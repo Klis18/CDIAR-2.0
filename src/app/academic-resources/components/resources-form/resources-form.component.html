@@ -20,7 +20,7 @@
               </option>
             </select>
             
-            <input *ngIf="rol == 'Docente' || rol == 'Admin'"
+            <input *ngIf="onlyViewACtivate(rol)"
             type="text"
             id="nivelSelected"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -49,7 +49,7 @@
               </option>
             </select>
   
-            <input *ngIf="rol == 'Docente' || rol == 'Admin'"
+            <input *ngIf="onlyViewACtivate(rol)"
             type="text"
             id="asignatureSelected"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -89,7 +89,7 @@
             formControlName="nombreRecurso"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             placeholder="Descripción"
-            [readonly]="rol == 'Admin' || rol == 'Docente'"
+            [readonly]="onlyViewACtivate(rol)"
           />
         </div>
   
@@ -109,7 +109,7 @@
             <option value="Archivo">Documento/Imagen</option>
           </select>
   
-          <input *ngIf="rol == 'Docente' || rol == 'Admin'"
+          <input *ngIf="onlyViewACtivate(rol)"
             type="text"
             id="tipoRecursoSelected"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -129,7 +129,7 @@
             formControlName="enlaceDelRecurso"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             placeholder="Link"
-            [readonly]="rol == 'Admin' || rol == 'Docente'"
+            [readonly]="onlyViewACtivate(rol)"
           />
         </div>
   
@@ -191,7 +191,7 @@
             id="revisorName"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             [value]="formData.nombreDocenteRevisor"
-            [readonly]="rol == 'Admin' || rol == 'Docente'"
+            [readonly]="rol == 'Estudiante' || rol == 'Docente'"
           />
         </div>
   

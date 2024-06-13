@@ -59,7 +59,7 @@
       </ul>
     </div>
   
-    <!-- <div *ngIf="selectedTab == 'Publicado'" class=" pt-5 pb-5">
+    <div *ngIf="selectedTab == 'Publicado'" class=" pt-5 pb-5">
       <resources-table [filterByStatus]="'Aprobado'"></resources-table>
     </div>
   
@@ -69,9 +69,9 @@
   
     <div *ngIf="selectedTab == 'Por Aprobar'" class="pt-5 pb-5">
       <resources-table [filterByRevisor]="usuario" [filterByStatus]="'Ingresado'"></resources-table>
-    </div>  -->
+    </div> 
 
-    <div class="pt-5 pb-5">
+    <!-- <div class="pt-5 pb-5">
       @switch (selectedTab) { @case ('Publicado') {
       <resources-table
         [searchData]="searchInfo"
@@ -89,5 +89,5 @@
         [filterByStatus]="'Ingresado'"
       ></resources-table>
       } }
-    </div>
+    </div> -->
   </div>

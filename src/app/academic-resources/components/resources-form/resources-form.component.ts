@@ -43,7 +43,7 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
   recursoFile: string | null = null;
   extension: string = '';
   datosRecursos!: any;
-  selectedTab: string = '';
+  selectedTab: string = this.academic.selectedTab;
   listadoExtensionesImagenes = ['jpg', 'jpeg', 'png'];
   listadoExtensionesArchivos = [
     'docx',
@@ -61,6 +61,7 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private recursoService: RecursoService,
+    private academic: ResourcesComponent,
     private homeService: HomeService,
   ) {}
 
@@ -250,8 +251,15 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
 
   selectedActivate(rol:string): boolean{
     const isStudent = rol === 'Estudiante';
-    const isDocente = rol === 'Docente' && this.selectedTab === 'Mis Recursos';
+    // const isDocente = rol === 'Docente' && this.selectedTab === 'Mis Recursos';
+    const isDocente = rol === 'Docente';
     return isStudent || isDocente;
+  }
+
+  onlyViewACtivate(rol:string): boolean{
+    const isDocente = rol === 'Docente' && this.selectedTab === 'Por Aprobar';
+    const isAdmin = rol === 'Admin';
+    return isDocente || isAdmin;
   }
 
   showStatus(rol:string): boolean {
