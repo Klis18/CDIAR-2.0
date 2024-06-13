@@ -1,0 +1,45 @@
+<div class="flex flex-col" *ngIf="data.length > 0; else noData">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead>
+            <tr>
+              <th class=" px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                <p>Acciones</p>
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                Nombre Comoletos</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                Cedula</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                Correo</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                Celular</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">Fecha
+                Solicitud</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let item of paginatedData">
+              <td class=" px-6 py-4 whitespace-nowrap">
+                <mat-icon class="text-red-600 mr-2" (click)="rechazarDocente(item.correo, false)">close</mat-icon>
+                <mat-icon class="text-green-700 mr-2" (click)="aprobarDocente(item.correo, true)">check</mat-icon>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.nombresCompletos}}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.cedula }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.correo }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.telefono }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.fechaSolicitud | date }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noData>
+  <div class="text-center text-xl">No hay datos disponibles.</div>
+</ng-template>

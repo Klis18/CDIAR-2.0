@@ -1,0 +1,129 @@
+<div class="grid grid-flow-col auto-cols-maxjustify-center px-6 py-5 lg:px-8">
+  <div></div>
+  <div class="card bg-white rounded-lg mt-5 mb-5">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm mt-10">
+      <h2 class="mt-5 text-left text-2xl sm:text-2xl md:text-3xl font-bold leading-9 tracking-tight text-gray-900">
+        Crear Cuenta
+      </h2>
+    </div>
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm mr-3 ml-3">
+      <form [formGroup]="userGroup" (ngSubmit)="onSubmit()">
+        <div class="border-b border-gray-900/10 pb-5">
+          <div class="mt-5 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6">
+            <div class="sm:col-span-3">
+              <label for="identity" class="block text-sm font-medium leading-6 text-gray-900">Cédula
+              </label>
+              <div class="mt-2">
+                <input type="text" name="identity" id="identity" formControlName="cedula"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid"
+                  pattern=".{10}$" />
+                <span
+                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  *Cédula debe tener 10 dígitos
+                </span>
+              </div>
+            </div>
+            <div class="sm:col-span-3 sm:col-start-1">
+              <label for="user-name" class="block text-sm font-medium leading-6 text-gray-900">Nombres</label>
+              <div class="mt-2">
+                <input type="text" name="user-name" id="user-name" formControlName="nombres"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid"
+                  pattern="^[a-zA-Z\s]*$" />
+                <span
+                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  *Solo se permiten letras
+                </span>
+              </div>
+            </div>
+            <div class="sm:col-span-3">
+              <label for="user-lastname" class="block text-sm font-medium leading-6 text-gray-900">Apellidos</label>
+              <div class="mt-2">
+                <input type="text" name="user-lastname" id="user-lastname" formControlName="apellidos"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                  pattern="^[a-zA-Z\s]*$" />
+                <span
+                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  *Solo se permiten letras
+                </span>
+              </div>
+            </div>
+            <div class="sm:col-span-3">
+              <label for="role" class="block text-sm font-medium leading-6 text-gray-900">Tipo Usuario</label>
+              <div class="mt-2">
+                <select id="role" name="role" autocomplete="role-name" formControlName="rolId"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid">
+                  <option *ngFor="let rol of userTypes" [value]="rol.value">
+                    {{ rol.label }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="sm:col-span-4">
+              <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Correo electrónico</label>
+              <div class="mt-2">
+                <input id="email" name="email" type="email" formControlName="email" autocomplete="email"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid"
+                  pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}" />
+                <span
+                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  *Correo electrónico inválido
+                </span>
+              </div>
+            </div>
+            <div class="sm:col-span-2">
+              <label for="phoneNumber" class="block text-sm font-medium leading-6 text-gray-900">Celular</label>
+              <div class="mt-2">
+                <input id="phoneNumber" name="phoneNumber" type="text" autocomplete="phoneNumber"
+                  formControlName="phoneNumber"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                  pattern=".{10}$" />
+                <span
+                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  *Celular debe tener 10 dígitos
+                </span>
+              </div>
+            </div>
+
+            <div class="sm:col-span-3 sm:col-start-1">
+              <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Contraseña</label>
+              <div class="mt-2">
+                <input type="password" name="password" id="password" formControlName="password"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid"
+                  pattern=".{8,}$" />
+                <span
+                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  *Contraseña debe tener al menos 8 caracteres
+                </span>
+              </div>
+            </div>
+
+            <div class="sm:col-span-3">
+              <label for="passwordConfirm" class="block text-sm font-medium leading-6 text-gray-900">Confirmar
+                contraseña</label>
+              <div class="mt-2">
+                <input type="password" name="passwordConfirm" id="passwordConfirm" formControlName="passwordConfirm"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid" />
+              </div>
+              <div *ngIf="userGroup.getError('mustBeEqual')" class="text-red-500 text-xs">
+                *No coincide con la contraseña
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <ngx-recaptcha2 #captchaElem [siteKey]="siteKey"> </ngx-recaptcha2>
+        </div>
+        <div class="mt-6 flex items-center justify-end gap-x-6 pb-7">
+          <button type="button" routerLink="/auth/login" class="text-sm font-semibold leading-6 text-gray-900">
+            Cancelar
+          </button>
+          <button type="submit"
+            class="rounded-md bg-blue-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Registrarse
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div></div>
+</div>

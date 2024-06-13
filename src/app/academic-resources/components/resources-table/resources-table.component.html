@@ -1,0 +1,239 @@
+
+<div class="flex flex-col" *ngIf="data.length > 0; else noData">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead>
+            <tr>
+              <th class=" px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                <p *ngIf="selectedTab ==='Mis Recursos'">Acciones</p>
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                Nombre Recurso</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                Asignatura</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                Nivel</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                Fecha Creación</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">Tipo
+                Recurso</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                Usuario Creación</th>
+              <th *ngIf="selectedTab === 'Mis Recursos'"
+                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                Estado</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let item of paginatedData">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <mat-icon class="text-red-600 mr-2"
+                  *ngIf="item.usuarioCreacion == usuario && selectedTab === 'Mis Recursos' && item.estadoRecurso != 'Aprobado' && item.docenteRevisor === ''"
+                  (click)="eliminarRecurso(item.idRecurso)">delete</mat-icon>
+                  <mat-icon class="text-blue-800 mr-2"
+                  *ngIf="canEdit(item)" 
+                  (click)="editarRecurso(item.idRecurso,item)">edit</mat-icon>
+                <a [href]="openFileInTab(item)" target="_blank">
+                  <mat-icon class="text-blue-800">visibility</mat-icon>
+                </a>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.nombreRecurso }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.asignatura }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.nivel }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.fechaCreacion | date:'d/M/yyyy' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div
+                  class="flex justify-center items-center m-1 font-medium py-1 px-2 pt-2 pb-2 rounded-full text-white"
+                  [class]="getStyleColor(item.tipoRecurso)">
+                  <div class="text-xs font-normal leading-none max-w-full flex-initial">
+                    {{item.tipoRecurso}}
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.usuarioCreacion }}</td>
+              <td *ngIf="selectedTab === 'Mis Recursos'" class="px-6 py-4 whitespace-nowrap">{{ item.estadoRecurso }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noData>
+  <div class="text-center text-xl">No hay datos disponibles.</div>
+</ng-template>
+
+
+<!-- <div class="flex flex-col" *ngIf="data.length > 0; else noData">
+  <div
+    [formGroup]="resourceTable"
+    class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"
+  >
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div
+        class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+      >
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead>
+            <tr>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+              >
+                <p *ngIf="selectedTab === 'Mis Recursos'">Acciones</p>
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+              >
+                Nombre Recurso
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+              >
+                Asignatura
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+              >
+                Nivel
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+              >
+                Fecha Creación
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+              >
+                Tipo Recurso
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+              >
+                Usuario Creación
+              </th>
+              <th
+                *ngIf="selectedTab === 'Mis Recursos'"
+                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+              >
+                Estado
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let item of paginatedData">
+              <td class="px-6 py-4 whitespace-nowrap">
+                @if(item.usuarioCreacion == usuario && selectedTab === 'Mis
+                Recursos' && item.estadoRecurso != 'Aprobado' &&
+                item.docenteRevisor === ''){
+                <mat-icon
+                  class="text-red-600 mr-2"
+                  (click)="eliminarRecurso(item.idRecurso)"
+                  >delete</mat-icon
+                >
+                }
+
+                <mat-icon
+                  class="text-blue-800 mr-2"
+                  *ngIf="canEdit(item)"
+                  (click)="editarRecurso(item.idRecurso, item)"
+                  >edit</mat-icon
+                >
+                <a [href]="openFileInTab(item)" target="_blank">
+                  <mat-icon class="text-blue-800">visibility</mat-icon>
+                </a>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ item.nombreRecurso }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.asignatura }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ item.nivel }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ item.fechaCreacion | date : "d/M/yyyy" }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div
+                  class="flex justify-center items-center m-1 font-medium py-1 px-2 pt-2 pb-2 rounded-full text-white"
+                  [class]="getStyleColor(item.tipoRecurso)"
+                >
+                  <div
+                    class="text-xs font-normal leading-none max-w-full flex-initial"
+                  >
+                    {{ item.tipoRecurso }}
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ item.usuarioCreacion }}
+              </td>
+              <td
+                *ngIf="selectedTab === 'Mis Recursos'"
+                class="px-6 py-4 whitespace-nowrap"
+              >
+                {{ item.estadoRecurso }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="flex mt-3 h-screen">
+          <div class="flex-1 ms-2">
+            <select
+              class="p-1 rounded border-2 border-solid border-slate-500"
+              formControlName="limit"
+            >
+              @for (item of limitsOptions; track item) {
+              <option [value]="item.value">{{ item.label }}</option>
+              }
+            </select>
+          </div>
+          <div class="grid justify-end">
+            <nav>
+              <ul class="flex">
+                <li>
+                  <a
+                    class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+                    aria-label="Previous"
+                  >
+                    <span class="material-icons text-sm"
+                      >keyboard_arrow_left</span
+                    >
+                  </a>
+                </li>
+                @for (paginate of paginateCurrent; track $index) {
+                <li>
+                  <a
+                    class="mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm shadow-md transition duration-150 ease-in-out"
+                    [ngClass]="{
+                      'bg-blue-800 text-white': paginate === page,
+                      'bg-white text-black': paginate !== page
+                    }"
+                  >
+                    {{ paginate }}
+                  </a>
+                </li>
+                }
+                <li>
+                  <a
+                    class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+                    aria-label="Next"
+                  >
+                    <span class="material-icons text-sm"
+                      >keyboard_arrow_right</span
+                    >
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noData>
+  <div class="text-center text-xl">No hay datos disponibles.</div>
+</ng-template> -->

@@ -1,0 +1,71 @@
+<div class="grid grid-flow-col auto-cols-maxjustify-center px-6 py-5 lg:px-8">
+  <div></div>
+  <div class="card bg-white rounded-lg pb-10">
+    <!-- <div class="sm:mx-auto sm:w-full sm:max-w-sm mt-10"> -->
+    <div class="mt-10">
+      <img class="mx-auto h-60 w-full" src="../../../../assets/CDIARLogo.png" alt="logo cdiar" />
+      <h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        Iniciar sesión
+      </h2>
+    </div>
+
+    <div class="mt-5 sm:mx-auto sm:w-full sm:max-w-sm mr-3 ml-3">
+      <form class="space-y-6" [formGroup]="loginForm" (submit)="onSubmit()">
+        <div>
+          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Correo electrónico</label>
+          <div class="mt-2">
+            <input id="email" name="email" type="email" autocomplete="email" formControlName="email"
+              class="block w-full rounded-md border-1 py-1.5 text-gray-900 ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-700 peer peer-invalid"
+              pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}" />
+            <span class="mt-2 hidden text-xs text-gray-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+              *Correo electrónico inválido
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between">
+            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Contraseña</label>
+          </div>
+          <div class="mt-2">
+            <input id="password" name="password" type="password" autocomplete="current-password"
+              formControlName="password"
+              class="block w-full rounded-md border-1 py-1.5 text-gray-900 ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-700 peer peer-invalid"
+              pattern=".{8,}$" />
+              <div class="mt-1 text-sm text-right">
+                <a href="#" class="font-semibold text-blue-900 hover:text-blue-800" routerLink="/auth/recovery">Olvidé mi
+                  contraseña</a>
+              </div>
+            <p class="mt-2 hidden text-xs text-gray-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+              *Contraseña debe tener al menos 10 caracteres
+            </p>
+            <p *ngIf="loginForm.controls['password'].getError('atLeastOneLowercase') && loginForm.controls['password']?.touched" class="mt-2 text-xs text-gray-500">
+              *Contraseña debe tener al menos una letra minúscula
+            </p>
+            <p *ngIf="loginForm.controls['password'].getError('atLeastOneUppercase') && loginForm.controls['password']?.touched" class="mt-2 text-xs text-gray-500">
+              *Contraseña debe tener al menos una letra mayúscula
+            </p>
+            <p *ngIf="loginForm.controls['password'].getError('toNumber') && loginForm.controls['password']?.touched" class="mt-2 text-xs text-gray-500">
+              *Contraseña debe tener al menos un número
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit"
+            class="flex w-full justify-center rounded-md bg-blue-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 group-invalid:pointer-events-none group-invalid:opacity-30"
+            [disabled]="loginForm.invalid">
+            Ingresar
+          </button>
+        </div>
+      </form>
+
+      <p class="mt-10 text-center text-sm text-gray-500">
+        ¿No te has registrado?
+        <a href="#" class="font-semibold leading-6 text-blue-900 hover:text-blue-800" routerLink="/auth/registro">Crear
+          cuenta</a>
+      </p>
+    </div>
+  </div>
+  <div></div>
+</div>

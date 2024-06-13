@@ -1,0 +1,39 @@
+<div class="grid grid-flow-col auto-cols-maxjustify-center px-6 py-12 lg:px-8 container-register">
+  <div></div>
+  <div class="card bg-white rounded-lg mt-10 mb-10 pb-5">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm mt-10">
+      <h2 class="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        Verificar Token
+      </h2>
+    </div>
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm mr-3 ml-3">
+      <form class="space-y-6" [formGroup]="userGroup" (ngSubmit)="onSubmit()">
+        <div>
+          <div class="flex items-center justify-between">
+            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Código de
+              Verificación</label>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-2 mb-6">
+          <input id="token" name="token" type="token" autocomplete="token" formControlName="token" required
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2" />
+        </div>
+        <div>
+          <button type="submit" class=" flex w-full justify-center rounded-md bg-blue-900 px-3 py-1.5 text-sm font-semibold leading-6
+            text-white shadow-sm hover:bg-blue-800 focus-visible:outline focus-visible:outline-2
+            focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Verificar
+          </button>
+        </div>
+      </form>
+      <p class="mt-5 text-center text-sm text-gray-500">
+        No has recibido el código?
+        <button type="submit" class="font-semibold leading-6 text-blue-900 hover:text-blue-800"
+          (onClick)="reenviarCorreo()">Reenviar</button>
+      </p>
+    </div>
+  </div>
+  <div></div>
+</div>
