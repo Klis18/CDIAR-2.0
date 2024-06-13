@@ -261,7 +261,7 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   }
     
     canEdit(item: any): boolean {
-      const isCreator = item.usuarioCreacion == this.usuario && this.selectedTab === 'Mis Recursos' && item.estadoRecurso != 'Aprobado' && item.nombreRevisor== '';
+      const isCreator = item.usuarioCreacion == this.usuario && this.selectedTab === 'Mis Recursos' && item.estadoRecurso != 'Aprobado';
       const isReviewer = item.docenteRevisor == this.usuario && this.selectedTab === 'Por Aprobar' && item.estadoRecurso != 'Aprobado';
      const isAdmin = item.docenteRevisor === '' && item.estadoRecurso != 'Aprobado'&& this.selectedTab2 === 'Recursos Académicos';
       return isCreator || isReviewer || isAdmin;
