@@ -1,6 +1,10 @@
 export interface Mazo{
     idMazo: number;
-    asigatura: string;
+    asignatura: string;
+    nivel: string;
+    usuarioCreador: string;
+    fechaCreacion: string;
+    estado: string;
     nombreMazo: string;
     cantidadFlashcards: number;
 }
