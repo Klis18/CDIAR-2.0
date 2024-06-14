@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ListaRecurso } from '../../academic-resources/interfaces/recurso.interface';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { Mazo } from '../interfaces/mazo.interface';
+import { ListMazo, Mazo } from '../interfaces/mazo.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,13 @@ export class LearnService {
   constructor() { }
 
   getMazos() {
-    return this.http.get<Mazo>('mazos', {
+    return this.http.get<ListMazo>('mazos', {
+      headers: this.headers,
+    });
+  }
+
+  getDatosMazo(idMazo: number) {
+    return this.http.get<Mazo>(`mazos/${idMazo}`, {
       headers: this.headers,
     });
   }
