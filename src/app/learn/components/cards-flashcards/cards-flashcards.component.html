@@ -5,9 +5,9 @@
     </div>
     <div class="grid grid-cols-4 gap-4 m-4">
         <div class="col-span-4">
-            <a href="#">
-                <span class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{item.nombreMazo}}</span>
-            </a>
+            <button (click)="redirigirPreguntas(item)">
+                <div class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{item.nombreMazo}}</div>
+            </button>
             </div>
                 <div class="col-span-3">
                     <div class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300 w-fit">

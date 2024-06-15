@@ -22,3 +22,19 @@ export interface Mazo{
     nombreMazo: string;
     cantidadFlashcards: number;
 }
+
+export interface NewMazo{
+    nombreMazo: string;
+    idAsignatura: string;
+    idNivel: string
+}
+
+export interface PreguntasMazo{
+    idFlashcard: number;
+    pregunta: string;
+    respuesta: string;
+    nombreMazo: string;
+    siguienteRepaso: string;
+    ultimoRepaso: string;
+    fechaCreacion: string;
+}

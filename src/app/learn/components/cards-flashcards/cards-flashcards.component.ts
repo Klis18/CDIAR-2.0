@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ListMazo } from '../../interfaces/mazo.interface';
 import { LearnService } from '../../services/learn.service';
 import { MatDialog } from '@angular/material/dialog';
-import { EditResourceComponent } from '../../../academic-resources/components/edit-resource/edit-resource.component';
 import { DetailsMazoComponent } from '../details-mazo/details-mazo.component';
+import { Router } from '@angular/router';
 
 interface DataItem {
   title: string;
@@ -22,13 +22,20 @@ export class CardsFlashcardsComponent implements OnInit{
 
   //constructor(private http: HttpClient) {}
   constructor(private learnService:LearnService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private router: Router
   ) {}
 
   ngOnInit() {
     this.listaMazos();
     
   }
+
+  actualizarNombreMazo(nombreMazo: string) {
+    this.learnService.cambiarNombreMazo(nombreMazo);
+    this.router.navigate(['/learn/preguntas']);
+  }
+
 
   listaMazos(){
     this.learnService.getMazos().subscribe((res:any) => {
@@ -51,4 +58,7 @@ export class CardsFlashcardsComponent implements OnInit{
     });
   }
 
+  redirigirPreguntas(item: ListMazo) {
+    this.router.navigate(['/learn/preguntas',{id: item.idMazo, mazo: item.nombreMazo}]);
+  }
 }

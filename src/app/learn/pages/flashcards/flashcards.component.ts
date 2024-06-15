@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddResourceComponent } from '../../../academic-resources/components/add-resource/add-resource.component';
 import { HomeService } from '../../../home/services/home.service';
+import { AddMazoComponent } from '../../components/add-mazo/add-mazo.component';
 
 @Component({
   selector: 'app-flashcards',
@@ -26,7 +27,7 @@ export class FlashcardsComponent implements OnInit{
   }
 
   openDialog() {
-    this.dialog.open(AddResourceComponent, {
+    this.dialog.open(AddMazoComponent, {
       width: '40%',
       maxHeight: '80%',
     });

@@ -6,18 +6,28 @@ import { MaterialModule } from '../material/material.module';
 import { FlashcardsComponent } from './pages/flashcards/flashcards.component';
 import { CardsFlashcardsComponent } from './components/cards-flashcards/cards-flashcards.component';
 import { DetailsMazoComponent } from './components/details-mazo/details-mazo.component';
+import { FormMazoComponent } from './components/form-mazo/form-mazo.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AddMazoComponent } from './components/add-mazo/add-mazo.component';
+import { PreguntasFlashcardsComponent } from './pages/preguntas-flashcards/preguntas-flashcards.component';
+import { QuestionsTableComponent } from './components/questions-table/questions-table.component';
 
 
 @NgModule({
   declarations: [
     FlashcardsComponent,
     CardsFlashcardsComponent,
-    DetailsMazoComponent
+    DetailsMazoComponent,
+    FormMazoComponent,
+    AddMazoComponent,
+    PreguntasFlashcardsComponent,
+    QuestionsTableComponent
   ],
   imports: [
     CommonModule,
     LearnRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class LearnModule { }

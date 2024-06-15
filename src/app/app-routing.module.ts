@@ -35,7 +35,7 @@ const routes: Routes = [
       },
       {
         path:'learn',
-        component: FlashcardsComponent,
+        // component: FlashcardsComponent,
         loadChildren: () => import('./learn/learn.module').then(m => m.LearnModule),
       }
       
