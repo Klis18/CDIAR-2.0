@@ -1,0 +1,45 @@
+<mat-dialog-content>
+    <div class="pr-7 pl-7">
+      <form [formGroup]="questionGroupForm">
+        <div class="grid grid-cols-4 gap-4 mt-5">
+          <div class="col-span-4">
+            <label
+              for="pregunta"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Pregunta</label
+            >
+            <input
+              type="text"
+              id="pregunta"
+              formControlName="pregunta"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Pregunta"
+            />
+          </div>
+
+          <div class="col-span-4">
+            <label
+              for="Respuesta"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Respuesta</label
+            >
+        
+            <textarea id="respuesta" rows="4" formControlName="respuesta" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Respuesta..."></textarea>
+
+          </div>
+        </div>
+      </form>
+      <div class="mt-2 text-right">
+        <button
+            type="button" (click)="agregarPreguntaLista()"
+            class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+          >
+            <span class="flex items-center justify-center"> Agregar</span>
+          </button>
+      </div>
+      <div class="mt-2" *ngIf="preguntasRespuestas.length > 0">
+        <flashcards-table [flashcards]="preguntasRespuestas" (flashcardsAdd)="recibirDatos($event)"></flashcards-table>
+      </div>
+    </div>
+  </mat-dialog-content>
+  

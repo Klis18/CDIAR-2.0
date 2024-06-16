@@ -2,12 +2,12 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ListaRecurso } from '../../academic-resources/interfaces/recurso.interface';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListMazo, Mazo, NewMazo, PreguntasMazo } from '../interfaces/mazo.interface';
+import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo } from '../interfaces/mazo.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Nivel } from '../../academic-resources/interfaces/nivel.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 import { Estado } from '../../academic-resources/interfaces/estados.interface';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -71,11 +71,6 @@ export class LearnService {
     });
   }
 
-  // getFlashcardsMazo(idMazo: number) {
-  //   return this.http.get<PreguntasMazo>(`flashcards/flashcardsMazo/${idMazo}`,{
-  //     headers: this.headers,
-  //   });
-  // }
 
   getFlashcardsMazo({ id, page, limit }: { id:number, page: number; limit: number }) {
     if (!page) page = 1;
@@ -86,6 +81,12 @@ export class LearnService {
 
     return this.http.get<PreguntasMazo>(`flashcards/flashcardsMazo${query}`, {
       headers: this.headers,
+    });
+  }
+
+  addFlashcard(payload: { flashcards: NewFlashcard[]}) {
+    return this.http.post('flashcards/crear', payload, {
+      headers: this.headers
     });
   }
 }

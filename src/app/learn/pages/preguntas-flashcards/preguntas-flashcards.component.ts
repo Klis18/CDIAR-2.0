@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { LearnService } from '../../services/learn.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddQuestionFlashcardComponent } from '../../components/add-question-flashcard/add-question-flashcard.component';
 
 @Component({
   selector: 'app-preguntas-flashcards',
@@ -13,7 +15,7 @@ export class PreguntasFlashcardsComponent {
   nombreMazo: string = '';
   idMazo: number = 0;
 
-  constructor(private learnService: LearnService, private route: ActivatedRoute) { }
+  constructor(public dialog: MatDialog, private route: ActivatedRoute) { }
 
   ngOnInit() {
     // this.learnService.nombreMazoActual.subscribe(nombreMazo => this.nombreMazo = nombreMazo);
@@ -21,6 +23,14 @@ export class PreguntasFlashcardsComponent {
       this.nombreMazo = params['mazo'];
       this.idMazo = params['id'];
       // console.log(data);
+    });
+  }
+
+  openDialog() {
+    this.dialog.open(AddQuestionFlashcardComponent, {
+      width: '50%',
+      maxHeight: '80%',
+      data: {id: this.idMazo},
     });
   }
 

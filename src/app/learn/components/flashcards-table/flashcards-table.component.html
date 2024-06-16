@@ -1,34 +1,27 @@
 
-<div class="flex flex-col" *ngIf="data.length > 0; else noData">
+<div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
           <table class="min-w-full divide-y divide-gray-200">
             <thead>
               <tr>
-                <th class=" px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                <th class=" px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
                   <p>Acciones</p>
                 </th>
-                <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
                   Pregunta</th>
-                <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
                   Respuesta</th>
-                <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                  Fecha Creación</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr *ngFor="let item of data">
+              <tr *ngFor="let item of flashcards; let i = index">
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <mat-icon class="text-red-600 mr-2">delete</mat-icon>
-                    <mat-icon class="text-blue-800 mr-2">edit</mat-icon>
-                  <a>
-                    <mat-icon class="text-blue-800">visibility</mat-icon>
-                  </a>
+                  <mat-icon class="text-red-600 mr-2" (click)="eliminarPreguntaRespuesta(item.pregunta)">delete</mat-icon>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ item.pregunta }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ item.respuesta }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ item.fechaCreacion | date:'d/M/yyyy' }}</td>
               </tr>
             </tbody>
           </table>

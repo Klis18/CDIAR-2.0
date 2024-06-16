@@ -38,3 +38,9 @@ export interface PreguntasMazo{
     ultimoRepaso: string;
     fechaCreacion: string;
 }
+
+export interface NewFlashcard{
+    idMazo: number;
+    pregunta: string;
+    respuesta: string;
+}

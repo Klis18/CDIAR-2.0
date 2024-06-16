@@ -11,6 +11,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AddMazoComponent } from './components/add-mazo/add-mazo.component';
 import { PreguntasFlashcardsComponent } from './pages/preguntas-flashcards/preguntas-flashcards.component';
 import { QuestionsTableComponent } from './components/questions-table/questions-table.component';
+import { QuestionFlashcardFormComponent } from './components/question-flashcard-form/question-flashcard-form.component';
+import { AddQuestionFlashcardComponent } from './components/add-question-flashcard/add-question-flashcard.component';
+import { FlashcardsTableComponent } from './components/flashcards-table/flashcards-table.component';
 
 
 @NgModule({
@@ -21,7 +24,10 @@ import { QuestionsTableComponent } from './components/questions-table/questions-
     FormMazoComponent,
     AddMazoComponent,
     PreguntasFlashcardsComponent,
-    QuestionsTableComponent
+    QuestionsTableComponent,
+    QuestionFlashcardFormComponent,
+    AddQuestionFlashcardComponent,
+    FlashcardsTableComponent
   ],
   imports: [
     CommonModule,
