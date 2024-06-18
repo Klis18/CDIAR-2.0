@@ -25,7 +25,7 @@ export class SidebarComponent implements OnInit {
     {
       icon: 'home',
       name: 'Inicio',
-      route: '/inicio',
+      route: '/home/landing',
       expanded: false,
       subOptions: [],
       roles: ['Docente', 'Admin', 'Estudiante'],

@@ -7,12 +7,15 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    children: [
-      { path: 'landing', component: HomeComponent },
+    // children: [
+    //   { path: 'landing', component: HomeComponent },
+    //   { path: 'profile', component: ProfileComponent },
+    //   { path: '**', redirectTo: 'landing' },
+    // ],
+  },
+  { path: 'landing', component: HomeComponent },
       { path: 'profile', component: ProfileComponent },
       { path: '**', redirectTo: 'landing' },
-    ],
-  },
 ];
 
 @NgModule({

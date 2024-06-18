@@ -44,3 +44,18 @@ export interface NewFlashcard{
     pregunta: string;
     respuesta: string;
 }
+
+export interface Flashcard{
+    idFlashcard: number;
+    pregunta: string;
+    respuesta: string;
+    nombreMazo: string;
+    siguienteRepaso: Date;
+    ultimoRepaso: Date;
+    fechaCreacion: Date;
+}
+
+export interface updateFlashcard{
+    idFlashcard: number;
+    siguienteRepaso: string;
+}

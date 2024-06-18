@@ -61,4 +61,8 @@ export class CardsFlashcardsComponent implements OnInit{
   redirigirPreguntas(item: ListMazo) {
     this.router.navigate(['/learn/preguntas',{id: item.idMazo, mazo: item.nombreMazo}]);
   }
+
+  redirigirEstudiarFlashcards(item: ListMazo) {
+    this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
+  }
 }

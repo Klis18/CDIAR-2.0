@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ListaRecurso } from '../../academic-resources/interfaces/recurso.interface';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo } from '../interfaces/mazo.interface';
+import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateFlashcard } from '../interfaces/mazo.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Nivel } from '../../academic-resources/interfaces/nivel.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
@@ -87,6 +87,18 @@ export class LearnService {
   addFlashcard(payload: { flashcards: NewFlashcard[]}) {
     return this.http.post('flashcards/crear', payload, {
       headers: this.headers
+    });
+  }
+
+  estudiarFlashcards(idMazo: number) {
+    return this.http.get(`flashcards/estudiar/${idMazo}`, {
+      headers: this.headers,
+    });
+  }
+
+  updateFlashcard(flashcard: updateFlashcard) {
+    return this.http.post('flashcards/actualizarestudio', flashcard,{
+      headers: this.headers,
     });
   }
 }

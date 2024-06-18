@@ -46,10 +46,10 @@ registerLocaleData(localeEsEC);
       provide: LOCALE_ID,
       useValue: 'es-EC',
     },
-    {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy,
-    },
+    // {
+    //   provide: LocationStrategy,
+    //   useClass: HashLocationStrategy,
+    // },
     {
       provide:ResourcesComponent,
       useClass:ResourcesComponent

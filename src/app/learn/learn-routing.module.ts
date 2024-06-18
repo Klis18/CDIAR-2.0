@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FlashcardsComponent } from './pages/flashcards/flashcards.component';
 import { PreguntasFlashcardsComponent } from './pages/preguntas-flashcards/preguntas-flashcards.component';
+import { StudyFlashcardsComponent } from './pages/study-flashcards/study-flashcards.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'preguntas',
     component: PreguntasFlashcardsComponent,
+  },
+  {
+    path:'estudiar-flashcards',
+    component: StudyFlashcardsComponent
   }
   
   

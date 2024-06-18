@@ -14,6 +14,7 @@ import { QuestionsTableComponent } from './components/questions-table/questions-
 import { QuestionFlashcardFormComponent } from './components/question-flashcard-form/question-flashcard-form.component';
 import { AddQuestionFlashcardComponent } from './components/add-question-flashcard/add-question-flashcard.component';
 import { FlashcardsTableComponent } from './components/flashcards-table/flashcards-table.component';
+import { StudyFlashcardsComponent } from './pages/study-flashcards/study-flashcards.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FlashcardsTableComponent } from './components/flashcards-table/flashcar
     QuestionsTableComponent,
     QuestionFlashcardFormComponent,
     AddQuestionFlashcardComponent,
-    FlashcardsTableComponent
+    FlashcardsTableComponent,
+    StudyFlashcardsComponent
   ],
   imports: [
     CommonModule,
