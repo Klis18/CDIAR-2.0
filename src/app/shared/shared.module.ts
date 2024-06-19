@@ -10,6 +10,8 @@ import { CardConfirmComponent } from './pages/card-confirm/card-confirm.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputComponent } from './components/input.components';
 import { SelectComponent } from './components/select.components';
+import { SearchFiltersComponent } from './pages/search-filters/search-filters.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -20,18 +22,21 @@ import { SelectComponent } from './components/select.components';
     CardConfirmComponent,
     InputComponent,
     SelectComponent,
+    SearchFiltersComponent,
   ],
   imports: [
     CommonModule,
     SharedRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule
   ],
   exports: [
     FooterComponent,
     SidebarComponent,
     InputComponent,
     SelectComponent,
+    SearchFiltersComponent,
   ]
 })
 export class SharedModule { }

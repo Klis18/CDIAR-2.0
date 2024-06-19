@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LearnService } from '../../services/learn.service';
-import { Flashcard, updateFlashcard } from '../../interfaces/mazo.interface';
+import { Flashcard, updateSiguienteRepasoFlashcard } from '../../interfaces/mazo.interface';
 import { Subscription, interval } from 'rxjs';
 
 @Component({
@@ -78,12 +78,12 @@ actualizarRepasoFlashcard(minutos: number): void {
       // Convierte la nueva fecha a una cadena en formato ISO 8601 manteniendo la zona horaria local
       let nuevaFechaISO = this.toLocalISOString(this.nuevaFecha);
 
-      const flashcard: updateFlashcard = {
+      const flashcard: updateSiguienteRepasoFlashcard = {
           idFlashcard: this.currentFlashcard.idFlashcard,
           siguienteRepaso: nuevaFechaISO
       };
 
-      this.learnService.updateFlashcard(flashcard).subscribe(res => {
+      this.learnService.updateSiguienteRepasoFlashcard(flashcard).subscribe(res => {
           this.showAnswer = false;
           this.cargarFlashcards();
       }); 

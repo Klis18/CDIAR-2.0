@@ -9,6 +9,8 @@ import { EditResourceComponent } from './components/edit-resource/edit-resource.
 import { SharedModule } from '../shared/shared.module';
 import { ResourcesFormComponent } from './components/resources-form/resources-form.component';
 import { ResourcesComponent } from './pages/resources/resources.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { ResourcesComponent } from './pages/resources/resources.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    NgSelectModule,
     SharedModule,
   ],
   exports: [

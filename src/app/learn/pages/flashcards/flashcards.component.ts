@@ -13,6 +13,7 @@ export class FlashcardsComponent implements OnInit{
   usuario: string = '';
   rol: string = '';
   selectedTab = 'Publicado';
+  searchInfo: any;
 
   private homeService = inject(HomeService);
 
@@ -26,10 +27,31 @@ export class FlashcardsComponent implements OnInit{
     });
   }
 
+  emitSearch(res: any) {
+    if (res) {
+      this.searchInfo = res;
+    }
+  }
+  reloadTable: boolean = false;
+
+
+  loadTable() {
+    this.reloadTable = true;
+  }
+
+  loadedTale() {
+    this.reloadTable = false;
+  }
+
   openDialog() {
-    this.dialog.open(AddMazoComponent, {
+    const dialogRef = this.dialog.open(AddMazoComponent, {
       width: '40%',
       maxHeight: '80%',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadTable();
+      }
     });
   }
 }

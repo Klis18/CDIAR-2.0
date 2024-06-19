@@ -41,6 +41,59 @@ export class ResourceFiltersComponent implements OnInit {
   //     });
   // }
 
+  //INTENTO 2
+  // nivelesType: { label: string; value: string }[] = [];
+  // asignaturas: { label: string; value: string }[] = [];
+  // nombreRecurso: string = '';
+  // resourceForm!: FormGroup;
+  // @Output() search = new EventEmitter();
+
+  // constructor(
+  //   private recursoService: RecursoService,
+  //   @Inject(FormBuilder) private formBuilder: FormBuilder
+  // ) {}
+
+  // builderForm() {
+  //   this.resourceForm = this.formBuilder.group({
+  //     nombreRecurso: [''],
+  //     asignaturas: [''],
+  //     nivelesType: [''],
+  //   });
+  // }
+
+  // ngOnInit() {
+  //   this.builderForm();
+  //   this.loadNiveles();
+  //   this.resourceForm.valueChanges.subscribe({
+  //     next: (res:any) => {
+  //       this.search.emit(res);
+  //     },
+  //   });
+  // }
+
+  // loadNiveles() {
+  //   this.recursoService.getNiveles().subscribe((res: any) => {
+  //     this.nivelesType = res.data.map((nivel: Nivel) => ({
+  //       label: nivel.descripcion,
+  //       value: nivel.idNivel,
+  //     }));
+  //   });
+  // }
+
+  // onNivelChange(event: Event) {
+  //   const selectedNivel = Number((event.target as HTMLSelectElement).value);
+  //   this.recursoService
+  //     .getAsignaturasPorNivel(selectedNivel)
+  //     .subscribe((res: any) => {
+  //       console.log(res.data);
+  //       this.asignaturas = res.data.map((asignatura: any) => ({
+  //         label: asignatura.nombre,
+  //         value: asignatura.idAsignatura,
+  //       }));
+  //     });
+  // }
+
+
   nivelesType: { label: string; value: string }[] = [];
   asignaturas: { label: string; value: string }[] = [];
   nombreRecurso: string = '';
@@ -54,18 +107,32 @@ export class ResourceFiltersComponent implements OnInit {
 
   builderForm() {
     this.resourceForm = this.formBuilder.group({
-      nombreRecurso: [''],
-      asignaturas: [''],
-      nivelesType: [''],
+      nombreRecurso: [null],
+      asignaturas: [null],
+      nivelesType: [null],
     });
   }
-
+  counter = 0;
   ngOnInit() {
     this.builderForm();
     this.loadNiveles();
     this.resourceForm.valueChanges.subscribe({
-      next: (res:any) => {
-        this.search.emit(res);
+      next: (res) => {
+        this.counter++;
+        setTimeout(() => {
+          this.counter--;
+          if (this.counter === 0) {
+            this.search.emit(res);
+          }
+        }, 500);
+      },
+    });
+    this.resourceForm.get('nivelesType')?.valueChanges.subscribe({
+      next: (level) => {
+        console.log({ level });
+        if (level) {
+          this.onNivelChange(level);
+        }
       },
     });
   }
@@ -79,8 +146,7 @@ export class ResourceFiltersComponent implements OnInit {
     });
   }
 
-  onNivelChange(event: Event) {
-    const selectedNivel = Number((event.target as HTMLSelectElement).value);
+  onNivelChange(selectedNivel: number) {
     this.recursoService
       .getAsignaturasPorNivel(selectedNivel)
       .subscribe((res: any) => {
@@ -91,4 +157,7 @@ export class ResourceFiltersComponent implements OnInit {
         }));
       });
   }
+
+
+
 }

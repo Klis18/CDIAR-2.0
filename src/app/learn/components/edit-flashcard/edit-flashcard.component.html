@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="cardTo my-3">
+      <div class="pr-7 pl-7"> 
+        <div class="text-right">
+          <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
+        </div>
+        <p class="text-2xl text-black">{{title}}</p>
+        <hr />
+      </div>
+      
+      <!---Formulario-->
+      <div class="p-5">
+        <form [formGroup]="flashcardGroupForm">
+            <div class="grid grid-cols-4 gap-4 mt-5">
+              <div class="col-span-4">
+                <label
+                  for="pregunta"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Pregunta</label
+                >
+                <input
+                  type="text"
+                  id="pregunta"
+                  formControlName="pregunta"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Pregunta"
+                  [readonly]="isDisabled == false"
+                />
+              </div>
+    
+              <div class="col-span-4">
+                <label
+                  for="Respuesta"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Respuesta</label
+                >
+                <textarea id="respuesta" rows="4" formControlName="respuesta" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Respuesta..." [readonly]="isDisabled == false"></textarea>
+              </div>
+            </div>
+          </form>
+      </div>
+      
+      <!---Fin formulario-->
+    </div>
+    <div style="text-align: right" class="my-2">
+      <div class="col-span-4 text-right mt-3 mb-3 pr-5" *ngIf="isDisabled == true">
+        <button
+          type="button"
+          (click)="cancelar()"
+          class="text-white bg-gray-500 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+        >
+          <span class="flex items-center justify-center"> Cancelar </span>
+        </button>
+        <button
+          type="button"
+          (click)="saveFlashcard()"
+          class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+        >
+          <span class="flex items-center justify-center"> Guardar </span>
+        </button>
+      </div>
+      <div class="col-span-4 text-right mt-3 mb-3 pr-5" *ngIf="isDisabled == false">
+        <button
+        type="button"
+        (click)="cancelar()"
+        class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+      >
+        <span class="flex items-center justify-center"> Cerrar </span>
+      </button>
+      </div>
+    </div>
+  </div>
+  

@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ListaRecurso } from '../../academic-resources/interfaces/recurso.interface';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateFlashcard } from '../interfaces/mazo.interface';
+import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateSiguienteRepasoFlashcard, Flashcard, updateFlashcard } from '../interfaces/mazo.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Nivel } from '../../academic-resources/interfaces/nivel.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
@@ -96,9 +96,28 @@ export class LearnService {
     });
   }
 
-  updateFlashcard(flashcard: updateFlashcard) {
+  updateSiguienteRepasoFlashcard(flashcard: updateSiguienteRepasoFlashcard) {
     return this.http.post('flashcards/actualizarestudio', flashcard,{
       headers: this.headers,
     });
   }
+
+  getFlashcard(idFlashcard: number) {
+    return this.http.get<updateFlashcard>(`flashcards/flashcard/${idFlashcard}`, {
+      headers: this.headers,
+    });
+  }
+
+  updateFlashcard(flashcard:updateFlashcard){
+    return this.http.put('flashcards/actualizar', flashcard, {
+      headers: this.headers,
+    });
+  }
+
+  deleteFlashcard(idFlashcard: number) {
+    return this.http.delete(`flashcards/eliminar/${idFlashcard}`, {
+      headers: this.headers,
+    });
+  }
+
 }

@@ -1,0 +1,13 @@
+.scroll-bar-primary::-webkit-scrollbar {
+    width: 6px;
+    cursor: pointer;
+  }
+  .scroll-bar-primary::-webkit-scrollbar-track {
+    background-color: rgba(229, 231, 235, 1);
+    cursor: pointer;
+  }
+  .scroll-bar-primary::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    background-color: #a0aec0;
+  }
+  

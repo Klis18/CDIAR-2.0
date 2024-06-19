@@ -55,7 +55,27 @@ export interface Flashcard{
     fechaCreacion: Date;
 }
 
-export interface updateFlashcard{
+export interface updateSiguienteRepasoFlashcard{
     idFlashcard: number;
     siguienteRepaso: string;
 }
+
+export interface updateFlashcard{
+    idFlashcard: number;
+    pregunta: string;
+    respuesta: string;
+
+}
+
+
+export type typeTable = 'Publicado' | 'Mis Flashcards' | 'Por Aprobar';
+
+
+export interface MazosGetQuery {
+    page: number;
+    limit: number;
+    idNivel?: number;
+    idAsignatura?: number;
+    descripcion?: string;
+    idEstado?: number;
+  }

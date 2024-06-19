@@ -21,6 +21,7 @@ import { ResourcesComponent } from './academic-resources/pages/resources/resourc
 import { ControlModule } from './control/control.module';
 import { FlashcardsComponent } from './learn/pages/flashcards/flashcards.component';
 import { CardsFlashcardsComponent } from './learn/components/cards-flashcards/cards-flashcards.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 registerLocaleData(localeEsEC);
@@ -34,7 +35,8 @@ registerLocaleData(localeEsEC);
     HttpClientModule,
     ReactiveFormsModule,
     DocenteModule,
-    ControlModule
+    ControlModule,
+    NgSelectModule,
   ],
   providers: [
     {

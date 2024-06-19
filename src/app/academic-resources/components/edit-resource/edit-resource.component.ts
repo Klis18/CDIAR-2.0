@@ -65,6 +65,7 @@ export class EditResourceComponent {
 
     this.recursoService.editarRecurso(recursosedit).subscribe((res) => {
       console.log('recurso editado');
+      this.CloseModal('recurso editado');
     });
   }
 
@@ -82,5 +83,9 @@ export class EditResourceComponent {
   }
   cancelar() {
     this.dialogRef.close();
+  }
+
+  CloseModal(mensaje?: string) {
+    this.dialogRef.close(mensaje);
   }
 }

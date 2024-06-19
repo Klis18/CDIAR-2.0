@@ -8,6 +8,22 @@ export interface Recurso {
   extension: string;
 }
 
+export enum EstadosRecursos {
+  INGRESADO = 'Ingresado',
+  APROBADO = 'Aprobado',
+  RECHAZADO = 'Rechazado',
+}
+
+export enum RecursosIdEstados {
+  INGRESADO = 1,
+  APROBADO = 2,
+  RECHAZADO = 3,
+  ELIMINADO = 4,
+}
+
+export type typeTable = 'Publicado' | 'Mis Recursos' | 'Por Aprobar';
+
+
 export interface ListaRecurso {
   idRecurso: number;
   nombreRecurso: string;
@@ -47,4 +63,13 @@ export interface RecursoEdit {
   observacionesArchivo: string;
   recurso?: string;
   extension?: string;
+}
+
+export interface RecursosGetQuery {
+  page: number;
+  limit: number;
+  idNivel?: number;
+  idAsignatura?: number;
+  descripcion?: string;
+  idEstado?: number;
 }

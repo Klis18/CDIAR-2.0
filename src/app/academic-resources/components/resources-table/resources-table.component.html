@@ -1,4 +1,4 @@
-
+<!-- 
 <div class="flex flex-col" *ngIf="data.length > 0; else noData">
   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -65,14 +65,11 @@
 
 <ng-template #noData>
   <div class="text-center text-xl">No hay datos disponibles.</div>
-</ng-template>
+</ng-template> -->
 
 
-<!-- <div class="flex flex-col" *ngIf="data.length > 0; else noData">
-  <div
-    [formGroup]="resourceTable"
-    class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8"
-  >
+<div class="flex flex-col" *ngIf="data.length > 0; else noData">
+  <div [formGroup]="resourceTable" class="-my-2 overflow-x-auto sm:-mx-6">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div
         class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
@@ -83,7 +80,7 @@
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
               >
-                <p *ngIf="selectedTab === 'Mis Recursos'">Acciones</p>
+                <p>Acciones</p>
               </th>
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
@@ -124,25 +121,33 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr *ngFor="let item of paginatedData">
+            <tr *ngFor="let item of data">
               <td class="px-6 py-4 whitespace-nowrap">
                 @if(item.usuarioCreacion == usuario && selectedTab === 'Mis
                 Recursos' && item.estadoRecurso != 'Aprobado' &&
                 item.docenteRevisor === ''){
                 <mat-icon
-                  class="text-red-600 mr-2"
+                  class="text-red-600 mr-2 cursor-pointer"
                   (click)="eliminarRecurso(item.idRecurso)"
                   >delete</mat-icon
                 >
-                }
-
+                } @if(canEdit(item)){
                 <mat-icon
-                  class="text-blue-800 mr-2"
-                  *ngIf="canEdit(item)"
+                  class="text-blue-800 mr-2 cursor-pointer"
                   (click)="editarRecurso(item.idRecurso, item)"
-                  >edit</mat-icon
                 >
-                <a [href]="openFileInTab(item)" target="_blank">
+                  {{
+                    typeTable === "Por Aprobar"
+                      ? "assignment_turned_in"
+                      : "edit"
+                  }}
+                </mat-icon>
+                }
+                <a
+                  class="cursor-pointer"
+                  [href]="openFileInTab(item)"
+                  target="_blank"
+                >
                   <mat-icon class="text-blue-800">visibility</mat-icon>
                 </a>
               </td>
@@ -173,15 +178,27 @@
                 *ngIf="selectedTab === 'Mis Recursos'"
                 class="px-6 py-4 whitespace-nowrap"
               >
-                {{ item.estadoRecurso }}
+                @switch (item.estadoRecurso) { @case ('Ingresado') {
+                <span class="text-neutral-500 font-bold">
+                  {{ item.estadoRecurso }}</span
+                >
+                } @case ('Aprobado') {
+                <span class="text-green-500 font-bold">
+                  {{ item.estadoRecurso }}</span
+                >
+                } @case ('Rechazado') {
+                <span class="text-red-700 font-bold">
+                  {{ item.estadoRecurso }}</span
+                >
+                } }
               </td>
             </tr>
           </tbody>
         </table>
-        <div class="flex mt-3 h-screen">
+        <div class="flex my-3">
           <div class="flex-1 ms-2">
             <select
-              class="p-1 rounded border-2 border-solid border-slate-500"
+              class="p-1 rounded border-2 border-solid border-slate-300"
               formControlName="limit"
             >
               @for (item of limitsOptions; track item) {
@@ -194,8 +211,12 @@
               <ul class="flex">
                 <li>
                   <a
-                    class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
-                    aria-label="Previous"
+                    class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out"
+                    [ngClass]="{
+                      'cursor-pointer hover:border-gray-400 hover:bg-light-300': pagination.buttonLeft,
+                      'opacity-50 cursor-default': !pagination.buttonLeft,
+                    }"
+                    (click)="prevPage()"
                   >
                     <span class="material-icons text-sm"
                       >keyboard_arrow_left</span
@@ -205,11 +226,12 @@
                 @for (paginate of paginateCurrent; track $index) {
                 <li>
                   <a
-                    class="mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm shadow-md transition duration-150 ease-in-out"
+                    class="mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm shadow-md transition duration-150 ease-in-out cursor-pointer"
                     [ngClass]="{
                       'bg-blue-800 text-white': paginate === page,
                       'bg-white text-black': paginate !== page
                     }"
+                    (click)="changePage(paginate)"
                   >
                     {{ paginate }}
                   </a>
@@ -218,7 +240,12 @@
                 <li>
                   <a
                     class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
-                    aria-label="Next"
+                    (click)="nextPage()"
+                    [ngClass]="{
+                      'cursor-pointer hover:border-gray-400 hover:bg-light-300':
+                        pagination.buttonRight,
+                      'opacity-50 cursor-default': !pagination.buttonRight
+                    }"
                   >
                     <span class="material-icons text-sm"
                       >keyboard_arrow_right</span
@@ -236,4 +263,4 @@
 
 <ng-template #noData>
   <div class="text-center text-xl">No hay datos disponibles.</div>
-</ng-template> -->
+</ng-template>

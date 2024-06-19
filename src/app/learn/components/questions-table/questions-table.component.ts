@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LearnService } from '../../services/learn.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
+import { EditFlashcardComponent } from '../edit-flashcard/edit-flashcard.component';
 
 @Component({
   selector: 'questions-table',
@@ -12,7 +15,17 @@ export class QuestionsTableComponent implements OnInit{
 
   data: any[] = [];
 
-  constructor(private learnService: LearnService) { }
+  mensaje: string = '';
+
+  openDialog(message: string) {
+    return this.dialog.open(CardConfirmComponent, {
+      data: {
+        mensaje: message,
+      },
+      width: '30%',
+    });
+  }
+  constructor(private learnService: LearnService,  private dialog: MatDialog) { }
   
   ngOnInit(){
 
@@ -35,35 +48,34 @@ export class QuestionsTableComponent implements OnInit{
   }
   
 
-  // eliminarRecurso(idRecurso: number) {
-  //   const dialogRef = this.openDialog(
-  //     '¿Estás seguro de eliminar este recurso?'
-  //   );
-  //   dialogRef.afterClosed().subscribe((res) => {
-  //     if (res) {
-  //       console.log('Eliminando recurso', res);
-  //       this.recursoService.eliminarRecurso(idRecurso).subscribe(() => {
-  //         console.log('Recurso eliminado');
-  //         this.listaRecursos();
-  //       });
-  //     }
-  //   });
-  // }
+  eliminarFlashcard(idFlashcard: number) {
+    const dialogRef = this.openDialog(
+      '¿Estás seguro de eliminar esta flashcard?'
+    );
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        console.log('Flashcard a eliminar', idFlashcard);
+        console.log('Eliminando flashcard', res);
+        this.learnService.deleteFlashcard(idFlashcard).subscribe(() => {
+          console.log('Flashcard eliminada');
+          this.listaPreguntas();
+        });
+      }
+    });
+  }
 
-  // editarRecurso(idRecurso: number, item:any) {
-  //   if(this.canEdit(item)){
-  //     if (item.usuarioCreacion == this.usuario) {
-  //       this.tituloRecurso = 'Editar Recurso';
-  //     } else if (item.docenteRevisor == this.usuario) {
-  //       this.tituloRecurso = 'Aprobar Recurso';
-  //     } else {
-  //       this.tituloRecurso = 'Asignar Revisor';
-  //     }
-  //   }
-  //   this.dialog.open(EditResourceComponent, {
-  //     width: '40%',
-  //     data: {id: idRecurso, titulo: this.tituloRecurso},
-  //   });
-  // }
+  editarFlashcard(idFlashcard: number) {
+    this.dialog.open(EditFlashcardComponent, {
+      width: '40%',
+      data: {id: idFlashcard, isDisabled: true, titulo: 'Editar Flashcard'},
+    });
+  }
+
+  viewFlashcard(idFlashcard: number) {
+    this.dialog.open(EditFlashcardComponent, {
+      width: '40%',
+      data: {id: idFlashcard, isDisabled: false, titulo: 'Detalles Flashcard'},
+    });
+  }
 
 }

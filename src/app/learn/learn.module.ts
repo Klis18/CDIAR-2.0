@@ -15,6 +15,8 @@ import { QuestionFlashcardFormComponent } from './components/question-flashcard-
 import { AddQuestionFlashcardComponent } from './components/add-question-flashcard/add-question-flashcard.component';
 import { FlashcardsTableComponent } from './components/flashcards-table/flashcards-table.component';
 import { StudyFlashcardsComponent } from './pages/study-flashcards/study-flashcards.component';
+import { SharedModule } from '../shared/shared.module';
+import { EditFlashcardComponent } from './components/edit-flashcard/edit-flashcard.component';
 
 
 @NgModule({
@@ -29,13 +31,15 @@ import { StudyFlashcardsComponent } from './pages/study-flashcards/study-flashca
     QuestionFlashcardFormComponent,
     AddQuestionFlashcardComponent,
     FlashcardsTableComponent,
-    StudyFlashcardsComponent
+    StudyFlashcardsComponent,
+    EditFlashcardComponent
   ],
   imports: [
     CommonModule,
     LearnRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class LearnModule { }

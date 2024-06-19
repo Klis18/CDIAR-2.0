@@ -9,9 +9,41 @@ import { AddResourceComponent } from '../../components/add-resource/add-resource
   styles: ``
 })
 export class ResourcesComponent implements OnInit{
+  // usuario: string = '';
+  // rol: string = '';
+  // selectedTab = 'Publicado';
+
+  // private homeService = inject(HomeService);
+
+  // constructor(public dialog: MatDialog) {}
+
+  // ngOnInit() {
+  //   this.homeService.obtenerDatosMenu().subscribe((user) => {
+  //     console.log(user);
+  //     this.usuario = user.data.userName;
+  //     this.rol = user.data.rol;
+  //   });
+  // }
+
+  // searchInfo: any;
+  // emitSearch(res: any) {
+  //   if (res) {
+  //     this.searchInfo = res;
+  //   }
+  // }
+  
+  // openDialog() {
+  //   this.dialog.open(AddResourceComponent, {
+  //     width: '40%',
+  //     maxHeight: '80%',
+  //   });
+  // }
+
+
   usuario: string = '';
   rol: string = '';
   selectedTab = 'Publicado';
+  searchInfo: any;
 
   private homeService = inject(HomeService);
 
@@ -24,18 +56,31 @@ export class ResourcesComponent implements OnInit{
       this.rol = user.data.rol;
     });
   }
-
-  searchInfo: any;
   emitSearch(res: any) {
     if (res) {
       this.searchInfo = res;
     }
   }
-  
+  reloadTable: boolean = false;
+
+  loadTable() {
+    this.reloadTable = true;
+  }
+
+  loadedTale() {
+    this.reloadTable = false;
+  }
+
   openDialog() {
-    this.dialog.open(AddResourceComponent, {
-      width: '40%',
+    const dialogRef = this.dialog.open(AddResourceComponent, {
+      width: '80%',
+      maxWidth: '420px',
       maxHeight: '80%',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadTable();
+      }
     });
   }
 }
