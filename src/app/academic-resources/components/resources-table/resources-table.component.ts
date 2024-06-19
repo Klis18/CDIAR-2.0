@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   inject,
 } from '@angular/core';
-import { ListaRecurso, RecursosGetQuery, RecursosIdEstados, typeTable } from '../../interfaces/recurso.interface';
+import { EstadosRecursos, ListaRecurso, RecursosGetQuery, RecursosIdEstados, typeTable } from '../../interfaces/recurso.interface';
 import { RecursoService } from '../../services/recurso.service';
 import { HomeService } from '../../../home/services/home.service';
 import { MatDialog} from '@angular/material/dialog';
@@ -349,6 +349,32 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
       paginate.idEstado = RecursosIdEstados.INGRESADO;
     }
 
+    if (this.filterByStatus) {
+      const StatesByResources = [
+        {
+          label: EstadosRecursos.INGRESADO,
+          value: RecursosIdEstados.INGRESADO,
+        },
+        {
+          label: EstadosRecursos.APROBADO,
+          value: RecursosIdEstados.APROBADO,
+        },
+        {
+          label: EstadosRecursos.RECHAZADO,
+          value: RecursosIdEstados.RECHAZADO,
+        },
+        {
+          label: EstadosRecursos.ELIMINADO,
+          value: RecursosIdEstados.RECHAZADO,
+        },
+      ];
+      const find = StatesByResources.find(
+        (state) => state.label === this.filterByStatus
+      );
+      if (find) paginate.idEstado = find.value;
+    }
+    if (this.filterByRevisor) {
+    }
     console.log({ paginate });
     this.recursoService.getRecursos(paginate).subscribe({
       next: (res: any) => {
@@ -359,6 +385,9 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
           this.nivel = res.data.nivel;
           this.asignatura = res.data.asignatura;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
+        }
+        if (this.data?.length === 0 || !this.data) {
+          this.paginateCurrent = [1];
         }
       },
       complete: () => {
@@ -518,7 +547,11 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
     const dialogRef = this.dialog.open(EditResourceComponent, {
       width: '80%',
       maxWidth: '420px',
-      data: { id: idRecurso, titulo: this.tituloRecurso },
+      data: {
+        id: idRecurso,
+        titulo: this.tituloRecurso,
+        typeModal: this.typeTable,
+      },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

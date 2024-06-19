@@ -48,7 +48,7 @@ export class EditResourceComponent {
       return;
     }
 
-    const recursosedit: RecursoEdit = {
+    const recursosEdit: RecursoEdit = {
       idRecurso: this.editaDataRecurso.idRecurso,
       idNivel: Number(this.editaDataRecurso.idNivel),
       idAsignatura: Number(this.editaDataRecurso.idAsignatura),
@@ -59,11 +59,22 @@ export class EditResourceComponent {
       idDocenteRevisor: this.editaDataRecurso.idDocenteRevisor,
       observacion: this.editaDataRecurso.observacion,
       observacionesArchivo: this.editaDataRecurso.observacionesArchivo,
+      recurso: this.editaDataRecurso?.recurso,
+      extension: this.editaDataRecurso?.extension,
     };
 
-    console.log(recursosedit);
+    if (recursosEdit?.tipoRecurso === 'Link') {
+      recursosEdit.recurso = null;
+      recursosEdit.extension = null;
+    } else {
+      recursosEdit.enlaceDelRecurso = null;
+    }
+    console.log('AQUI:', {
+      recursosEdit,
+      editaDataRecurso: this.editaDataRecurso,
+    });
 
-    this.recursoService.editarRecurso(recursosedit).subscribe((res) => {
+    this.recursoService.editarRecurso(recursosEdit).subscribe((res) => {
       console.log('recurso editado');
       this.CloseModal('recurso editado');
     });

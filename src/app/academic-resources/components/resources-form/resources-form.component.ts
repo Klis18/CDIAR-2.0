@@ -265,7 +265,7 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
 
 
   @Input() formData: any;
-  @Input() modeForm!: 'Edit' | 'Add';
+  @Input() modeForm!: 'Edit' | 'Add' | 'Por Aprobar';
   @Output() editedDataEmitter = new EventEmitter<any>();
   @Output() valueFormEmitter = new EventEmitter<boolean>();
   @Output() asignaturaEmitter = new EventEmitter<any>();
@@ -281,7 +281,6 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
   observation: string = '';
   tipoRecurso: string = '';
   currentIdNivel!: number;
-  extension: string = '';
   idStatus: string = '';
   idAsign: string = '';
   idNiv: string = '';
@@ -307,13 +306,21 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
-    this.homeService.obtenerDatosMenu().subscribe((user) => {
-      if (user) this.rol = user.data.rol;
-    });
     this.createForm();
     this.loadNiveles();
     this.loadEstados();
     this.loadDocentesRevision();
+    this.homeService.obtenerDatosMenu().subscribe({
+      next: (user) => {
+        if (user) this.rol = user.data?.rol;
+        console.log('USER:', user);
+        this.validationsForm();
+        this.loadDocentesRevision();
+      },
+      error: () => {
+        window.alert('No cargo la información del Usuario Administrador');
+      },
+    });
 
     if (this.formData) {
       console.log('formData', this.formData);
@@ -326,7 +333,13 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
           this.currentTypeResource = tipoRecurso;
           if (tipoRecurso === 'Link') {
             this.recursoGroupForm.get('enlaceDelRecurso')?.enable();
+            this.recursoGroupForm.get('recurso')?.reset();
+            this.recursoGroupForm.get('recurso')?.disable();
+            this.recursoGroupForm.get('extension')?.reset();
+            this.recursoGroupForm.get('extension')?.disable();
           } else {
+            this.recursoGroupForm.get('recurso')?.enable();
+            this.recursoGroupForm.get('extension')?.enable();
             this.recursoGroupForm.get('enlaceDelRecurso')?.reset();
             this.recursoGroupForm.get('enlaceDelRecurso')?.disable();
           }
@@ -382,8 +395,14 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       enlaceDelRecurso: ['', Validators.required],
       nombreRecurso: ['', Validators.required],
       idDocenteRevisor: ['', Validators.required],
+      recurso: [null, Validators.required],
+      extension: [null, Validators.required],
       observation: ['', Validators.required],
     });
+  }
+
+  validationsForm() {
+    console.log('MI ROL', { rol: this.rol });
     switch (this.rol) {
       case ROLES.ADMIN:
         console.log('ADMIN');
@@ -397,6 +416,17 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
         break;
       case ROLES.DOCENTE:
         console.log('DOCENTE');
+        if (this.modeForm === 'Add') {
+          this.recursoGroupForm.get('idEstado')?.clearValidators();
+          this.recursoGroupForm.get('idEstado')?.updateValueAndValidity();
+          this.recursoGroupForm.get('idDocenteRevisor')?.clearValidators();
+          this.recursoGroupForm
+            .get('idDocenteRevisor')
+            ?.updateValueAndValidity();
+          console.log('ESTUDIANTE');
+          this.recursoGroupForm.get('observation')?.clearValidators();
+          this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+        }
         break;
 
       default:
@@ -431,6 +461,12 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
         this.getAsignaturasPorNivel(Number(data.idNivel));
       }
 
+      if (this.rol === ROLES.ESTUDIANTE) {
+        if (this.modeForm === 'Edit') {
+          this.recursoGroupForm.get('observation')?.disable();
+          this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+        }
+      }
       this.observation = data.observacion;
       this.idAsign = data.idAsignatura;
       this.idNiv = data.idNivel;
@@ -506,11 +542,15 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.recursoFile = (reader.result as string).split(',')[1];
-        this.extension = file.name.split('.').pop() || '';
+        const recursoFile = (reader.result as string).split(',')[1];
+        if (recursoFile)
+          this.recursoGroupForm.get('recurso')?.setValue(recursoFile);
+        const extension = file.name.split('.').pop() || '';
+        if (extension)
+          this.recursoGroupForm.get('extension')?.setValue(extension);
         if (
-          !this.listadoExtensionesImagenes.includes(this.extension) &&
-          !this.listadoExtensionesArchivos.includes(this.extension)
+          !this.listadoExtensionesImagenes.includes(extension) &&
+          !this.listadoExtensionesArchivos.includes(extension)
         ) {
           //enviar mensaje error de que la extension no es permitida para imagenes
           window.alert('La extensión del archivo no es permitida');
@@ -525,7 +565,10 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
 
   showObservation(rol: string): boolean {
     const isStudent = rol === 'Estudiante' && this.observation != '';
-    const isDocente = rol === 'Docente' && this.modeForm !== 'Add';
+    const isDocente =
+      rol === 'Docente' &&
+      this.modeForm !== 'Add' &&
+      this.modeForm !== 'Por Aprobar';
     return isStudent || isDocente;
   }
 
@@ -541,5 +584,4 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
     const isDocente = rol === 'Docente';
     return isDocente;
   }
-
 }

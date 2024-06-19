@@ -135,10 +135,12 @@ export class AsignarRevisorComponent {
     };
     this.recursoService.getRecursos(paginate).subscribe((res: any) => {
       console.log(res);
-      this.data = res.data;
-      this.nombreRecurso = res.data.nombreRecurso;
-      this.nivel = res.data.nivel;
-      this.asignatura = res.data.asignatura;
+      this.data = res?.data ?? [];
+      if (res?.data) {
+        this.nombreRecurso = res.data.nombreRecurso;
+        this.nivel = res.data.nivel;
+        this.asignatura = res.data.asignatura;
+      }
     });
   }
 

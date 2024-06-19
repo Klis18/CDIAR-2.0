@@ -9,6 +9,7 @@
       </div>
       <app-resources-form
         (editedDataEmitter)="getData($event)"
+        [modeForm]="'Add'"
         (valueFormEmitter)="getValidForm($event)"
         (asignaturaEmitter)="updateAsignatura($event)"
       ></app-resources-form>

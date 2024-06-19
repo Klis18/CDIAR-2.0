@@ -33,9 +33,17 @@ export class AddResourceComponent{
       enlaceDelRecurso: this.datosRecursos.enlaceDelRecurso,
       recurso: this.datosRecursos.recurso,
       extension: this.datosRecursos.extension
+    };
+
+    if (recursos?.tipoRecurso === 'Link') {
+      recursos.recurso = null;
+      recursos.extension = null;
+    } else {
+      recursos.enlaceDelRecurso = null;
     }
+
     
-    console.log('RECURSO: ', recursos);
+    console.log('RECURSO: ', {recursos, datosRecursos: this.datosRecursos});
 
     this.recursoService.addRecurso(recursos)
     .subscribe((res) => {

@@ -5,13 +5,20 @@ export interface Recurso {
   nombreRecurso: string;
   enlaceDelRecurso: string | null;
   recurso: string | null;
-  extension: string;
+  extension: string | null;
 }
+
+export type EstadoRecursosType =
+  | 'Ingresado'
+  | 'Aprobado'
+  | 'Rechazado'
+  | 'Eliminado';
 
 export enum EstadosRecursos {
   INGRESADO = 'Ingresado',
   APROBADO = 'Aprobado',
   RECHAZADO = 'Rechazado',
+  ELIMINADO = 'Eliminado',
 }
 
 export enum RecursosIdEstados {
@@ -56,13 +63,13 @@ export interface RecursoEdit {
   idAsignatura: number;
   idEstado: number;
   tipoRecurso: string;
-  enlaceDelRecurso: string;
+  enlaceDelRecurso?: string | null;
   nombreRecurso: string;
   idDocenteRevisor: string;
   observacion: string;
   observacionesArchivo: string;
-  recurso?: string;
-  extension?: string;
+  recurso?: string | null;
+  extension?: string | null;
 }
 
 export interface RecursosGetQuery {

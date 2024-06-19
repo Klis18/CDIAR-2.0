@@ -193,7 +193,6 @@
       <resources-table
         [searchData]="searchInfo"
         [typeTable]="'Publicado'"
-        [filterByStatus]="'Aprobado'"
         (loadedTableEmitter)="loadedTale()"
         [loadTable]="reloadTable"
       ></resources-table>
@@ -212,7 +211,6 @@
         (loadedTableEmitter)="loadedTale()"
         [loadTable]="reloadTable"
         [typeTable]="'Por Aprobar'"
-        [filterByStatus]="'Ingresado'"
       ></resources-table>
       } }
     </div>
