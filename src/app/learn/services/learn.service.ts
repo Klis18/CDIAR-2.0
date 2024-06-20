@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ListaRecurso } from '../../academic-resources/interfaces/recurso.interface';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateSiguienteRepasoFlashcard, Flashcard, updateFlashcard } from '../interfaces/mazo.interface';
+import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateSiguienteRepasoFlashcard, Flashcard, updateFlashcard, MazosGetQuery, EditMazo } from '../interfaces/mazo.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Nivel } from '../../academic-resources/interfaces/nivel.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
@@ -29,11 +29,11 @@ export class LearnService {
     this.nombreMazoSource.next(nombreMazo);
   }
   
-  getMazos() {
-    return this.http.get<ListMazo>('mazos', {
-      headers: this.headers,
-    });
-  }
+  // getMazos() {
+  //   return this.http.get<ListMazo>('mazos', {
+  //     headers: this.headers,
+  //   });
+  // }
 
   getDatosMazo(idMazo: number) {
     return this.http.get<Mazo>(`mazos/${idMazo}`, {
@@ -120,4 +120,42 @@ export class LearnService {
     });
   }
 
+  getMazos({
+    page,
+    limit,
+    idAsignatura,
+    idNivel,
+    descripcion,
+    idEstado,
+    nombreDocenteRevisor,
+  }: MazosGetQuery) {
+    if (!page) page = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${page}&limit=${limit}`;
+
+    if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
+    if (idNivel) query += `&idNivel=${idNivel}`;
+    if (descripcion && descripcion !== '')
+      query += `&descripcion=${descripcion}`;
+    if (idEstado) query += `&idEstado=${idEstado}`;
+    if (nombreDocenteRevisor && nombreDocenteRevisor !== '')
+      query += `&nombreDocenteRevisor=${nombreDocenteRevisor}`;
+
+    return this.http.get<ListMazo>(`mazos${query}`, {
+      headers: this.headers,
+    });
+  }
+
+
+  deleteMazo(idMazo:number){
+    return this.http.delete(`mazos/eliminar/${idMazo}`, {
+      headers: this.headers,
+    });
+  }
+
+ editMazo(mazo:EditMazo){
+  return this.http.put('mazos/editar', mazo, {
+    headers: this.headers,
+  });
+ }
 }

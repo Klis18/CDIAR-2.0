@@ -7,6 +7,7 @@ export interface ListMazo{
     estado: string;
     nombreMazo: string;
     cantidadFlashcards: number;
+    nombreDocenteRevisor: string;
 }
 
 
@@ -68,7 +69,7 @@ export interface updateFlashcard{
 }
 
 
-export type typeTable = 'Publicado' | 'Mis Flashcards' | 'Por Aprobar';
+export type typeTable = 'Publicado' | 'Mis Flashcards' | 'Por Aprobar' | 'Flashcards';
 
 
 export interface MazosGetQuery {
@@ -78,4 +79,13 @@ export interface MazosGetQuery {
     idAsignatura?: number;
     descripcion?: string;
     idEstado?: number;
-  }
+    nombreDocenteRevisor?: string;
+}
+
+export interface EditMazo{
+    nombreMazo: string,
+    idAsignatura: 0,
+    idNivel: 0,
+    idMazo: 0,
+    observacion: string
+}

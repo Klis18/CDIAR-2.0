@@ -11,6 +11,7 @@ import { Nivel } from '../../../academic-resources/interfaces/nivel.inteface';
 })
 export class FormMazoComponent implements OnInit, OnChanges{
   @Input() formData: any;
+  @Input() modeForm!: 'Edit' | 'Add' | 'Por Aprobar';
   @Output() editedDataEmitter = new EventEmitter<any>();
   @Output() valueFormEmitter = new EventEmitter<boolean>();
   @Output() asignaturaEmitter = new EventEmitter<any>();
@@ -87,8 +88,7 @@ export class FormMazoComponent implements OnInit, OnChanges{
       idAsignatura: [0, Validators.required],
       idEstado: [0, Validators.required],
       nombreMazo: ['', Validators.required],
-      idDocenteRevisor: [''],
-      observacion: [''],
+      
     });
 
   }
@@ -101,9 +101,6 @@ export class FormMazoComponent implements OnInit, OnChanges{
         idAsignatura: data.idAsignatura,
         idEstado: data.idEstado,
         nombreMazo: data.nombreMazo,
-        nombreRevisor: data.nombreRevisor,
-        observacion: data.observacion,
-        idDocenteRevisor: data.idDocenteRevisor,
       });
 
       this.getAsignaturasPorNivel(Number(data.idNivel));

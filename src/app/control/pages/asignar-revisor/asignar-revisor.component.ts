@@ -12,95 +12,21 @@ import { HomeService } from '../../../home/services/home.service';
   styles: ``
 })
 export class AsignarRevisorComponent {
-  // @Input() filterByStatus: string = '';
-
-  // usuario: string = '';
-  
-  // constructor(
-  //   private recursoService: RecursoService,
-  //   private academic: ResourcesComponent,
-  //   private dialog: MatDialog,
-  //   private homeService:HomeService
-  // ) {}
-
-  // ngOnInit(): void {
-  //   this.listaRecursos();
-
-  //   this.homeService.obtenerDatosMenu().subscribe((user) => {
-  //     console.log(user);
-  //     this.usuario = user.data.userName;
-  //   });
-  //   this.selectedTab = 'Recursos Académicos'
-  // }
-
-  // data: ListaRecurso[] = [];
-  // currentPage: number = 1;
-  // itemsPerPage: number = 5;
-  // totalPages: number = 1;
-  // selectedTab = 'Recursos Académicos';
-  // nombreRecurso: string = '';
-  // nivel: string = '';
-  // asignatura: string = '';
-
-  // listaRecursos() {
-  //   this.recursoService.getRecursos().subscribe((res: any) => {
-  //     console.log(res);
-  //     this.data = res.data;
-  //     this.nombreRecurso = res.data.nombreRecurso;
-  //     this.nivel = res.data.nivel;
-  //     this.asignatura = res.data.asignatura;
-  //   });
-  // }
-
-  // get paginatedData(): ListaRecurso[] {
-  //   const start = (this.currentPage - 1) * this.itemsPerPage;
-  //   const end = start + this.itemsPerPage;
-
-  //   const filteredData = this.data.filter(
-  //     (item) =>
-  //       item.docenteRevisor === '' && item.estadoRecurso === 'Ingresado'
-        
-  //   );
-  //   return filteredData.slice(start, end);
-  // }
-
-  // editarRecurso(idRecurso: number) {
-  //   this.dialog.open(EditResourceComponent, {
-  //     width: '40%',
-  //     data: idRecurso,
-  //   });
-  // }
-  // getStyleColor(tipoRecurso: string) {
-  //   switch (tipoRecurso) {
-  //     case 'Archivo':
-  //       return 'bg-cyan-700';
-  //     case 'Link':
-  //       return 'bg-orange-600';
-  //     case 'Imagen':
-  //       return 'bg-pink-700';
-  //     default:
-  //       return '';
-  //   }
-  // }
-
-  // openFileInTab(item: any): string {
-  //   let urlRecurso: string = '';
-
-  //   if (item.tipoRecurso === 'Link') {
-  //     urlRecurso = item.enlaceRecurso;
-  //   } else if (
-  //     item.tipoRecurso === 'Archivo' ||
-  //     item.tipoRecurso === 'Imagen'
-  //   ) {
-  //     urlRecurso = item.recurso;
-  //   }
-  //   return urlRecurso;
-  // }
-
+ 
 
   @Input() filterByStatus: string = '';
 
   usuario: string = '';
+  searchInfo: any;
+  
+  data: ListaRecurso[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  totalPages: number = 1;
+  selectedTab ='Recursos Académicos';
+  nombreRecurso: string = '';
+  nivel: string = '';
+  asignatura: string = '';
 
   constructor(
     private recursoService: RecursoService,
@@ -116,17 +42,9 @@ export class AsignarRevisorComponent {
       console.log(user);
       this.usuario = user.data.userName;
     });
-    this.selectedTab = 'Recursos Académicos';
+    // this.selectedTab = 'Recursos Académicos';
   }
 
-  data: ListaRecurso[] = [];
-  currentPage: number = 1;
-  itemsPerPage: number = 5;
-  totalPages: number = 1;
-  selectedTab = 'Recursos Académicos';
-  nombreRecurso: string = '';
-  nivel: string = '';
-  asignatura: string = '';
 
   listaRecursos() {
     const paginate = {
@@ -187,4 +105,26 @@ export class AsignarRevisorComponent {
     return urlRecurso;
   }
 
+  emitSearch(res: any) {
+    if (res) {
+      this.searchInfo = res;
+    }
+  }
+  reloadTable: boolean = false;
+
+  loadedTale() {
+    this.reloadTable = false;
+  }
+
+  // openDialog() {
+  //   const dialogRef = this.dialog.open(AddMazoComponent, {
+  //     width: '40%',
+  //     maxHeight: '80%',
+  //   });
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     if (result) {
+  //       this.loadTable();
+  //     }
+  //   });
+  // }
 }

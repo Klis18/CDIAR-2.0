@@ -30,7 +30,7 @@
     <div class="mt-2 mb-2">
     </div>
   
-    <div class="text-sm font-medium text-center text-gray-700 border-b border-gray-200">
+    <!-- <div class="text-sm font-medium text-center text-gray-700 border-b border-gray-200">
       <ul class="flex flex-wrap -mb-px">
         <li class="me-2">
           <span (click)="selectedTab == 'Recursos Académicos'"
@@ -56,10 +56,69 @@
     </div>
   
     <div *ngIf="selectedTab == 'Flashcards'" class="pt-5 pb-5">
-      <!-- <resources-table [filterByStatus]="'Ingresado'"></resources-table> -->
+      <cards-flashcards
+      [searchData]="searchInfo"
+      [typeTable]="'Flashcards'"
+      [filterByStatus]="'Ingresado'"
+      (loadedTableEmitter)="loadedTale()"
+      [loadTable]="reloadTable"
+    ></cards-flashcards>
+       
     </div>
   
     <div *ngIf="selectedTab == 'Videolearn'" class="pt-5 pb-5">
-      <!-- <resources-table [filterByStatus]="'Ingresado'"></resources-table> -->
-    </div> 
+    </div>  -->
+
+    <div class="text-sm font-medium text-center text-gray-700 border-b border-gray-200">
+      <ul class="flex flex-wrap -mb-px">
+        <li class="me-2">
+          <span (click)="selectedTab = 'Recursos Académicos'"
+            [ngClass]="{'text-blue-900 active border-b-2 border-blue-900': selectedTab === 'Recursos Académicos', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Recursos Académicos'}"
+            class="inline-block p-4 rounded-t-lg">Recursos Académicos</span>
+        </li>
+        <li class="me-2">
+          <span (click)="selectedTab = 'Flashcards'"
+            [ngClass]="{'text-blue-900 border-b-2 border-blue-900': selectedTab === 'Flashcards', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Flashcards'}"
+            class="inline-block p-4 rounded-t-lg">Flashcards</span>
+        </li>
+        
+          <li class="me-2">
+            <a
+              (click)="selectedTab = 'Por Aprobar'"
+              [ngClass]="{
+                'text-blue-900 border-b-2 border-blue-900':
+                  selectedTab === 'Por Aprobar',
+                'hover:text-gray-600 hover:border-gray-300':
+                  selectedTab !== 'Por Aprobar'
+              }"
+              class="inline-block p-4 rounded-t-lg"
+              >Por Aprobar
+            </a>
+          </li>
+          
+      </ul>
+    </div>
+
+    <div class="pt-5 pb-5">
+      @switch (selectedTab) { @case ('Recursos Académicos') {
+        <resources-table [filterByStatus]="'Ingresado'" [filterByRevisor]="''"></resources-table>
+      } @case ('Flashcards') {
+        <cards-flashcards
+        [searchData]="searchInfo"
+        [typeTable]="'Flashcards'"
+        [filterByStatus]="'Ingresado'"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      ></cards-flashcards>
+      } @case ('Por Aprobar') {
+      <cards-flashcards
+        [searchData]="searchInfo"
+        [filterByRevisor]="usuario"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+        [typeTable]="'Por Aprobar'"
+        [filterByStatus]="'Ingresado'"
+      ></cards-flashcards>
+      } }
+    </div>
   </div>

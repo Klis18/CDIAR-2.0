@@ -9,6 +9,8 @@ import { CargaHorariaComponent } from './pages/carga-horaria/carga-horaria.compo
 import { AcademicResourcesModule } from '../academic-resources/academic-resources.module';
 import { MaterialModule } from '../material/material.module';
 import { ListadoCargaDocenteComponent } from './components/listado-carga-docente/listado-carga-docente.component';
+import { LearnModule } from '../learn/learn.module';
+import { ListRevisorComponent } from './components/list-revisor/list-revisor.component';
 
 
 @NgModule({
@@ -17,13 +19,15 @@ import { ListadoCargaDocenteComponent } from './components/listado-carga-docente
     AprobarDocentesComponent,
     AsignarRevisorComponent,
     CargaHorariaComponent,
-    ListadoCargaDocenteComponent
+    ListadoCargaDocenteComponent,
+    ListRevisorComponent
   ],
   imports: [
     CommonModule,
     ControlRoutingModule,
     AcademicResourcesModule,
-    MaterialModule
+    MaterialModule,
+    LearnModule
   ],
   exports:[
     ListadoAprobacionDocenteComponent

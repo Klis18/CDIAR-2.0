@@ -48,12 +48,6 @@
             [ngClass]="{'text-blue-900 border-b-2 border-blue-900': selectedTab === 'Mis Flashcards', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Mis Flashcards'}"
             class="inline-block p-4 rounded-t-lg">Mis Flashcards</span>
         </li>
-        <!-- <li *ngIf="rol == 'Docente'" class="me-2">
-          <span (click)="selectedTab = 'Por Aprobar'"
-            [ngClass]="{'text-blue-900 border-b-2 border-blue-900': selectedTab === 'Por Aprobar', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Por Aprobar'}"
-            class="inline-block p-4 rounded-t-lg">Por Aprobar
-          </span>
-        </li> -->
         @if(rol == 'Docente'){
           <li class="me-2">
             <a
@@ -71,17 +65,6 @@
           }
       </ul>
     </div>
-  
-    <!-- <div *ngIf="selectedTab == 'Publicado'" class=" pt-5 pb-5">
-        <cards-flashcards></cards-flashcards>
-    </div>
-  
-    <div *ngIf="selectedTab == 'Mis Flashcards'" class="pt-5 pb-5">
-        <cards-flashcards></cards-flashcards>
-    </div>
-  
-    <div *ngIf="selectedTab == 'Por Aprobar'" class="pt-5 pb-5">
-    </div>  -->
 
     <div class="pt-5 pb-5">
       @switch (selectedTab) { @case ('Publicado') {
@@ -92,30 +75,16 @@
         (loadedTableEmitter)="loadedTale()"
         [loadTable]="reloadTable"
       ></cards-flashcards>
-      <!-- <cards-flashcards
+      } @case ('Mis Flashcards') {
+      <cards-flashcards
         [searchData]="searchInfo"
-        [typeTable]="'Publicado'"
-        [filterByStatus]="'Aprobado'"
-        (loadedTableEmitter)="loadedTale()"
-        [loadTable]="reloadTable"
-      ></cards-flashcards> -->
-      } @case ('Mis Recursos') {
-      <!-- <cards-flashcards
-        [searchData]="searchInfo"
-        [typeTable]="'Mis Recursos'"
+        [typeTable]="'Mis Flashcards'"
         [filterByUser]="usuario"
         (loadedTableEmitter)="loadedTale()"
         [loadTable]="reloadTable"
-      ></cards-flashcards> -->
-      } @case ('Por Aprobar') {
-      <!-- <cards-flashcards
-        [searchData]="searchInfo"
-        [filterByRevisor]="usuario"
-        (loadedTableEmitter)="loadedTale()"
-        [loadTable]="reloadTable"
-        [typeTable]="'Por Aprobar'"
-        [filterByStatus]="'Ingresado'"
-      ></cards-flashcards> -->
+      ></cards-flashcards>
+      } @case ('Videolearn') {
+      
       } }
     </div>
   </div>

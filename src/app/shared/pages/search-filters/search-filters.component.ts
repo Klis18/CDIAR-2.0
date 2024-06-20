@@ -12,8 +12,8 @@ export class SearchFiltersComponent {
 
   nivelesType: { label: string; value: string }[] = [];
   asignaturas: { label: string; value: string }[] = [];
-  nombreRecurso: string = '';
-  resourceForm!: FormGroup;
+  descripcion: string = '';
+  filterForm!: FormGroup;
   @Output() search = new EventEmitter();
 
   constructor(
@@ -22,8 +22,8 @@ export class SearchFiltersComponent {
   ) {}
 
   builderForm() {
-    this.resourceForm = this.formBuilder.group({
-      nombreRecurso: [null],
+    this.filterForm = this.formBuilder.group({
+      descripcion: [null],
       asignaturas: [null],
       nivelesType: [null],
     });
@@ -32,7 +32,7 @@ export class SearchFiltersComponent {
   ngOnInit() {
     this.builderForm();
     this.loadNiveles();
-    this.resourceForm.valueChanges.subscribe({
+    this.filterForm.valueChanges.subscribe({
       next: (res) => {
         this.counter++;
         setTimeout(() => {
@@ -43,7 +43,7 @@ export class SearchFiltersComponent {
         }, 500);
       },
     });
-    this.resourceForm.get('nivelesType')?.valueChanges.subscribe({
+    this.filterForm.get('nivelesType')?.valueChanges.subscribe({
       next: (level) => {
         console.log({ level });
         if (level) {

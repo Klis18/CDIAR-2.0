@@ -7,6 +7,7 @@ import {
   ListaDocentesPorAprobar,
 } from '../interfaces/lista-docentes.interface';
 import { DocenteAprobacion } from '../interfaces/docente-aprobacion.interface';
+import { AsignaDocenteRevisor } from '../interfaces/asignDocente.interface';
 
 
 @Injectable({
@@ -42,6 +43,12 @@ export class SecurityService {
 
   getListaDocentes() {
     return this.http.get<ListaDocentes>('admin/listaDocentes', {
+      headers: this.headers,
+    });
+  }
+
+  asignarRevisor(revisor: AsignaDocenteRevisor) {
+    return this.http.post<AsignaDocenteRevisor>('mazos/asignarrevisor',revisor, {
       headers: this.headers,
     });
   }
