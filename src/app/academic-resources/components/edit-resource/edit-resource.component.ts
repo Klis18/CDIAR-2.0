@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { RecursoEdit } from '../../interfaces/recurso.interface';
+import { ModeFormsResources, RecursoEdit } from '../../interfaces/recurso.interface';
 import { RecursoService } from '../../services/recurso.service';
 
 @Component({
@@ -31,7 +31,21 @@ export class EditResourceComponent {
   ngOnInit() {
     this.getRecurso(this.data.id);
     console.log(this.data.id);
+    switch (this.data.typeModal) {
+      case 'Por Aprobar':
+        this.modeForm = 'Por Aprobar';
+        break;
+      case 'Asignar Revisor':
+        this.modeForm = 'Asignar Revisor';
+        break;
+      default:
+        this.modeForm = 'Edit';
+        break;
+    }
   }
+
+  public modeForm!: ModeFormsResources;
+
 
   getRecurso(idRecurso: number) {
     console.log('RECURSO ID: ', idRecurso);

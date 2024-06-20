@@ -63,6 +63,16 @@
             </a>
           </li>
           }
+          <li class="me-2">
+            <span (click)="selectedTab = 'Guardados'"
+              [ngClass]="{'text-blue-900 border-b-2 border-blue-900': selectedTab === 'Guardados', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Guardados'}"
+              class="inline-block p-4 rounded-t-lg">Guardados</span>
+          </li>
+          <li class="me-2">
+            <span (click)="selectedTab = 'Estudiados'"
+              [ngClass]="{'text-blue-900 border-b-2 border-blue-900': selectedTab === 'Estudiados', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Estudiados'}"
+              class="inline-block p-4 rounded-t-lg">Estudiados</span>
+          </li>
       </ul>
     </div>
 
@@ -83,8 +93,14 @@
         (loadedTableEmitter)="loadedTale()"
         [loadTable]="reloadTable"
       ></cards-flashcards>
-      } @case ('Videolearn') {
-      
+      } @case ('Por Aprobar') {
+        <cards-flashcards
+        [searchData]="searchInfo"
+        [typeTable]="'Por Aprobar'"
+        [filterByRevisor]="usuario"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      ></cards-flashcards>
       } }
     </div>
   </div>

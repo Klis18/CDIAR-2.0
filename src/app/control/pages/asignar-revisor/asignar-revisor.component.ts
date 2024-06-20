@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EditResourceComponent } from '../../../academic-resources/components/edit-resource/edit-resource.component';
-import { ListaRecurso } from '../../../academic-resources/interfaces/recurso.interface';
+import { EstadosRecursos, ListaRecurso } from '../../../academic-resources/interfaces/recurso.interface';
 import { ResourcesComponent } from '../../../academic-resources/pages/resources/resources.component';
 import { RecursoService } from '../../../academic-resources/services/recurso.service';
 import { HomeService } from '../../../home/services/home.service';
@@ -19,15 +19,6 @@ export class AsignarRevisorComponent {
   usuario: string = '';
   searchInfo: any;
   
-  data: ListaRecurso[] = [];
-  currentPage: number = 1;
-  itemsPerPage: number = 5;
-  totalPages: number = 1;
-  selectedTab ='Recursos Académicos';
-  nombreRecurso: string = '';
-  nivel: string = '';
-  asignatura: string = '';
-
   constructor(
     private recursoService: RecursoService,
     private academic: ResourcesComponent,
@@ -42,8 +33,18 @@ export class AsignarRevisorComponent {
       console.log(user);
       this.usuario = user.data.userName;
     });
-    // this.selectedTab = 'Recursos Académicos';
   }
+
+  data: ListaRecurso[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  totalPages: number = 1;
+  selectedTab ='Recursos Académicos';
+  nombreRecurso: string = '';
+  nivel: string = '';
+  asignatura: string = '';
+
+
 
 
   listaRecursos() {
@@ -116,15 +117,4 @@ export class AsignarRevisorComponent {
     this.reloadTable = false;
   }
 
-  // openDialog() {
-  //   const dialogRef = this.dialog.open(AddMazoComponent, {
-  //     width: '40%',
-  //     maxHeight: '80%',
-  //   });
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result) {
-  //       this.loadTable();
-  //     }
-  //   });
-  // }
 }

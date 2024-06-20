@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   inject,
 } from '@angular/core';
-import { EstadosRecursos, ListaRecurso, RecursosGetQuery, RecursosIdEstados, typeTable } from '../../interfaces/recurso.interface';
+import { EstadoRecursosType, EstadosRecursos, ListaRecurso, RecursosGetQuery, RecursosIdEstados, typeTable } from '../../interfaces/recurso.interface';
 import { RecursoService } from '../../services/recurso.service';
 import { HomeService } from '../../../home/services/home.service';
 import { MatDialog} from '@angular/material/dialog';
@@ -218,7 +218,7 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   //   }
 
   @Input() filterByUser: string = '';
-  @Input() filterByStatus: string = '';
+  @Input() filterByStatus!: EstadoRecursosType;
   @Input() filterByRevisor: string = '';
   @Input() typeTable!: typeTable;
   @Input() searchData: any;
@@ -252,10 +252,12 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   public page!: number;
   public limit: number = 5;
   public paginateCurrent: number[] = [];
+  public iconActionTable: string = '';
   mensaje: string = '';
   tituloRecurso: string = '';
   usuario: string = '';
   resourceTable!: FormGroup;
+
 
   constructor(
     private recursoService: RecursoService,
@@ -281,6 +283,22 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
       },
     });
     this.listaRecursos();
+    switch (this.typeTable) {
+      case 'Por Aprobar':
+        this.tituloRecurso = 'Aprobar Recurso';
+        this.iconActionTable = 'assignment_turned_in';
+        break;
+
+      case 'Asignar Revisor':
+        this.tituloRecurso = 'Asignar Revisor';
+        this.iconActionTable = 'perm_contact_calendar';
+        break;
+
+      default:
+        this.tituloRecurso = 'Editar Recurso';
+        this.iconActionTable = 'edit';
+        break;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -297,10 +315,12 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
       }
     }
   }
+
   pagination = {
     buttonLeft: true,
     buttonRight: true,
   };
+
   builderForm() {
     this.resourceTable = this.formBuilder.group({
       limit: [5],
@@ -535,15 +555,15 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   }
 
   editarRecurso(idRecurso: number, item: any) {
-    if (this.canEdit(item)) {
-      if (item.usuarioCreacion == this.usuario) {
-        this.tituloRecurso = 'Editar Recurso';
-      } else if (item.docenteRevisor == this.usuario) {
-        this.tituloRecurso = 'Aprobar Recurso';
-      } else {
-        this.tituloRecurso = 'Asignar Revisor';
-      }
-    }
+    // if (this.canEdit(item)) {
+    //   if (item.usuarioCreacion == this.usuario) {
+    //     this.tituloRecurso = 'Editar Recurso';
+    //   } else if (item.docenteRevisor == this.usuario) {
+    //     this.tituloRecurso = 'Aprobar Recurso';
+    //   } else {
+    //     this.tituloRecurso = 'Asignar Revisor';
+    //   }
+    // }
     const dialogRef = this.dialog.open(EditResourceComponent, {
       width: '80%',
       maxWidth: '420px',

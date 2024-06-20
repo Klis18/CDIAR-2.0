@@ -187,9 +187,9 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
       );
       if (find) paginate.idEstado = find.value;
     }
-    // if (this.filterByRevisor) {
-    //   paginate.nombreDocenteRevisor == this.filterByRevisor;
-    // }
+    if (this.filterByRevisor) {
+      paginate.nombreDocenteRevisor == this.filterByRevisor;
+    }
     console.log({ paginate });
     this.learnService.getMazos(paginate).subscribe({
       next: (res: any) => {

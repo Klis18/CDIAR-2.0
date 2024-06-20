@@ -28,8 +28,13 @@ export enum RecursosIdEstados {
   ELIMINADO = 4,
 }
 
-export type typeTable = 'Publicado' | 'Mis Recursos' | 'Por Aprobar';
+export type typeTable = 'Publicado' | 'Mis Recursos' | 'Por Aprobar'| 'Asignar Revisor';
 
+export type ModeFormsResources =
+  | 'Edit'
+  | 'Add'
+  | 'Por Aprobar'
+  | 'Asignar Revisor';
 
 export interface ListaRecurso {
   idRecurso: number;
@@ -39,7 +44,7 @@ export interface ListaRecurso {
   fechaCreacion: Date;
   tipoRecurso: string;
   usuarioCreacion: string;
-  estadoRecurso: string;
+  estadoRecurso: EstadosRecursos;
   docenteRevisor: string;
   enlaceRecurso: string | null;
   recurso: string | null;

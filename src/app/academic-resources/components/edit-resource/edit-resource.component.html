@@ -9,7 +9,7 @@
     </div>
     <app-resources-form
       [formData]="datosRecursos"
-      [modeForm]="data?.typeModal === 'Por Aprobar' ? 'Por Aprobar' : 'Edit'"
+      [modeForm]="this.modeForm"
       (editedDataEmitter)="getData($event)"
       (valueFormEmitter)="getValidForm($event)"
       (asignaturaEmitter)="updateAsignatura($event)"
