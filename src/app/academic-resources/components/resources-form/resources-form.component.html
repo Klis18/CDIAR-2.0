@@ -1,247 +1,7 @@
-<!-- <mat-dialog-content>
-  <div class="pr-7 pl-7">
-    <form [formGroup]="recursoGroupForm">
-      <div class="grid grid-cols-4 gap-4 mt-5">
-          <div>
-            <label
-              for="nivel"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Nivel</label
-            >
-            <select *ngIf="selectedActivate(rol)"
-              id="niveles"
-              formControlName="idNivel"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              (change)="onNivelChange($event)"
-            >
-              <option value="" disabled selected>Nivel</option>
-              <option *ngFor="let nivel of nivelesType" [value]="nivel.value">
-                {{ nivel.label }}
-              </option>
-            </select>
-            
-            <input *ngIf="onlyViewACtivate(rol)"
-            type="text"
-            id="nivelSelected"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            [value]="descripcionNivel"
-            [readonly]="rol == 'Admin' || rol == 'Docente'"
-           />
-          </div>
-    
-          <div class="col-span-2">
-            <label
-              for="asignatura"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Asignatura</label
-            >
-            <select *ngIf="selectedActivate(rol)"
-              id="asignaturas"
-              formControlName="idAsignatura"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            >
-              <option value="" disabled selected>Asignatura</option>
-              <option
-                *ngFor="let asignatura of asignaturas"
-                [value]="asignatura.value"
-              >
-                {{ asignatura.label }}
-              </option>
-            </select>
-  
-            <input *ngIf="onlyViewACtivate(rol)"
-            type="text"
-            id="asignatureSelected"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            [value]="nombreAsignatura"
-            [readonly]="rol == 'Admin' || rol == 'Docente'"
-           />
-          </div>
-    
-          <div *ngIf="rol=='Docente'">
-            <label
-              for="estado"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Estado</label
-            >
-            <select
-              id="estado"
-              formControlName="idEstado"
-              class="bg-gray-50 border disabled border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            >
-              <option value="">Estado</option>
-              <option *ngFor="let estado of estados" [value]="estado.value">
-                {{ estado.label }}
-              </option>
-            </select>
-          </div>
-        
-  
-        <div class="col-span-4">
-          <label
-            for="nombreRecurso"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Descripción</label
-          >
-          <input
-            type="text"
-            id="nombreRecurso"
-            formControlName="nombreRecurso"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="Descripción"
-            [readonly]="onlyViewACtivate(rol)"
-          />
-        </div>
-  
-        <div class="col-span-4">
-          <label
-            for="tipoRecurso"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Tipo Recurso</label
-          >
-          <select *ngIf="selectedActivate(rol)"
-            id="tipoRecurso"
-            formControlName="tipoRecurso"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          >
-            <option value="" disabled selected>Tipo Recurso</option>
-            <option value="Link">Link</option>
-            <option value="Archivo">Documento/Imagen</option>
-          </select>
-  
-          <input *ngIf="onlyViewACtivate(rol)"
-            type="text"
-            id="tipoRecursoSelected"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            [value]="formData.tipoRecurso"
-            [readonly]="rol == 'Admin' || rol == 'Docente'">
-        </div>
-  
-        <div class="col-span-4" *ngIf="isLink()">
-          <label
-            for="link"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Link</label
-          >
-          <input
-            type="text"
-            id="link"
-            formControlName="enlaceDelRecurso"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="Link"
-            [readonly]="onlyViewACtivate(rol)"
-          />
-        </div>
-  
-        <div class="col-span-4" *ngIf="isFile()">
-          <label
-            for="file"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Archivo/Imagen</label
-          >
-          <div class="mt-2">
-            <input
-              type="file"
-              id="file"
-              (change)="onFileChange($event)"
-              accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .pdf, .xls, .xlsx, .ppt, .pptx"
-              class="block w-full text-gray-900"
-            />
-            <div>
-              <!-- <span
-                ><a target="_blank" [href]="this.recursoFile">{{
-                  resourceName(datosRecursos.recurso)
-                }}</a>
-              </span> -->
-            <!-- </div>
-          </div>
-        </div>
-  
-        <div class="col-span-4" *ngIf="this.rol == 'Admin'">
-          <div
-          class="col-span-4"
-        >
-          <label
-            for="docenteRevisor"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Revisor</label
-          >
-          <select
-            id="docentes"
-            formControlName="idDocenteRevisor"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          >
-            <option value="">Docente</option>
-            <option *ngFor="let docente of docentes" [value]="docente.value">
-              {{ docente.label }}
-            </option>
-          </select>
-        </div>
-        </div>
-  
-        <div *ngIf="showObservacion(this.rol)" class="col-span-4">
-        <div class="col-span-4">
-          <label
-            for="revisorName"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Revisor</label
-          >
-          <input
-            type="text"
-            id="revisorName"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            [value]="formData.nombreDocenteRevisor"
-            [readonly]="rol == 'Estudiante' || rol == 'Docente'"
-          />
-        </div>
-  
-        <div class="col-span-4 mt-2">
-          <label
-            for="observacion"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Observación</label
-          >
-          <input
-            type="text"
-            id="observacion"
-            formControlName="observacion"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="Observacion"
-            [readonly]="rol == 'Estudiante'"
-          />
-        </div>
-  
-        <div class="col-span-4 mt-2">
-          <label
-            for="file"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Observaciones Archivo</label
-          >
-          <div class="mt-2">
-            <input
-              type="file"
-              id="file"
-              (change)="onFileChange($event)"
-              accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .pdf, .xls, .xlsx, .ppt, .pptx"
-              class="block w-full text-gray-900"
-            />
-            <div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-    </form>
-  </div>
-  
-</mat-dialog-content> --> 
-
-
 <mat-dialog-content>
   <div class="pr-7 pl-7">
     <form [formGroup]="recursoGroupForm">
       <div class="grid grid-cols-12 gap-4 mt-5">
-        @if(rol === 'Estudiante' || rol === 'Docente'){
         <div class="col-span-12 md:col-span-6">
           <label
             for="nivel"
@@ -279,7 +39,8 @@
           >
           </ng-select>
         </div>
-        } @if(rol === 'Docente' && modeForm === 'Edit'){
+        @if(rol === 'Docente' && modeForm === 'Edit' || rol === 'Docente' &&
+        modeForm === 'Por Aprobar'){
         <div class="col-span-12 md:col-span-6">
           <label
             for="estado"
@@ -303,7 +64,9 @@
         <div
           class="col-span-12"
           [ngClass]="{
-            ' md:col-span-6': rol === 'Docente' && modeForm === 'Edit'
+            ' md:col-span-6':
+              (rol === 'Docente' && modeForm === 'Edit') ||
+              (rol === 'Docente' && modeForm === 'Por Aprobar')
           }"
         >
           <label
@@ -375,7 +138,7 @@
             </div>
           </div>
         </div>
-        } @if(this.rol === 'Admin'){
+        } @if(this.rol === 'Admin' || showObservation(this.rol)){
         <div class="col-span-12">
           <div class="col-span-4">
             <label
@@ -398,20 +161,6 @@
         </div>
         } @if(showObservation(this.rol)){
         <div class="col-span-12">
-          <div class="col-span-4">
-            <label
-              for="revisorName"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Revisor</label
-            >
-            <input
-              type="text"
-              id="revisorName"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              [value]="formData.nombreDocenteRevisor"
-            />
-          </div>
-
           <div class="col-span-4 mt-2">
             <label
               for="observacion"

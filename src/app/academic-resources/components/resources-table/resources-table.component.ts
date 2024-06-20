@@ -26,200 +26,9 @@ import { ROLES } from '../../interfaces/roles.interface';
   styles: ``,
 })
 export class ResourcesTableComponent implements OnInit, OnChanges{
-  // @Input() filterByUser: string = '';
-  // @Input() filterByStatus: string = '';
-  // @Input() filterByRevisor: string = '';
-  // @Input() searchData: any;
-  // data: ListaRecurso[] = [];
-  // currentPage: number = 1;
-  // itemsPerPage: number = 5;
-  // totalPages: number = 1;
-  // selectedTab = this.academic.selectedTab;
-  // selectedTab2 = this.aprove.selectedTab;
-  // nombreRecurso: string = '';
-  // nivel: string = '';
-  // asignatura: string = '';
-  // limitsOptions = [
-  //   {
-  //     label: '5 Elementos',
-  //     value: 5,
-  //   },
-  //   {
-  //     label: '10 Elementos',
-  //     value: 10,
-  //   },
-  //   {
-  //     label: '15 Elementos',
-  //     value: 15,
-  //   },
-  // ];
-  // limit: number = 5;
-  // mensaje: string = '';
-  // tituloRecurso: string = '';
-  // usuario: string = '';
-  // resourceTable!: FormGroup;    
-  
-  // constructor(
-  //   private recursoService: RecursoService,
-  //   private academic: ResourcesComponent,
-  //   @Inject(AsignarRevisorComponent) private aprove: AsignarRevisorComponent,
-  //   @Inject(HomeService) private homeService: HomeService,
-  //   @Inject(FormBuilder) private formBuilder: FormBuilder,
-  //   private dialog: MatDialog
-  // ) {}
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   console.log({ changes });
-  //   if (changes['searchData']) {
-  //     console.log('El valor del input ha cambiado:', this.searchData);
-  //   }
-  // }
-
-  // openDialog(message: string) {
-  //   return this.dialog.open(CardConfirmComponent, {
-  //     data: {
-  //       mensaje: message,
-  //     },
-  //     width: '30%',
-  //   });
-  // }
-
-
-  // ngOnInit(): void {
-  //   this.getDataMenu();
-   
-  //   this.listaRecursos();
-  // }
-
-  // listaRecursos() {
-  //   this.recursoService.getRecursos().subscribe((res: any) => {
-  //     console.log(res);
-  //     this.data = res.data;
-  //     this.nombreRecurso = res.data.nombreRecurso;
-  //     this.nivel = res.data.nivel;
-  //     this.asignatura = res.data.asignatura;
-  //   });
-  // }
-
-  // getDataMenu(){
-  //   this.homeService.obtenerDatosMenu().subscribe((user) => {
-  //     console.log(user);
-  //     this.usuario = user.data.userName;
-  //   });
-  // }
-
-  // get paginatedData(): ListaRecurso[] {
-  //   const start = (this.currentPage - 1) * this.itemsPerPage;
-  //   const end = start + this.itemsPerPage;
-
-  //   const filteredData = this.data.filter(
-  //     (item) =>
-  //       (this.filterByUser
-  //         ? item.usuarioCreacion === this.filterByUser
-  //         : true) &&
-  //       (this.filterByRevisor
-  //         ? item.docenteRevisor === this.filterByRevisor
-  //         : true) &&
-  //       (this.filterByStatus
-  //         ? item.estadoRecurso === this.filterByStatus
-  //         : item.estadoRecurso !== 'Eliminado')
-  //   );
-  //   return filteredData.slice(start, end);
-  // }
-
-  // eliminarRecurso(idRecurso: number) {
-  //   const dialogRef = this.openDialog(
-  //     '¿Estás seguro de eliminar este recurso?'
-  //   );
-  //   dialogRef.afterClosed().subscribe((res) => {
-  //     if (res) {
-  //       console.log('Eliminando recurso', res);
-  //       this.recursoService.eliminarRecurso(idRecurso).subscribe(() => {
-  //         console.log('Recurso eliminado');
-  //         this.listaRecursos();
-  //       });
-  //     }
-  //   });
-  // }
-
-  // prevPage() {
-  //   if (this.currentPage > 1) {
-  //     this.currentPage--;
-  //   }
-  // }
-      
-  // nextPage() {
-  //   if (this.currentPage < this.totalPages) {
-  //     this.currentPage++;
-  //   }
-  // }
-  
-  // getStyleColor(tipoRecurso: string) {
-  //   switch (tipoRecurso) {
-  //     case 'Archivo':
-  //       return 'bg-cyan-700';
-  //     case 'Link':
-  //       return 'bg-orange-600';
-  //     case 'Imagen':
-  //       return 'bg-pink-700';
-  //     default:
-  //       return '';
-  //   }
-  // }
-            
-  // getIcon(tipoRecurso: string) {
-  //   switch (tipoRecurso) {
-  //     case 'Archivo':
-  //       return 'insert_drive_file';
-  //     case 'Link':
-  //       return 'insert_drive_file';
-  //     case 'Imagen':
-  //       return 'image';
-  //     default:
-  //       return '';
-  //   }
-  // }
-          
-  // openFileInTab(item: any): string {
-  //     let urlRecurso: string = '';
-                          
-  //   if (item.tipoRecurso === 'Link') {
-  //     urlRecurso = item.enlaceRecurso;
-  //     } else if (
-  //     item.tipoRecurso === 'Archivo' ||
-  //     item.tipoRecurso === 'Imagen'
-  //   ) {
-  //     urlRecurso = item.recurso;
-  //   }
-  //   return urlRecurso;
-  // }
-    
-  //   canEdit(item: any): boolean {
-  //     const isCreator = item.usuarioCreacion == this.usuario && this.selectedTab === 'Mis Recursos' && item.estadoRecurso != 'Aprobado';
-  //     const isReviewer = item.docenteRevisor == this.usuario && this.selectedTab === 'Por Aprobar' && item.estadoRecurso != 'Aprobado';
-  //    const isAdmin = item.docenteRevisor === '' && item.estadoRecurso != 'Aprobado'&& this.selectedTab2 === 'Recursos Académicos';
-  //     return isCreator || isReviewer || isAdmin;
-  //   }
-
-  //   editarRecurso(idRecurso: number, item:any) {
-  //     if(this.canEdit(item)){
-  //       if (item.usuarioCreacion == this.usuario) {
-  //         this.tituloRecurso = 'Editar Recurso';
-  //       } else if (item.docenteRevisor == this.usuario) {
-  //         this.tituloRecurso = 'Aprobar Recurso';
-  //       } else {
-  //         this.tituloRecurso = 'Asignar Revisor';
-  //       }
-  //     }
-  //     this.dialog.open(EditResourceComponent, {
-  //       width: '40%',
-  //       data: {id: idRecurso, titulo: this.tituloRecurso},
-  //     });
-  //   }
-
   @Input() filterByUser: string = '';
   @Input() filterByStatus!: EstadoRecursosType;
-  @Input() filterByRevisor: string = '';
+  @Input() filterByRevisor!: string;
   @Input() typeTable!: typeTable;
   @Input() searchData: any;
   @Input() loadTable: boolean = false;
@@ -252,12 +61,10 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   public page!: number;
   public limit: number = 5;
   public paginateCurrent: number[] = [];
-  public iconActionTable: string = '';
   mensaje: string = '';
   tituloRecurso: string = '';
   usuario: string = '';
   resourceTable!: FormGroup;
-
 
   constructor(
     private recursoService: RecursoService,
@@ -267,6 +74,13 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private dialog: MatDialog
   ) {}
+  public iconActionTable: string = '';
+  public userRol!: string;
+  private idEstado!: number;
+  pagination = {
+    buttonLeft: false,
+    buttonRight: false,
+  };
 
   ngOnInit(): void {
     this.builderForm();
@@ -305,7 +119,6 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
     if (changes['searchData']) {
       this.idAsignatura = this.searchData?.asignaturas;
       this.idNivel = this.searchData?.nivelesType;
-      console.log({ searchData: this.searchData });
       this.descripcion = this.searchData?.nombreRecurso;
       this.listaRecursos();
     }
@@ -315,11 +128,6 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
       }
     }
   }
-
-  pagination = {
-    buttonLeft: true,
-    buttonRight: true,
-  };
 
   builderForm() {
     this.resourceTable = this.formBuilder.group({
@@ -331,25 +139,17 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   }
 
   changePage(newPage: number) {
-    console.log({
-      newPage,
-      pagina: this.page,
-    });
     if (newPage !== this.page) {
-      console.log('PASO');
       this.page = newPage;
       this.listaRecursos();
     }
   }
-  public userRol!: string;
   getDataMenu() {
     this.homeService.obtenerDatosMenu().subscribe((user) => {
-      console.log({ userDATA: user });
       this.usuario = user.data.userName;
       this.userRol = user.data.rol;
     });
   }
-  private idEstado!: number;
   listaRecursos() {
     const paginate: RecursosGetQuery = {
       page: this.page,
@@ -478,6 +278,7 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   prevPage() {
     if (this.pagination.buttonLeft) {
       const leftButton = this.resourceTable.get('page')?.value;
+      console.log({ leftButton: leftButton - 1 });
       this.resourceTable.get('page')?.setValue(leftButton - 1);
     }
   }
@@ -485,6 +286,7 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   nextPage() {
     if (this.pagination.buttonRight) {
       const rightButton = this.resourceTable.get('page')?.value;
+      console.log({ rightButton: rightButton + 1 });
       this.resourceTable.get('page')?.setValue(rightButton + 1);
     }
   }
@@ -555,15 +357,6 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   }
 
   editarRecurso(idRecurso: number, item: any) {
-    // if (this.canEdit(item)) {
-    //   if (item.usuarioCreacion == this.usuario) {
-    //     this.tituloRecurso = 'Editar Recurso';
-    //   } else if (item.docenteRevisor == this.usuario) {
-    //     this.tituloRecurso = 'Aprobar Recurso';
-    //   } else {
-    //     this.tituloRecurso = 'Asignar Revisor';
-    //   }
-    // }
     const dialogRef = this.dialog.open(EditResourceComponent, {
       width: '80%',
       maxWidth: '420px',

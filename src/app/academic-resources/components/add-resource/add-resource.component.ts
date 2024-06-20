@@ -11,20 +11,20 @@ import {  MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   `,
 })
 export class AddResourceComponent{
-  datosRecursos!:any;
-  validForm:boolean = true;
+  datosRecursos!: any;
+  validForm: boolean = false;
   asignaturas: { label: string; value: string }[] = [];
 
-  constructor(private recursoService:RecursoService,
-              private dialogRef: MatDialogRef<AddResourceComponent>
+  constructor(
+    private recursoService: RecursoService,
+    private dialogRef: MatDialogRef<AddResourceComponent>
   ) {}
-  
-  saveRecurso(){
-    if(!this.validForm){
-      console.log('DATOS RECURSOS: ', this.datosRecursos);
+
+  saveRecurso() {
+    if (!this.validForm) {
       return;
     }
-  
+
     const recursos: Recurso = {
       idNivel: this.datosRecursos.idNivel,
       idAsignatura: this.datosRecursos.idAsignatura,
@@ -32,7 +32,7 @@ export class AddResourceComponent{
       nombreRecurso: this.datosRecursos.nombreRecurso,
       enlaceDelRecurso: this.datosRecursos.enlaceDelRecurso,
       recurso: this.datosRecursos.recurso,
-      extension: this.datosRecursos.extension
+      extension: this.datosRecursos.extension,
     };
 
     if (recursos?.tipoRecurso === 'Link') {
@@ -42,34 +42,27 @@ export class AddResourceComponent{
       recursos.enlaceDelRecurso = null;
     }
 
-    
-    console.log('RECURSO: ', {recursos, datosRecursos: this.datosRecursos});
-
-    this.recursoService.addRecurso(recursos)
-    .subscribe((res) => {
-      this.CloseModal(res.statusCode.toString())
+    this.recursoService.addRecurso(recursos).subscribe((res) => {
+      this.CloseModal(res.statusCode.toString());
     });
-
-    
   }
 
-  getData(events:any){
+  getData(events: any) {
     this.datosRecursos = events;
   }
 
-  CloseModal(mensaje?:string){
+  CloseModal(mensaje?: string) {
     this.dialogRef.close(mensaje);
   }
 
-  getValidForm(event:any){
+  getValidForm(event: any) {
     this.validForm = event;
   }
 
   updateAsignatura(event: any) {
-    console.log('EVENTO ASIGNATURA: ', event);
     this.asignaturas = event;
   }
-   cancelar() {
+  cancelar() {
     this.dialogRef.close();
   }
 }

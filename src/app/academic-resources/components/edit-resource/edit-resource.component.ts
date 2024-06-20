@@ -17,7 +17,7 @@ export class EditResourceComponent {
   datosRecursos!: any;
   editaDataRecurso!: any;
   idRecurso!: number;
-  validForm: boolean = true;
+  validForm: boolean = false;
 
   constructor(
     private recursoService: RecursoService,
@@ -30,7 +30,6 @@ export class EditResourceComponent {
 
   ngOnInit() {
     this.getRecurso(this.data.id);
-    console.log(this.data.id);
     switch (this.data.typeModal) {
       case 'Por Aprobar':
         this.modeForm = 'Por Aprobar';
@@ -43,22 +42,16 @@ export class EditResourceComponent {
         break;
     }
   }
-
   public modeForm!: ModeFormsResources;
 
-
   getRecurso(idRecurso: number) {
-    console.log('RECURSO ID: ', idRecurso);
-
     this.recursoService.getRecurso(idRecurso).subscribe((res: any) => {
-      console.log(res);
       this.datosRecursos = res.data;
     });
   }
 
   saveRecurso() {
     if (!this.validForm) {
-      console.log('Debe completar todos los campos para continuar.');
       return;
     }
 
@@ -83,13 +76,8 @@ export class EditResourceComponent {
     } else {
       recursosEdit.enlaceDelRecurso = null;
     }
-    console.log('AQUI:', {
-      recursosEdit,
-      editaDataRecurso: this.editaDataRecurso,
-    });
 
     this.recursoService.editarRecurso(recursosEdit).subscribe((res) => {
-      console.log('recurso editado');
       this.CloseModal('recurso editado');
     });
   }
@@ -103,7 +91,6 @@ export class EditResourceComponent {
   }
 
   updateAsignatura(event: any) {
-    console.log('EVENTO ASIGNATURA: ', event);
     this.asignaturas = event;
   }
   cancelar() {

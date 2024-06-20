@@ -9,37 +9,6 @@ import { AddResourceComponent } from '../../components/add-resource/add-resource
   styles: ``
 })
 export class ResourcesComponent implements OnInit{
-  // usuario: string = '';
-  // rol: string = '';
-  // selectedTab = 'Publicado';
-
-  // private homeService = inject(HomeService);
-
-  // constructor(public dialog: MatDialog) {}
-
-  // ngOnInit() {
-  //   this.homeService.obtenerDatosMenu().subscribe((user) => {
-  //     console.log(user);
-  //     this.usuario = user.data.userName;
-  //     this.rol = user.data.rol;
-  //   });
-  // }
-
-  // searchInfo: any;
-  // emitSearch(res: any) {
-  //   if (res) {
-  //     this.searchInfo = res;
-  //   }
-  // }
-  
-  // openDialog() {
-  //   this.dialog.open(AddResourceComponent, {
-  //     width: '40%',
-  //     maxHeight: '80%',
-  //   });
-  // }
-
-
   usuario: string = '';
   rol: string = '';
   selectedTab = 'Publicado';
@@ -51,7 +20,6 @@ export class ResourcesComponent implements OnInit{
 
   ngOnInit() {
     this.homeService.obtenerDatosMenu().subscribe((user) => {
-      console.log(user);
       this.usuario = user.data.userName;
       this.rol = user.data.rol;
     });
