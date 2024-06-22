@@ -33,7 +33,7 @@
           </div>
 
           <div class="col-span-4">
-            @if(userRol == 'Admin'){
+            @if(userRol == 'Admin' && item.nombreDocenteRevisor == null){
               <button
                 type="button"
                 (click)="asignaRevisor(item.idMazo)"

@@ -68,7 +68,6 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
 
   colors = ['#67E8A2', '#67E8DA', '#C883F1', '#CB48A0', '#7FCDE8', '#E4E87F', '#E8BB7F']; // Puedes cambiar estos colores
 
-  //constructor(private http: HttpClient) {}
   constructor(private learnService:LearnService,
               private dialog: MatDialog,
               private router: Router,
@@ -160,7 +159,9 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
     }
     if (this.typeTable === 'Por Aprobar') {
       paginate.idEstado = IdEstados.INGRESADO;
-      paginate.nombreDocenteRevisor = this.filterByRevisor;
+    }
+    if(this.typeTable === 'Flashcards') {
+      paginate.idEstado == IdEstados.INGRESADO && paginate.nombreDocenteRevisor == '' ;
     }
 
     if (this.filterByStatus) {

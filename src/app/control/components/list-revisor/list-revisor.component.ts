@@ -10,7 +10,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class ListRevisorComponent implements OnInit{
 
   dataDocentes: any;
-  idMazo = this.data.idMazo;
+  idMazo = this.data.id;
 
   constructor(private securityService: SecurityService,
               @Inject (MAT_DIALOG_DATA) public data: any,
@@ -20,9 +20,7 @@ export class ListRevisorComponent implements OnInit{
   }
 
   ngOnInit(){
-
-    this.getListaDocentes();
-    
+    this.getListaDocentes(); 
   }
 
   getListaDocentes(){
@@ -38,7 +36,7 @@ export class ListRevisorComponent implements OnInit{
       idDocenteRevisor: idDocente
     }
     this.securityService.asignarRevisor(revisor).subscribe((res) => {
-      console.log('Revisor asignado',res);
+      this.CloseModal('Revisor asignado exitosamente');      
     });
   }
 
@@ -46,5 +44,9 @@ export class ListRevisorComponent implements OnInit{
     this.dialogRef.close();
   }
 
+  
+  CloseModal(mensaje?: string) {
+    this.dialogRef.close(mensaje);
+  }
 
 }
