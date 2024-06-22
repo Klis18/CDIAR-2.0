@@ -26,21 +26,16 @@ export class EditMazoComponent implements OnInit{
 
   ngOnInit(){
     this.getMazo(this.data.id);
-    console.log('ID MAZO: ', this.getMazo(this.data.id));
-    console.log(this.data.id);
   }
   
   getMazo(idMazo:number){
     this.learnService.getDatosMazo(idMazo).subscribe((res: any) => {
-      console.log(res);
       this.datosMazo = res.data;
-
     });
   }
 
     saveMazo(){
       if(!this.validForm){
-        console.log('DATOS RECURSOS: ', this.datosMazo);
         return;
     }
   
@@ -49,11 +44,8 @@ export class EditMazoComponent implements OnInit{
       idNivel: this.datosMazo.idNivel,
       idAsignatura: this.datosMazo.idAsignatura,
       idMazo: this.datosMazo.idMazo,
-      observacion: this.datosMazo.observacion
     }
     
-    console.log('Mazo: ', mazoEdit);
-
     this.learnService.editMazo(mazoEdit)
     .subscribe((res) => {
       this.CloseModal(res.statusCode.toString())
@@ -75,7 +67,6 @@ export class EditMazoComponent implements OnInit{
   }
 
   updateAsignatura(event: any) {
-    console.log('EVENTO ASIGNATURA: ', event);
     this.asignaturas = event;
   }
    cancelar() {

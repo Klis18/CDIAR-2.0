@@ -98,7 +98,6 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
     if (changes['searchData']) {
       this.idAsignatura = this.searchData?.asignaturas;
       this.idNivel = this.searchData?.nivelesType;
-      console.log({ searchData: this.searchData });
       this.nombreMazo = this.searchData?.descripcion;
       this.listaMazos();
     }
@@ -122,10 +121,6 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   }
 
   changePage(newPage: number) {
-    console.log({
-      newPage,
-      pagina: this.page,
-    });
     if (newPage !== this.page) {
       console.log('PASO');
       this.page = newPage;
@@ -135,7 +130,6 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   public userRol!: string;
   getDataMenu() {
     this.homeService.obtenerDatosMenu().subscribe((user) => {
-      console.log({ userDATA: user });
       this.usuario = user.data.userName;
       this.userRol = user.data.rol;
     });
@@ -191,10 +185,8 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
     if (this.filterByRevisor) {
       paginate.nombreDocenteRevisor == this.filterByRevisor;
     }
-    console.log({ paginate });
     this.learnService.getMazos(paginate).subscribe({
       next: (res: any) => {
-        console.log({ res });
         this.data = res.data ?? [];
         if (this.data.length > 0) {
           this.nombreMazo = res.data.nombreMazo;
@@ -227,12 +219,7 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
       this.pagination.buttonLeft = true;
       this.pagination.buttonRight = true;
     }
-    console.log({
-      elementos,
-      page: this.page,
-      arreglo: arreglo.length,
-      more,
-    });
+    
     if (elementos > 0) {
       if (arreglo?.length === this.page) {
         this.pagination.buttonRight = false;
@@ -286,32 +273,6 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
     }
   }
 
-  getStyleColor(tipoRecurso: string) {
-    switch (tipoRecurso) {
-      case 'Archivo':
-        return 'bg-cyan-700';
-      case 'Link':
-        return 'bg-orange-600';
-      case 'Imagen':
-        return 'bg-pink-700';
-      default:
-        return '';
-    }
-  }
-
-  getIcon(tipoRecurso: string) {
-    switch (tipoRecurso) {
-      case 'Archivo':
-        return 'insert_drive_file';
-      case 'Link':
-        return 'insert_drive_file';
-      case 'Imagen':
-        return 'image';
-      default:
-        return '';
-    }
-  }
-
 
   canApprove(item: any): boolean {
     let isReviewer = false;
@@ -340,7 +301,7 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
 
   editarMazo(idMazo: number, item: any) {
     if (this.canEdit(item)) {
-      if (item.usuarioCreacion == this.usuario) {
+      if (item.usuarioCreador == this.usuario) {
         this.tituloMazo = 'Editar Mazo';
       } else if (item.docenteRevisor == this.usuario) {
         this.tituloMazo = 'Aprobar Mazo';
@@ -349,8 +310,8 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
       }
     }
     const dialogRef = this.dialog.open(EditMazoComponent, {
-      width: '80%',
-      maxWidth: '420px',
+      width: '40%',
+      maxHeight: '80%',
       data: {
         id: idMazo,
         titulo: this.tituloMazo,

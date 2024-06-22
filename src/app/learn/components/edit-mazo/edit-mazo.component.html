@@ -4,12 +4,11 @@
         <div class="text-right">
           <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
         </div>
-        <p class="text-2xl text-black">{{tituloForm}}</p>
+        <p class="text-2xl text-black">Editar Mazo</p>
         <hr />
       </div>
       <app-form-mazo
         [formData]="datosMazo"
-        [modeForm]="data?.typeModal === 'Por Aprobar' ? 'Por Aprobar' : 'Edit'"
         (editedDataEmitter)="getData($event)"
         (valueFormEmitter)="getValidForm($event)"
         (asignaturaEmitter)="updateAsignatura($event)"

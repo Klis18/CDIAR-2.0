@@ -12,16 +12,16 @@ export interface ListMazo{
 
 
 export interface Mazo{
-    preguntas: string[];
-    nombreRevisor: string;
     idMazo: number;
-    asignatura: string;
-    nivel: string;
+    idAsignatura: number;
+    idNivel: number;    
     usuarioCreador: string;
     fechaCreacion: string;
     estado: string;
     nombreMazo: string;
     cantidadFlashcards: number;
+    nombreRevisor: string;
+    preguntas: string[];
 }
 
 export interface NewMazo{
@@ -87,5 +87,4 @@ export interface EditMazo{
     idAsignatura: 0,
     idNivel: 0,
     idMazo: 0,
-    observacion: string
 }

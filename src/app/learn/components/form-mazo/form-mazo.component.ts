@@ -54,16 +54,13 @@ export class FormMazoComponent implements OnInit, OnChanges{
 
     this.createForm();
     this.loadNiveles();
-    this.loadEstados();
-    this.loadDocentes();
+    // this.loadEstados();
     
     if (this.formData) {
-      console.log('formData', this.formData);
       this.setData(this.formData);
     }
       
       this.mazoGroupForm.valueChanges.subscribe(() => {
-        console.log(this.mazoGroupForm.value);
         this.editedDataEmitter.emit(this.mazoGroupForm.value);
         this.valueFormEmitter.emit(this.mazoGroupForm.valid);
         this.asignaturaEmitter.emit(this.mazoGroupForm.value.idAsignatura);
@@ -99,13 +96,13 @@ export class FormMazoComponent implements OnInit, OnChanges{
         idMazo: data.idMazo,
         idNivel: data.idNivel,
         idAsignatura: data.idAsignatura,
-        idEstado: data.idEstado,
+        // idEstado: data.idEstado,
         nombreMazo: data.nombreMazo,
       });
 
       this.getAsignaturasPorNivel(Number(data.idNivel));
 
-      this.observacion = data.observacion;
+      // this.observacion = data.observacion;
       this.idAsign = data.idAsignatura;
       this.idNiv = data.idNivel;
 
@@ -114,12 +111,10 @@ export class FormMazoComponent implements OnInit, OnChanges{
 
   loadNiveles() {
     this.learnService.getNiveles().subscribe((res: any) => {
-      console.log('Niveles', res.data);
 
        //Extaer descripción de nivel
        let nivel = res.data.find((nivel: any) => nivel.idNivel === this.idNiv);
        this.descripcionNivel = nivel ? nivel.descripcion : null;
-       console.log(this.descripcionNivel);
        //Fin de la extracción
 
       this.nivelesType = res.data.map((nivel: Nivel) => ({
@@ -129,25 +124,6 @@ export class FormMazoComponent implements OnInit, OnChanges{
     });
   }
 
-  loadEstados() {
-    this.learnService.getEstados().subscribe((res: any) => {
-      this.estados = res.data.map((estado: any) => ({
-        label: estado.descripcion,
-        value: estado.idEstado,
-      }));
-    });
-  }
-
-  loadDocentes() {
-    this.learnService.getDocentes().subscribe((res: any) => {
-      console.log('docentes', res.data);
-      this.docentes = res.data.map((docente: any) => ({
-        label: docente.nombresCompletos,
-        value: docente.idDocente,  
-
-      }));
-    });
-  }
 
   onNivelChange(event: Event) {
     const selectedNivel = Number((event.target as HTMLSelectElement).value);
@@ -160,12 +136,10 @@ export class FormMazoComponent implements OnInit, OnChanges{
     this.learnService
       .getAsignaturasPorNivel(idNivel)
       .subscribe((res: any) => {
-        console.log(res.data);
 
         //Extaer el nombre de la asignatura
         let asignatura = res.data.find((asignatura: any) => asignatura.idAsignatura === this.idAsign);
         this.nombreAsignatura = asignatura ? asignatura.nombre : null;
-        console.log(this.nombreAsignatura);
         //Fin de la extracción
 
         this.asignaturas = res.data.map((asignatura: any) => ({
@@ -178,7 +152,6 @@ export class FormMazoComponent implements OnInit, OnChanges{
         }
       });
     const asignaturaControl = this.mazoGroupForm.get('idAsignatura');
-    console.log(asignaturaControl);
 
     if (asignaturaControl) {
       asignaturaControl.markAsTouched();
@@ -187,31 +160,6 @@ export class FormMazoComponent implements OnInit, OnChanges{
   
   }
 
-  onFileChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.recursoFile = (reader.result as string).split(',')[1];
-        this.extension = file.name.split('.').pop() || '';
-        if (
-          !this.listadoExtensionesImagenes.includes(this.extension) &&
-          !this.listadoExtensionesArchivos.includes(this.extension)
-        ) {
-          //enviar mensaje error de que la extension no es permitida para imagenes
-          window.alert('La extensión del archivo no es permitida');
-        }
-      };
-    }
-  }
-
-  showObservacion(rol:string): boolean {
-    const isStudent = rol === 'Estudiante' && this.observacion != '';
-    const isDocente = rol === 'Docente';
-    return isStudent || isDocente;
-
-  }
 
   selectedActivate(rol:string): boolean{
     const isStudent = rol === 'Estudiante';
