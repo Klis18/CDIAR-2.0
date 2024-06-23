@@ -119,7 +119,7 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
     if (changes['searchData']) {
       this.idAsignatura = this.searchData?.asignaturas;
       this.idNivel = this.searchData?.nivelesType;
-      this.descripcion = this.searchData?.nombreRecurso;
+      this.descripcion = this.searchData?.descripcion;
       this.listaRecursos();
     }
     if (changes['loadTable']) {

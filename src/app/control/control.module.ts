@@ -11,6 +11,7 @@ import { MaterialModule } from '../material/material.module';
 import { ListadoCargaDocenteComponent } from './components/listado-carga-docente/listado-carga-docente.component';
 import { LearnModule } from '../learn/learn.module';
 import { ListRevisorComponent } from './components/list-revisor/list-revisor.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ListRevisorComponent } from './components/list-revisor/list-revisor.com
     ControlRoutingModule,
     AcademicResourcesModule,
     MaterialModule,
-    LearnModule
+    LearnModule,
+    SharedModule
   ],
   exports:[
     ListadoAprobacionDocenteComponent

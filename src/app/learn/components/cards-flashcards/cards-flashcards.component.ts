@@ -41,6 +41,7 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   nivel: string = '';
   asignatura: string = '';
   docenteRevisor: string = '';
+  nombreRevisor: string = '';
   limitsOptions = [
     {
       label: '5 Elementos',
@@ -143,7 +144,7 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
       idNivel: this.idNivel,
       descripcion: this.nombreMazo,
       idEstado: this.idEstado,
-      nombreDocenteRevisor: this.docenteRevisor,
+      nombreDocenteRevisor: this.nombreRevisor,
     };
     if (this.typeTable === 'Mis Flashcards') {
       delete paginate.idEstado;
@@ -153,6 +154,7 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
     }
     if (this.typeTable === 'Por Aprobar') {
       paginate.idEstado = IdEstados.INGRESADO;
+      // paginate.nombreDocenteRevisor = this.filterByRevisor;
     }
     if(this.typeTable === 'Flashcards') {
       paginate.idEstado == IdEstados.INGRESADO && paginate.nombreDocenteRevisor == '' ;
@@ -182,9 +184,9 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
       );
       if (find) paginate.idEstado = find.value;
     }
-    if (this.filterByRevisor) {
-      paginate.nombreDocenteRevisor == this.filterByRevisor;
-    }
+    // if (this.filterByRevisor) {
+    //   paginate.nombreDocenteRevisor === this.filterByRevisor;
+    // }
     this.learnService.getMazos(paginate).subscribe({
       next: (res: any) => {
         this.data = res.data ?? [];

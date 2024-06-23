@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ListaRecurso } from '../../academic-resources/interfaces/recurso.interface';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateSiguienteRepasoFlashcard, Flashcard, updateFlashcard, MazosGetQuery, EditMazo } from '../interfaces/mazo.interface';
+import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateSiguienteRepasoFlashcard, Flashcard, updateFlashcard, MazosGetQuery, EditMazo, FlashcardsGetQuery, updateStatusMazo } from '../interfaces/mazo.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Nivel } from '../../academic-resources/interfaces/nivel.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
@@ -29,11 +29,6 @@ export class LearnService {
     this.nombreMazoSource.next(nombreMazo);
   }
   
-  // getMazos() {
-  //   return this.http.get<ListMazo>('mazos', {
-  //     headers: this.headers,
-  //   });
-  // }
 
   getDatosMazo(idMazo: number) {
     return this.http.get<Mazo>(`mazos/${idMazo}`, {
@@ -72,12 +67,12 @@ export class LearnService {
   }
 
 
-  getFlashcardsMazo({ id, page, limit }: { id:number, page: number; limit: number }) {
+  getFlashcardsMazo({ id, page, limit, preguntaFlashcard}: FlashcardsGetQuery) {
     if (!page) page = 1;
 
     if (!limit) limit = 5;
 
-    let query: string = `?id=${id}&pages=${page}&limit=${limit}`;
+    let query: string = `?id=${id}&pages=${page}&limit=${limit}&preguntaFlashcard=${preguntaFlashcard}`;
 
     return this.http.get<PreguntasMazo>(`flashcards/flashcardsMazo${query}`, {
       headers: this.headers,
@@ -155,6 +150,12 @@ export class LearnService {
 
  editMazo(mazo:EditMazo){
   return this.http.put('mazos/editar', mazo, {
+    headers: this.headers,
+  });
+ }
+
+ publicarMazo(status: updateStatusMazo){
+  return this.http.post('mazos/publicar',status, {
     headers: this.headers,
   });
  }

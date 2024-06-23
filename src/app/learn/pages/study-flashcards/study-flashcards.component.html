@@ -30,8 +30,21 @@
   <div class="m-7 mt-5 mb-5">
     <span class="text-3xl">{{nombreMazo}}</span>
   </div>
-  
-  <div class="m-7 h-96 flashcard-view rounded-lg p-9">
+  <!-- Mostrar el cronómetro -->
+ 
+  <div *ngIf="entradaPagina !== null" class="pr-9 pl-9" style="display: grid; grid-template-columns: auto auto; justify-content: end; align-items: center; gap: 5px;">
+  <div class="flex gap-2">
+    <div
+      class="relative grid select-none items-center whitespace-nowrap rounded-lg bg-sky-700 py-3 px-5 font-sans text-xs font-bold uppercase text-white">
+      <div class="absolute top-2/4 left-1.5 h-5 w-5 -translate-y-2/4">
+        <mat-icon class="pr-5">access_time</mat-icon>
+      </div>
+      <span class="ml-[12px]">Tiempo de estudio: {{ formatoTiempo(tiempoEnPagina) }}</span>
+    </div>
+  </div>
+  </div>
+
+  <div class="m-7 mt-2 h-96 flashcard-view rounded-lg p-9 pt-9">
     <div *ngIf="currentFlashcard">
       <div class="text-2xl block font-medium text-center bg-white text-gray-700 border border-gray-200 rounded-lg shadow p-7 md:mr-48 md:ml-48 sm:mr-7 sm:ml-7">
         <div class="question">
@@ -54,7 +67,7 @@
         <hr>
         <div class="mt-5">
 
-            <button type="button" (click)="actualizarRepasoFlashcard(1)" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-gray-400 rounded-lg hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300">
+            <button type="button" (click)="actualizarRepasoFlashcard(1)" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-cyan-500 rounded-lg hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-blue-300">
                 Otra vez
             </button>
             <button type="button" (click)="actualizarRepasoFlashcard(6)" class="px-3 py-2 text-sm ml-5 font-medium text-center inline-flex items-center text-white bg-rose-500 rounded-lg hover:bg-rose-600 focus:ring-4 focus:outline-none focus:ring-blue-300">

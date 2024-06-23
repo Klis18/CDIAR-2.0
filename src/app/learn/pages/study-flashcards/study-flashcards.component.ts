@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LearnService } from '../../services/learn.service';
 import { Flashcard, updateSiguienteRepasoFlashcard } from '../../interfaces/mazo.interface';
@@ -23,6 +23,9 @@ export class StudyFlashcardsComponent implements OnInit, OnDestroy{
   currentFlashcard: Flashcard | null = null;
   showAnswer: boolean = false;
   subscription: Subscription | null = null;
+  entradaPagina: Date | null = null;
+  tiempoEnPagina: number = 0;
+  intervaloTiempo: any; // Variable para el intervalo del cronómetro
   nuevaFecha: Date = new Date();
 
 
@@ -36,6 +39,12 @@ export class StudyFlashcardsComponent implements OnInit, OnDestroy{
 
     this.cargarFlashcards();
     this.iniciarRepeticion();
+
+     // Iniciar el cronómetro al entrar a la página
+     this.entradaPagina = new Date();
+     this.intervaloTiempo = setInterval(() => {
+       this.tiempoEnPagina = Math.floor((new Date().getTime() - this.entradaPagina!.getTime()) / 1000);
+     }, 1000);
   
   }
 
@@ -104,5 +113,41 @@ actualizarRepasoFlashcard(minutos: number): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+
+     // Detener el cronómetro al salir de la página
+   clearInterval(this.intervaloTiempo);
+   this.tiempoEnPagina = 0;
+   this.entradaPagina = null;
+ 
+  }
+
+  formatoTiempo(segundos: number): string {
+    const horas = Math.floor(segundos / 3600);
+    const minutos = Math.floor((segundos % 3600) / 60);
+    const segundosRestantes = segundos % 60;
+    return `${this.agregarCero(horas)}:${this.agregarCero(minutos)}:${this.agregarCero(segundosRestantes)}`;
+  }
+
+  agregarCero(numero: number): string {
+    return numero < 10 ? `0${numero}` : `${numero}`;
+  }
+
+  @HostListener('window:focus')
+  onFocus() {
+    // Usuario ha entrado en la página
+    if (!this.entradaPagina) {
+      this.entradaPagina = new Date();
+      this.intervaloTiempo = setInterval(() => {
+        this.tiempoEnPagina = Math.floor((new Date().getTime() - this.entradaPagina!.getTime()) / 1000);
+      }, 1000);
+    }
+  }
+
+  @HostListener('window:blur')
+  onBlur() {
+    // Usuario ha salido de la página
+    clearInterval(this.intervaloTiempo);
+    this.tiempoEnPagina = 0;
+    this.entradaPagina = null;
   }
 }

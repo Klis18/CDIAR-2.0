@@ -12,6 +12,7 @@ import { InputComponent } from './components/input.components';
 import { SelectComponent } from './components/select.components';
 import { SearchFiltersComponent } from './pages/search-filters/search-filters.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { QuestionFilterComponent } from './pages/question-filter/question-filter.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     InputComponent,
     SelectComponent,
     SearchFiltersComponent,
+    QuestionFilterComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     InputComponent,
     SelectComponent,
     SearchFiltersComponent,
+    QuestionFilterComponent,
   ]
 })
 export class SharedModule { }

@@ -82,9 +82,21 @@ export interface MazosGetQuery {
     nombreDocenteRevisor?: string;
 }
 
+export interface FlashcardsGetQuery{
+    page: number;
+    limit: number;
+    id: number;
+    preguntaFlashcard?: string;
+}
+
 export interface EditMazo{
     nombreMazo: string,
     idAsignatura: 0,
     idNivel: 0,
     idMazo: 0,
+}
+
+export interface updateStatusMazo{
+    idMazo: number;
+    idEstado: number;
 }
