@@ -52,7 +52,7 @@ export class SidebarComponent implements OnInit {
     {
       icon: 'assignment',
       name: 'Simuladores',
-      route: '/productos',
+      route: '/simulators',
       expanded: false,
       subOptions: [],
       roles: ['Docente', 'Estudiante'],

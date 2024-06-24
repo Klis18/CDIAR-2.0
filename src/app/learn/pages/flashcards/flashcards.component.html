@@ -101,6 +101,13 @@
         (loadedTableEmitter)="loadedTale()"
         [loadTable]="reloadTable"
       ></cards-flashcards>
+      } @case ('Guardados') {
+        <mazos-guardados
+        [searchData]="searchInfo"
+        [typeTable]="'Guardados'"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      ></mazos-guardados>
       } }
     </div>
   </div>

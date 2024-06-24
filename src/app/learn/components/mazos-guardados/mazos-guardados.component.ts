@@ -1,33 +1,23 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ListMazo, MazosGetQuery, typeTable } from '../../interfaces/mazo.interface';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { LearnService } from '../../services/learn.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DetailsMazoComponent } from '../details-mazo/details-mazo.component';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { AsignarRevisorComponent } from '../../../control/pages/asignar-revisor/asignar-revisor.component';
-import { HomeService } from '../../../home/services/home.service';
 import { FlashcardsComponent } from '../../pages/flashcards/flashcards.component';
-import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
-import { ROLES } from '../../../shared/interfaces/roles.interface';
-import { Estados, IdEstados } from '../../../shared/interfaces/estados.interface';
-import { EditMazoComponent } from '../edit-mazo/edit-mazo.component';
-import { ListRevisorComponent } from '../../../control/components/list-revisor/list-revisor.component';
-
-interface DataItem {
-  title: string;
-  content: string;
-}
+import { HomeService } from '../../../home/services/home.service';
+import { IdEstados } from '../../../shared/interfaces/estados.interface';
+import { DetailsMazoComponent } from '../details-mazo/details-mazo.component';
 
 @Component({
-  selector: 'cards-flashcards',
-  templateUrl: './cards-flashcards.component.html',
+  selector: 'mazos-guardados',
+  templateUrl: './mazos-guardados.component.html',
   styles: ``
 })
-export class CardsFlashcardsComponent implements OnInit, OnChanges{
-  @Input() filterByUser: string = '';
-  @Input() filterByStatus: string = '';
-  @Input() filterByRevisor: string = '';
+export class MazosGuardadosComponent implements OnInit, OnChanges{
+  // @Input() filterByUser: string = '';
+  // @Input() filterByStatus: string = '';
+  // @Input() filterByRevisor: string = '';
   @Input() typeTable!: typeTable;
   @Input() searchData: any;
   @Input() loadTable: boolean = false;
@@ -36,13 +26,12 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   itemsPerPage: number = 5;
   totalPages: number = 1;
   selectedTab = this.mazo.selectedTab;
-  selectedTab2 = this.approve.selectedTab;
   nombreMazo: string = '';
   nivel: string = '';
   asignatura: string = '';
   docenteRevisor: string = '';
   nombreRevisor: string = '';
-  usuarioCreador: boolean = true;
+  usuarioCreador: boolean = false;
   limitsOptions = [
     {
       label: '5 Elementos',
@@ -67,7 +56,6 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   tituloMazo: string = '';
   usuario: string = '';
   flashCards!: FormGroup;
-  creadorMazo: string = '';
 
   colors = ['#67E8A2', '#67E8DA', '#C883F1', '#CB48A0', '#7FCDE8', '#E4E87F', '#E8BB7F']; // Puedes cambiar estos colores
 
@@ -75,7 +63,6 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
               private dialog: MatDialog,
               private router: Router,
               private mazo: FlashcardsComponent,
-              @Inject(AsignarRevisorComponent) private approve: AsignarRevisorComponent,
               @Inject(HomeService) private homeService: HomeService,
               @Inject(FormBuilder) private formBuilder: FormBuilder,
   ) {}
@@ -137,7 +124,7 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
       this.userRol = user.data.rol;
     });
   }
-  private idEstado!: number;
+  // private idEstado!: number;
   listaMazos() {
     const paginate: MazosGetQuery = {
       page: this.page,
@@ -145,63 +132,15 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
       idAsignatura: this.idAsignatura,
       idNivel: this.idNivel,
       descripcion: this.nombreMazo,
-      idEstado: this.idEstado,
-      nombreDocenteRevisor: this.nombreRevisor,
-      usuarioCreador: this.usuarioCreador,
     };
-    if (this.typeTable === 'Mis Flashcards') {
-      delete paginate.idEstado;
-    }
-    if (this.typeTable === 'Publicado') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado = IdEstados.APROBADO;
-    }
-    if (this.typeTable === 'Por Aprobar') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado = IdEstados.INGRESADO;
-    }
-    if(this.typeTable === 'Flashcards') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado == IdEstados.INGRESADO && paginate.nombreDocenteRevisor == '' ;
-    }
-
-    if (this.filterByStatus) {
-      const StatesByResources = [
-        {
-          label: Estados.INGRESADO,
-          value: IdEstados.INGRESADO,
-        },
-        {
-          label: Estados.APROBADO,
-          value: IdEstados.APROBADO,
-        },
-        {
-          label: Estados.RECHAZADO,
-          value: IdEstados.RECHAZADO,
-        },
-        {
-          label: Estados.ELIMINADO,
-          value: IdEstados.RECHAZADO,
-        },
-      ];
-      const find = StatesByResources.find(
-        (state) => state.label === this.filterByStatus
-      );
-      if (find) paginate.idEstado = find.value;
-    }
-    if (this.filterByRevisor) {
-      paginate.nombreDocenteRevisor = this.filterByRevisor;
-    }
-   
-    this.learnService.getMazos(paginate).subscribe({
+  
+    this.learnService.getMazosGuardados(paginate).subscribe({
       next: (res: any) => {
         this.data = res.data ?? [];
         if (this.data.length > 0) {
           this.nombreMazo = res.data.nombreMazo;
           this.nivel = res.data.nivel;
           this.asignatura = res.data.asignatura;
-          this.docenteRevisor = res.data.nombreDocenteRevisor;
-          this.creadorMazo = res.data.usuarioCreador;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
         if (this.data?.length === 0 || !this.data) {
@@ -246,27 +185,27 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
     return arreglo;
   }
 
-  openDialog(message: string) {
-    return this.dialog.open(CardConfirmComponent, {
-      data: {
-        mensaje: message,
-      },
-      width: '30%',
-    });
-  }
+  // openDialog(message: string) {
+  //   return this.dialog.open(CardConfirmComponent, {
+  //     data: {
+  //       mensaje: message,
+  //     },
+  //     width: '30%',
+  //   });
+  // }
 
-  eliminarMazo(idMazo: number) {
-    const dialogRef = this.openDialog(
-      '¿Estás seguro de eliminar este mazo?'
-    );
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res) {
-        this.learnService.deleteMazo(idMazo).subscribe(() => {
-          this.listaMazos();
-        });
-      }
-    });
-  }
+  // eliminarMazo(idMazo: number) {
+  //   const dialogRef = this.openDialog(
+  //     '¿Estás seguro de eliminar este mazo?'
+  //   );
+  //   dialogRef.afterClosed().subscribe((res) => {
+  //     if (res) {
+  //       this.learnService.deleteMazo(idMazo).subscribe(() => {
+  //         this.listaMazos();
+  //       });
+  //     }
+  //   });
+  // }
 
   prevPage() {
     if (this.pagination.buttonLeft) {
@@ -283,57 +222,8 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   }
 
 
-  canApprove(item: any): boolean {
-    let isReviewer = false;
-    if (this.userRol === ROLES.DOCENTE) {
-      isReviewer =
-        item.docenteRevisor == this.usuario &&
-        this.selectedTab === 'Por Aprobar' &&
-        item.estado != 'Aprobado';
-    }
 
-    return isReviewer;
-  }
-  canEdit(item: any): boolean {
-    const isCreator =
-      item.usuarioCreacion == this.usuario &&
-      this.selectedTab === 'Mis Flashcards' &&
-      item.estado !== 'Aprobado' &&
-      item.nombreRevisor == '';
-
-    const isAdmin =
-      item.docenteRevisor === '' &&
-      item.estado != 'Aprobado' &&
-      this.selectedTab2 === 'Flashcards';
-    return isCreator || isAdmin;
-  }
-
-  editarMazo(idMazo: number, item: any) {
-    if (this.canEdit(item)) {
-      if (item.usuarioCreador == this.usuario) {
-        this.tituloMazo = 'Editar Mazo';
-      } else if (item.docenteRevisor == this.usuario) {
-        this.tituloMazo = 'Aprobar Mazo';
-      } else {
-        this.tituloMazo = 'Asignar Revisor';
-      }
-    }
-    const dialogRef = this.dialog.open(EditMazoComponent, {
-      width: '40%',
-      maxHeight: '80%',
-      data: {
-        id: idMazo,
-        titulo: this.tituloMazo,
-        typeModal: this.typeTable,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.listaMazos();
-      }
-    });
-  }
-
+  
   getGradient(index: number) {
     const color1 = this.colors[index % this.colors.length];
     const color2 = this.colors[(index + 1) % this.colors.length];
@@ -354,18 +244,6 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
 
   redirigirEstudiarFlashcards(item: ListMazo) {
     this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
-  }
-
-  asignaRevisor(idMazo: number) {
-    const dialogRef = this.dialog.open(ListRevisorComponent, {
-      width: '80%',
-      data: {id: idMazo},
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.listaMazos();
-      }
-    });
   }
 
   saveMazoToReview(idMazo: number) {

@@ -18,6 +18,8 @@ import { StudyFlashcardsComponent } from './pages/study-flashcards/study-flashca
 import { SharedModule } from '../shared/shared.module';
 import { EditFlashcardComponent } from './components/edit-flashcard/edit-flashcard.component';
 import { EditMazoComponent } from './components/edit-mazo/edit-mazo.component';
+import { ObservacionRechazoComponent } from './components/observacion-rechazo/observacion-rechazo.component';
+import { MazosGuardadosComponent } from './components/mazos-guardados/mazos-guardados.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { EditMazoComponent } from './components/edit-mazo/edit-mazo.component';
     FlashcardsTableComponent,
     StudyFlashcardsComponent,
     EditFlashcardComponent,
-    EditMazoComponent
+    EditMazoComponent,
+    ObservacionRechazoComponent,
+    MazosGuardadosComponent
   ],
   imports: [
     CommonModule,

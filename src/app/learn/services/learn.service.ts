@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ListaRecurso } from '../../academic-resources/interfaces/recurso.interface';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateSiguienteRepasoFlashcard, Flashcard, updateFlashcard, MazosGetQuery, EditMazo, FlashcardsGetQuery, updateStatusMazo } from '../interfaces/mazo.interface';
+import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateSiguienteRepasoFlashcard, Flashcard, updateFlashcard, MazosGetQuery, EditMazo, FlashcardsGetQuery, updateStatusMazo, sendObservation, observation } from '../interfaces/mazo.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Nivel } from '../../academic-resources/interfaces/nivel.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
@@ -123,6 +123,7 @@ export class LearnService {
     descripcion,
     idEstado,
     nombreDocenteRevisor,
+    usuarioCreador,
   }: MazosGetQuery) {
     if (!page) page = 1;
     if (!limit) limit = 5;
@@ -135,6 +136,8 @@ export class LearnService {
     if (idEstado) query += `&idEstado=${idEstado}`;
     if (nombreDocenteRevisor && nombreDocenteRevisor !== '')
       query += `&nombreDocenteRevisor=${nombreDocenteRevisor}`;
+    if (usuarioCreador && usuarioCreador === true)
+      query += `&usuarioCreador=${usuarioCreador}`;
 
     return this.http.get<ListMazo>(`mazos${query}`, {
       headers: this.headers,
@@ -159,4 +162,49 @@ export class LearnService {
     headers: this.headers,
   });
  }
+
+ enviarObservacion(observacion:sendObservation){
+  return this.http.post(`mazos/observaciones`,observacion, {
+    headers: this.headers,
+  });
+ }
+
+ getObservacion(idMazo:number){
+  return this.http.get<observation>(`mazos/observaciones/${idMazo}`, {
+    headers: this.headers,
+  });
+ }
+
+ saveMazoToReview(idMazo:number){
+  return this.http.post(`mazos/guardar/${idMazo}`,{}, {
+    headers: this.headers,
+  });
+ }
+
+ viewMazoToReview(){
+  return this.http.get<ListMazo>(`mazos/guardados`, {
+    headers: this.headers,
+  });
+ }
+
+ getMazosGuardados({
+  page,
+  limit,
+  idAsignatura,
+  idNivel,
+  descripcion,
+}: MazosGetQuery) {
+  if (!page) page = 1;
+  if (!limit) limit = 5;
+  let query: string = `?pages=${page}&limit=${limit}`;
+
+  if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
+  if (idNivel) query += `&idNivel=${idNivel}`;
+  if (descripcion && descripcion !== '')
+    query += `&descripcion=${descripcion}`;
+
+  return this.http.get<ListMazo>(`mazos/guardados${query}`, {
+    headers: this.headers,
+  });
+}
 }

@@ -51,13 +51,26 @@
           Aprobar
         </span>
       </button>
-      <button type="button" *ngIf="canAprove()" (click)="openDialog()" 
+      <button type="button" *ngIf="canAprove()" (click)="reprobarMazo()" 
         class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
         <span class="flex items-center justify-center">
           <mat-icon>clear</mat-icon>
           Reprobar
         </span>
       </button>
+      <button type="button" *ngIf="canViewObservation()" (click)="viewObservation()" 
+        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+        <span class="flex items-center justify-center">
+          <mat-icon>report</mat-icon>
+          Ver observación
+        </span>
+      </button>
+    </div>
+    <div *ngIf="observationVisible == true" class="bg-amber-100">
+      <div class="p-5">
+        <p class="text-base pb-2 text-amber-600 font-bold">Motivo Rechazo:</p>
+        {{observacionRechazo}}
+      </div>
     </div>
     <div class="mt-10">
       <question-filter (search)="emitSearch($event)"></question-filter>

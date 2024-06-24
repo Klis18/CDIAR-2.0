@@ -5,6 +5,7 @@ import { HomeLayoutComponent } from './home/home-layout/home-layout.component';
 import { ResourcesComponent } from './academic-resources/pages/resources/resources.component';
 import { CargaHorariaComponent } from './docente/pages/carga-horaria/carga-horaria.component';
 import { FlashcardsComponent } from './learn/pages/flashcards/flashcards.component';
+import { SimulatorsComponent } from './simulators/pages/simulators/simulators.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
         path:'learn',
         // component: FlashcardsComponent,
         loadChildren: () => import('./learn/learn.module').then(m => m.LearnModule),
+      },
+      {
+        path: 'simulators',
+        component: SimulatorsComponent,
+        loadChildren: () => import('./simulators/simulators.module').then(m => m.SimulatorsModule),
       }
       
     ],

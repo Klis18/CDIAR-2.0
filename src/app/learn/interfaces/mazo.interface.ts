@@ -69,7 +69,7 @@ export interface updateFlashcard{
 }
 
 
-export type typeTable = 'Publicado' | 'Mis Flashcards' | 'Por Aprobar' | 'Flashcards';
+export type typeTable = 'Publicado' | 'Mis Flashcards' | 'Por Aprobar' | 'Flashcards' | 'Guardados' | 'Estudiados';
 
 
 export interface MazosGetQuery {
@@ -80,6 +80,7 @@ export interface MazosGetQuery {
     descripcion?: string;
     idEstado?: number;
     nombreDocenteRevisor?: string;
+    usuarioCreador?: boolean;
 }
 
 export interface FlashcardsGetQuery{
@@ -99,4 +100,13 @@ export interface EditMazo{
 export interface updateStatusMazo{
     idMazo: number;
     idEstado: number;
+}
+
+export interface sendObservation{
+    idMazo: number;
+    observacion: string;
+}
+
+export interface observation{
+    observacion: string;
 }

@@ -30,7 +30,30 @@
                 {{ item.asignatura }}
               </div>
             </div>
+            <div class="text-sm ml-2" *ngIf="selectedTab ==='Mis Flashcards'">
+              @switch (item.estado) { 
+                @case ('Privado') {
+                  <span class="text-cyan-500 font-bold">
+                    {{ item.estado}}</span
+                  >
+                }
+                @case ('Ingresado') {
+                <span class="text-neutral-500 font-bold">
+                  {{ item.estado}}</span
+                >
+                } @case ('Aprobado') {
+                <span class="text-green-500 font-bold">
+                  {{ item.estado}}</span
+                >
+                } @case ('Rechazado') {
+                <span class="text-red-700 font-bold">
+                  {{ item.estado}}</span
+                >
+                } }
+            </div>
+            
           </div>
+         
 
           <div class="col-span-4">
             @if(userRol == 'Admin' && item.nombreDocenteRevisor == null){
@@ -48,6 +71,7 @@
             @if(selectedTab == 'Publicado' && userRol != 'Admin'){
               <button
                 type="button"
+                (click)="saveMazoToReview(item.idMazo)"
                 class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
               >
                 <span class="flex items-center justify-center">
@@ -76,6 +100,18 @@
                   <mat-icon>delete</mat-icon>
                 </span>
               </button>
+            }
+
+            @if(selectedTab ==='Por Aprobar'){
+              <button
+              type="button"
+              (click)="redirigirPreguntas(item)"
+              class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
+            >
+              <span class="flex items-center justify-center">
+                <mat-icon>assignment_turned_in</mat-icon>
+              </span>
+            </button>
             }
 
             <button

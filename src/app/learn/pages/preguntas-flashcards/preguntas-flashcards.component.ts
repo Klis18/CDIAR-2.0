@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddQuestionFlashcardComponent } from '../../components/add-question-flashcard/add-question-flashcard.component';
 import { HomeService } from '../../../home/services/home.service';
 import { updateStatusMazo } from '../../interfaces/mazo.interface';
+import { ObservacionRechazoComponent } from '../../components/observacion-rechazo/observacion-rechazo.component';
 
 @Component({
   selector: 'app-preguntas-flashcards',
@@ -19,6 +20,9 @@ export class PreguntasFlashcardsComponent {
   searchInfo: any;
   nombreUsuario: string = '';
   rol: string = '';
+  nombreRevisor: string = '';
+  observacionRechazo: string = '';
+  observationVisible: boolean = false;
 
   private homeService = inject(HomeService);
   
@@ -41,6 +45,12 @@ export class PreguntasFlashcardsComponent {
     this.learnService.getDatosMazo(this.idMazo).subscribe((res) => {
       this.estadoMazo = res.data.estado;
       this.creadorMazo = res.data.usuarioCreador;
+      this.nombreRevisor = res.data.nombreRevisor;
+    });
+    
+    this.learnService.getObservacion(this.idMazo).subscribe((res) => {
+      console.log(res);
+      this.observacionRechazo = res.data.observacion;
     });
     
   }
@@ -72,7 +82,7 @@ export class PreguntasFlashcardsComponent {
   
   
   canAprove() {
-    return this.rol === 'Docente' && this.creadorMazo != this.nombreUsuario && this.estadoMazo != 'Aprobado';
+    return this.rol === 'Docente' && this.nombreRevisor === this.nombreUsuario && this.estadoMazo != 'Aprobado' && this.estadoMazo != 'Rechazado';
   }
 
   canPublish(){
@@ -80,7 +90,9 @@ export class PreguntasFlashcardsComponent {
   }
 
   canCreate(){
-    return this.rol === 'Docente' || this.rol === 'Estudiante';
+    const Estudiante = this.rol === 'Estudiante' ;
+    const Docente = this.rol === 'Docente' && this.creadorMazo=== this.nombreUsuario;
+    return Estudiante || Docente;
   }
 
   publishMazo(idStatus: number){
@@ -92,5 +104,21 @@ export class PreguntasFlashcardsComponent {
     this.learnService.publicarMazo(mazo).subscribe((res) => {
       console.log(res);
     });
+  }
+
+  reprobarMazo() {
+    this.dialog.open(ObservacionRechazoComponent, {
+      width: '40%',
+      maxHeight: '80%',
+      data: {id: this.idMazo},
+    });
+  }
+
+  viewObservation(){
+    this.observationVisible = true;
+  }
+
+  canViewObservation(){
+    return this.rol ==='Estudiante' && this.observacionRechazo !== null;
   }
 }
