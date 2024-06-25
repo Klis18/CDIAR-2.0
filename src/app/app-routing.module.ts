@@ -43,6 +43,10 @@ const routes: Routes = [
         path: 'simulators',
         component: SimulatorsComponent,
         loadChildren: () => import('./simulators/simulators.module').then(m => m.SimulatorsModule),
+      },
+      {
+        path: 'reports',
+        loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
       }
       
     ],

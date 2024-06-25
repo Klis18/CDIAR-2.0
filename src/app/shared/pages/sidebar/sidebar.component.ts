@@ -92,11 +92,11 @@ export class SidebarComponent implements OnInit {
     {
       icon: 'insert_drive_file',
       name: 'Reportes',
-      route: '/contacto',
+      route: '/reports',
       expanded: false,
       subOptions: [
-        { name: 'Reporte de Usuarios', route: '' },
-        { name: 'Reporte de Simuladores', route: '' },
+        { name: 'Reporte de Usuarios', route: 'reports/user-report' },
+        { name: 'Reporte de Simuladores', route: 'reports/simulators-report' },
       ],
       roles: ['Admin'],
     },

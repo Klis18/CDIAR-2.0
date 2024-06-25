@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { SimulatorsRoutingModule } from './simulators-routing.module';
 import { SimulatorsComponent } from './pages/simulators/simulators.component';
+import { CardsSimulatorsComponent } from './components/cards-simulators/cards-simulators.component';
 
 
 @NgModule({
   declarations: [
-    SimulatorsComponent
+    SimulatorsComponent,
+    CardsSimulatorsComponent
   ],
   imports: [
     CommonModule,
