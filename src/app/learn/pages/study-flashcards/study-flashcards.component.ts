@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LearnService } from '../../services/learn.service';
 import { Flashcard, updateSiguienteRepasoFlashcard } from '../../interfaces/mazo.interface';
@@ -39,7 +39,6 @@ export class StudyFlashcardsComponent implements OnInit, OnDestroy{
 
     this.cargarFlashcards();
     this.iniciarRepeticion();
-
      // Iniciar el cronómetro al entrar a la página
      this.entradaPagina = new Date();
      this.intervaloTiempo = setInterval(() => {
@@ -49,7 +48,13 @@ export class StudyFlashcardsComponent implements OnInit, OnDestroy{
   }
 
   cargarFlashcards() {
-    this.learnService.estudiarFlashcards(this.idMazo).subscribe((res: any) => {
+    // this.learnService.estudiarFlashcards(this.idMazo).subscribe((res: any) => {
+    //   this.flashcardsMazo = res.data;
+    //   this.procesarSiguienteFlashcard();
+    // });
+
+    this.learnService.estudiarMazoGuardado(this.idMazo).subscribe((res: any) => {
+      console.log('RES',res.data);
       this.flashcardsMazo = res.data;
       this.procesarSiguienteFlashcard();
     });
@@ -87,16 +92,29 @@ actualizarRepasoFlashcard(minutos: number): void {
       // Convierte la nueva fecha a una cadena en formato ISO 8601 manteniendo la zona horaria local
       let nuevaFechaISO = this.toLocalISOString(this.nuevaFecha);
 
+      console.log('NUEVA FECHA',nuevaFechaISO);
+
       const flashcard: updateSiguienteRepasoFlashcard = {
           idFlashcard: this.currentFlashcard.idFlashcard,
           siguienteRepaso: nuevaFechaISO
       };
 
-      this.learnService.updateSiguienteRepasoFlashcard(flashcard).subscribe(res => {
-          this.showAnswer = false;
-          this.cargarFlashcards();
-      }); 
+      // console.log('FLASHCARD',flashcard);
+      
+
+      // this.learnService.updateSiguienteRepasoFlashcard(flashcard).subscribe(res => {
+      //     this.showAnswer = false;
+      //     this.cargarFlashcards();
+      // }); 
+
+      this.learnService.actualizarRepasoFlashcardsGuardadas(flashcard).subscribe(res => {
+        this.showAnswer = false;
+        this.cargarFlashcards();
+        console.log('RES actualizado',res);
+        console.log('FLASHCARDs mazo',this.flashcardsMazo);
+      });
   }
+  console.log('MAZO',this.flashcardsMazo);
 }
 
   iniciarRepeticion() {

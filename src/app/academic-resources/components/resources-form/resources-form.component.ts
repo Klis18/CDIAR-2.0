@@ -45,6 +45,8 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
   datosRecursos!: any;
   idNiv: string = '';
   rol: string = '';
+  // recursoFile: string | null = null;
+  // extension: string = '';
   listadoExtensionesImages = ['jpg', 'jpeg', 'png'];
   listadoExtensionesArchivos = [
     'docx',
@@ -71,21 +73,18 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
     this.homeService.obtenerDatosMenu().subscribe({
       next: (user) => {
         if (user) this.rol = user.data?.rol;
-        console.log('USER:', user);
         this.validationsForm();
         this.loadDocentesRevision();
+        this.ngSuscribesOnInit();
+
+        if (this.formData) {
+          this.setData(this.formData);
+        }
       },
       error: () => {
         window.alert('No cargo la información del Usuario Administrador');
       },
     });
-
-    this.ngSuscribesOnInit();
-
-    if (this.formData) {
-      console.log('formData', this.formData);
-      this.setData(this.formData);
-    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -104,17 +103,16 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       enlaceDelRecurso: ['', Validators.required],
       nombreRecurso: ['', Validators.required],
       idDocenteRevisor: ['', Validators.required],
-      recurso: [null, Validators.required],
-      extension: [null, Validators.required],
+      recurso: ['', Validators.required],
+      extension: ['', Validators.required],
       observation: ['', Validators.required],
+      observationArchivo: [''],
     });
   }
 
   validationsForm() {
-    console.log('MI ROL', { rol: this.rol });
     switch (this.rol) {
       case ROLES.ADMIN:
-        console.log('ADMIN');
         this.recursoGroupForm.get('idNivel')?.disable();
         this.recursoGroupForm.get('idAsignatura')?.disable();
         this.recursoGroupForm.get('idEstado')?.disable();
@@ -127,7 +125,6 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
 
         break;
       case ROLES.DOCENTE:
-        console.log('DOCENTE');
         if (this.modeForm === 'Add') {
           this.recursoGroupForm.get('idEstado')?.clearValidators();
           this.recursoGroupForm.get('idEstado')?.updateValueAndValidity();
@@ -149,7 +146,6 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
         break;
 
       default:
-        console.log('ESTUDIANTE');
         this.recursoGroupForm.get('observation')?.clearValidators();
         this.recursoGroupForm.get('observation')?.updateValueAndValidity();
 
@@ -163,8 +159,6 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
 
   setData(data: any) {
     if (data && this.recursoGroupForm) {
-      console.log({ ESTADO: data.idEstado, estados: this.estados });
-
       this.recursoGroupForm.patchValue({
         idRecurso: data.idRecurso,
         idNivel: data.idNivel,
@@ -192,20 +186,25 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       this.idAssign = data.idAsignatura;
       this.idNiv = data.idNivel;
     }
+
     if (this.rol === ROLES.DOCENTE) {
       this.recursoGroupForm.get('idDocenteRevisor')?.disable();
       this.recursoGroupForm.get('idDocenteRevisor')?.updateValueAndValidity();
       this.recursoGroupForm.get('observation')?.disable();
       this.recursoGroupForm.get('observation')?.updateValueAndValidity();
-    }
-    if (this.rol === ROLES.DOCENTE) {
-      this.recursoGroupForm.get('idDocenteRevisor')?.disable();
-      this.recursoGroupForm.get('idDocenteRevisor')?.updateValueAndValidity();
-      this.recursoGroupForm.get('observation')?.disable();
-      this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+
       if (this.modeForm === 'Por Aprobar') {
+        this.recursoGroupForm.get('observation')?.enable();
+        this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+
         this.recursoGroupForm.disable();
         this.recursoGroupForm.get('idEstado')?.enable();
+
+        this.recursoGroupForm.get('idNivel')?.disable();
+        this.recursoGroupForm.get('idAsignatura')?.disable();
+        this.recursoGroupForm.get('tipoRecurso')?.disable();
+        this.recursoGroupForm.get('enlaceDelRecurso')?.disable();
+        this.recursoGroupForm.get('nombreRecurso')?.disable();
       }
     }
   }
@@ -262,38 +261,48 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
     }
   }
 
-  onFileChange(event: any) {
+  onFileChange(event: any, field: 'recurso' | 'observationArchivo') {
     const file = event.target.files[0];
+
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
         const recursoFile = (reader.result as string).split(',')[1];
         if (recursoFile)
-          this.recursoGroupForm.get('recurso')?.setValue(recursoFile);
+          this.recursoGroupForm.get(field)?.setValue(recursoFile);
         const extension = file.name.split('.').pop() || '';
-        if (extension)
-          this.recursoGroupForm.get('extension')?.setValue(extension);
+
         if (
           !this.listadoExtensionesImages.includes(extension) &&
           !this.listadoExtensionesArchivos.includes(extension)
         ) {
-          //enviar mensaje error de que la extension no es permitida para imagenes
-          window.alert('La extensión del archivo no es permitida');
-        }
+          this.recursoGroupForm.get('extension')?.reset();
+          this.recursoGroupForm.get(field)?.reset();
+        } else if (extension)
+          this.recursoGroupForm.get('extension')?.setValue(extension);
       };
     }
   }
 
+  
+
   resourceName(value: string): string {
     return value.split('/').slice(-1)[0] || '';
   }
-
+  observationView: boolean = false;
   showObservation(rol: string): boolean {
     const isStudent = rol === 'Estudiante' && this.observation !== '';
     const isDocente =
-      rol === 'Docente' && this.modeForm === 'Edit' && this.observation !== '';
-    return isStudent || isDocente;
+      rol === 'Docente' &&
+      (this.modeForm === 'Edit' || this.modeForm === 'Por Aprobar') &&
+      (this.observation !== '' || this.observationView);
+
+    let status = false;
+    if (rol === 'Estudiante') status = isStudent;
+    if (rol === 'Docente') status = isDocente;
+
+    return status;
   }
 
   selectedActivate(rol: string): boolean {
@@ -309,6 +318,18 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
     return isDocente;
   }
 
+  canShowStatus() {
+    let status: boolean = false;
+    if (this.rol === 'Docente') {
+      status = this.modeForm === 'Edit' || this.modeForm === 'Por Aprobar';
+    }
+    console.log({ rol: this.rol });
+    if (this.rol === 'Estudiante') {
+      status = this.modeForm === 'Corregir Recurso';
+    }
+
+    return status;
+  }
   ngSuscribesOnInit() {
     this.recursoGroupForm.get('tipoRecurso')?.valueChanges.subscribe({
       next: (tipoRecurso) => {
@@ -332,12 +353,19 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
 
     this.recursoGroupForm.get('idEstado')?.valueChanges.subscribe({
       next: (idEstado) => {
-        if (idEstado === RecursosIdEstados.ELIMINADO) {
+        if (idEstado === RecursosIdEstados.RECHAZADO) {
           this.recursoGroupForm
             .get('observation')
             ?.setValidators([Validators.required]);
+          this.observationView = true;
+          this.recursoGroupForm.get('observation')?.enable();
           this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+        } else {
+          this.recursoGroupForm.get('observation')?.reset();
+          this.recursoGroupForm.get('observation')?.clearValidators();
+          this.observationView = false;
         }
+        this.recursoGroupForm.get('observation')?.updateValueAndValidity();
       },
     });
     this.recursoGroupForm.get('idNivel')?.valueChanges.subscribe({
@@ -352,7 +380,7 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       },
     });
 
-    this.recursoGroupForm.valueChanges.subscribe((res) => {
+    this.recursoGroupForm.valueChanges.subscribe(() => {
       const response = {
         idRecurso: this.recursoGroupForm.get('idRecurso')?.value,
         idNivel: this.recursoGroupForm.get('idNivel')?.value,

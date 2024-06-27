@@ -23,12 +23,21 @@ import { ROLES } from '../../interfaces/roles.interface';
 @Component({
   selector: 'resources-table',
   templateUrl: './resources-table.component.html',
-  styles: ``,
+  styles: `
+    :host ::ng-deep .mat-badge-content.mat-badge-active {
+    background-color: #1e3a8a !important;
+    border-radius: 20px !important;
+    padding: 2px 3px !important;
+    line-height: normal !important;
+    font-weight: 500;
+    height: auto !important;
+    width: auto;
+    font-size: 11px;
+  }
+  `,
 })
 export class ResourcesTableComponent implements OnInit, OnChanges{
   @Input() filterByUser: string = '';
-  @Input() filterByStatus!: EstadoRecursosType;
-  @Input() filterByRevisor!: string;
   @Input() typeTable!: typeTable;
   @Input() searchData: any;
   @Input() loadTable: boolean = false;
@@ -41,6 +50,16 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   nombreRecurso: string = '';
   nivel: string = '';
   asignatura: string = '';
+  private idAsignatura!: number;
+  private idNivel!: number;
+  private descripcion!: string;
+  public page!: number;
+  public limit: number = 5;
+  public paginateCurrent: number[] = [];
+  mensaje: string = '';
+  tituloRecurso: string = '';
+  usuario: string = '';
+  resourceTable!: FormGroup;
   limitsOptions = [
     {
       label: '5 Elementos',
@@ -55,16 +74,6 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
       value: 15,
     },
   ];
-  private idAsignatura!: number;
-  private idNivel!: number;
-  private descripcion!: string;
-  public page!: number;
-  public limit: number = 5;
-  public paginateCurrent: number[] = [];
-  mensaje: string = '';
-  tituloRecurso: string = '';
-  usuario: string = '';
-  resourceTable!: FormGroup;
 
   constructor(
     private recursoService: RecursoService,
@@ -83,8 +92,9 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   };
 
   ngOnInit(): void {
-    this.builderForm();
     this.getDataMenu();
+    this.builderForm();
+
     this.resourceTable.valueChanges.subscribe({
       next: (res) => {
         if (res?.limit) {
@@ -96,7 +106,6 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
         this.listaRecursos();
       },
     });
-    this.listaRecursos();
     switch (this.typeTable) {
       case 'Por Aprobar':
         this.tituloRecurso = 'Aprobar Recurso';
@@ -138,16 +147,13 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
     this.page = this.resourceTable.get('page')?.value;
   }
 
-  changePage(newPage: number) {
-    if (newPage !== this.page) {
-      this.page = newPage;
-      this.listaRecursos();
-    }
-  }
   getDataMenu() {
-    this.homeService.obtenerDatosMenu().subscribe((user) => {
-      this.usuario = user.data.userName;
-      this.userRol = user.data.rol;
+    this.homeService.obtenerDatosMenu().subscribe({
+      next: (user) => {
+        this.usuario = user.data.userName;
+        this.userRol = user.data.rol;
+        this.listaRecursos();
+      },
     });
   }
   listaRecursos() {
@@ -165,41 +171,30 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
     if (this.typeTable === 'Publicado') {
       paginate.idEstado = RecursosIdEstados.APROBADO;
     }
-    if (this.typeTable === 'Por Aprobar') {
+    if (this.typeTable === 'Por Aprobar' && this.userRol === 'Docente') {
+      paginate.revisor = true;
+      paginate.idEstado = RecursosIdEstados.INGRESADO;
+    }
+    if (this.typeTable === 'Asignar Revisor') {
       paginate.idEstado = RecursosIdEstados.INGRESADO;
     }
 
-    if (this.filterByStatus) {
-      const StatesByResources = [
-        {
-          label: EstadosRecursos.INGRESADO,
-          value: RecursosIdEstados.INGRESADO,
-        },
-        {
-          label: EstadosRecursos.APROBADO,
-          value: RecursosIdEstados.APROBADO,
-        },
-        {
-          label: EstadosRecursos.RECHAZADO,
-          value: RecursosIdEstados.RECHAZADO,
-        },
-        {
-          label: EstadosRecursos.ELIMINADO,
-          value: RecursosIdEstados.RECHAZADO,
-        },
-      ];
-      const find = StatesByResources.find(
-        (state) => state.label === this.filterByStatus
-      );
-      if (find) paginate.idEstado = find.value;
-    }
-    if (this.filterByRevisor) {
-    }
-    console.log({ paginate });
     this.recursoService.getRecursos(paginate).subscribe({
       next: (res: any) => {
-        console.log({ res });
-        this.data = res.data ?? [];
+        let currentData: any[] = [];
+
+        if (res?.data) {
+          currentData = res?.data.filter((d: any) => {
+            if (this.typeTable === 'Asignar Revisor') {
+              if (d?.docenteRevisor === '') {
+                return d;
+              }
+            } else {
+              return d;
+            }
+          });
+        }
+        this.data = currentData;
         if (this.data.length > 0) {
           this.nombreRecurso = res.data.nombreRecurso;
           this.nivel = res.data.nivel;
@@ -216,6 +211,57 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
     });
   }
 
+  clickFileLink(item: any) {
+    this.recursoService.setRevisionResource(item?.idRecurso).subscribe({
+      next: (res) => {
+        if (res) {
+        }
+      },
+      complete: () => {
+        this.listaRecursos();
+      },
+    });
+  }
+
+  openFileInTab(item: any): string {
+    let urlRecurso: string = '';
+
+    if (item.tipoRecurso === 'Link') {
+      urlRecurso = item.enlaceRecurso;
+    } else if (
+      item.tipoRecurso === 'Archivo' ||
+      item.tipoRecurso === 'Imagen'
+    ) {
+      urlRecurso = item.recurso;
+    }
+
+    return urlRecurso;
+  }
+
+  getFilterByStatus(statusName: EstadosRecursos) {
+    const StatesByResources = [
+      {
+        label: EstadosRecursos.INGRESADO,
+        value: RecursosIdEstados.INGRESADO,
+      },
+      {
+        label: EstadosRecursos.APROBADO,
+        value: RecursosIdEstados.APROBADO,
+      },
+      {
+        label: EstadosRecursos.RECHAZADO,
+        value: RecursosIdEstados.RECHAZADO,
+      },
+      {
+        label: EstadosRecursos.ELIMINADO,
+        value: RecursosIdEstados.RECHAZADO,
+      },
+    ];
+    const find = StatesByResources.find((state) => state.label === statusName);
+
+    return find!.value;
+  }
+
   crearArreglo(limite: number, cant: number) {
     const rest = cant / limite;
     const elementos = Math.floor(rest);
@@ -230,12 +276,6 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
       this.pagination.buttonLeft = true;
       this.pagination.buttonRight = true;
     }
-    console.log({
-      elementos,
-      page: this.page,
-      arreglo: arreglo.length,
-      more,
-    });
     if (elementos > 0) {
       if (arreglo?.length === this.page) {
         this.pagination.buttonRight = false;
@@ -278,16 +318,24 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
   prevPage() {
     if (this.pagination.buttonLeft) {
       const leftButton = this.resourceTable.get('page')?.value;
-      console.log({ leftButton: leftButton - 1 });
       this.resourceTable.get('page')?.setValue(leftButton - 1);
+      this.listaRecursos();
     }
   }
 
   nextPage() {
     if (this.pagination.buttonRight) {
       const rightButton = this.resourceTable.get('page')?.value;
-      console.log({ rightButton: rightButton + 1 });
       this.resourceTable.get('page')?.setValue(rightButton + 1);
+      this.listaRecursos();
+    }
+  }
+
+  changePage(newPage: number) {
+    if (newPage !== this.page) {
+      this.resourceTable.get('page')?.setValue(newPage);
+      this.page = newPage;
+      this.listaRecursos();
     }
   }
 
@@ -317,20 +365,6 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
     }
   }
 
-  openFileInTab(item: any): string {
-    let urlRecurso: string = '';
-
-    if (item.tipoRecurso === 'Link') {
-      urlRecurso = item.enlaceRecurso;
-    } else if (
-      item.tipoRecurso === 'Archivo' ||
-      item.tipoRecurso === 'Imagen'
-    ) {
-      urlRecurso = item.recurso;
-    }
-    return urlRecurso;
-  }
-
   canApprove(item: any): boolean {
     let isReviewer = false;
     if (this.userRol === ROLES.DOCENTE) {
@@ -342,21 +376,74 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
 
     return isReviewer;
   }
-  canEdit(item: any): boolean {
-    const isCreator =
-      item.usuarioCreacion == this.usuario &&
-      this.selectedTab === 'Mis Recursos' &&
-      item.estadoRecurso !== 'Aprobado' &&
-      item.nombreRevisor == '';
 
-    const isAdmin =
-      item.docenteRevisor === '' &&
-      item.estadoRecurso != 'Aprobado' &&
-      this.selectedTab2 === 'Recursos Académicos';
-    return isCreator || isAdmin;
+  canDelete(item: any) {
+    const first = item.usuarioCreacion == this.usuario;
+    const second = this.selectedTab === 'Mis Recursos';
+    const three =
+      item.estadoRecurso !== 'Aprobado' && item.estadoRecurso !== 'Eliminado';
+
+    const fourth = item.docenteRevisor === '';
+
+    return first && second && three && fourth;
   }
 
-  editarRecurso(idRecurso: number, item: any) {
+  viewNotify(element: any) {
+    if (element?.recursoRevisadoDato) return '';
+
+    return 'nuevo';
+  }
+
+  canResolveReject(item: any) {
+    let status: boolean = false;
+    if (item.estadoRecurso === 'Rechazado') {
+      status =
+        item.usuarioCreacion == this.usuario &&
+        this.selectedTab === 'Mis Recursos' &&
+        item.docenteRevisor;
+    }
+    return status;
+  }
+
+  canEdit(item: any): boolean {
+    let status: boolean = false;
+
+    switch (this.userRol) {
+      case 'Estudiante':
+        if (this.selectedTab === 'Mis Recursos') {
+          if (item.estadoRecurso === 'Ingresado') {
+            status =
+              item.usuarioCreacion == this.usuario &&
+              item.docenteRevisor === '';
+          }
+        }
+
+        break;
+      case 'Docente':
+        if (this.selectedTab === 'Mis Recursos') {
+          status =
+            item.usuarioCreacion == this.usuario &&
+            item.estadoRecurso !== 'Aprobado' &&
+            item.docenteRevisor === '';
+        }
+
+        if (this.selectedTab === 'Por Aprobar') {
+          status =
+            item.estadoRecurso !== 'Aprobado' && item.docenteRevisor !== '';
+        }
+        break;
+      case 'Admin':
+        status =
+          item.docenteRevisor === '' &&
+          item.estadoRecurso !== 'Aprobado' &&
+          this.selectedTab2 === 'Recursos Académicos';
+        break;
+    }
+
+    return status;
+  }
+
+  editarRecurso(idRecurso: number) {
     const dialogRef = this.dialog.open(EditResourceComponent, {
       width: '80%',
       maxWidth: '420px',
@@ -372,5 +459,22 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
       }
     });
   }
+
+  corregirRecurso(idRecurso: number) {
+    const dialogRef = this.dialog.open(EditResourceComponent, {
+      width: '80%',
+      maxWidth: '420px',
+      data: {
+        id: idRecurso,
+        titulo: 'Corregir Recurso',
+        typeModal: this.typeTable,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.listaRecursos();
+      }
+    });
   }
+}
       

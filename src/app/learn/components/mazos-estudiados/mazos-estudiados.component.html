@@ -1,0 +1,121 @@
+
+<div [formGroup]="flashCards" class="-my-2 overflow-x-auto sm:-mx-6">
+    <div class="flex flex-wrap pr-7 pl-7 pt-2 pb-7">
+      <div
+        *ngFor="let item of data; let i = index"
+        class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2"
+      >
+        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
+          <div [ngStyle]="{ background: getGradient(i) }" class="h-32"></div>
+          <div class="grid grid-cols-4 gap-4 m-4">
+            <div class="col-span-4">
+              <button (click)="redirigirPreguntas(item)">
+                <div class=" text-xl font-bold tracking-tight text-gray-900">
+                  {{ item.nombreMazo }}
+                </div>
+              </button>
+            </div>
+            <div class="col-span-3">
+              <div
+                class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300 w-fit"
+              >
+                <div class="text-xs font-normal leading-none w-fit flex-initial">
+                  {{ item.nivel }}
+                </div>
+              </div>
+              <div
+                class="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-blue-700 bg-blue-100 border border-blue-300 w-fit"
+              >
+                <div class="text-xs font-normal leading-none w-fit flex-initial">
+                  {{ item.asignatura }}
+                </div>
+              </div>
+            </div>
+           
+  
+            <div class="col-span-4">
+              
+              <button
+                type="button"
+                (click)="viewDetailsMazo(item.idMazo)"
+                class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
+              >
+                <span class="flex items-center justify-center">
+                  <mat-icon>view_list</mat-icon>
+                </span>
+              </button>
+  
+              <button type="button"  (click)="redirigirEstudiarFlashcards(item)" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                <span class="flex items-center justify-center">
+                  <mat-icon>play_arrow</mat-icon>
+                  Estudiar
+                </span>
+              </button>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!---PAGINACIÓN-->
+  
+    <div class="flex my-3 pr-7 pl-7">
+      <div class="flex-1 ms-2">
+        <select
+          class="p-1 rounded border-2 border-solid border-slate-300"
+          formControlName="limit"
+        >
+          @for (item of limitsOptions; track item) {
+          <option [value]="item.value">{{ item.label }}</option>
+          }
+        </select>
+      </div>
+      <div class="grid justify-end">
+        <nav>
+          <ul class="flex">
+            <li>
+              <a
+                class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out"
+                [ngClass]="{
+                    'cursor-pointer hover:border-gray-400 hover:bg-light-300': pagination.buttonLeft,
+                    'opacity-50 cursor-default': !pagination.buttonLeft,
+                  }"
+                (click)="prevPage()"
+              >
+                <span class="material-icons text-sm">keyboard_arrow_left</span>
+              </a>
+            </li>
+            @for (paginate of paginateCurrent; track $index) {
+            <li>
+              <a
+                class="mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm shadow-md transition duration-150 ease-in-out cursor-pointer"
+                [ngClass]="{
+                  'bg-blue-800 text-white': paginate === page,
+                  'bg-white text-black': paginate !== page
+                }"
+                (click)="changePage(paginate)"
+              >
+                {{ paginate }}
+              </a>
+            </li>
+            }
+            <li>
+              <a
+                class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+                (click)="nextPage()"
+                [ngClass]="{
+                  'cursor-pointer hover:border-gray-400 hover:bg-light-300':
+                    pagination.buttonRight,
+                  'opacity-50 cursor-default': !pagination.buttonRight
+                }"
+              >
+                <span class="material-icons text-sm">keyboard_arrow_right</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  

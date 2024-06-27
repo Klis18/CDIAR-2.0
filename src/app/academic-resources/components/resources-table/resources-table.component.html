@@ -37,6 +37,13 @@
               >
                 Tipo Recurso
               </th>
+              @if(selectedTab === 'Mis Recursos' && userRol === 'Estudiante' ){
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+              >
+                Revisor
+              </th>
+              }
               <th
                 class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
               >
@@ -54,30 +61,50 @@
             @for (item of data; track item) {
             <tr>
               <td class="px-6 py-4 whitespace-nowrap">
-                @if(item.usuarioCreacion == usuario && selectedTab === 'Mis
-                Recursos' && item.estadoRecurso != 'Aprobado' &&
-                item.docenteRevisor === ''){
+                @if(canDelete(item)){
                 <mat-icon
                   class="text-red-600 mr-2 cursor-pointer"
                   (click)="eliminarRecurso(item.idRecurso)"
                   onkeydown="eliminarRecurso(item.idRecurso)"
+                  matTooltip="Eliminar Recurso"
+                  matTooltipPosition="above"
                   >delete</mat-icon
                 >
                 } @if(canEdit(item)){
                 <mat-icon
                   class="text-blue-800 mr-2 cursor-pointer"
-                  onkeydown="editarRecurso(item.idRecurso, item)"
-                  (click)="editarRecurso(item.idRecurso, item)"
+                  [matTooltip]="tituloRecurso"
+                  matTooltipPosition="above"
+                  onkeydown="editarRecurso(item.idRecurso)"
+                  (click)="editarRecurso(item.idRecurso)"
                 >
                   {{ iconActionTable }}
+                </mat-icon>
+                } @if(canResolveReject(item)){
+                <mat-icon
+                  class="text-blue-800 mr-2 cursor-pointer"
+                  matTooltip="Corregir Recurso"
+                  matTooltipPosition="above"
+                  onkeydown="corregirRecurso(item.idRecurso)"
+                  (click)="corregirRecurso(item.idRecurso)"
+                >
+                  draw
                 </mat-icon>
                 }
                 <a
                   class="cursor-pointer"
                   [href]="openFileInTab(item)"
+                  (click)="clickFileLink(item)"
                   target="_blank"
                 >
-                  <mat-icon class="text-blue-800">open_in_new</mat-icon>
+                  <mat-icon
+                    [matBadge]="viewNotify(item)"
+                    matTooltip="Ver Recurso"
+                    matTooltipPosition="above"
+                    matBadgeSize="small"
+                    class="text-blue-800"
+                    >open_in_new</mat-icon
+                  >
                 </a>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
@@ -100,13 +127,24 @@
                   </div>
                 </div>
               </td>
+              @if(selectedTab === 'Mis Recursos' && userRol === 'Estudiante'){
+              <td
+                class="px-6 py-4 whitespace-nowrap {{
+                  !item?.docenteRevisor ? 'font-bold' : ''
+                }}"
+              >
+                {{
+                  item.docenteRevisor !== ""
+                    ? item.docenteRevisor
+                    : "Sin Asignar"
+                }}
+              </td>
+              }
               <td class="px-6 py-4 whitespace-nowrap">
                 {{ item.usuarioCreacion }}
               </td>
-              <td
-                *ngIf="selectedTab === 'Mis Recursos'"
-                class="px-6 py-4 whitespace-nowrap"
-              >
+              @if(selectedTab === 'Mis Recursos'){
+              <td class="px-6 py-4 whitespace-nowrap">
                 @switch (item.estadoRecurso) { @case ('Ingresado') {
                 <span class="text-neutral-500 font-bold">
                   {{ item.estadoRecurso }}</span
@@ -115,12 +153,13 @@
                 <span class="text-green-500 font-bold">
                   {{ item.estadoRecurso }}</span
                 >
-                } @case ('Rechazado') {
+                } @default {
                 <span class="text-red-700 font-bold">
                   {{ item.estadoRecurso }}</span
                 >
                 } }
               </td>
+              }
             </tr>
             } @empty {
             <tr>

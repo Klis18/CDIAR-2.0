@@ -56,6 +56,7 @@ export class RecursoService {
     idNivel,
     descripcion,
     idEstado,
+    revisor,
   }: RecursosGetQuery) {
     if (!page) page = 1;
     if (!limit) limit = 5;
@@ -66,6 +67,7 @@ export class RecursoService {
     if (descripcion && descripcion !== '')
       query += `&descripcion=${descripcion}`;
     if (idEstado) query += `&idEstado=${idEstado}`;
+    if (revisor) query += `&revisor=${revisor}`;
     return this.http.get<ListaRecurso>(`recursos/listarecursos${query}`, {
       headers: this.headers,
     });
@@ -76,13 +78,21 @@ export class RecursoService {
       headers: this.headers,
     });
   }
+
   editarRecurso(recurso: RecursoEdit) {
     return this.http.put<RecursoEdit>('recursos/actualizar', recurso, {
       headers: this.headers,
     });
   }
+
   eliminarRecurso(idRecurso: number) {
     return this.http.delete(`recursos/eliminar/${idRecurso}`, {
+      headers: this.headers,
+    });
+  }
+
+  setRevisionResource(id: number) {
+    return this.http.post(`recursos/revisado/${id}`, null, {
       headers: this.headers,
     });
   }

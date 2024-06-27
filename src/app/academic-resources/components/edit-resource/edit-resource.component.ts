@@ -51,6 +51,7 @@ export class EditResourceComponent {
   }
 
   saveRecurso() {
+    console.log({ editaDataRecurso: this.editaDataRecurso });
     if (!this.validForm) {
       return;
     }
@@ -64,8 +65,8 @@ export class EditResourceComponent {
       enlaceDelRecurso: this.editaDataRecurso.enlaceDelRecurso,
       nombreRecurso: this.editaDataRecurso.nombreRecurso,
       idDocenteRevisor: this.editaDataRecurso.idDocenteRevisor,
-      observacion: this.editaDataRecurso.observacion,
-      observacionesArchivo: this.editaDataRecurso.observacionesArchivo,
+      observacion: this.editaDataRecurso.observation,
+      observacionesArchivo: this.editaDataRecurso.observationArchivo,
       recurso: this.editaDataRecurso?.recurso,
       extension: this.editaDataRecurso?.extension,
     };
@@ -77,9 +78,11 @@ export class EditResourceComponent {
       recursosEdit.enlaceDelRecurso = null;
     }
 
-    this.recursoService.editarRecurso(recursosEdit).subscribe((res) => {
+    console.log({ recursosEdit });
+
+    /*this.recursoService.editarRecurso(recursosEdit).subscribe((res) => {
       this.CloseModal('recurso editado');
-    });
+    });*/
   }
 
   getData(events: any) {

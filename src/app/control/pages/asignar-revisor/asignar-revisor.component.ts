@@ -14,6 +14,42 @@ import { HomeService } from '../../../home/services/home.service';
 export class AsignarRevisorComponent {
  
 
+  // @Input() filterByStatus: string = '';
+
+  // usuario: string = '';
+  // searchInfo: any;
+  
+  // constructor(
+  //   private recursoService: RecursoService,
+  //   private academic: ResourcesComponent,
+  //   private dialog: MatDialog,
+  //   private homeService: HomeService
+  // ) {}
+
+  // ngOnInit(): void {
+
+  //   this.homeService.obtenerDatosMenu().subscribe((user) => {
+  //     console.log(user);
+  //     this.usuario = user.data.userName;
+  //   });
+  // }
+
+  // selectedTab ='Recursos Académicos';
+ 
+  // emitSearch(res: any) {
+  //   if (res) {
+  //     this.searchInfo = res;
+  //   }
+  // }
+  // reloadTable: boolean = false;
+
+  // loadedTale() {
+  //   this.reloadTable = false;
+  // }
+
+
+
+
   @Input() filterByStatus: string = '';
 
   usuario: string = '';
@@ -116,5 +152,4 @@ export class AsignarRevisorComponent {
   loadedTale() {
     this.reloadTable = false;
   }
-
 }

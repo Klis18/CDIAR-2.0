@@ -28,13 +28,18 @@ export enum RecursosIdEstados {
   ELIMINADO = 4,
 }
 
-export type typeTable = 'Publicado' | 'Mis Recursos' | 'Por Aprobar'| 'Asignar Revisor';
+export type typeTable =
+  | 'Publicado'
+  | 'Mis Recursos'
+  | 'Por Aprobar'
+  | 'Asignar Revisor';
 
 export type ModeFormsResources =
   | 'Edit'
   | 'Add'
   | 'Por Aprobar'
-  | 'Asignar Revisor';
+  | 'Asignar Revisor'
+  | 'Corregir Recurso';
 
 export interface ListaRecurso {
   idRecurso: number;
@@ -43,6 +48,7 @@ export interface ListaRecurso {
   nivel: string;
   fechaCreacion: Date;
   tipoRecurso: string;
+  recursoRevisadoDato?: any;
   usuarioCreacion: string;
   estadoRecurso: EstadosRecursos;
   docenteRevisor: string;
@@ -84,4 +90,5 @@ export interface RecursosGetQuery {
   idAsignatura?: number;
   descripcion?: string;
   idEstado?: number;
+  revisor?: boolean;
 }

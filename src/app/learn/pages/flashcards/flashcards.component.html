@@ -108,6 +108,13 @@
         (loadedTableEmitter)="loadedTale()"
         [loadTable]="reloadTable"
       ></mazos-guardados>
-      } }
+      }  @case ('Estudiados') {
+        <mazos-estudiados
+        [searchData]="searchInfo"
+        [typeTable]="'Estudiados'"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      ></mazos-estudiados>
+      }}
     </div>
   </div>

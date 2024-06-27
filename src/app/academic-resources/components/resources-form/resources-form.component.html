@@ -39,8 +39,7 @@
           >
           </ng-select>
         </div>
-        @if(rol === 'Docente' && modeForm === 'Edit' || rol === 'Docente' &&
-        modeForm === 'Por Aprobar'){
+        @if(canShowStatus()){
         <div class="col-span-12 md:col-span-6">
           <label
             for="estado"
@@ -59,8 +58,7 @@
           >
           </ng-select>
         </div>
-        }
-
+        } @if(selectedActivate(rol)){
         <div
           class="col-span-12"
           [ngClass]="{
@@ -69,21 +67,6 @@
               (rol === 'Docente' && modeForm === 'Por Aprobar')
           }"
         >
-          <label
-            for="nombreRecurso"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Descripción</label
-          >
-          <input
-            type="text"
-            id="nombreRecurso"
-            formControlName="nombreRecurso"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="Descripción"
-          />
-        </div>
-        @if(selectedActivate(rol)){
-        <div class="col-span-12">
           <label
             for="tipoRecurso"
             class="block text-sm font-medium leading-6 text-gray-900"
@@ -99,7 +82,23 @@
             <option value="Archivo">Documento/Imagen</option>
           </select>
         </div>
-        } @if(this.recursoGroupForm.get('tipoRecurso')?.value === 'Link'){
+        }
+
+        <div class="col-span-12">
+          <label
+            for="nombreRecurso"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Descripción</label
+          >
+          <textarea
+            type="text"
+            id="nombreRecurso"
+            formControlName="nombreRecurso"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="Descripción"
+          ></textarea>
+        </div>
+        @if(this.recursoGroupForm.get('tipoRecurso')?.value === 'Link'){
         <div class="col-span-12">
           <label
             for="link"
@@ -125,7 +124,7 @@
             <input
               type="file"
               id="file"
-              (change)="onFileChange($event)"
+              (change)="onFileChange($event, 'recurso')"
               accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .pdf, .xls, .xlsx, .ppt, .pptx"
               class="block w-full text-gray-900"
             />
@@ -138,7 +137,8 @@
             </div>
           </div>
         </div>
-        } @if(this.rol === 'Admin' || showObservation(this.rol)){
+        } @if(this.rol === 'Admin' || showObservation(this.rol) && rol ===
+        'Estudiante'){
         <div class="col-span-12">
           <div class="col-span-4">
             <label
@@ -167,13 +167,13 @@
               class="block text-sm font-medium leading-6 text-gray-900"
               >Observación</label
             >
-            <input
+            <textarea
               type="text"
               id="observacion"
               formControlName="observation"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               placeholder="Observación"
-            />
+            ></textarea>
           </div>
 
           <div class="col-span-4 mt-2">
@@ -186,7 +186,7 @@
               <input
                 type="file"
                 id="file"
-                (change)="onFileChange($event)"
+                (change)="onFileChange($event, 'observationArchivo')"
                 accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .pdf, .xls, .xlsx, .ppt, .pptx"
                 class="block w-full text-gray-900"
               />

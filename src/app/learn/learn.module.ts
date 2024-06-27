@@ -20,6 +20,7 @@ import { EditFlashcardComponent } from './components/edit-flashcard/edit-flashca
 import { EditMazoComponent } from './components/edit-mazo/edit-mazo.component';
 import { ObservacionRechazoComponent } from './components/observacion-rechazo/observacion-rechazo.component';
 import { MazosGuardadosComponent } from './components/mazos-guardados/mazos-guardados.component';
+import { MazosEstudiadosComponent } from './components/mazos-estudiados/mazos-estudiados.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { MazosGuardadosComponent } from './components/mazos-guardados/mazos-guar
     EditFlashcardComponent,
     EditMazoComponent,
     ObservacionRechazoComponent,
-    MazosGuardadosComponent
+    MazosGuardadosComponent,
+    MazosEstudiadosComponent
   ],
   imports: [
     CommonModule,

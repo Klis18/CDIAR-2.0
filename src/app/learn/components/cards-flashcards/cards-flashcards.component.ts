@@ -353,7 +353,11 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   }
 
   redirigirEstudiarFlashcards(item: ListMazo) {
-    this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
+    this.learnService.guardarMazoEstudiado(item.idMazo).subscribe((res) => {
+      console.log('Mazo guardado', res.data);
+      this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
+    });
+    // this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
   }
 
   asignaRevisor(idMazo: number) {

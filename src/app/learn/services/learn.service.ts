@@ -207,4 +207,54 @@ export class LearnService {
     headers: this.headers,
   });
 }
+
+
+//MAZOS ESTUDIADOS
+
+  guardarMazoEstudiado(idMazo:number){
+    return this.http.post(`mazos/estudiado/${idMazo}`,{}, {
+      headers: this.headers,
+    });
+  }
+
+
+  getMazosEstudiados({
+    page,
+    limit,
+    idAsignatura,
+    idNivel,
+    descripcion,
+  }: MazosGetQuery) {
+    if (!page) page = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${page}&limit=${limit}`;
+
+    if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
+    if (idNivel) query += `&idNivel=${idNivel}`;
+    if (descripcion && descripcion !== '')
+      query += `&descripcion=${descripcion}`;
+
+    return this.http.get<ListMazo>(`mazos/estudiados${query}`, {
+      headers: this.headers,
+    });
+  }
+
+  getMazoEstudiado(idMazo:number){
+    return this.http.get<Mazo>(`mazos/estudiado/${idMazo}`, {
+      headers: this.headers,
+    });
+  }
+
+  estudiarMazoGuardado(idMazo:number){
+    return this.http.get(`flashcards/estudiarflashcardpediente/${idMazo}`,{
+      headers: this.headers,
+    });
+  }
+
+  actualizarRepasoFlashcardsGuardadas(update: updateSiguienteRepasoFlashcard){
+    return this.http.put('flashcards/actualizarFlashCardEstudiada',update,{
+      headers: this.headers,
+
+  });
+  }
 }

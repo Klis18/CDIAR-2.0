@@ -10,6 +10,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatBadgeModule} from '@angular/material/badge';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -28,7 +29,9 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatToolbarModule,
     MatListModule,
     MatMenuModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatTooltipModule,
+
   ]
 })
 export class MaterialModule { }
