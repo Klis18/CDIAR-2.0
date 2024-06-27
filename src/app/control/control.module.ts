@@ -12,6 +12,8 @@ import { ListadoCargaDocenteComponent } from './components/listado-carga-docente
 import { LearnModule } from '../learn/learn.module';
 import { ListRevisorComponent } from './components/list-revisor/list-revisor.component';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SelectRevisorComponent } from './components/select-revisor/select-revisor.component';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { SharedModule } from '../shared/shared.module';
     AsignarRevisorComponent,
     CargaHorariaComponent,
     ListadoCargaDocenteComponent,
-    ListRevisorComponent
+    ListRevisorComponent,
+    SelectRevisorComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +32,8 @@ import { SharedModule } from '../shared/shared.module';
     AcademicResourcesModule,
     MaterialModule,
     LearnModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   exports:[
     ListadoAprobacionDocenteComponent

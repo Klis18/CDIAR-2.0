@@ -13,6 +13,7 @@ import { ROLES } from '../../../shared/interfaces/roles.interface';
 import { Estados, IdEstados } from '../../../shared/interfaces/estados.interface';
 import { EditMazoComponent } from '../edit-mazo/edit-mazo.component';
 import { ListRevisorComponent } from '../../../control/components/list-revisor/list-revisor.component';
+import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
 
 interface DataItem {
   title: string;
@@ -361,7 +362,7 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   }
 
   asignaRevisor(idMazo: number) {
-    const dialogRef = this.dialog.open(ListRevisorComponent, {
+    const dialogRef = this.dialog.open(SelectRevisorComponent, {
       width: '40%',
       data: {id: idMazo, opcion:'Mazo'},
     });

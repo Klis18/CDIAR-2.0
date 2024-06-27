@@ -7,7 +7,7 @@ import {
   ListaDocentesPorAprobar,
 } from '../interfaces/lista-docentes.interface';
 import { DocenteAprobacion } from '../interfaces/docente-aprobacion.interface';
-import { AsignaDocenteRevisor } from '../interfaces/asignDocente.interface';
+import { AsignaDocenteRevisor, AsignaDocenteRevisorRecurso, ListaDocenteRevisor, RevisorGetQuery } from '../interfaces/asignDocente.interface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 
 
@@ -60,4 +60,32 @@ export class SecurityService {
       headers: this.headers,
     });
   }
+
+  asignarRevisorRecurso(revisor: AsignaDocenteRevisorRecurso) {
+    return this.http.post<AsignaDocenteRevisorRecurso>('recursos/asignarrevisor',revisor, {
+      headers: this.headers,
+    });
+  }
+
+
+  getDocRevisores({
+    page,
+    limit,
+    nombre
+  }: RevisorGetQuery) {
+    if (!page) page = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${page}&limit=${limit}`;
+  
+  
+    if (nombre && nombre !== '')
+      query += `&nombre=${nombre}`;
+    
+    return this.http.get<ListaDocenteRevisor>(`docentesrevision${query}`, {
+      headers: this.headers,
+    });
+  }
 }
+
+
+

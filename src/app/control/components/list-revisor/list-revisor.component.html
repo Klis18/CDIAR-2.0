@@ -1,60 +1,106 @@
-<div class="pr-7 pl-7 pb-5 pt-2"> 
-    <div class="text-right">
-      <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
-    </div>
-    <p class="text-2xl text-black">Asignar Revisor</p>
-    <hr />
-  </div>
-<div class="flex flex-col p-5">
-    
-    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            
+
+  <div [formGroup]="revisors">
+    <div class="flex flex-col" *ngIf="data.length > 0; else noData">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table class="min-w-full divide-y divide-gray-200">
-                <thead>
-                  <tr>
-                    <th class=" px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                      <p></p>
-                    </th>
-                    <!-- <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                      Cédula</th> -->
-                      <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                        Nombres</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                            <!-- Correo</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                                Telefono</th> -->
-                  </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <tr *ngFor="let item of dataDocentes; let i = index">
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <mat-icon (click)="asignarRevisor(item.idDocente)">add</mat-icon>
-                    </td>
-                    <!-- <td class="px-6 py-4 whitespace-nowrap">{{ item.cedula }}</td> -->
-                    <td class="px-6 py-4 whitespace-nowrap">{{ item.nombresCompletos }}</td>
-                    <!-- <td class="px-6 py-4 whitespace-nowrap">{{ item.correo }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ item.telefono }}</td> -->
-                  </tr>
-                </tbody>
-              </table>      
+              <thead>
+                <tr>
+                  <th class=" px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                    <p>Acciones</p>
+                  </th>
+                  <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                    Nombre</th>
+                  <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                    Cédula</th>
+                  <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                    Correo</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                    Teléfono</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr *ngFor="let item of data; let i = index">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <mat-icon (click)="asignarRevisor(item.idDocente)">add</mat-icon>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ item.nombresCompletos}}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ item.cedula }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ item.correo}}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ item.telefono}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+  
+   <!---PAGINACIÓN-->
+
+   <div class="flex my-3 pr-7 pl-7">
+    <div class="flex-1 ms-2">
+      <select
+        class="p-1 rounded border-2 border-solid border-slate-300"
+        formControlName="limit"
+      >
+        @for (item of limitsOptions; track item) {
+        <option [value]="item.value">{{ item.label }}</option>
+        }
+      </select>
+    </div>
+    <div class="grid justify-end">
+      <nav>
+        <ul class="flex">
+          <li>
+            <a
+              class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out"
+              [ngClass]="{
+                  'cursor-pointer hover:border-gray-400 hover:bg-light-300': pagination.buttonLeft,
+                  'opacity-50 cursor-default': !pagination.buttonLeft,
+                }"
+              (click)="prevPage()"
+            >
+              <span class="material-icons text-sm">keyboard_arrow_left</span>
+            </a>
+          </li>
+          @for (paginate of paginateCurrent; track $index) {
+          <li>
+            <a
+              class="mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm shadow-md transition duration-150 ease-in-out cursor-pointer"
+              [ngClass]="{
+                'bg-blue-800 text-white': paginate === page,
+                'bg-white text-black': paginate !== page
+              }"
+              (click)="changePage(paginate)"
+            >
+              {{ paginate }}
+            </a>
+          </li>
+          }
+          <li>
+            <a
+              class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+              (click)="nextPage()"
+              [ngClass]="{
+                'cursor-pointer hover:border-gray-400 hover:bg-light-300':
+                  pagination.buttonRight,
+                'opacity-50 cursor-default': !pagination.buttonRight
+              }"
+            >
+              <span class="material-icons text-sm">keyboard_arrow_right</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
-  <div class="col-span-4 text-right mt-3 mb-3 pr-5">
-    <button
-    type="button"
-    (click)="cancelar()"
-    class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
-  >
-    <span class="flex items-center justify-center"> Cerrar </span>
-  </button>
-  </div>
+</div>
+
   
   <ng-template #noData>
     <div class="h-24 bg-gray-200 p-7">
       <div class="text-center text-xl">No hay datos disponibles.</div>
     </div>
   </ng-template>
+  </div>

@@ -20,6 +20,7 @@ import { AsignarRevisorComponent } from '../../../control/pages/asignar-revisor/
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ROLES } from '../../interfaces/roles.interface';
 import { ListRevisorComponent } from '../../../control/components/list-revisor/list-revisor.component';
+import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
 
 @Component({
   selector: 'resources-table',
@@ -524,8 +525,8 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
 
 
   asignaRevisor(idRecurso: number) {
-    const dialogRef = this.dialog.open(ListRevisorComponent, {
-      width: '40%',
+    const dialogRef = this.dialog.open(SelectRevisorComponent, {
+      width: '80%',
       data: {id: idRecurso, opcion:'Recursos'},
     });
     dialogRef.afterClosed().subscribe((result) => {

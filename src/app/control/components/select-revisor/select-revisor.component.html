@@ -1,0 +1,21 @@
+<div class="pr-7 pl-7 pb-5 pt-2"> 
+    <div class="text-right">
+      <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
+    </div>
+    <p class="text-2xl text-black">Asignar Revisor</p>
+    <hr />
+  </div>
+  <div class="flex flex-col p-5">
+    <question-filter (search)="emitSearch($event)"></question-filter>
+    <list-revisor [searchData]="searchInfo"  (loadedTableEmitter)="loadedTale()"
+    [loadTable]="reloadTable" ></list-revisor>
+</div>
+<div class="col-span-4 text-right mt-3 mb-3 pr-5">
+    <button
+    type="button"
+    (click)="cancelar()"
+    class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+  >
+    <span class="flex items-center justify-center"> Cerrar </span>
+  </button>
+  </div>
