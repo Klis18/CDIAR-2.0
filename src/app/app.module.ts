@@ -18,10 +18,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocenteModule } from './docente/docente.module';
 import { ResourcesComponent } from './academic-resources/pages/resources/resources.component';
-import { ControlModule } from './control/control.module';
-import { FlashcardsComponent } from './learn/pages/flashcards/flashcards.component';
-import { CardsFlashcardsComponent } from './learn/components/cards-flashcards/cards-flashcards.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ControlModule } from './control/control.module';
+import { AcademicResourcesModule } from './academic-resources/academic-resources.module';
 
 
 registerLocaleData(localeEsEC);
@@ -34,8 +33,8 @@ registerLocaleData(localeEsEC);
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    DocenteModule,
     ControlModule,
+    DocenteModule,
     NgSelectModule,
   ],
   providers: [

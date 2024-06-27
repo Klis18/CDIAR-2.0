@@ -111,6 +111,19 @@
         </a>
       </li>
       }
+      <li class="me-2">
+        <a
+          (click)="selectedTab = 'Recursos revisados'"
+          [ngClass]="{
+            'text-blue-900 border-b-2 border-blue-900':
+              selectedTab === 'Recursos revisados',
+            'hover:text-gray-600 hover:border-gray-300':
+              selectedTab !== 'Recursos revisados'
+          }"
+          class="inline-block p-4 rounded-t-lg"
+          >Recursos revisados
+        </a>
+      </li>
     </ul>
   </div>
   <div class="pt-5 pb-5">
@@ -134,6 +147,13 @@
       (loadedTableEmitter)="loadedTale()"
       [loadTable]="reloadTable"
       [typeTable]="'Por Aprobar'"
+    ></resources-table>
+    } @case ('Recursos revisados') {
+    <resources-table
+      [searchData]="searchInfo"
+      (loadedTableEmitter)="loadedTale()"
+      [loadTable]="reloadTable"
+      [typeTable]="'Recursos revisados'"
     ></resources-table>
     } }
   </div>

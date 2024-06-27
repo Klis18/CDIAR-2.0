@@ -45,8 +45,6 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
   datosRecursos!: any;
   idNiv: string = '';
   rol: string = '';
-  // recursoFile: string | null = null;
-  // extension: string = '';
   listadoExtensionesImages = ['jpg', 'jpeg', 'png'];
   listadoExtensionesArchivos = [
     'docx',
@@ -103,10 +101,11 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       enlaceDelRecurso: ['', Validators.required],
       nombreRecurso: ['', Validators.required],
       idDocenteRevisor: ['', Validators.required],
-      recurso: ['', Validators.required],
-      extension: ['', Validators.required],
+      recurso: [null, Validators.required],
+      extension: [null, Validators.required],
       observation: ['', Validators.required],
-      observationArchivo: [''],
+      observationArchivo: [null, Validators.required],
+      extensionObservaciones: [null, Validators.required],
     });
   }
 
@@ -120,8 +119,19 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
         this.recursoGroupForm.get('enlaceDelRecurso')?.disable();
         this.recursoGroupForm.get('nombreRecurso')?.disable();
         this.recursoGroupForm.get('idDocenteRevisor')?.updateValueAndValidity();
+
         this.recursoGroupForm.get('observation')?.clearValidators();
         this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+
+        this.recursoGroupForm.get('observationArchivo')?.clearValidators();
+        this.recursoGroupForm
+          .get('observationArchivo')
+          ?.updateValueAndValidity();
+
+        this.recursoGroupForm.get('extensionObservaciones')?.clearValidators();
+        this.recursoGroupForm
+          .get('extensionObservaciones')
+          ?.updateValueAndValidity();
 
         break;
       case ROLES.DOCENTE:
@@ -134,20 +144,56 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
             ?.updateValueAndValidity();
           this.recursoGroupForm.get('observation')?.clearValidators();
           this.recursoGroupForm.get('observation')?.updateValueAndValidity();
-        }
-        if (this.modeForm === 'Edit' || this.modeForm === 'Por Aprobar') {
+
+          this.recursoGroupForm.get('observationArchivo')?.clearValidators();
+          this.recursoGroupForm
+            .get('observationArchivo')
+            ?.updateValueAndValidity();
+
+          this.recursoGroupForm
+            .get('extensionObservaciones')
+            ?.clearValidators();
+          this.recursoGroupForm
+            .get('extensionObservaciones')
+            ?.updateValueAndValidity();
+        } else if (
+          this.modeForm === 'Edit' ||
+          this.modeForm === 'Por Aprobar'
+        ) {
           this.recursoGroupForm.get('idDocenteRevisor')?.clearValidators();
           this.recursoGroupForm
             .get('idDocenteRevisor')
             ?.updateValueAndValidity();
           this.recursoGroupForm.get('observation')?.clearValidators();
           this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+
+          this.recursoGroupForm.get('observationArchivo')?.clearValidators();
+          this.recursoGroupForm
+            .get('observationArchivo')
+            ?.updateValueAndValidity();
+
+          this.recursoGroupForm
+            .get('extensionObservaciones')
+            ?.clearValidators();
+          this.recursoGroupForm
+            .get('extensionObservaciones')
+            ?.updateValueAndValidity();
         }
         break;
 
       default:
         this.recursoGroupForm.get('observation')?.clearValidators();
         this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+
+        this.recursoGroupForm.get('observationArchivo')?.clearValidators();
+        this.recursoGroupForm
+          .get('observationArchivo')
+          ?.updateValueAndValidity();
+
+        this.recursoGroupForm.get('extensionObservaciones')?.clearValidators();
+        this.recursoGroupForm
+          .get('extensionObservaciones')
+          ?.updateValueAndValidity();
 
         this.recursoGroupForm.get('idDocenteRevisor')?.clearValidators();
         this.recursoGroupForm.get('idDocenteRevisor')?.updateValueAndValidity();
@@ -177,14 +223,41 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       }
 
       if (this.rol === ROLES.ESTUDIANTE) {
+        console.log({ FORM: this.modeForm });
         if (this.modeForm === 'Edit') {
           this.recursoGroupForm.get('observation')?.disable();
           this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+
+          this.recursoGroupForm.get('idDocenteRevisor')?.disable();
+          this.recursoGroupForm
+            .get('idDocenteRevisor')
+            ?.updateValueAndValidity();
+
+          this.recursoGroupForm.get('observationArchivo')?.disable();
+          this.recursoGroupForm
+            .get('observationArchivo')
+            ?.updateValueAndValidity();
+
+          this.recursoGroupForm.get('extensionObservaciones')?.disable();
+          this.recursoGroupForm
+            .get('extensionObservaciones')
+            ?.updateValueAndValidity();
+        }
+
+        if (this.modeForm === 'Corregir Recurso') {
+          this.recursoGroupForm.get('idDocenteRevisor')?.disable();
+          this.recursoGroupForm
+            .get('idDocenteRevisor')
+            ?.updateValueAndValidity();
         }
       }
       this.observation = data.observacion;
       this.idAssign = data.idAsignatura;
       this.idNiv = data.idNivel;
+    }
+
+    if (this.rol === ROLES.ADMIN) {
+      this.recursoGroupForm.get('enlaceDelRecurso')?.disable();
     }
 
     if (this.rol === ROLES.DOCENTE) {
@@ -262,6 +335,11 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
   }
 
   onFileChange(event: any, field: 'recurso' | 'observationArchivo') {
+    let extensionField: string = '';
+    if (field === 'recurso') extensionField = 'extension';
+    if (field === 'observationArchivo')
+      extensionField = 'extensionObservaciones';
+
     const file = event.target.files[0];
 
     if (file) {
@@ -277,15 +355,13 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
           !this.listadoExtensionesImages.includes(extension) &&
           !this.listadoExtensionesArchivos.includes(extension)
         ) {
-          this.recursoGroupForm.get('extension')?.reset();
+          this.recursoGroupForm.get(extensionField)?.reset();
           this.recursoGroupForm.get(field)?.reset();
         } else if (extension)
-          this.recursoGroupForm.get('extension')?.setValue(extension);
+          this.recursoGroupForm.get(extensionField)?.setValue(extension);
       };
     }
   }
-
-  
 
   resourceName(value: string): string {
     return value.split('/').slice(-1)[0] || '';
@@ -323,7 +399,7 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
     if (this.rol === 'Docente') {
       status = this.modeForm === 'Edit' || this.modeForm === 'Por Aprobar';
     }
-    console.log({ rol: this.rol });
+
     if (this.rol === 'Estudiante') {
       status = this.modeForm === 'Corregir Recurso';
     }
@@ -360,12 +436,33 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
           this.observationView = true;
           this.recursoGroupForm.get('observation')?.enable();
           this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+
+          this.recursoGroupForm
+            .get('observationArchivo')
+            ?.setValidators([Validators.required]);
+          this.recursoGroupForm.get('observationArchivo')?.enable();
+          this.recursoGroupForm
+            .get('extensionObservaciones')
+            ?.setValidators([Validators.required]);
+          this.recursoGroupForm.get('extensionObservaciones')?.enable();
         } else {
           this.recursoGroupForm.get('observation')?.reset();
           this.recursoGroupForm.get('observation')?.clearValidators();
+          this.recursoGroupForm.get('observationArchivo')?.reset();
+          this.recursoGroupForm.get('observationArchivo')?.clearValidators();
+          this.recursoGroupForm.get('extensionObservaciones')?.reset();
+          this.recursoGroupForm
+            .get('extensionObservaciones')
+            ?.clearValidators();
           this.observationView = false;
         }
         this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+        this.recursoGroupForm
+          .get('observationArchivo')
+          ?.updateValueAndValidity();
+        this.recursoGroupForm
+          .get('extensionObservaciones')
+          ?.updateValueAndValidity();
       },
     });
     this.recursoGroupForm.get('idNivel')?.valueChanges.subscribe({
@@ -393,7 +490,14 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
         recurso: this.recursoGroupForm.get('recurso')?.value,
         observation: this.recursoGroupForm.get('observation')?.value,
         idDocenteRevisor: this.recursoGroupForm.get('idDocenteRevisor')?.value,
+        observacionesArchivo:
+          this.recursoGroupForm.get('observationArchivo')?.value,
+        extensionObservaciones: this.recursoGroupForm.get(
+          'extensionObservaciones'
+        )?.value,
+        extension: this.recursoGroupForm.get('extension')?.value,
       };
+      console.log({ form: this.recursoGroupForm, response });
       this.editedDataEmitter.emit(response);
       this.valueFormEmitter.emit(this.recursoGroupForm.valid);
       this.asignaturaEmitter.emit(this.recursoGroupForm.value.idAsignatura);

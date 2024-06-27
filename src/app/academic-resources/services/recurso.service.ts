@@ -73,6 +73,33 @@ export class RecursoService {
     });
   }
 
+  getRecursosReviewed({
+    page,
+    limit,
+    idAsignatura,
+    idNivel,
+    descripcion,
+    idEstado,
+    revisor,
+  }: RecursosGetQuery) {
+    if (!page) page = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${page}&limit=${limit}`;
+
+    if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
+    if (idNivel) query += `&idNivel=${idNivel}`;
+    if (descripcion && descripcion !== '')
+      query += `&descripcion=${descripcion}`;
+    if (idEstado) query += `&idEstado=${idEstado}`;
+    if (revisor) query += `&revisor=${revisor}`;
+    return this.http.get<ListaRecurso>(
+      `recursos/listarecursosrevisados${query}`,
+      {
+        headers: this.headers,
+      }
+    );
+  }
+
   getRecurso(idRecurso: number) {
     return this.http.get<RecursoResponse>(`recursos/obtener/${idRecurso}`, {
       headers: this.headers,

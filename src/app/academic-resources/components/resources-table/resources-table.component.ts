@@ -128,7 +128,7 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
     if (changes['searchData']) {
       this.idAsignatura = this.searchData?.asignaturas;
       this.idNivel = this.searchData?.nivelesType;
-      this.descripcion = this.searchData?.descripcion;
+      this.descripcion = this.searchData?.nombreRecurso;
       this.listaRecursos();
     }
     if (changes['loadTable']) {
@@ -179,7 +179,50 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
       paginate.idEstado = RecursosIdEstados.INGRESADO;
     }
 
+    if (this.typeTable !== 'Recursos revisados') {
+      this.getServiceRecursos(paginate);
+    }
+
+    if (this.typeTable === 'Recursos revisados') {
+      this.getServiceRecursosReviewed(paginate);
+    }
+  }
+
+  getServiceRecursos(paginate: RecursosGetQuery) {
     this.recursoService.getRecursos(paginate).subscribe({
+      next: (res: any) => {
+        let currentData: any[] = [];
+
+        if (res?.data) {
+          currentData = res?.data.filter((d: any) => {
+            if (this.typeTable === 'Asignar Revisor') {
+              if (d?.docenteRevisor === '') {
+                return d;
+              }
+            } else {
+              return d;
+            }
+          });
+        }
+        this.data = currentData;
+        if (this.data.length > 0) {
+          this.nombreRecurso = res.data.nombreRecurso;
+          this.nivel = res.data.nivel;
+          this.asignatura = res.data.asignatura;
+          this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
+        }
+        if (this.data?.length === 0 || !this.data) {
+          this.paginateCurrent = [1];
+        }
+      },
+      complete: () => {
+        this.loadedTableEmitter.emit(false);
+      },
+    });
+  }
+
+  getServiceRecursosReviewed(paginate: RecursosGetQuery) {
+    this.recursoService.getRecursosReviewed(paginate).subscribe({
       next: (res: any) => {
         let currentData: any[] = [];
 

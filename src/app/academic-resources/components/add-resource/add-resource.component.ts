@@ -35,7 +35,6 @@ export class AddResourceComponent{
       extension: this.datosRecursos.extension,
     };
 
-    console.log(recursos);
     if (recursos?.tipoRecurso === 'Link') {
       recursos.recurso = null;
       recursos.extension = null;

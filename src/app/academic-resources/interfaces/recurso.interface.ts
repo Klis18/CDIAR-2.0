@@ -32,14 +32,16 @@ export type typeTable =
   | 'Publicado'
   | 'Mis Recursos'
   | 'Por Aprobar'
-  | 'Asignar Revisor';
+  | 'Asignar Revisor'
+  | 'Recursos revisados';
 
 export type ModeFormsResources =
   | 'Edit'
   | 'Add'
   | 'Por Aprobar'
   | 'Asignar Revisor'
-  | 'Corregir Recurso';
+  | 'Corregir Recurso'
+  | 'Recursos revisados';
 
 export interface ListaRecurso {
   idRecurso: number;
@@ -77,8 +79,9 @@ export interface RecursoEdit {
   enlaceDelRecurso?: string | null;
   nombreRecurso: string;
   idDocenteRevisor: string;
-  observacion: string;
-  observacionesArchivo: string;
+  observacion?: string | null;
+  observacionesArchivo?: string | null;
+  extensionObservaciones?: string | null;
   recurso?: string | null;
   extension?: string | null;
 }

@@ -29,6 +29,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
   ],
   exports: [
     ResourcesTableComponent,
+    
   ],
 })
+
 export class AcademicResourcesModule {}
