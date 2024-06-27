@@ -19,6 +19,7 @@ import { ResourcesComponent } from '../../pages/resources/resources.component';
 import { AsignarRevisorComponent } from '../../../control/pages/asignar-revisor/asignar-revisor.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ROLES } from '../../interfaces/roles.interface';
+import { ListRevisorComponent } from '../../../control/components/list-revisor/list-revisor.component';
 
 @Component({
   selector: 'resources-table',
@@ -112,10 +113,10 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
         this.iconActionTable = 'assignment_turned_in';
         break;
 
-      case 'Asignar Revisor':
-        this.tituloRecurso = 'Asignar Revisor';
-        this.iconActionTable = 'perm_contact_calendar';
-        break;
+      // case 'Asignar Revisor':
+      //   this.tituloRecurso = 'Asignar Revisor';
+      //   this.iconActionTable = 'perm_contact_calendar';
+      //   break;
 
       default:
         this.tituloRecurso = 'Editar Recurso';
@@ -128,7 +129,7 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
     if (changes['searchData']) {
       this.idAsignatura = this.searchData?.asignaturas;
       this.idNivel = this.searchData?.nivelesType;
-      this.descripcion = this.searchData?.nombreRecurso;
+      this.descripcion = this.searchData?.descripcion;
       this.listaRecursos();
     }
     if (changes['loadTable']) {
@@ -475,12 +476,12 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
             item.estadoRecurso !== 'Aprobado' && item.docenteRevisor !== '';
         }
         break;
-      case 'Admin':
-        status =
-          item.docenteRevisor === '' &&
-          item.estadoRecurso !== 'Aprobado' &&
-          this.selectedTab2 === 'Recursos Académicos';
-        break;
+      // case 'Admin':
+      //   status =
+      //     item.docenteRevisor === '' &&
+      //     item.estadoRecurso !== 'Aprobado' &&
+      //     this.selectedTab2 === 'Recursos Académicos';
+      //   break;
     }
 
     return status;
@@ -512,6 +513,20 @@ export class ResourcesTableComponent implements OnInit, OnChanges{
         titulo: 'Corregir Recurso',
         typeModal: this.typeTable,
       },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.listaRecursos();
+      }
+    });
+  }
+
+
+
+  asignaRevisor(idRecurso: number) {
+    const dialogRef = this.dialog.open(ListRevisorComponent, {
+      width: '40%',
+      data: {id: idRecurso, opcion:'Recursos'},
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

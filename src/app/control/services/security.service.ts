@@ -8,6 +8,7 @@ import {
 } from '../interfaces/lista-docentes.interface';
 import { DocenteAprobacion } from '../interfaces/docente-aprobacion.interface';
 import { AsignaDocenteRevisor } from '../interfaces/asignDocente.interface';
+import { Docente } from '../../academic-resources/interfaces/docente.interface';
 
 
 @Injectable({
@@ -47,8 +48,15 @@ export class SecurityService {
     });
   }
 
-  asignarRevisor(revisor: AsignaDocenteRevisor) {
+  asignarRevisorMazo(revisor: AsignaDocenteRevisor) {
     return this.http.post<AsignaDocenteRevisor>('mazos/asignarrevisor',revisor, {
+      headers: this.headers,
+    });
+  }
+
+
+  getDocentesRevision() {
+    return this.http.get<Docente>('docentesrevision', {
       headers: this.headers,
     });
   }

@@ -362,8 +362,8 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
 
   asignaRevisor(idMazo: number) {
     const dialogRef = this.dialog.open(ListRevisorComponent, {
-      width: '80%',
-      data: {id: idMazo},
+      width: '40%',
+      data: {id: idMazo, opcion:'Mazo'},
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

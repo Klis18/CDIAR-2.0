@@ -10,7 +10,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class ListRevisorComponent implements OnInit{
 
   dataDocentes: any;
-  idMazo = this.data.id;
+  id = this.data.id;
+  opcion = this.data.opcion;
 
   constructor(private securityService: SecurityService,
               @Inject (MAT_DIALOG_DATA) public data: any,
@@ -20,24 +21,43 @@ export class ListRevisorComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.getListaDocentes(); 
+    // this.getListaDocentes(); 
+    this.getDocentesRevision();
   }
 
-  getListaDocentes(){
-    this.securityService.getListaDocentes().subscribe((res) => {
+  // getListaDocentes(){
+  //   this.securityService.getListaDocentes().subscribe((res) => {
+  //     this.dataDocentes = res.data;
+  //     console.log(res);
+  //   });
+  // }
+
+  getDocentesRevision(){
+    this.securityService.getDocentesRevision().subscribe((res) => {
       this.dataDocentes = res.data;
       console.log(res);
     });
+  
   }
 
   asignarRevisor(idDocente: string){
-    const revisor = {
-      idMazo: this.idMazo,
-      idDocenteRevisor: idDocente
+    if(this.opcion === 'Mazo'){
+      const revisor = {
+        idMazo: this.id,
+        idDocenteRevisor: idDocente
+      }
+      this.securityService.asignarRevisorMazo(revisor).subscribe((res) => {
+        this.CloseModal('Revisor asignado exitosamente');      
+      });
+    }else if(this.opcion === 'Recursos'){
+      const revisor = {
+        idRecurso: this.id,
+        idDocenteRevisor: idDocente
+      }
+      
     }
-    this.securityService.asignarRevisor(revisor).subscribe((res) => {
-      this.CloseModal('Revisor asignado exitosamente');      
-    });
+    
+    
   }
 
   cancelar() {
