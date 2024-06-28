@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SimulatorsRoutingModule } from './simulators-routing.module';
 import { SimulatorsComponent } from './pages/simulators/simulators.component';
 import { CardsSimulatorsComponent } from './components/cards-simulators/cards-simulators.component';
+import { MaterialModule } from '../material/material.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { CardsSimulatorsComponent } from './components/cards-simulators/cards-si
   ],
   imports: [
     CommonModule,
-    SimulatorsRoutingModule
+    SimulatorsRoutingModule,
+    MaterialModule
   ]
 })
 export class SimulatorsModule { }

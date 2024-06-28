@@ -7,7 +7,6 @@ import { HomeService } from '../../../home/services/home.service';
   styles: ``,
 })
 export class SidebarComponent implements OnInit {
-  //private homeService = inject(HomeService);
   rol: string = '';
 
   constructor(private homeService: HomeService){}
@@ -82,9 +81,9 @@ export class SidebarComponent implements OnInit {
       route: 'control-security',
       expanded: false,
       subOptions: [
-        { name: 'Aprobación Docente', route: 'control-security/aprobar-docentes' },
+        { name: 'Aprobación Docente', route: '/control-security/aprobar-docentes/' },
         { name: 'Malla Académica', route: '' },
-        { name: 'Carga Horaria', route: 'control-security/carga-horaria'},
+        { name: 'Carga Horaria', route: '/control-security/carga-horaria/'},
         { name: 'Asignación Revisor', route: '/control-security/asignar-revisor/' },
       ],
       roles: ['Admin'],
@@ -95,8 +94,8 @@ export class SidebarComponent implements OnInit {
       route: '/reports',
       expanded: false,
       subOptions: [
-        { name: 'Reporte de Usuarios', route: 'reports/user-report' },
-        { name: 'Reporte de Simuladores', route: 'reports/simulators-report' },
+        { name: 'Reporte de Usuarios', route: '/reports/user-report' },
+        { name: 'Reporte de Simuladores', route: '/reports/simulators-report' },
       ],
       roles: ['Admin'],
     },

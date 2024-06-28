@@ -9,7 +9,7 @@
         <mat-icon *ngIf="option.subOptions.length > 0" class="text-right">keyboard_arrow_down</mat-icon>
       </a>
       <div *ngFor="let subOption of option.subOptions" [ngClass]="{ hidden: !option.expanded }"
-        class="ml-6 my-1 hover:bg-gray-700 p-2 rounded">
+        class="ml-6 my-1 hover:bg-blue-900 p-2 rounded">
         <a [routerLink]="subOption.route">{{ subOption.name }}</a>
       </div>
     </div>

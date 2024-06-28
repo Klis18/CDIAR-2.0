@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ResourcesFormComponent } from './components/resources-form/resources-form.component';
 import { ResourcesComponent } from './pages/resources/resources.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AcademicResourcesRoutingModule } from './academic-resources-routing.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     NgSelectModule,
     SharedModule,
+    AcademicResourcesRoutingModule
   ],
   exports: [
     ResourcesTableComponent,
