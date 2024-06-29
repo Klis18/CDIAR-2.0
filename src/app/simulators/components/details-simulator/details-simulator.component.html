@@ -1,0 +1,42 @@
+<div class="p-5"> 
+    <div class="text-right">
+      <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
+    </div>
+    <p class="text-xl">Detalles Simulador</p>
+    <hr />
+    <mat-dialog-content>
+      <div class="mt-5 mb-5">
+        <p><b>Nivel: </b>{{nivel}}</p>
+        <p><b>Asignatura: </b>{{asignatura}}</p>
+        <p><b>Propietario: </b>{{ datosSimulador.usuarioCreador}}</p>
+        <p>
+          <b>Fecha registro: </b>{{ datosSimulador.fechaCreacion | date : "d/M/yyyy" }}
+        </p>
+        <p><b>Cantidad preguntas: </b>{{ datosSimulador.cantidadPreguntas }}</p>
+        <p><b>Preguntas: </b></p>
+        <div *ngFor="let item of datosSimulador.preguntas">
+          <p>{{ item }}</p>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <div class="col-span-4">
+      <button
+        type="button"
+        class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2.5 text-center me-2 mb-2"
+      >
+        <span class="flex items-center justify-center">
+          <mat-icon>bookmark</mat-icon>
+          Guardar
+        </span>
+      </button>
+      <button
+        type="button"
+        class="ml-2 text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2.5 text-center me-2 mb-2"
+      >
+        <span class="flex items-center justify-center">
+          <mat-icon>play_arrow</mat-icon>
+          Estudiar
+        </span>
+      </button>
+    </div>
+  </div>

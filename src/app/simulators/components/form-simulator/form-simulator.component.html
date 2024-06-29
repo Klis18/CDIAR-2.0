@@ -1,0 +1,82 @@
+<mat-dialog-content>
+    <div class="pr-7 pl-7">
+      <form [formGroup]="simulatorGroupForm">
+        <div class="grid grid-cols-5 gap-4 mt-5">
+            <div class="col-span-2">
+              <label
+                for="nivel"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Nivel</label
+              >
+              <select *ngIf="selectedActivate(rol)"
+                id="niveles"
+                formControlName="idNivel"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                (change)="onNivelChange($event)"
+              >
+                <option value="" disabled selected>Nivel</option>
+                <option *ngFor="let nivel of nivelesType" [value]="nivel.value">
+                  {{ nivel.label }}
+                </option>
+              </select>
+              
+              <input *ngIf="onlyViewACtivate(rol)"
+              type="text"
+              id="nivelSelected"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              [value]="descripcionNivel"
+              [readonly]="rol == 'Admin' || rol == 'Docente'"
+             />
+            </div>
+      
+            <div class="col-span-3">
+              <label
+                for="asignatura"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Asignatura</label
+              >
+              <select *ngIf="selectedActivate(rol)"
+                id="asignaturas"
+                formControlName="idAsignatura"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              >
+                <option value="" disabled selected>Asignatura</option>
+                <option
+                  *ngFor="let asignatura of asignaturas"
+                  [value]="asignatura.value"
+                >
+                  {{ asignatura.label }}
+                </option>
+              </select>
+    
+              <input *ngIf="onlyViewACtivate(rol)"
+              type="text"
+              id="asignatureSelected"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              [value]="nombreAsignatura"
+              [readonly]="rol == 'Admin' || rol == 'Docente'"
+             />
+            </div>
+      
+           
+          <div class="col-span-5">
+            <label
+              for="nombreMazo"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Título Simulador</label
+            >
+            <input
+              type="text"
+              id="nombreSimulador"
+              formControlName="nombreSimulador"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Título Simulador"
+              [readonly]="onlyViewACtivate(rol)"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+    
+  </mat-dialog-content>
+  

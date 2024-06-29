@@ -70,7 +70,8 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   flashCards!: FormGroup;
   creadorMazo: string = '';
 
-  colors = ['#67E8A2', '#67E8DA', '#C883F1', '#CB48A0', '#7FCDE8', '#E4E87F', '#E8BB7F']; // Puedes cambiar estos colores
+  colors = ['#67E8A2', '#67E8DA', '#C883F1', '#CB48A0', '#7FCDE8', '#2E95A3', '#E8BB7F']; 
+
 
   constructor(private learnService:LearnService,
               private dialog: MatDialog,

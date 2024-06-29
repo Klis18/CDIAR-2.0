@@ -14,3 +14,101 @@
       </li>
     </ol>
   </nav>
+
+  <div class="m-7">
+    <div class="mt-5 mb-5">
+      <span class="text-3xl">Repositorio de Simuladores</span>
+      <button type="button" (click)="openDialog()"
+        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+        <span class="flex items-center justify-center">
+          <mat-icon>add</mat-icon>
+          Nuevo
+        </span>
+      </button>
+    </div>
+    <div class="mt-10">
+     <search-filters (search)="emitSearch($event)"></search-filters>
+    </div>
+  
+    <div class="text-sm font-medium text-center text-gray-700 border-b border-gray-200">
+      <ul class="flex flex-wrap -mb-px">
+        <li class="me-2">
+          <span (click)="selectedTab = 'Publicado'"
+            [ngClass]="{'text-blue-900 active border-b-2 border-blue-900': selectedTab === 'Publicado', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Publicado'}"
+            class="inline-block p-4 rounded-t-lg">Publicados</span>
+        </li>
+        <li class="me-2">
+          <span (click)="selectedTab = 'Mis Simuladores'"
+            [ngClass]="{'text-blue-900 border-b-2 border-blue-900': selectedTab === 'Mis Simuladores', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Mis Simuladores'}"
+            class="inline-block p-4 rounded-t-lg">Mis Simuladores</span>
+        </li>
+        @if(rol == 'Docente'){
+          <li class="me-2">
+            <a
+              (click)="selectedTab = 'Por Aprobar'"
+              [ngClass]="{
+                'text-blue-900 border-b-2 border-blue-900':
+                  selectedTab === 'Por Aprobar',
+                'hover:text-gray-600 hover:border-gray-300':
+                  selectedTab !== 'Por Aprobar'
+              }"
+              class="inline-block p-4 rounded-t-lg"
+              >Por Aprobar
+            </a>
+          </li>
+          }
+          <li class="me-2">
+            <span (click)="selectedTab = 'Guardados'"
+              [ngClass]="{'text-blue-900 border-b-2 border-blue-900': selectedTab === 'Guardados', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Guardados'}"
+              class="inline-block p-4 rounded-t-lg">Guardados</span>
+          </li>
+          <li class="me-2">
+            <span (click)="selectedTab = 'Estudiados'"
+              [ngClass]="{'text-blue-900 border-b-2 border-blue-900': selectedTab === 'Estudiados', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Estudiados'}"
+              class="inline-block p-4 rounded-t-lg">Estudiados</span>
+          </li>
+      </ul>
+    </div>
+
+    <div class="pt-5 pb-5">
+      @switch (selectedTab) { @case ('Publicado') {
+         <cards-simulators
+        [searchData]="searchInfo"
+        [typeTable]="'Publicado'"
+        [filterByStatus]="'Aprobado'"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      ></cards-simulators>
+      } @case ('Mis Simuladores') {
+      <cards-simulators
+        [searchData]="searchInfo"
+        [typeTable]="'Mis Simuladores'"
+        [filterByUser]="usuario"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      ></cards-simulators>
+      } @case ('Por Aprobar') {
+        <cards-simulators
+        [searchData]="searchInfo"
+        [typeTable]="'Por Aprobar'"
+        [filterByRevisor]="usuario"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      ></cards-simulators>
+      } @case ('Guardados') {
+        <!-- <mazos-guardados
+        [searchData]="searchInfo"
+        [typeTable]="'Guardados'"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      ></mazos-guardados> -->
+      }  @case ('Estudiados') {
+        <!-- <mazos-estudiados
+        [searchData]="searchInfo"
+        [typeTable]="'Estudiados'"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      ></mazos-estudiados> -->
+      }}
+    </div>
+  </div>
