@@ -5,11 +5,16 @@ import { SimulatorsRoutingModule } from './simulators-routing.module';
 import { SimulatorsComponent } from './pages/simulators/simulators.component';
 import { CardsSimulatorsComponent } from './components/cards-simulators/cards-simulators.component';
 import { MaterialModule } from '../material/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { DetailsSimulatorComponent } from './components/details-simulator/details-simulator.component';
 import { AddSimulatorComponent } from './components/add-simulator/add-simulator.component';
 import { FormSimulatorComponent } from './components/form-simulator/form-simulator.component';
 import { SharedModule } from '../shared/shared.module';
+import { QuestionsSimulatorFormComponent } from './components/questions-simulator-form/questions-simulator-form.component';
+import { AddQuestionSimulatorComponent } from './components/add-question-simulator/add-question-simulator.component';
+import { QuestionsSimulatorsComponent } from './pages/questions-simulators/questions-simulators.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { QuestionsSimulatorsTablesComponent } from './components/questions-simulators-tables/questions-simulators-tables.component';
 
 
 @NgModule({
@@ -19,13 +24,19 @@ import { SharedModule } from '../shared/shared.module';
     DetailsSimulatorComponent,
     AddSimulatorComponent,
     FormSimulatorComponent,
+    QuestionsSimulatorFormComponent,
+    AddQuestionSimulatorComponent,
+    QuestionsSimulatorsComponent,
+    QuestionsSimulatorsTablesComponent,
   ],
   imports: [
     CommonModule,
     SimulatorsRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgSelectModule,
+    FormsModule,
   ]
 })
 export class SimulatorsModule { }

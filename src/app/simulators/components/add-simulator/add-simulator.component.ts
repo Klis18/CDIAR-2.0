@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { SimulatorsService } from '../../services/simulators.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NewSimulator } from '../../interfaces/simulators.interface';
 
 @Component({
@@ -14,7 +14,7 @@ export class AddSimulatorComponent {
   asignaturas: { label: string; value: string }[] = [];
 
   constructor(private simulatorService:SimulatorsService,
-              private dialogRef: MatDialogRef<AddSimulatorComponent>
+              private dialogRef: MatDialogRef<AddSimulatorComponent>,
   ) {}
   
   saveMazo(){

@@ -12,7 +12,9 @@ export interface ListSimulators{
 
 export interface Simulator {
     idAsignatura: number;
-    idNivel: number;    
+    idNivel: number; 
+    nivel: string;
+    asignatura: string;   
     usuarioCreador: string;
     fechaCreacion: string;
     estado: string;
@@ -31,6 +33,13 @@ export interface SimulatorsGetQuery {
     idEstado?: number;
     nombreDocenteRevisor?: string;
     usuarioCreador?: boolean;
+}
+
+export interface QuestionsSimulatorsGetQuery {
+    idSimulador: number;
+    page: number;
+    limit: number;
+    pregunta?: string;
 }
 
 export interface NewSimulator{
@@ -52,3 +61,16 @@ export interface OptionsQuestion{
 }
 
 export type typeTable = 'Publicado' | 'Mis Simuladores' | 'Por Aprobar' | 'Simuladores' | 'Guardados' | 'Estudiados';
+
+export interface SimulatorsQuestions{
+    idPregunta: number;
+    pregunta: string;
+    tipoPregunta: string;
+    fechaCreacion: Date;
+    opcionesRespuestas: OptionsQuestion[];
+}
+
+export interface TipoPreguntas{
+    idTipoPregunta: number;
+    tipoPregunta: string;
+}

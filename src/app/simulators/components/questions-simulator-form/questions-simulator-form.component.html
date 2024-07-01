@@ -1,0 +1,163 @@
+<mat-dialog-content>
+    <div class="pr-7 pl-7">
+      <form [formGroup]="simulatorQuestionGroupForm">
+        <div class="grid grid-cols-12 gap-4 mt-3">
+          <div class="col-span-12 md:col-span-4">
+            <label
+              for="Nivel"
+              class="text-sm font-medium leading-6 text-gray-900"
+              >{{nivel}}</label
+            >
+          </div>
+  
+          <div class="col-span-12 md:col-span-8">
+            <label
+              for="Asignatura"
+              class="text-sm font-medium leading-6 text-gray-900"
+              >Asignatura: </label
+            >
+            <span class="text-sm">{{asignatura}}</span>
+
+          </div>
+          <div class="col-span-12">
+            <label
+              for="pregunta"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Pregunta</label
+            >
+            <input
+              type="text"
+              id="pregunta"
+              formControlName="pregunta"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Pregunta"
+            />
+          </div>
+           @if(selectedActivate(rol)){
+          <div
+            class="col-span-12"
+            [ngClass]="{
+              ' md:col-span-6':
+                (rol === 'Docente' && modeForm === 'Edit') ||
+                (rol === 'Docente' && modeForm === 'Por Aprobar')
+            }"
+          >
+            <label
+              for="tipoPregunta"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Tipo Pregunta</label
+            >
+            <ng-select
+              [items]="tiposPreguntasType"
+              bindLabel="label"
+              bindValue="value"
+              [searchable]="false"
+              placeholder="Tipo Pregunta"
+              formControlName="idTipoPregunta"
+              notFoundText="No hay tipos de preguntas"
+              class="ng-custom"
+              (change)="onChange($event)"
+            > 
+            </ng-select>
+          </div>
+          }
+
+          <!---PREGUNTAS SIMPLES-->
+          @if(questionType === 2){
+            <div class="col-span-12">
+              <label
+                for="respuesta"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Respuesta</label
+              >
+              <ul class="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg">
+                <li class="w-full border-b border-gray-200 rounded-t-lg">
+                    <div class="flex items-center ps-3">
+                        <input id="radio1" [value]="true" type="radio" formControlName="radio1" name="radio"  [(ngModel)]="radioSeleccionado1" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                        <label for="list-radio-answer1" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">
+                          <input type="text" class="w-full" placeholder="Opción 1" formControlName="opcionSimple1">
+                        </label>
+                    </div>
+                </li>
+                <li class="w-full border-b border-gray-200 rounded-t-lg">
+                    <div class="flex items-center ps-3">
+                        <input id="radio2" [value]="true" type="radio" name="radio" formControlName="radio2"  [(ngModel)]="radioSeleccionado2" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                        <label for="list-radio-answer2" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">
+                          <input type="text" class="w-full" placeholder="Opción 2" formControlName="opcionSimple2">
+                        </label>
+                    </div>
+                </li>
+                <li class="w-full border-b border-gray-200 rounded-t-lg">
+                    <div class="flex items-center ps-3">
+                        <input id="radio3" [value]="true" type="radio" name="radio" formControlName="radio3" [(ngModel)]="radioSeleccionado3" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                        <label for="list-radio-answer3" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">
+                          <input type="text" class="w-full" placeholder="Opción 3" formControlName="opcionSimple3">
+                        </label>
+                    </div>
+                </li>
+                <li class="w-full border-b border-gray-200 rounded-t-lg">
+                    <div class="flex items-center ps-3">
+                        <input id="radio4" [value]="true" type="radio" name="radio" formControlName="radio4" [(ngModel)]="radioSeleccionado4" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                        <label for="list-radio-answer4" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">
+                          <input type="text" class="w-full" placeholder="Opción 4" formControlName="opcionSimple4">
+                        </label>
+                    </div>
+                </li>
+            </ul>
+            </div>
+          }
+          
+          <!------FIN PREGUNTAS SIMPLES-->
+
+
+          <!---PREGUNTAS SELECCIÓN MÚLTIPLE-->
+          @if(questionType === 1){
+            <div class="col-span-12">
+              <label
+              for="respuestas"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Respuestas</label
+            >
+            <ul class="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg">
+              <li class="w-full border-b border-gray-200 rounded-t-lg">
+                  <div class="flex items-center ps-3">
+                      <input id="checkbox1" type="checkbox" [value]="true" formControlName="checkbox1" [(ngModel)]="checkboxSeleccionado1"  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                      <label for="answer-checkbox1" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">
+                        <input type="text" class="w-full" placeholder="Opción 1" formControlName="opcionMultiple1">
+                      </label>
+                  </div>
+              </li>
+              <li class="w-full border-b border-gray-200 rounded-t-lg">
+                  <div class="flex items-center ps-3">
+                      <input id="checkbox2" type="checkbox" [value]="true" formControlName="checkbox2" [(ngModel)]="checkboxSeleccionado2" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                      <label for="answer-checkbox2" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">
+                        <input type="text" class="w-full" placeholder="Opción 2" formControlName="opcionMultiple2">
+                      </label>
+                  </div>
+              </li>
+              <li class="w-full border-b border-gray-200 rounded-t-lg">
+                  <div class="flex items-center ps-3">
+                      <input id="checkbox3" type="checkbox" [value]="true" formControlName="checkbox3" [(ngModel)]="checkboxSeleccionado3" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                      <label for="answer-checkbox3" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">
+                        <input type="text" class="w-full" placeholder="Opción 3" formControlName="opcionMultiple3">
+                      </label>
+                  </div>
+              </li>
+              <li class="w-full border-b border-gray-200 rounded-t-lg">
+                  <div class="flex items-center ps-3">
+                      <input id="checkbox4" type="checkbox" [value]="true" formControlName="checkbox4" [(ngModel)]="checkboxSeleccionado4" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                      <label for="answer-checkbox4" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">
+                        <input type="text" class="w-full" placeholder="Opción 4" formControlName="opcionMultiple4">
+                      </label>
+                  </div>
+              </li>
+          </ul>
+            </div>
+          }
+          <!-------FIN PREGUNTAS SELECCIÓN MÚLTIPLE-->
+          
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
+  

@@ -40,8 +40,8 @@ const routes: Routes = [
         loadChildren: () => import('./learn/learn.module').then(m => m.LearnModule),
       },
       {
-        path: 'simulators',
-        component: SimulatorsComponent,
+        path: 'simuladores',
+        // component: SimulatorsComponent,
         loadChildren: () => import('./simulators/simulators.module').then(m => m.SimulatorsModule),
       },
       {

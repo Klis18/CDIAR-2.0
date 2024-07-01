@@ -72,7 +72,9 @@ export class LearnService {
 
     if (!limit) limit = 5;
 
-    let query: string = `?id=${id}&pages=${page}&limit=${limit}&preguntaFlashcard=${preguntaFlashcard}`;
+    let query: string = `?id=${id}&pages=${page}&limit=${limit}`;
+    if (preguntaFlashcard && preguntaFlashcard !== '')
+      query += `&preguntaFlashcard=${preguntaFlashcard}`;
 
     return this.http.get<PreguntasMazo>(`flashcards/flashcardsMazo${query}`, {
       headers: this.headers,

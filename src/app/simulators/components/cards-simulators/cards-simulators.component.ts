@@ -249,6 +249,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     });
   }
 
+  //TODO:
   // eliminarSimulador(idSimulador: number) {
   //   const dialogRef = this.openDialog(
   //     '¿Estás seguro de eliminar este simulador?'
@@ -276,7 +277,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     }
   }
 
-
+//TODO:
   // canApprove(item: any): boolean {
   //   let isReviewer = false;
   //   if (this.userRol === ROLES.DOCENTE) {
@@ -289,6 +290,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   //   return isReviewer;
   // }
 
+  //TODO:
   // canEdit(item: any): boolean {
   //   const isCreator =
   //     item.usuarioCreacion == this.usuario &&
@@ -303,6 +305,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   //   return isCreator || isAdmin;
   // }
 
+  //TODO:
   // editarMazo(idMazo: number, item: any) {
   //   if (this.canEdit(item)) {
   //     if (item.usuarioCreador == this.usuario) {
@@ -343,9 +346,10 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     });
   }
 
-  // redirigirPreguntas(item: ListMazo) {
-  //   this.router.navigate(['/learn/preguntas',{id: item.idMazo, mazo: item.nombreMazo}]);
-  // }
+  //TODO:
+  redirigirPreguntas(item: ListSimulators) {
+    this.router.navigate(['/simuladores/preguntas',{id: item.idSimulador, simulador: item.nombreSimulador}]);
+  }
 
   // redirigirEstudiarFlashcards(item: ListMazo) {
   //   this.learnService.guardarMazoEstudiado(item.idMazo).subscribe((res) => {
@@ -354,6 +358,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   //   });
   // }
 
+  //TODO:
   // asignaRevisor(idMazo: number) {
   //   const dialogRef = this.dialog.open(SelectRevisorComponent, {
   //     width: '40%',
@@ -366,6 +371,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   //   });
   // }
 
+  //TODO:
   // saveMazoToReview(idMazo: number) {
   //   this.learnService.saveMazoToReview(idMazo).subscribe(() => {
   //     console.log('Mazo guardado para futura revisión');

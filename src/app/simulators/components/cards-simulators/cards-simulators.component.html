@@ -9,7 +9,7 @@
           <div [ngStyle]="{ background: getGradient(i) }" class="h-32"></div>
           <div class="grid grid-cols-4 gap-4 m-4">
             <div class="col-span-4">
-              <button>
+              <button (click)="redirigirPreguntas(item)">
                 <div class=" text-xl font-bold tracking-tight text-gray-900">
                   {{ item.nombreSimulador }}
                 </div>

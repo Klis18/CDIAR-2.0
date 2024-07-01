@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListSimulators, NewSimulator, NewSimulatorQuestion, Simulator, SimulatorsGetQuery } from '../interfaces/simulators.interface';
+import { ListSimulators, NewSimulator, NewSimulatorQuestion, QuestionsSimulatorsGetQuery, Simulator, SimulatorsGetQuery, SimulatorsQuestions, TipoPreguntas } from '../interfaces/simulators.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 import { Estado } from '../../academic-resources/interfaces/estados.interface';
@@ -92,4 +92,23 @@ export class SimulatorsService {
     });
   }
 
+  getPreguntasSimulador({ idSimulador, page, limit, pregunta}: QuestionsSimulatorsGetQuery) {
+    if (!page) page = 1;
+
+    if (!limit) limit = 5;
+
+    let query: string = `?idSimulador=${idSimulador}&pages=${page}&limit=${limit}`;
+    if (pregunta && pregunta !== '')
+      query += `&pregunta=${pregunta}`;
+
+    return this.http.get<SimulatorsQuestions>(`simuladores/obtenerPreguntasRespuestaSimulador${query}`, {
+      headers: this.headers,
+    });
+  }
+
+  getTiposPreguntas() {
+    return this.http.get<TipoPreguntas>('simuladores/tipospreguntas', {
+      headers: this.headers,
+    });
+  }
 }
