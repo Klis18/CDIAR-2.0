@@ -3,6 +3,7 @@ import { QuestionsSimulatorsGetQuery } from '../../interfaces/simulators.interfa
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SimulatorsService } from '../../services/simulators.service';
 import { MatDialog } from '@angular/material/dialog';
+import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
 
 @Component({
   selector: 'questions-simulators-table',
@@ -160,14 +161,14 @@ export class QuestionsSimulatorsTablesComponent implements OnInit, OnChanges{
     return arreglo;
   }
 
-  // openDialog(message: string) {
-  //   return this.dialog.open(CardConfirmComponent, {
-  //     data: {
-  //       mensaje: message,
-  //     },
-  //     width: '30%',
-  //   });
-  // }
+  openDialog(message: string) {
+    return this.dialog.open(CardConfirmComponent, {
+      data: {
+        mensaje: message,
+      },
+      width: '30%',
+    });
+  }
 
 
   prevPage() {
@@ -186,21 +187,21 @@ export class QuestionsSimulatorsTablesComponent implements OnInit, OnChanges{
 
 
  
-  // eliminarFlashcard(idFlashcard: number) {
-  //   const dialogRef = this.openDialog(
-  //     '¿Estás seguro de eliminar esta flashcard?'
-  //   );
-  //   dialogRef.afterClosed().subscribe((res) => {
-  //     if (res) {
-  //       console.log('Flashcard a eliminar', idFlashcard);
-  //       console.log('Eliminando flashcard', res);
-  //       this.learnService.deleteFlashcard(idFlashcard).subscribe(() => {
-  //         console.log('Flashcard eliminada');
-  //         this.listaPreguntas();
-  //       });
-  //     }
-  //   });
-  // }
+  eliminarPregunta(idPregunta: number) {
+    const dialogRef = this.openDialog(
+      '¿Estás seguro de eliminar esta pregunta del simulador?'
+    );
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        console.log('Pregunta a eliminar', idPregunta);
+        console.log('Eliminando pregunta', res);
+        this.simulatorService.deleteSimulatorQuestion(idPregunta).subscribe(() => {
+          console.log('Flashcard eliminada');
+          this.listaPreguntas();
+        });
+      }
+    });
+  }
 
   // editarFlashcard(idFlashcard: number) {
   //   this.dialog.open(EditFlashcardComponent, {

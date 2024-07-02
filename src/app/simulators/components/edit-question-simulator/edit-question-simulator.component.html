@@ -1,0 +1,38 @@
+<!-- <div>
+    <div class="cardTo my-3" *ngIf="datosRecursos">
+      <div class="pr-7 pl-7">
+        <div class="text-right">
+          <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
+        </div>
+        <p class="text-2xl text-black">{{ tituloForm }}</p>
+        <hr />
+      </div>
+      <app-resources-form
+        [formData]="datosRecursos"
+        [modeForm]="modeForm"
+        (editedDataEmitter)="getData($event)"
+        (valueFormEmitter)="getValidForm($event)"
+        (asignaturaEmitter)="updateAsignatura($event)"
+      ></app-resources-form>
+    </div>
+    <div style="text-align: right" class="my-2">
+      <div class="col-span-4 text-right mt-3 mb-3 pr-5">
+        <button
+          type="button"
+          (click)="cancelar()"
+          class="text-white bg-gray-500 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+        >
+          <span class="flex items-center justify-center"> Cancelar </span>
+        </button>
+        <button
+          type="button"
+          (click)="saveRecurso()"
+          [disabled]="!validForm"
+          class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+        >
+          <span class="flex items-center justify-center"> Guardar </span>
+        </button>
+      </div>
+    </div>
+  </div>
+   -->

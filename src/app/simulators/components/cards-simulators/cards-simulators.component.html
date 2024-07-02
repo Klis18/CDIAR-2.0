@@ -30,7 +30,7 @@
                   {{ item.asignatura }}
                 </div>
               </div>
-              <!-- <div class="text-sm ml-2" *ngIf="selectedTab ==='Mis Flashcards'">
+              <div class="text-sm ml-2" *ngIf="selectedTab ==='Mis Simuladores'">
                 @switch (item.estado) { 
                   @case ('Privado') {
                     <span class="text-cyan-500 font-bold">
@@ -57,7 +57,7 @@
   
             <div class="col-span-4">
               @if(userRol == 'Admin' && item.nombreDocenteRevisor == null){
-                <button
+                <!-- <button
                   type="button"
                   (click)="asignaRevisor(item.idMazo)"
                   class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
@@ -65,11 +65,11 @@
                   <span class="flex items-center justify-center">
                     <mat-icon>assignment_ind</mat-icon>
                   </span>
-                </button>
+                </button> -->
               }
   
               @if(selectedTab == 'Publicado' && userRol != 'Admin'){
-                <button
+                <!-- <button
                   type="button"
                   (click)="saveMazoToReview(item.idMazo)"
                   class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
@@ -77,13 +77,13 @@
                   <span class="flex items-center justify-center">
                     <mat-icon>bookmark</mat-icon>
                   </span>
-                </button>
+                </button> -->
               }
   
-              @if(selectedTab == 'Mis Flashcards'){
+              @if(selectedTab == 'Mis Simuladores'){
                 <button
                   type="button"
-                  (click)="editarMazo(item.idMazo, item)"
+                  (click)="editarSimulador(item.idSimulador, item)"
                   class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
                 >
                   <span class="flex items-center justify-center">
@@ -93,7 +93,7 @@
   
                 <button
                   type="button"
-                  (click)="eliminarMazo(item.idMazo)"
+                  (click)="eliminarSimulador(item.idSimulador)"
                   class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
                 >
                   <span class="flex items-center justify-center">
@@ -113,7 +113,7 @@
                 </span>
               </button>
               }
-            -->
+           
               <button
                 type="button"
                 (click)="viewDetailsSimulator(item.idSimulador,item.nivel,item.asignatura)"

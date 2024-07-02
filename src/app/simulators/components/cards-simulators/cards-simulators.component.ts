@@ -11,6 +11,7 @@ import { Estados, IdEstados } from '../../../shared/interfaces/estados.interface
 import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
 import { ROLES } from '../../../shared/interfaces/roles.interface';
 import { DetailsSimulatorComponent } from '../details-simulator/details-simulator.component';
+import { EditSimulatorComponent } from '../edit-simulator/edit-simulator.component';
 
 @Component({
   selector: 'cards-simulators',
@@ -249,19 +250,18 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     });
   }
 
-  //TODO:
-  // eliminarSimulador(idSimulador: number) {
-  //   const dialogRef = this.openDialog(
-  //     '¿Estás seguro de eliminar este simulador?'
-  //   );
-  //   dialogRef.afterClosed().subscribe((res) => {
-  //     if (res) {
-  //       this.simulatorService.deleteSimulador(idSimulador).subscribe(() => {
-  //         this.listaSimuladores();
-  //       });
-  //     }
-  //   });
-  // }
+  eliminarSimulador(idSimulador: number) {
+    const dialogRef = this.openDialog(
+      '¿Estás seguro de eliminar este simulador?'
+    );
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.simulatorService.deleteSimulator(idSimulador).subscribe(() => {
+          this.listaSimuladores();
+        });
+      }
+    });
+  }
 
   prevPage() {
     if (this.pagination.buttonLeft) {
@@ -291,46 +291,46 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   // }
 
   //TODO:
-  // canEdit(item: any): boolean {
-  //   const isCreator =
-  //     item.usuarioCreacion == this.usuario &&
-  //     this.selectedTab === 'Mis Flashcards' &&
-  //     item.estado !== 'Aprobado' &&
-  //     item.nombreRevisor == '';
+  canEdit(item: any): boolean {
+    const isCreator =
+      item.usuarioCreacion == this.usuario &&
+      this.selectedTab === 'Mis Simuladores' &&
+      item.estado !== 'Aprobado' &&
+      item.nombreRevisor == '';
 
-  //   const isAdmin =
-  //     item.docenteRevisor === '' &&
-  //     item.estado != 'Aprobado' &&
-  //     this.selectedTab2 === 'Flashcards';
-  //   return isCreator || isAdmin;
-  // }
+    const isAdmin =
+      item.docenteRevisor === '' &&
+      item.estado != 'Aprobado' &&
+      this.selectedTab2 === 'Simuladores';
+    return isCreator || isAdmin;
+  }
 
   //TODO:
-  // editarMazo(idMazo: number, item: any) {
-  //   if (this.canEdit(item)) {
-  //     if (item.usuarioCreador == this.usuario) {
-  //       this.tituloMazo = 'Editar Mazo';
-  //     } else if (item.docenteRevisor == this.usuario) {
-  //       this.tituloMazo = 'Aprobar Mazo';
-  //     } else {
-  //       this.tituloMazo = 'Asignar Revisor';
-  //     }
-  //   }
-  //   const dialogRef = this.dialog.open(EditMazoComponent, {
-  //     width: '40%',
-  //     maxHeight: '80%',
-  //     data: {
-  //       id: idMazo,
-  //       titulo: this.tituloMazo,
-  //       typeModal: this.typeTable,
-  //     },
-  //   });
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result) {
-  //       this.listaMazos();
-  //     }
-  //   });
-  // }
+  editarSimulador(idSimulador: number, item: any) {
+    // if (this.canEdit(item)) {
+    //   if (item.usuarioCreador == this.usuario) {
+    //     this.tituloMazo = 'Editar Mazo';
+    //   } else if (item.docenteRevisor == this.usuario) {
+    //     this.tituloMazo = 'Aprobar Mazo';
+    //   } else {
+    //     this.tituloMazo = 'Asignar Revisor';
+    //   }
+    // }
+    const dialogRef = this.dialog.open(EditSimulatorComponent, {
+      width: '40%',
+      maxHeight: '80%',
+      data: {
+        id: idSimulador,
+        // titulo: this.tituloMazo,
+        typeModal: this.typeTable,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.listaSimuladores();
+      }
+    });
+  }
 
   getGradient(index: number) {
     const color1 = this.colors[index % this.colors.length];

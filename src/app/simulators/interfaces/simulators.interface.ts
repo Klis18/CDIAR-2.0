@@ -48,6 +48,14 @@ export interface NewSimulator{
     nombreSimulador: string;
 }
 
+export interface UpdateSimulator{
+    idSimulador: number;
+    idAsignatura: string;
+    idNivel: string;
+    nombreSimulador: string;
+
+}
+
 export interface NewSimulatorQuestion{
     idSimulador: number;
     pregunta: string;
@@ -60,6 +68,13 @@ export interface OptionsQuestion{
     esCorrecta: boolean;
 }
 
+export interface UpdateSimulatorQuestion{
+    idSimulador: number;
+    idPregunta: number;
+    pregunta: string;
+    idTipoPregunta: number;
+    opcionesRespuestas: OptionsQuestion[];
+}
 export type typeTable = 'Publicado' | 'Mis Simuladores' | 'Por Aprobar' | 'Simuladores' | 'Guardados' | 'Estudiados';
 
 export interface SimulatorsQuestions{

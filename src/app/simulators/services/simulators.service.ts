@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListSimulators, NewSimulator, NewSimulatorQuestion, QuestionsSimulatorsGetQuery, Simulator, SimulatorsGetQuery, SimulatorsQuestions, TipoPreguntas } from '../interfaces/simulators.interface';
+import { ListSimulators, NewSimulator, NewSimulatorQuestion, QuestionsSimulatorsGetQuery, Simulator, SimulatorsGetQuery, SimulatorsQuestions, TipoPreguntas, UpdateSimulator, UpdateSimulatorQuestion } from '../interfaces/simulators.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 import { Estado } from '../../academic-resources/interfaces/estados.interface';
@@ -43,6 +43,15 @@ export class SimulatorsService {
       headers: this.headers,
     });
   }
+
+  getTiposPreguntas() {
+    return this.http.get<TipoPreguntas>('simuladores/tipospreguntas', {
+      headers: this.headers,
+    });
+  }
+
+
+  //----------SIMULADORES----------------
 
 
   getSimulators({
@@ -86,11 +95,19 @@ export class SimulatorsService {
     });
   }
 
-  addSimulatorQuestion(simulatorQuestion: NewSimulatorQuestion) {
-    return this.http.post('simuladores/crearpreguntas', simulatorQuestion, {
-      headers: this.headers
+  updateSimulator(simulador:UpdateSimulator){
+    return this.http.put<UpdateSimulator>('simuladores/actualizar',simulador, {
+      headers: this.headers,
     });
   }
+
+  deleteSimulator(idSimulador:number){
+    return this.http.delete(`simuladores/eliminarSimulador/${idSimulador}`, {
+      headers: this.headers,
+    });
+  }
+
+  //----------PREGUNTAS SIMULADORES----------------
 
   getPreguntasSimulador({ idSimulador, page, limit, pregunta}: QuestionsSimulatorsGetQuery) {
     if (!page) page = 1;
@@ -106,9 +123,29 @@ export class SimulatorsService {
     });
   }
 
-  getTiposPreguntas() {
-    return this.http.get<TipoPreguntas>('simuladores/tipospreguntas', {
+  getSimulatorQuestion(idPregunta: number) {
+    return this.http.get(`simuladores/obtenerPregunta/${idPregunta}`, {
       headers: this.headers,
     });
   }
+  
+
+  addSimulatorQuestion(simulatorQuestion: NewSimulatorQuestion) {
+    return this.http.post('simuladores/crearpreguntas', simulatorQuestion, {
+      headers: this.headers
+    });
+  }
+
+  updateSimulatorQuestion(simulatorQuestion: UpdateSimulatorQuestion) {
+    return this.http.put('simuladores/actualizarPregunta', simulatorQuestion, {
+      headers: this.headers
+    });
+  }
+
+  deleteSimulatorQuestion(idPregunta: number) {
+    return this.http.delete(`simuladores/eliminarPregunta/${idPregunta}`, {
+      headers: this.headers
+    });
+  }
+  
 }
