@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { SimulatorsService } from '../../services/simulators.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
+import { EditQuestionSimulatorComponent } from '../edit-question-simulator/edit-question-simulator.component';
 
 @Component({
   selector: 'questions-simulators-table',
@@ -203,12 +204,12 @@ export class QuestionsSimulatorsTablesComponent implements OnInit, OnChanges{
     });
   }
 
-  // editarFlashcard(idFlashcard: number) {
-  //   this.dialog.open(EditFlashcardComponent, {
-  //     width: '40%',
-  //     data: {id: idFlashcard, isDisabled: true, titulo: 'Editar Flashcard'},
-  //   });
-  // }
+  editarPreguntaSimulador(idPregunta: number) {
+    this.dialog.open(EditQuestionSimulatorComponent, {
+      width: '40%',
+      data: {idPregunta: idPregunta, idSimulador:this.idSimulador},
+    });
+  }
 
   // viewFlashcard(idFlashcard: number) {
   //   this.dialog.open(EditFlashcardComponent, {

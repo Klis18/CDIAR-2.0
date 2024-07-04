@@ -16,6 +16,7 @@ import { QuestionsSimulatorsComponent } from './pages/questions-simulators/quest
 import { NgSelectModule } from '@ng-select/ng-select';
 import { QuestionsSimulatorsTablesComponent } from './components/questions-simulators-tables/questions-simulators-tables.component';
 import { EditSimulatorComponent } from './components/edit-simulator/edit-simulator.component';
+import { EditQuestionSimulatorComponent } from './components/edit-question-simulator/edit-question-simulator.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { EditSimulatorComponent } from './components/edit-simulator/edit-simulat
     QuestionsSimulatorsComponent,
     QuestionsSimulatorsTablesComponent,
     EditSimulatorComponent,
+    EditQuestionSimulatorComponent
   ],
   imports: [
     CommonModule,

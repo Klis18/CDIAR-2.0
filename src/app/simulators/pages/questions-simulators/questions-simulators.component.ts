@@ -34,6 +34,7 @@ export class QuestionsSimulatorsComponent {
       this.idSimulador= params['id'];
     });
 
+    console.log('ID SIM',this.idSimulador);
     this.homeService.obtenerDatosMenu().subscribe((user:any) => {
       this.nombreUsuario = user.data.userName;
       this.rol = user.data.rol;
@@ -55,10 +56,16 @@ export class QuestionsSimulatorsComponent {
   }
 
   openDialog() {
-    this.dialog.open(AddQuestionSimulatorComponent, {
+    const dialogRef = this.dialog.open(AddQuestionSimulatorComponent, {
       width: '40%',
       maxHeight: '80%',
       data: {id: this.idSimulador},
+    });
+    
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadTable();
+      }
     });
   }
 

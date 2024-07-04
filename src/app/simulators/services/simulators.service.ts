@@ -124,7 +124,7 @@ export class SimulatorsService {
   }
 
   getSimulatorQuestion(idPregunta: number) {
-    return this.http.get(`simuladores/obtenerPregunta/${idPregunta}`, {
+    return this.http.get<UpdateSimulatorQuestion>(`simuladores/obtenerPregunta/${idPregunta}`, {
       headers: this.headers,
     });
   }

@@ -33,17 +33,12 @@
               placeholder="Pregunta"
             />
           </div>
-           @if(selectedActivate(rol)){
+          
           <div
             class="col-span-12"
-            [ngClass]="{
-              ' md:col-span-6':
-                (rol === 'Docente' && modeForm === 'Edit') ||
-                (rol === 'Docente' && modeForm === 'Por Aprobar')
-            }"
           >
             <label
-              for="tipoPregunta"
+              for="idTipoPregunta"
               class="block text-sm font-medium leading-6 text-gray-900"
               >Tipo Pregunta</label
             >
@@ -60,7 +55,7 @@
             > 
             </ng-select>
           </div>
-          }
+        
 
           <!---PREGUNTAS SIMPLES-->
           @if(questionType === 2){

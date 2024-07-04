@@ -1,103 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { UpdateSimulatorQuestion } from '../../interfaces/simulators.interface';
+import { SimulatorsService } from '../../services/simulators.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { IdEstados } from '../../../shared/interfaces/estados.interface';
 
 @Component({
   selector: 'app-edit-question-simulator',
   templateUrl: './edit-question-simulator.component.html',
   styles: ``
 })
-export class EditQuestionSimulatorComponent {
-  // nivelesType: { label: string; value: string }[] = [];
-  // asignaturas: { label: string; value: string }[] = [];
-  // estados: { label: string; value: string }[] = [];
-  // recursoFile: string | null = null;
-  // extension: string = '';
-  // datosRecursos!: any;
-  // editaDataRecurso!: any;
-  // idRecurso!: number;
-  // validForm: boolean = false;
+export class EditQuestionSimulatorComponent implements OnInit{
 
-  // constructor(
-  //   private recursoService: RecursoService,
-  //   public dialogRef: MatDialogRef<EditResourceComponent>,
+  datosSimulador!: any;
+  validForm: boolean = false;
+  idSimulador: number = this.data.idSimulador;
 
-  //   @Inject(MAT_DIALOG_DATA) public data: any
-  // ) {}
+  constructor(
+    private simulatorService: SimulatorsService,
+    private dialogRef: MatDialogRef<EditQuestionSimulatorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
-  // tituloForm: string = this.data.titulo;
+  ngOnInit(){
+    this.getSimulatorQuestion(this.data.idPregunta);
+    console.log('ID PREGUNTA',this.data.idPregunta)
+    console.log('DATOS PREVIO EDICIÓN',this.getSimulatorQuestion(this.data.idPregunta));
+  }
 
-  // ngOnInit() {
-  //   this.getRecurso(this.data.id);
-  //   switch (this.data.typeModal) {
-  //     case 'Por Aprobar':
-  //       this.modeForm = 'Por Aprobar';
-  //       break;
-  //     case 'Asignar Revisor':
-  //       this.modeForm = 'Asignar Revisor';
-  //       break;
-  //     default:
-  //       this.modeForm = 'Edit';
+  getSimulatorQuestion(idPregunta: number) {
+    this.simulatorService.getSimulatorQuestion(idPregunta).subscribe((res) => {
+      this.datosSimulador = res.data;
+      console.log('DATOS SIMULADOR',this.datosSimulador);
+    });
+  }
 
-  //       break;
-  //   }
-  // }
-  // public modeForm!: ModeFormsResources;
+  saveQuestion() {
+    if (!this.validForm) {
+      return;
+    }
 
-  // getRecurso(idRecurso: number) {
-  //   this.recursoService.getRecurso(idRecurso).subscribe((res: any) => {
-  //     this.datosRecursos = res.data;
-  //   });
-  // }
+    const simulador: UpdateSimulatorQuestion = {
+      idSimulador: this.data.idSimulador,
+      idPregunta: this.data.idPregunta,
+      pregunta: this.datosSimulador.pregunta, 
+      idTipoPregunta: this.datosSimulador.idTipoPregunta,
+      opcionesRespuestas: this.datosSimulador.opcionesRespuestas,
+    };
 
-  // saveRecurso() {
-  //   console.log({ editaDataRecurso: this.editaDataRecurso });
-  //   if (!this.validForm) {
-  //     return;
-  //   }
 
-  //   const recursosEdit: RecursoEdit = {
-  //     idRecurso: this.editaDataRecurso.idRecurso,
-  //     idNivel: Number(this.editaDataRecurso.idNivel),
-  //     idAsignatura: Number(this.editaDataRecurso.idAsignatura),
-  //     idEstado: this.editaDataRecurso.idEstado,
-  //     tipoRecurso: this.editaDataRecurso.tipoRecurso,
-  //     enlaceDelRecurso: this.editaDataRecurso.enlaceDelRecurso,
-  //     nombreRecurso: this.editaDataRecurso.nombreRecurso,
-  //     idDocenteRevisor: this.editaDataRecurso.idDocenteRevisor,
-  //     observacion: this.editaDataRecurso.observation,
-  //     observacionesArchivo: this.editaDataRecurso.observacionesArchivo,
-  //     extensionObservaciones: this.editaDataRecurso.extensionObservaciones,
-  //     recurso: this.editaDataRecurso?.recurso,
-  //     extension: this.editaDataRecurso?.extension,
-  //   };
+    this.simulatorService.updateSimulatorQuestion(simulador).subscribe((res:any) => {
+      console.log('RESPUESTA EDITANDO',res);
+      this.CloseModal(res.statusCode.toString());
+    });
+  }
 
-  //   if (recursosEdit?.tipoRecurso === 'Link') {
-  //     recursosEdit.recurso = null;
-  //     recursosEdit.extension = null;
-  //   } else {
-  //     recursosEdit.enlaceDelRecurso = null;
-  //   }
+  getData(events: any) {
+    this.datosSimulador = events;
+  }
 
-  //   this.recursoService.editarRecurso(recursosEdit).subscribe((res) => {
-  //     this.CloseModal('recurso editado');
-  //   });
-  // }
+  CloseModal(mensaje?: string) {
+    this.dialogRef.close(mensaje);
+  }
 
-  // getData(events: any) {
-  //   this.editaDataRecurso = events;
-  // }
+  getValidForm(event: any) {
+    this.validForm = event;
+  }
 
-  // getValidForm(event: any) {
-  //   this.validForm = event;
-  // }
-
-  // updateAsignatura(event: any) {
-  //   this.asignaturas = event;
-  // }
-  // cancelar() {
-  //   this.dialogRef.close();
-  // }
-
-  // CloseModal(mensaje?: string) {
-  //   this.dialogRef.close(mensaje);
-  // }
+  cancelar() {
+    this.dialogRef.close();
+  }
 }
