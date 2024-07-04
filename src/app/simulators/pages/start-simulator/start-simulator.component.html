@@ -25,28 +25,6 @@
       <span class="text-3xl">{{nombreSimulador}}</span>
     </div>
 
-    <!-- <div *ngIf="preguntaActualIndex < preguntasSimulador.length">
-        <h3>{{ preguntasSimulador[preguntaActualIndex].pregunta }}</h3>
-        <div *ngFor="let opcion of preguntasSimulador[preguntaActualIndex].opcionesRespuestas; let i = index">
-          <label *ngIf="preguntasSimulador[preguntaActualIndex].tipoPregunta === 'Opcion Simple'">
-            <input type="radio" name="opcion" [value]="i" (click)="respuestaSeleccionada = i">
-            {{ opcion.respuesta }}
-          </label>
-          <label *ngIf="preguntasSimulador[preguntaActualIndex].tipoPregunta === 'Opcion Multiple'">
-            <input type="checkbox" [checked]="respuestasUsuario[preguntaActualIndex][i]" (click)="respuestasUsuario[preguntaActualIndex][i] = !respuestasUsuario[preguntaActualIndex][i]">
-            {{ opcion.respuesta }}
-          </label>
-        </div>
-        <button (click)="siguientePregunta()">Siguiente</button>
-      </div>
-      
-      <p *ngIf="preguntaActualIndex >= preguntasSimulador.length">¡Has completado todas las preguntas!</p>
-      <p>Puntaje total: {{ puntaje }}</p>
-      <button *ngIf="preguntaActualIndex < preguntasSimulador.length" (click)="siguientePregunta()">Siguiente</button>
-      <button *ngIf="preguntaActualIndex >= preguntasSimulador.length" (click)="reiniciar()">Reiniciar</button> -->
-
-<!----ESTILIZANDO PRESENTACIÓN DE PREGUNTAS-->
-
       <div class="m-7 mt-2 h-full flashcard-view rounded-lg p-9">
         <div *ngIf="preguntaActualIndex < preguntasSimulador.length">
           <div class="text-2xl block font-medium text-center bg-white text-gray-700 border border-gray-200 rounded-lg shadow p-7 md:mr-48 md:ml-48 sm:mr-7 sm:ml-7">
@@ -74,7 +52,7 @@
             </div>
             <div class="text-right md:mr-48 md:ml-48 sm:mr-7 mt-5">
                 <button type="button"(click)="siguientePregunta()" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-900 rounded-lg hover:bg-blue-800">
-                    Siguiente
+                    {{ preguntaActualIndex < preguntasSimulador.length - 1 ? 'Siguiente' : 'Finalizar'}}
                     <mat-icon>arrow_forward</mat-icon>
                 </button>
             </div>

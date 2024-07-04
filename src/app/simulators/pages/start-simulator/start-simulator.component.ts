@@ -23,6 +23,7 @@ export class StartSimulatorComponent implements OnInit {
   respuestasUsuario: boolean[][] = [];
   nombreSimulador!: string;
   puntaje = 0;
+  btnName!:string;
 
   constructor(private route: ActivatedRoute,private simulatorsService: SimulatorsService) { }
 
@@ -86,12 +87,25 @@ export class StartSimulatorComponent implements OnInit {
     if (this.preguntaActualIndex < this.preguntasSimulador.length) {
       this.inicializarRespuestasUsuario();
     }
+    else if (this.preguntaActualIndex === this.preguntasSimulador.length) {
+      this.guardarCalificacion();
+    }
   }
 
   reiniciar(){
     this.preguntaActualIndex = 0;
     this.puntaje = 0;
     this.inicializarRespuestasUsuario();
+  }
+
+  guardarCalificacion(){
+    const calificacion = {
+      idSimulador: this.idSimulador,
+      calificacion: this.puntaje,
+    };
+    this.simulatorsService.saveResultTest(calificacion).subscribe(() => {
+      console.log('Calificación guardada');
+    });
   }
 
 }

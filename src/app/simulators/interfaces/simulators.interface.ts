@@ -124,3 +124,8 @@ export interface sendObservationSimulator{
 export interface observationSimulator{
     observacion: string;
 }
+
+export interface calificacionSimulador{
+    idSimulador: number;
+    calificacion: number;
+}

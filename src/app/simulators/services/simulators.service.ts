@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListSimulatorSaver, ListSimulators, NewSimulator, NewSimulatorQuestion, QuestionsSimulatorsGetQuery, Simulator, SimulatorSaversGetQuery, SimulatorsGetQuery, SimulatorsQuestions, TipoPreguntas, UpdateSimulator, UpdateSimulatorQuestion, observationSimulator, sendObservationSimulator, updateStatusSimulator } from '../interfaces/simulators.interface';
+import { ListSimulatorSaver, ListSimulators, NewSimulator, NewSimulatorQuestion, QuestionsSimulatorsGetQuery, Simulator, SimulatorSaversGetQuery, SimulatorsGetQuery, SimulatorsQuestions, TipoPreguntas, UpdateSimulator, UpdateSimulatorQuestion, calificacionSimulador, observationSimulator, sendObservationSimulator, updateStatusSimulator } from '../interfaces/simulators.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 import { Estado } from '../../academic-resources/interfaces/estados.interface';
@@ -162,6 +162,12 @@ export class SimulatorsService {
 
   startSimulator(idSimulador:number){
     return this.http.get<SimulatorsQuestions[]>(`simuladores/realizarSimulador/${idSimulador}`, {
+      headers: this.headers,
+    });
+  }
+
+  saveResultTest(calificacion:calificacionSimulador){
+    return this.http.post('simuladores/simuladorRealizado',calificacion,{
       headers: this.headers,
     });
   }
