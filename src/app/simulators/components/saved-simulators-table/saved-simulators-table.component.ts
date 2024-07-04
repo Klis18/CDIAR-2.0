@@ -1,29 +1,24 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ListSimulators, SimulatorsGetQuery, typeTable } from '../../interfaces/simulators.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { SimulatorsService } from '../../services/simulators.service';
+import { Component, EventEmitter, Inject, Input, Output, SimpleChanges } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SimulatorsComponent } from '../../pages/simulators/simulators.component';
+import { ROLES } from '../../../academic-resources/interfaces/roles.interface';
 import { AsignarRevisorComponent } from '../../../control/pages/asignar-revisor/asignar-revisor.component';
 import { HomeService } from '../../../home/services/home.service';
-import { Estados, IdEstados } from '../../../shared/interfaces/estados.interface';
+import { IdEstados, Estados } from '../../../shared/interfaces/estados.interface';
 import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
-import { ROLES } from '../../../shared/interfaces/roles.interface';
+import { typeTable, ListSimulators, SimulatorsGetQuery, SimulatorSaversGetQuery } from '../../interfaces/simulators.interface';
+import { SimulatorsComponent } from '../../pages/simulators/simulators.component';
+import { SimulatorsService } from '../../services/simulators.service';
 import { DetailsSimulatorComponent } from '../details-simulator/details-simulator.component';
 import { EditSimulatorComponent } from '../edit-simulator/edit-simulator.component';
-import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
 
 @Component({
-  selector: 'cards-simulators',
-  templateUrl: './cards-simulators.component.html',
+  selector: 'saved-simulators-table',
+  templateUrl: './saved-simulators-table.component.html',
   styles: ``
 })
-export class CardsSimulatorsComponent implements OnInit, OnChanges{
-
-  @Input() filterByUser: string = '';
-  @Input() filterByStatus: string = '';
-  @Input() filterByRevisor: string = '';
+export class SavedSimulatorsTableComponent {
   @Input() typeTable!: typeTable;
   @Input() searchData: any;
   @Input() loadTable: boolean = false;
@@ -133,71 +128,23 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
       this.userRol = user.data.rol;
     });
   }
-  private idEstado!: number;
+
   listaSimuladores() {
-    const paginate: SimulatorsGetQuery = {
+    const paginate: SimulatorSaversGetQuery = {
       page: this.page,
       limit: this.limit,
       idAsignatura: this.idAsignatura,
       idNivel: this.idNivel,
       nombreSimulador: this.nombreSimulador,
-      idEstado: this.idEstado,
-      nombreDocenteRevisor: this.nombreRevisor,
-      usuarioCreador: this.usuarioCreador,
     };
-    if (this.typeTable === 'Mis Simuladores') {
-      delete paginate.idEstado;
-    }
-    if (this.typeTable === 'Publicado') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado = IdEstados.APROBADO;
-    }
-    if (this.typeTable === 'Por Aprobar') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado = IdEstados.INGRESADO;
-    }
-    if(this.typeTable === 'Simuladores') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado == IdEstados.INGRESADO && paginate.nombreDocenteRevisor == '' ;
-    }
-
-    if (this.filterByStatus) {
-      const StatesByResources = [
-        {
-          label: Estados.INGRESADO,
-          value: IdEstados.INGRESADO,
-        },
-        {
-          label: Estados.APROBADO,
-          value: IdEstados.APROBADO,
-        },
-        {
-          label: Estados.RECHAZADO,
-          value: IdEstados.RECHAZADO,
-        },
-        {
-          label: Estados.ELIMINADO,
-          value: IdEstados.RECHAZADO,
-        },
-      ];
-      const find = StatesByResources.find(
-        (state) => state.label === this.filterByStatus
-      );
-      if (find) paginate.idEstado = find.value;
-    }
-    if (this.filterByRevisor) {
-      paginate.nombreDocenteRevisor = this.filterByRevisor;
-    }
-   
-    this.simulatorService.getSimulators(paginate).subscribe({
+    
+    this.simulatorService.getSimulatorsSavers(paginate).subscribe({
       next: (res: any) => {
         this.data = res.data ?? [];
         if (this.data.length > 0) {
           this.nombreSimulador = res.data.nombreSimulador;
           this.nivel = res.data.nivel;
           this.asignatura = res.data.asignatura;
-          this.docenteRevisor = res.data.nombreDocenteRevisor;
-          this.creadorSimulador = res.data.usuarioCreador;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
         if (this.data?.length === 0 || !this.data) {
@@ -242,27 +189,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     return arreglo;
   }
 
-  openDialog(message: string) {
-    return this.dialog.open(CardConfirmComponent, {
-      data: {
-        mensaje: message,
-      },
-      width: '30%',
-    });
-  }
-
-  eliminarSimulador(idSimulador: number) {
-    const dialogRef = this.openDialog(
-      '¿Estás seguro de eliminar este simulador?'
-    );
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res) {
-        this.simulatorService.deleteSimulator(idSimulador).subscribe(() => {
-          this.listaSimuladores();
-        });
-      }
-    });
-  }
+ 
 
   prevPage() {
     if (this.pagination.buttonLeft) {
@@ -278,60 +205,6 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     }
   }
 
-//TODO:
-  canApprove(item: any): boolean {
-    let isReviewer = false;
-    if (this.userRol === ROLES.DOCENTE) {
-      isReviewer =
-        item.docenteRevisor == this.usuario &&
-        this.selectedTab === 'Por Aprobar' &&
-        item.estado != 'Aprobado';
-    }
-
-    return isReviewer;
-  }
-
-  //TODO:
-  canEdit(item: any): boolean {
-    const isCreator =
-      item.usuarioCreacion == this.usuario &&
-      this.selectedTab === 'Mis Simuladores' &&
-      item.estado !== 'Aprobado' &&
-      item.nombreRevisor == '';
-
-    const isAdmin =
-      item.docenteRevisor === '' &&
-      item.estado != 'Aprobado' &&
-      this.selectedTab2 === 'Simuladores';
-    return isCreator || isAdmin;
-  }
-
-  //TODO:
-  editarSimulador(idSimulador: number, item: any) {
-    // if (this.canEdit(item)) {
-    //   if (item.usuarioCreador == this.usuario) {
-    //     this.tituloMazo = 'Editar Mazo';
-    //   } else if (item.docenteRevisor == this.usuario) {
-    //     this.tituloMazo = 'Aprobar Mazo';
-    //   } else {
-    //     this.tituloMazo = 'Asignar Revisor';
-    //   }
-    // }
-    const dialogRef = this.dialog.open(EditSimulatorComponent, {
-      width: '40%',
-      maxHeight: '80%',
-      data: {
-        id: idSimulador,
-        // titulo: this.tituloMazo,
-        typeModal: this.typeTable,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.listaSimuladores();
-      }
-    });
-  }
 
   getGradient(index: number) {
     const color1 = this.colors[index % this.colors.length];
@@ -359,22 +232,5 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   //   });
   // }
 
-  //TODO:
-  asignaRevisor(idSimulador: number) {
-    const dialogRef = this.dialog.open(SelectRevisorComponent, {
-      width: '80%',
-      data: {id: idSimulador, opcion:'Simuladores'},
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.listaSimuladores();
-      }
-    });
-  }
-
-  saveSimulatorToReview(idSimulador: number) {
-    this.simulatorService.SaveSimulatorToReview(idSimulador).subscribe(() => {
-      console.log('Simulador guardado');
-    });
-  }
+  
 }

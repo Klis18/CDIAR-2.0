@@ -5,6 +5,7 @@ import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-co
 import { EditFlashcardComponent } from '../edit-flashcard/edit-flashcard.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Flashcard, FlashcardsGetQuery } from '../../interfaces/mazo.interface';
+import { HomeService } from '../../../home/services/home.service';
 
 @Component({
   selector: 'questions-table',
@@ -22,7 +23,7 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
   idFlashcard: number = 0; 
   preguntaFlashcard: string = '';
   usuarioCreador: string = '';
-
+  nombreUsuario: string = '';
   itemsPerPage: number = 5;
   totalPages: number = 1;
   flashCards!: FormGroup;
@@ -49,6 +50,7 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
 
   constructor(private learnService:LearnService,
               private dialog: MatDialog,
+              private homeService: HomeService,
               @Inject(FormBuilder) private formBuilder: FormBuilder,
 
   ) {}
@@ -67,6 +69,15 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
       },
     });
     this.listaPreguntas();
+
+    this.homeService.obtenerDatosMenu().subscribe((user:any) => {
+      this.nombreUsuario = user.data.userName;
+    });
+
+    
+    this.learnService.getDatosMazo(this.idMazo).subscribe((res) => {
+      this.usuarioCreador = res.data.usuarioCreador;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

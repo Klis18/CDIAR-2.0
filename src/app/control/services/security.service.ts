@@ -7,7 +7,7 @@ import {
   ListaDocentesPorAprobar,
 } from '../interfaces/lista-docentes.interface';
 import { DocenteAprobacion } from '../interfaces/docente-aprobacion.interface';
-import { AsignaDocenteRevisor, AsignaDocenteRevisorRecurso, ListaDocenteRevisor, RevisorGetQuery } from '../interfaces/asignDocente.interface';
+import { AsignaDocenteRevisor, AsignaDocenteRevisorRecurso, AsignaDocenteRevisorSimulador, ListaDocenteRevisor, RevisorGetQuery } from '../interfaces/asignDocente.interface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 
 
@@ -67,6 +67,11 @@ export class SecurityService {
     });
   }
 
+  asignaRevisorSimulador(revisor: AsignaDocenteRevisorSimulador) {
+    return this.http.post<AsignaDocenteRevisorSimulador>('simuladores/asignarRevisor',revisor, {
+      headers: this.headers,
+    });
+  }
 
   getDocRevisores({
     page,

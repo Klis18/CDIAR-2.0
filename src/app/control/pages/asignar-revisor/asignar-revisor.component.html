@@ -58,21 +58,19 @@
         >
       </li>
 
-      @if(this.roleName !== 'Admin'){
       <li class="me-2">
         <a
-          (click)="selectedTab = 'Por Aprobar'"
+          (click)="selectedTab = 'Simuladores'"
           [ngClass]="{
             'text-blue-900 border-b-2 border-blue-900':
-              selectedTab === 'Por Aprobar',
+              selectedTab === 'Simuladores',
             'hover:text-gray-600 hover:border-gray-300':
-              selectedTab !== 'Por Aprobar'
+              selectedTab !== 'Simuladores'
           }"
           class="inline-block p-4 rounded-t-lg"
-          >Por Aprobar
+          >Simuladores
         </a>
       </li>
-      }
     </ul>
   </div>
 
@@ -91,15 +89,15 @@
       (loadedTableEmitter)="loadedTale()"
       [loadTable]="reloadTable"
     ></cards-flashcards>
-    } @case ('Videolearn') {
-    <cards-flashcards
+    } @case ('Simuladores') {
+    <cards-simulators
       [searchData]="searchInfo"
-      [filterByRevisor]="usuario"
+      [typeTable]="'Simuladores'"
+      [filterByStatus]="'Ingresado'"
       (loadedTableEmitter)="loadedTale()"
       [loadTable]="reloadTable"
-      [typeTable]="'Por Aprobar'"
-      [filterByStatus]="'Ingresado'"
-    ></cards-flashcards>
+    ></cards-simulators>
+    } @default {
     } }
   </div>
 </div>

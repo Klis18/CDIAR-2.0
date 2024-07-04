@@ -1,3 +1,4 @@
+import { sendObservation, observation } from '../../learn/interfaces/mazo.interface';
 export interface ListSimulators{
     idSimulador: number;
     cantidadPreguntas: number;
@@ -35,11 +36,31 @@ export interface SimulatorsGetQuery {
     usuarioCreador?: boolean;
 }
 
+export interface SimulatorSaversGetQuery {
+    page: number;
+    limit: number;
+    idNivel?: number;
+    idAsignatura?: number;
+    nombreSimulador?: string;
+}
+
 export interface QuestionsSimulatorsGetQuery {
     idSimulador: number;
     page: number;
     limit: number;
     pregunta?: string;
+}
+
+export interface ListSimulatorSaver{
+    idSimulador: number;
+    nombreSimulador: string;
+    asignatura: string;
+    nivel: string;
+    fechaCreacion: string;
+    cantidadPreguntas: number;
+    estado: string;
+    usuarioCreador: string;
+    nombreDocenteRevisor: string;
 }
 
 export interface NewSimulator{
@@ -88,4 +109,18 @@ export interface SimulatorsQuestions{
 export interface TipoPreguntas{
     idTipoPregunta: number;
     tipoPregunta: string;
+}
+
+export interface updateStatusSimulator{
+    idSimulador: number;
+    idEstado: number;
+}
+
+export interface sendObservationSimulator{
+    idSimulador: number;
+    observacion: string;
+}
+
+export interface observationSimulator{
+    observacion: string;
 }

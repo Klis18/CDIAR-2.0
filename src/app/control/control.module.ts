@@ -14,6 +14,7 @@ import { ListRevisorComponent } from './components/list-revisor/list-revisor.com
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SelectRevisorComponent } from './components/select-revisor/select-revisor.component';
+import { SimulatorsModule } from '../simulators/simulators.module';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { SelectRevisorComponent } from './components/select-revisor/select-revis
     MaterialModule,
     LearnModule,
     SharedModule,
+    SimulatorsModule,
     ReactiveFormsModule
   ],
   exports:[

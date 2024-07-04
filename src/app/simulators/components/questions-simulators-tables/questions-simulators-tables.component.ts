@@ -5,6 +5,7 @@ import { SimulatorsService } from '../../services/simulators.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
 import { EditQuestionSimulatorComponent } from '../edit-question-simulator/edit-question-simulator.component';
+import { HomeService } from '../../../home/services/home.service';
 
 @Component({
   selector: 'questions-simulators-table',
@@ -20,7 +21,7 @@ export class QuestionsSimulatorsTablesComponent implements OnInit, OnChanges{
   mensaje: string = '';
   pregunta: string = '';
   usuarioCreador: string = '';
-
+nombreUsuario: string = '';
   itemsPerPage: number = 5;
   totalPages: number = 1;
   simulatorForm!: FormGroup;
@@ -47,6 +48,7 @@ export class QuestionsSimulatorsTablesComponent implements OnInit, OnChanges{
 
   constructor(private simulatorService:SimulatorsService,
               private dialog: MatDialog,
+              private homeService: HomeService,
               @Inject(FormBuilder) private formBuilder: FormBuilder,
 
   ) {}
@@ -67,6 +69,15 @@ export class QuestionsSimulatorsTablesComponent implements OnInit, OnChanges{
     this.listaPreguntas();
     console.log('Preguntas', this.data);
     console.log('ID', this.idSimulador);
+
+    this.homeService.obtenerDatosMenu().subscribe((user:any) => {
+      this.nombreUsuario = user.data.userName;
+    });
+
+    
+    this.simulatorService.getDatosSimulator(this.idSimulador).subscribe((res) => {
+      this.usuarioCreador = res.data.usuarioCreador;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

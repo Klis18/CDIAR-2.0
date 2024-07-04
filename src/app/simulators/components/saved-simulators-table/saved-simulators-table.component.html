@@ -56,64 +56,6 @@
            
   
             <div class="col-span-4">
-              @if(userRol == 'Admin' && item.nombreDocenteRevisor == ''){
-                <button
-                  type="button"
-                  (click)="asignaRevisor(item.idSimulador)"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-                >
-                  <span class="flex items-center justify-center">
-                    <mat-icon>assignment_ind</mat-icon>
-                  </span>
-                </button>
-              }
-  
-              @if(selectedTab == 'Publicado' && userRol != 'Admin'){
-                <button
-                  type="button"
-                  (click)="saveSimulatorToReview(item.idSimulador)"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-                >
-                  <span class="flex items-center justify-center">
-                    <mat-icon>bookmark</mat-icon>
-                  </span>
-                </button>
-              }
-  
-              @if(selectedTab == 'Mis Simuladores'){
-                <button
-                  type="button"
-                  (click)="editarSimulador(item.idSimulador, item)"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-                >
-                  <span class="flex items-center justify-center">
-                    <mat-icon>edit</mat-icon>
-                  </span>
-                </button>
-  
-                <button
-                  type="button"
-                  (click)="eliminarSimulador(item.idSimulador)"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-                >
-                  <span class="flex items-center justify-center">
-                    <mat-icon>delete</mat-icon>
-                  </span>
-                </button>
-              }
-  
-              @if(selectedTab ==='Por Aprobar'){
-                <button
-                type="button"
-                (click)="redirigirPreguntas(item)"
-                class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-              >
-                <span class="flex items-center justify-center">
-                  <mat-icon>assignment_turned_in</mat-icon>
-                </span>
-              </button>
-              }
-           
               <button
                 type="button"
                 (click)="viewDetailsSimulator(item.idSimulador,item.nivel,item.asignatura)"

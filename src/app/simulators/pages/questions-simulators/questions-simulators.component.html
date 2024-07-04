@@ -37,34 +37,34 @@
             Nuevo
           </span>
         </button>
-        <!-- <button type="button" *ngIf="canPublish()" (click)="publishMazo(1)" 
+        <button type="button" *ngIf="canPublish()" (click)="publishSimulator()" 
           class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
           <span class="flex items-center justify-center">
             <mat-icon>publish</mat-icon>
             Publicar
           </span>
         </button>
-        <button type="button" *ngIf="canAprove()" (click)="publishMazo(2)" 
+        <button type="button" *ngIf="canAprove()" (click)="updateStatusSimulator(2)" 
           class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
           <span class="flex items-center justify-center">
             <mat-icon>done</mat-icon>
             Aprobar
           </span>
         </button>
-        <button type="button" *ngIf="canAprove()" (click)="reprobarMazo()" 
+        <button type="button" *ngIf="canAprove()" (click)="reprobarSimulador()" 
           class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
           <span class="flex items-center justify-center">
             <mat-icon>clear</mat-icon>
             Reprobar
           </span>
-        </button> -->
-        <!-- <button type="button" *ngIf="canViewObservation()" (click)="viewObservation()" 
+        </button>
+        <button type="button" *ngIf="canViewObservation()" (click)="viewObservation()" 
           class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
           <span class="flex items-center justify-center">
             <mat-icon>report</mat-icon>
             Ver observación
           </span>
-        </button> -->
+        </button>
       </div>
       <div *ngIf="observationVisible == true" class="bg-amber-100">
         <div class="p-5">
@@ -77,8 +77,6 @@
       </div>
     
       <div class="text-sm font-medium text-center text-gray-700 border-b border-gray-200">
-        <!-- <questions-table [idMazo]="idMazo" [searchData]="searchInfo"  (loadedTableEmitter)="loadedTale()"
-        [loadTable]="reloadTable" ></questions-table> -->
         <questions-simulators-table [idSimulador]="idSimulador" [searchData]="searchInfo"  (loadedTableEmitter)="loadedTale()"
         [loadTable]="reloadTable"></questions-simulators-table>
       </div>

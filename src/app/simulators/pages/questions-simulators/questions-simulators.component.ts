@@ -4,6 +4,8 @@ import { SimulatorsService } from '../../services/simulators.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { HomeService } from '../../../home/services/home.service';
+import { updateStatusSimulator } from '../../interfaces/simulators.interface';
+import { ObservacionRechazoSimuladoresComponent } from '../../components/observacion-rechazo-simuladores/observacion-rechazo-simuladores.component';
 
 @Component({
   selector: 'app-questions-simulators',
@@ -38,6 +40,7 @@ export class QuestionsSimulatorsComponent {
     this.homeService.obtenerDatosMenu().subscribe((user:any) => {
       this.nombreUsuario = user.data.userName;
       this.rol = user.data.rol;
+      console.log('nombreUsuario', this.nombreUsuario);
     });
 
     
@@ -45,13 +48,14 @@ export class QuestionsSimulatorsComponent {
       this.estadoSimulador = res.data.estado;
       this.creadorSimulador = res.data.usuarioCreador;
       this.nombreRevisor = res.data.nombreRevisor;
+      console.log('NOMBRE REVISOR', this.nombreRevisor);
     });
     
-    //TODO:
-    // this.learnService.getObservacion(this.idMazo).subscribe((res) => {
-    //   console.log(res);
-    //   this.observacionRechazo = res.data.observacion;
-    // });
+    
+    this.simulatorService.getObservationSimulator(this.idSimulador).subscribe((res) => {
+      console.log(res);
+      this.observacionRechazo = res.data.observacion;
+    });
     
   }
 
@@ -88,7 +92,8 @@ export class QuestionsSimulatorsComponent {
   
   
   canAprove() {
-    return this.rol === 'Docente' && this.nombreRevisor === this.nombreUsuario && this.estadoSimulador != 'Aprobado' && this.estadoSimulador != 'Rechazado';
+    return this.rol === 'Docente' && this.nombreRevisor.trim() === this.nombreUsuario.trim() && this.estadoSimulador != 'Aprobado' && this.estadoSimulador != 'Rechazado';
+
   }
 
   canPublish(){
@@ -101,32 +106,41 @@ export class QuestionsSimulatorsComponent {
     return Estudiante || Docente;
   }
 
-  //TODO:
-  // publishMazo(idStatus: number){
-  //   const mazo: updateStatusMazo = {
-  //     idMazo: this.idMazo,
-  //     idEstado: idStatus
+  
+  updateStatusSimulator(idStatus: number){
+    const simulator: updateStatusSimulator = {
+      idSimulador: this.idSimulador,
+      idEstado: idStatus
     
-  //   };
-  //   this.learnService.publicarMazo(mazo).subscribe((res) => {
-  //     console.log(res);
-  //   });
-  // }
+    };
+    this.simulatorService.actualizarEstadoSimulator(simulator).subscribe((res) => {
+      console.log(res);
+    });
+  }
 
-  //TODO:
-  // reprobarMazo() {
-  //   this.dialog.open(ObservacionRechazoComponent, {
-  //     width: '40%',
-  //     maxHeight: '80%',
-  //     data: {id: this.idMazo},
-  //   });
-  // }
+  
+  reprobarSimulador() {
+    this.dialog.open(ObservacionRechazoSimuladoresComponent, {
+      width: '40%',
+      maxHeight: '80%',
+      data: {id: this.idSimulador},
+    });
+  }
 
-  // viewObservation(){
-  //   this.observationVisible = true;
-  // }
+  viewObservation(){
+    this.observationVisible = true;
+  }
 
-  // canViewObservation(){
-  //   return this.rol ==='Estudiante' && this.observacionRechazo !== null;
-  // }
+  canViewObservation(){
+    return this.rol ==='Estudiante' && this.observacionRechazo !== null;
+  }
+
+  publishSimulator(){
+    if(this.rol === 'Docente'){
+      this.updateStatusSimulator(2);
+  }
+  else{
+    this.updateStatusSimulator(1);
+  }
+  }
 }

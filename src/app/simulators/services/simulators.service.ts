@@ -1,11 +1,12 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListSimulators, NewSimulator, NewSimulatorQuestion, QuestionsSimulatorsGetQuery, Simulator, SimulatorsGetQuery, SimulatorsQuestions, TipoPreguntas, UpdateSimulator, UpdateSimulatorQuestion } from '../interfaces/simulators.interface';
+import { ListSimulatorSaver, ListSimulators, NewSimulator, NewSimulatorQuestion, QuestionsSimulatorsGetQuery, Simulator, SimulatorSaversGetQuery, SimulatorsGetQuery, SimulatorsQuestions, TipoPreguntas, UpdateSimulator, UpdateSimulatorQuestion, observationSimulator, sendObservationSimulator, updateStatusSimulator } from '../interfaces/simulators.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 import { Estado } from '../../academic-resources/interfaces/estados.interface';
 import { Nivel } from '../../academic-resources/interfaces/nivel.inteface';
+import { sendObservation } from '../../learn/interfaces/mazo.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -107,6 +108,57 @@ export class SimulatorsService {
     });
   }
 
+  actualizarEstadoSimulator(simulator:updateStatusSimulator){
+    return this.http.post('simuladores/publicarSimulador', simulator, {
+      headers: this.headers,
+    });
+  }
+
+  sendObservationSimulator(observacion: sendObservationSimulator){
+    return this.http.post('simuladores/observacionesSimulador', observacion, {
+      headers: this.headers,
+    });
+
+  }
+
+  getObservationSimulator(idSimulador: number){
+    return this.http.get<observationSimulator>(`simuladores/visualizarObservacionesSimulador/${idSimulador}`, {
+      headers: this.headers,
+    });
+  }
+
+  SaveSimulatorToReview(idSimulador:number){
+    return this.http.post(`simuladores/guardarSimulador/${idSimulador}`, {}, {
+      headers: this.headers,
+    });
+  }
+
+  getSimulatorSaver(){
+    return this.http.get<ListSimulators>('simuladores/obtenerSimuladoresGuardados', {
+      headers: this.headers,
+    });
+  }
+
+  getSimulatorsSavers({
+    page,
+    limit,
+    idAsignatura,
+    idNivel,
+    nombreSimulador,
+  }: SimulatorSaversGetQuery) {
+    if (!page) page = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${page}&limit=${limit}`;
+
+    if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
+    if (idNivel) query += `&idNivel=${idNivel}`;
+    if (nombreSimulador && nombreSimulador !== '')
+      query += `&nombreSimulador=${nombreSimulador}`;
+
+    return this.http.get<ListSimulatorSaver>(`simuladores/obtenerSimuladoresGuardados${query}`, {
+      headers: this.headers,
+    });
+  }
   //----------PREGUNTAS SIMULADORES----------------
 
   getPreguntasSimulador({ idSimulador, page, limit, pregunta}: QuestionsSimulatorsGetQuery) {

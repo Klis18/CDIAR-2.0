@@ -64,23 +64,54 @@ export class ListRevisorComponent implements OnInit, OnChanges{
 
 
   asignarRevisor(idDocente: string){
-    if(this.opcion === 'Mazo'){
-      const revisor = {
-        idMazo: this.id,
-        idDocenteRevisor: idDocente
-      }
-      this.securityService.asignarRevisorMazo(revisor).subscribe((res) => {
-        this.CloseModal('Revisor asignado exitosamente');      
-      });
-    }else if(this.opcion === 'Recursos'){
-      const revisor = {
-        id: this.id,
-        idDocenteRevisor: idDocente
-      }
-      this.securityService.asignarRevisorRecurso(revisor).subscribe((res) => {
-        this.CloseModal('Revisor asignado exitosamente');
-      });
+
+    switch(this.opcion){
+      case 'Mazo':
+        const revisorMazo = {
+          idMazo: this.id,
+          idDocenteRevisor: idDocente
+        }
+        this.securityService.asignarRevisorMazo(revisorMazo).subscribe((res) => {
+          this.CloseModal('Revisor asignado exitosamente');      
+        });
+        break;
+      case 'Recursos':
+        const revisorRecurso = {
+          id: this.id,
+          idDocenteRevisor: idDocente
+        }
+        this.securityService.asignarRevisorRecurso(revisorRecurso).subscribe((res) => {
+          this.CloseModal('Revisor asignado exitosamente');
+        });
+        break;
+      case 'Simuladores':
+        const revisorSimulador = {
+          idSimulador: this.id,
+          idDocenteRevisor: idDocente
+        }
+        this.securityService.asignaRevisorSimulador(revisorSimulador).subscribe((res) => {
+          this.CloseModal('Revisor asignado exitosamente');
+        });
+        break;
     }
+
+    // if(this.opcion === 'Mazo'){
+    //   const revisor = {
+    //     idMazo: this.id,
+    //     idDocenteRevisor: idDocente
+    //   }
+    //   this.securityService.asignarRevisorMazo(revisor).subscribe((res) => {
+    //     this.CloseModal('Revisor asignado exitosamente');      
+    //   });
+    // }else if(this.opcion === 'Recursos'){
+    //   const revisor = {
+    //     id: this.id,
+    //     idDocenteRevisor: idDocente
+    //   }
+    //   this.securityService.asignarRevisorRecurso(revisor).subscribe((res) => {
+    //     this.CloseModal('Revisor asignado exitosamente');
+    //   });
+    // }
     
     
   }

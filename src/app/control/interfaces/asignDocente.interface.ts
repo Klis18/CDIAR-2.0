@@ -9,6 +9,11 @@ export interface AsignaDocenteRevisorRecurso{
     idDocenteRevisor: string;
 }
 
+export interface AsignaDocenteRevisorSimulador{
+    idSimulador: number;
+    idDocenteRevisor: string;
+}
+
 export interface RevisorGetQuery {
     page: number;
     limit: number;

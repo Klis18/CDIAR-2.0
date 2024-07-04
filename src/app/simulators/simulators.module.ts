@@ -17,6 +17,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { QuestionsSimulatorsTablesComponent } from './components/questions-simulators-tables/questions-simulators-tables.component';
 import { EditSimulatorComponent } from './components/edit-simulator/edit-simulator.component';
 import { EditQuestionSimulatorComponent } from './components/edit-question-simulator/edit-question-simulator.component';
+import { ObservacionRechazoSimuladoresComponent } from './components/observacion-rechazo-simuladores/observacion-rechazo-simuladores.component';
+import { SavedSimulatorsTableComponent } from './components/saved-simulators-table/saved-simulators-table.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { EditQuestionSimulatorComponent } from './components/edit-question-simul
     QuestionsSimulatorsComponent,
     QuestionsSimulatorsTablesComponent,
     EditSimulatorComponent,
-    EditQuestionSimulatorComponent
+    EditQuestionSimulatorComponent,
+    ObservacionRechazoSimuladoresComponent,
+    SavedSimulatorsTableComponent
   ],
   imports: [
     CommonModule,
@@ -41,6 +45,12 @@ import { EditQuestionSimulatorComponent } from './components/edit-question-simul
     SharedModule,
     NgSelectModule,
     FormsModule,
+  ],
+  exports: [
+    CardsSimulatorsComponent
+  ],
+  providers:[
+    SimulatorsComponent
   ]
 })
 export class SimulatorsModule { }
