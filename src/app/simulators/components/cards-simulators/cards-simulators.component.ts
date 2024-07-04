@@ -352,12 +352,14 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     this.router.navigate(['/simuladores/preguntas',{id: item.idSimulador, simulador: item.nombreSimulador}]);
   }
 
-  // redirigirEstudiarFlashcards(item: ListMazo) {
+  redirigirIniciarSimulador(item: ListSimulators) {
+        this.router.navigate(['/simuladores/iniciar-simulador',{id: item.idSimulador, simulador: item.nombreSimulador}]);
+
   //   this.learnService.guardarMazoEstudiado(item.idMazo).subscribe((res) => {
   //     console.log('Mazo guardado', res.data);
   //     this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
   //   });
-  // }
+  }
 
   //TODO:
   asignaRevisor(idSimulador: number) {

@@ -63,9 +63,9 @@
               class="inline-block p-4 rounded-t-lg">Guardados</span>
           </li>
           <li class="me-2">
-            <span (click)="selectedTab = 'Estudiados'"
-              [ngClass]="{'text-blue-900 border-b-2 border-blue-900': selectedTab === 'Estudiados', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Estudiados'}"
-              class="inline-block p-4 rounded-t-lg">Estudiados</span>
+            <span (click)="selectedTab = 'Realizados'"
+              [ngClass]="{'text-blue-900 border-b-2 border-blue-900': selectedTab === 'Realizados', 'hover:text-gray-600 hover:border-gray-300': selectedTab !== 'Realizados'}"
+              class="inline-block p-4 rounded-t-lg">Realizados</span>
           </li>
       </ul>
     </div>
@@ -102,7 +102,7 @@
         (loadedTableEmitter)="loadedTale()"
         [loadTable]="reloadTable"
       />
-      }  @case ('Estudiados') {
+      }  @case ('Realizados') {
         <!-- <mazos-estudiados
         [searchData]="searchInfo"
         [typeTable]="'Estudiados'"

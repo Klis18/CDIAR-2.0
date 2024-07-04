@@ -159,6 +159,12 @@ export class SimulatorsService {
       headers: this.headers,
     });
   }
+
+  startSimulator(idSimulador:number){
+    return this.http.get<SimulatorsQuestions[]>(`simuladores/realizarSimulador/${idSimulador}`, {
+      headers: this.headers,
+    });
+  }
   //----------PREGUNTAS SIMULADORES----------------
 
   getPreguntasSimulador({ idSimulador, page, limit, pregunta}: QuestionsSimulatorsGetQuery) {

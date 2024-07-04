@@ -19,6 +19,7 @@ import { EditSimulatorComponent } from './components/edit-simulator/edit-simulat
 import { EditQuestionSimulatorComponent } from './components/edit-question-simulator/edit-question-simulator.component';
 import { ObservacionRechazoSimuladoresComponent } from './components/observacion-rechazo-simuladores/observacion-rechazo-simuladores.component';
 import { SavedSimulatorsTableComponent } from './components/saved-simulators-table/saved-simulators-table.component';
+import { StartSimulatorComponent } from './pages/start-simulator/start-simulator.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { SavedSimulatorsTableComponent } from './components/saved-simulators-tab
     EditSimulatorComponent,
     EditQuestionSimulatorComponent,
     ObservacionRechazoSimuladoresComponent,
-    SavedSimulatorsTableComponent
+    SavedSimulatorsTableComponent,
+    StartSimulatorComponent
   ],
   imports: [
     CommonModule,

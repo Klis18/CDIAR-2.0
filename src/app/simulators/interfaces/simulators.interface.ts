@@ -96,7 +96,7 @@ export interface UpdateSimulatorQuestion{
     idTipoPregunta: number;
     opcionesRespuestas: OptionsQuestion[];
 }
-export type typeTable = 'Publicado' | 'Mis Simuladores' | 'Por Aprobar' | 'Simuladores' | 'Guardados' | 'Estudiados';
+export type typeTable = 'Publicado' | 'Mis Simuladores' | 'Por Aprobar' | 'Simuladores' | 'Guardados' | 'Realizados';
 
 export interface SimulatorsQuestions{
     idPregunta: number;
