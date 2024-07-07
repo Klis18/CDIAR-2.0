@@ -1,0 +1,71 @@
+<div class="p-5"> 
+    <div class="text-right">
+      <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
+    </div>
+    <p class="text-2xl mb-2">{{title}}</p>
+    <hr />
+    <mat-dialog-content>
+      <div class="mt-5 mb-5 space-y-1">
+        <p><b>Nivel: </b>{{ nivel }}</p>
+        <p><b>Asignatura: </b>{{ asignatura}}</p>
+        <p><b>Descripción: </b>{{ datosRecurso.nombreRecurso }}</p>
+        <p><b>Propietario: </b>{{ datosRecurso.usuarioCreacion}}</p>
+        <p>
+          <b>Fecha registro: </b>{{ datosRecurso.fechaCreacion | date : "d/M/yyyy" }}
+        </p>
+        <p><b>Tipo Recurso: </b>{{ datosRecurso.tipoRecurso }}</p>
+        <p *ngIf="datosRecurso.nombreDocenteRevisor !== ''"><b>Revisor: </b>{{ datosRecurso.nombreDocenteRevisor}}
+       
+      </div>
+    </mat-dialog-content>
+    @if(opcion === 'approve'){
+      <div class="col-span-4">
+        <button type="button"
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          <a
+              class="cursor-pointer"
+              [href]="openFileInTab()"
+              target="_blank"
+            >
+          <span class="flex items-center justify-center">
+            <mat-icon
+            matTooltip="Ver Recurso"
+            matTooltipPosition="above"
+            matBadgeSize="small"
+            >open_in_new</mat-icon
+          >
+            Ver Recurso
+          </span>
+          </a>
+        </button>
+        <button type="button" (click)="changeStatusResource(2)" 
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          <span class="flex items-center justify-center">
+            <mat-icon>done</mat-icon>
+            Aprobar
+          </span>
+        </button>
+        <button type="button" (click)="reprobarRecurso()" 
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          <span class="flex items-center justify-center">
+            <mat-icon>clear</mat-icon>
+            Reprobar
+          </span>
+        </button>
+      </div>
+    }
+
+    @if(opcion === 'details'){
+      <div class="col-span-4 text-right">
+        <button
+          type="button"
+          (click)="cancelar()"
+          class="ml-2 text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2.5 text-center me-2 mb-2"
+        >
+          <span class="flex items-center justify-center">
+            Cerrar
+          </span>
+        </button>
+      </div>
+    }
+  </div>

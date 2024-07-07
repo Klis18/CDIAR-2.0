@@ -5,11 +5,13 @@ import { Nivel } from '../interfaces/nivel.inteface';
 import { Asignatura } from '../interfaces/asignatura.inteface';
 import { Estado } from '../interfaces/estados.interface';
 import {
+  approveResource,
   ListaRecurso,
   Recurso,
   RecursoEdit,
   RecursoResponse,
   RecursosGetQuery,
+  sendObservationResource,
 } from '../interfaces/recurso.interface';
 import { Docente } from '../interfaces/docente.interface';
 
@@ -126,6 +128,24 @@ export class RecursoService {
 
   getDocentesRevision() {
     return this.http.get<Docente>('docentesrevision', {
+      headers: this.headers,
+    });
+  }
+
+  changeStatusResource(recurso: approveResource) {
+    return this.http.post(`recursos/aprobarrecurso`, recurso, {
+      headers: this.headers,
+    });
+  }
+
+  sendObservation(recurso: sendObservationResource) {
+    return this.http.post('recursos/observaciones', recurso, {
+      headers: this.headers,
+    });
+  }
+
+  getObservations(idRecurso: number) {
+    return this.http.get(`recursos/obtenerobservaciones/${idRecurso}`, {
       headers: this.headers,
     });
   }

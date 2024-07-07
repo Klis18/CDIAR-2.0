@@ -1,21 +1,27 @@
-
-<div [formGroup]="simulators" class="-my-2 overflow-x-auto sm:-mx-6">
+<div [formGroup]="resourceTable" class="-my-2 overflow-x-auto sm:-mx-6">
     <div class="flex flex-wrap pr-7 pl-7 pt-2 pb-7">
       <div
         *ngFor="let item of data; let i = index"
         class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2"
       >
-        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
-          <div [ngStyle]="{ background: getGradient(i) }" class="h-32 flex items-center justify-center">
-            <img src="assets/images/cuestionario.png" alt="mazo Preguntas" class="h-20 w-auto"/>
-         </div>
+        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow mb-5">
+
+          <div [ngStyle]="{ background: getGradient(i) }" class="h-32 flex flex-col">
+            <!-- Contenedor del texto "Nuevo" -->
+            <div class="flex justify-end" *ngIf="newNotify(item) === true">
+              <p class="bg-lime-600 text-lime-100 text-xs font-medium px-2.5 py-0.5 rounded-full mt-2 mr-2">Nuevo</p>
+            </div>
+            
+            <!-- Contenedor de la imagen -->
+            <div class="flex items-center justify-center flex-1">
+              <img src="{{getIcon(item.tipoRecurso)}}" alt="{{ item.nombreRecurso }}" class="h-20 w-auto"/>
+            </div>
+          </div>
           <div class="grid grid-cols-4 gap-4 m-4">
             <div class="col-span-4">
-              <button (click)="redirigirPreguntas(item)">
                 <div class=" text-xl font-bold tracking-tight text-gray-900">
-                  {{ item.nombreSimulador }}
+                  {{ item.nombreRecurso }}
                 </div>
-              </button>
             </div>
             <div class="col-span-3">
               <div
@@ -32,24 +38,19 @@
                   {{ item.asignatura }}
                 </div>
               </div>
-              <div class="text-sm ml-2" *ngIf="selectedTab ==='Mis Simuladores'">
-                @switch (item.estado) { 
-                  @case ('Privado') {
-                    <span class="text-cyan-500 font-bold">
-                      {{ item.estado}}</span
-                    >
-                  }
+              <div class="text-sm ml-2" *ngIf="selectedTab ==='Mis Recursos'">
+                @switch (item.estadoRecurso) { 
                   @case ('Ingresado') {
                   <span class="text-neutral-500 font-bold">
-                    {{ item.estado}}</span
+                    {{ item.estadoRecurso}}</span
                   >
                   } @case ('Aprobado') {
                   <span class="text-green-500 font-bold">
-                    {{ item.estado}}</span
+                    {{ item.estadoRecurso}}</span
                   >
                   } @case ('Rechazado') {
                   <span class="text-red-700 font-bold">
-                    {{ item.estado}}</span
+                    {{ item.estadoRecurso}}</span
                   >
                   } }
               </div>
@@ -58,56 +59,66 @@
            
   
             <div class="col-span-4">
-              @if(userRol == 'Admin' && item.nombreDocenteRevisor == ''){
+              @if(userRol == 'Admin' && item.docenteRevisor == null){
                 <button
                   type="button"
-                  (click)="asignaRevisor(item.idSimulador)"
+                  (click)="asignaRevisor(item.idRecurso)"
                   class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
                 >
                   <span class="flex items-center justify-center">
-                    <mat-icon>assignment_ind</mat-icon>
+                    <mat-icon
+                    class="text-blue-900 mr-2 cursor-pointer"
+                    (click)="asignaRevisor(item.idRecurso)"
+                    onkeydown="asignarRevisor(item.idRecurso)"
+                    matTooltip="Asignar Revisor"
+                    matTooltipPosition="above"
+                    >assignment_ind</mat-icon
+                  >
                   </span>
                 </button>
               }
   
-              @if(selectedTab == 'Publicado' && userRol != 'Admin'){
+              @if(selectedTab == 'Mis Recursos'){
                 <button
                   type="button"
-                  (click)="saveSimulatorToReview(item.idSimulador)"
                   class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
                 >
                   <span class="flex items-center justify-center">
-                    <mat-icon>bookmark</mat-icon>
-                  </span>
-                </button>
-              }
-  
-              @if(selectedTab == 'Mis Simuladores'){
-                <button
-                  type="button"
-                  (click)="editarSimulador(item.idSimulador, item)"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
+                    <mat-icon
+                  class="mr-2 cursor-pointer"
+                  [matTooltip]="tituloRecurso"
+                  matTooltipPosition="above"
+                  onkeydown="editarRecurso(item.idRecurso)"
+                  (click)="editarRecurso(item.idRecurso)"
                 >
-                  <span class="flex items-center justify-center">
-                    <mat-icon>edit</mat-icon>
+                  {{ iconActionTable }}
+                </mat-icon>
                   </span>
                 </button>
   
                 <button
                   type="button"
-                  (click)="eliminarSimulador(item.idSimulador)"
                   class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
                 >
                   <span class="flex items-center justify-center">
-                    <mat-icon>delete</mat-icon>
+                    <mat-icon
+                    class="mr-2 cursor-pointer"
+                    (click)="eliminarRecurso(item.idRecurso)"
+                    onkeydown="eliminarRecurso(item.idRecurso)"
+                    matTooltip="Eliminar Recurso"
+                    matTooltipPosition="above"
+                    >delete</mat-icon
+                  >
                   </span>
                 </button>
+
+                
               }
   
               @if(selectedTab ==='Por Aprobar'){
                 <button
                 type="button"
-                (click)="redirigirPreguntas(item)"
+                (click)="viewDetailsResource(item, 'approve')"
                 class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
               >
                 <span class="flex items-center justify-center">
@@ -115,10 +126,10 @@
                 </span>
               </button>
               }
-           
+  
               <button
                 type="button"
-                (click)="viewDetailsSimulator(item.idSimulador,item.nivel,item.asignatura)"
+                (click)="viewDetailsResource(item, 'details')"
                 class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
               >
                 <span class="flex items-center justify-center">
@@ -126,13 +137,23 @@
                 </span>
               </button>
   
-              <button type="button"  (click)="redirigirIniciarSimulador(item)" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+              <button type="button" (click)="clickFileLink(item)" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                 <span class="flex items-center justify-center">
-                  <mat-icon>play_arrow</mat-icon>
-                  Iniciar
+                    <a
+                    class="cursor-pointer"
+                    [href]="openFileInTab(item)"
+                    target="_blank"
+                  >
+                      <mat-icon
+                      matTooltip="Ver Recurso"
+                      matTooltipPosition="above"
+                      matBadgeSize="small"
+                      >open_in_new</mat-icon
+                    >
+                  </a>
                 </span>
               </button>
-   
+  
             </div>
           </div>
         </div>

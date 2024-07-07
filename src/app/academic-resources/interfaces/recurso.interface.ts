@@ -95,3 +95,14 @@ export interface RecursosGetQuery {
   idEstado?: number;
   revisor?: boolean;
 }
+
+export interface approveResource {
+  idRecurso: number;
+  idEstado: number;
+}
+
+export interface sendObservationResource{
+  idRecurso: number;
+  observacion: string;
+  observacionesArchivo: string;
+}

@@ -43,11 +43,6 @@ export class ObservacionRechazoComponent {
 
   }
 
-  
-  
-
-  
-
   rechazarMazo(){
     const observacionMessage = this.observationForm.get('observation')?.value;
     const observacion: sendObservation = {

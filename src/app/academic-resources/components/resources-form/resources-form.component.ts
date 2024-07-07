@@ -1,11 +1,13 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
   inject,
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -28,6 +30,8 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
   @Output() valueFormEmitter = new EventEmitter<boolean>();
   @Output() asignaturaEmitter = new EventEmitter<any>();
 
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
   nivelesType: { label: string; value: string }[] = [];
   asignaturas: { label: string; value: string }[] = [];
   estados: { label: string; value: string }[] = [];
@@ -45,6 +49,7 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
   datosRecursos!: any;
   idNiv: string = '';
   rol: string = '';
+  recursoCargado:string = 'HOLA';
   listadoExtensionesImages = ['jpg', 'jpeg', 'png'];
   listadoExtensionesArchivos = [
     'docx',
@@ -102,7 +107,8 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       nombreRecurso: ['', Validators.required],
       idDocenteRevisor: ['', Validators.required],
       recurso: [null, Validators.required],
-      extension: [null, Validators.required],
+      recursoCargado: [null, Validators.required],
+      extension: [null],
       observation: ['', Validators.required],
       observationArchivo: [null, Validators.required],
       extensionObservaciones: [null, Validators.required],
@@ -214,14 +220,14 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
         enlaceDelRecurso: data.enlaceDelRecurso,
         nombreRecurso: data.nombreRecurso,
         nombreRevisor: data.nombreRevisor,
-        recurso: data.recurso,
+        recursoCargado: data.recurso,
         observation: data.observacion,
         idDocenteRevisor: data.idDocenteRevisor,
       });
       if (data?.idNivel) {
         this.getAsignaturasPorNivel(Number(data.idNivel));
       }
-
+      
       if (this.rol === ROLES.ESTUDIANTE) {
         console.log({ FORM: this.modeForm });
         if (this.modeForm === 'Edit') {
@@ -349,6 +355,7 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
         const recursoFile = (reader.result as string).split(',')[1];
         if (recursoFile)
           this.recursoGroupForm.get(field)?.setValue(recursoFile);
+          this.recursoGroupForm.get('recursoCargado')?.setValue(file.name);
         const extension = file.name.split('.').pop() || '';
 
         if (
@@ -502,5 +509,10 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       this.valueFormEmitter.emit(this.recursoGroupForm.valid);
       this.asignaturaEmitter.emit(this.recursoGroupForm.value.idAsignatura);
     });
+  }
+
+  selectFile(): void {
+    // Simula un clic en el input de tipo file oculto
+    this.fileInput.nativeElement.click();
   }
 }

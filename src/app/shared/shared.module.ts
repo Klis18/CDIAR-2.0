@@ -13,6 +13,9 @@ import { SelectComponent } from './components/select.components';
 import { SearchFiltersComponent } from './pages/search-filters/search-filters.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { QuestionFilterComponent } from './pages/question-filter/question-filter.component';
+import { ObservacionRechazoComponent } from './pages/observacion-rechazo/observacion-rechazo.component';
+// import { NgxEditorComponent, NgxEditorModule } from 'ngx-editor';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
 @NgModule({
@@ -25,13 +28,16 @@ import { QuestionFilterComponent } from './pages/question-filter/question-filter
     SelectComponent,
     SearchFiltersComponent,
     QuestionFilterComponent,
+    ObservacionRechazoComponent,
   ],
   imports: [
     CommonModule,
     SharedRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    // NgxEditorModule,
+    EditorModule
   ],
   exports: [
     FooterComponent,

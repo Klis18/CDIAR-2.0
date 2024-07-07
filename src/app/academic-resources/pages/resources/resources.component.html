@@ -27,7 +27,7 @@
     <button
       type="button"
       (click)="openDialog()"
-      class="ml-2 text-white bg-gradient-to-r from-blue-950 via-blue-800 to-blue-900 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2"
+      class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2"
     >
       <span class="flex items-center justify-center">
         <mat-icon>add</mat-icon>
@@ -35,7 +35,7 @@
       </span>
     </button>
   </div>
-  <div class="mt-2 mb-2">
+  <div class="mt-12 mb-2">
     <search-filters (search)="emitSearch($event)"></search-filters>
   </div>
 
@@ -94,40 +94,64 @@
               selectedTab !== 'Recursos revisados'
           }"
           class="inline-block p-4 rounded-t-lg"
-          >Recursos revisados
+          >Recursos Consultados
         </a>
       </li>
     </ul>
   </div>
   <div class="pt-5 pb-5">
     @switch (selectedTab) { @case ('Publicado') {
-    <resources-table
+    <!-- <resources-table
       [searchData]="searchInfo"
       [typeTable]="'Publicado'"
       (loadedTableEmitter)="loadedTale()"
       [loadTable]="reloadTable"
-    ></resources-table>
+    ></resources-table> -->
+    <resources-cards
+      [searchData]="searchInfo"
+      [typeTable]="'Publicado'"
+      (loadedTableEmitter)="loadedTale()"
+      [loadTable]="reloadTable"
+    ></resources-cards>
     } @case ('Mis Recursos') {
-    <resources-table
+    <!-- <resources-table
       [searchData]="searchInfo"
       [typeTable]="'Mis Recursos'"
       (loadedTableEmitter)="loadedTale()"
       [loadTable]="reloadTable"
-    ></resources-table>
+    ></resources-table> -->
+    <resources-cards
+      [searchData]="searchInfo"
+      [typeTable]="'Mis Recursos'"
+      (loadedTableEmitter)="loadedTale()"
+      [loadTable]="reloadTable"
+    ></resources-cards>
     } @case ('Por Aprobar') {
-    <resources-table
+    <!-- <resources-table
       [searchData]="searchInfo"
       (loadedTableEmitter)="loadedTale()"
       [loadTable]="reloadTable"
       [typeTable]="'Por Aprobar'"
-    ></resources-table>
+    ></resources-table> -->
+    <resources-cards
+    [searchData]="searchInfo"
+    (loadedTableEmitter)="loadedTale()"
+    [loadTable]="reloadTable"
+    [typeTable]="'Por Aprobar'"
+  ></resources-cards>
     } @case ('Recursos revisados') {
-    <resources-table
+    <!-- <resources-table
       [searchData]="searchInfo"
       (loadedTableEmitter)="loadedTale()"
       [loadTable]="reloadTable"
       [typeTable]="'Recursos revisados'"
-    ></resources-table>
+    ></resources-table> -->
+    <resources-cards
+      [searchData]="searchInfo"
+      (loadedTableEmitter)="loadedTale()"
+      [loadTable]="reloadTable"
+      [typeTable]="'Recursos revisados'"
+    ></resources-cards>
     } }
   </div>
 </div>

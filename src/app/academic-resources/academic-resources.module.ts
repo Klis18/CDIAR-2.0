@@ -10,6 +10,8 @@ import { ResourcesFormComponent } from './components/resources-form/resources-fo
 import { ResourcesComponent } from './pages/resources/resources.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AcademicResourcesRoutingModule } from './academic-resources-routing.module';
+import { ResourcesCardsComponent } from './components/resources-cards/resources-cards.component';
+import { ResourceDetailsComponent } from './components/resource-details/resource-details.component';
 
 
 @NgModule({
@@ -19,6 +21,8 @@ import { AcademicResourcesRoutingModule } from './academic-resources-routing.mod
     ResourcesFormComponent,
     ResourcesComponent,
     ResourcesTableComponent,
+    ResourcesCardsComponent,
+    ResourceDetailsComponent,
   ],
   imports: [
     CommonModule,
