@@ -71,6 +71,8 @@ export class AuthService {
     this._authStatus.set(AuthStatus.notAuthenticated);
   }
 
+ 
+
   registrarUsuario(user: User) {
     return this.http.post<User>('usuario/crear', user);
   }
