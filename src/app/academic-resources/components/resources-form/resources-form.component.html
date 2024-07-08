@@ -39,7 +39,7 @@
           >
           </ng-select>
         </div>
-        @if(canShowStatus()){
+        <!-- @if(canShowStatus()){
         <div class="col-span-12 md:col-span-6">
           <label
             for="estado"
@@ -58,14 +58,10 @@
           >
           </ng-select>
         </div>
-        } @if(selectedActivate(rol)){
+        }  -->
+        <!-- @if(selectedActivate(rol)){ -->
         <div
           class="col-span-12"
-          [ngClass]="{
-            ' md:col-span-6':
-              (rol === 'Docente' && modeForm === 'Edit') ||
-              (rol === 'Docente' && modeForm === 'Por Aprobar')
-          }"
         >
           <label
             for="tipoRecurso"
@@ -82,7 +78,7 @@
             <option value="Archivo">Documento/Imagen</option>
           </select>
         </div>
-        }
+        <!-- } -->
 
         <div class="col-span-12">
           <label
@@ -123,6 +119,7 @@
             <button 
               (click)="selectFile()"
               class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
+              <mat-icon class="mr-2">cloud_upload</mat-icon>
               Seleccionar archivo
             </button>
             <input type="file" #fileInput style="display: none" (change)="onFileChange($event, 'recurso')"  accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .pdf, .xls, .xlsx, .ppt, .pptx"/>
@@ -135,9 +132,9 @@
               readonly
             />
           </div>
-           
-      
-        } @if(this.rol === 'Admin' || showObservation(this.rol) && rol ===
+          
+        } 
+        <!-- @if(this.rol === 'Admin' || showObservation(this.rol) && rol ===
         'Estudiante'){
         <div class="col-span-12">
           <div class="col-span-4">
@@ -195,7 +192,7 @@
             </div>
           </div>
         </div>
-        }
+        } -->
       </div>
     </form>
   </div>

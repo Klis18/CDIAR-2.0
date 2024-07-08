@@ -35,7 +35,7 @@ import { ResourceDetailsComponent } from './components/resource-details/resource
   ],
   exports: [
     ResourcesTableComponent,
-    
+    ResourcesCardsComponent
   ],
 })
 

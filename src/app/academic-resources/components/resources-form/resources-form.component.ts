@@ -72,12 +72,12 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.createForm();
     this.loadNiveles();
-    this.loadEstados();
+    // this.loadEstados();
     this.homeService.obtenerDatosMenu().subscribe({
       next: (user) => {
         if (user) this.rol = user.data?.rol;
-        this.validationsForm();
-        this.loadDocentesRevision();
+        // this.validationsForm();
+        // this.loadDocentesRevision();
         this.ngSuscribesOnInit();
 
         if (this.formData) {
@@ -101,113 +101,113 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       idRecurso: [],
       idNivel: [null, Validators.required],
       idAsignatura: [null, Validators.required],
-      idEstado: [null, Validators.required],
+      // idEstado: [null, Validators.required],
       tipoRecurso: ['', Validators.required],
       enlaceDelRecurso: ['', Validators.required],
       nombreRecurso: ['', Validators.required],
-      idDocenteRevisor: ['', Validators.required],
-      recurso: [null, Validators.required],
-      recursoCargado: [null, Validators.required],
+      // idDocenteRevisor: ['', Validators.required],
+      recurso: [null],
+      recursoCargado: [null],
       extension: [null],
-      observation: ['', Validators.required],
-      observationArchivo: [null, Validators.required],
-      extensionObservaciones: [null, Validators.required],
+      // observation: ['', Validators.required],
+      // observationArchivo: [null, Validators.required],
+      // extensionObservaciones: [null, Validators.required],
     });
   }
 
-  validationsForm() {
-    switch (this.rol) {
-      case ROLES.ADMIN:
-        this.recursoGroupForm.get('idNivel')?.disable();
-        this.recursoGroupForm.get('idAsignatura')?.disable();
-        this.recursoGroupForm.get('idEstado')?.disable();
-        this.recursoGroupForm.get('tipoRecurso')?.disable();
-        this.recursoGroupForm.get('enlaceDelRecurso')?.disable();
-        this.recursoGroupForm.get('nombreRecurso')?.disable();
-        this.recursoGroupForm.get('idDocenteRevisor')?.updateValueAndValidity();
+  // validationsForm() {
+  //   switch (this.rol) {
+  //     case ROLES.ADMIN:
+  //       this.recursoGroupForm.get('idNivel')?.disable();
+  //       this.recursoGroupForm.get('idAsignatura')?.disable();
+  //       this.recursoGroupForm.get('idEstado')?.disable();
+  //       this.recursoGroupForm.get('tipoRecurso')?.disable();
+  //       this.recursoGroupForm.get('enlaceDelRecurso')?.disable();
+  //       this.recursoGroupForm.get('nombreRecurso')?.disable();
+  //       this.recursoGroupForm.get('idDocenteRevisor')?.updateValueAndValidity();
 
-        this.recursoGroupForm.get('observation')?.clearValidators();
-        this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+  //       this.recursoGroupForm.get('observation')?.clearValidators();
+  //       this.recursoGroupForm.get('observation')?.updateValueAndValidity();
 
-        this.recursoGroupForm.get('observationArchivo')?.clearValidators();
-        this.recursoGroupForm
-          .get('observationArchivo')
-          ?.updateValueAndValidity();
+  //       this.recursoGroupForm.get('observationArchivo')?.clearValidators();
+  //       this.recursoGroupForm
+  //         .get('observationArchivo')
+  //         ?.updateValueAndValidity();
 
-        this.recursoGroupForm.get('extensionObservaciones')?.clearValidators();
-        this.recursoGroupForm
-          .get('extensionObservaciones')
-          ?.updateValueAndValidity();
+  //       this.recursoGroupForm.get('extensionObservaciones')?.clearValidators();
+  //       this.recursoGroupForm
+  //         .get('extensionObservaciones')
+  //         ?.updateValueAndValidity();
 
-        break;
-      case ROLES.DOCENTE:
-        if (this.modeForm === 'Add') {
-          this.recursoGroupForm.get('idEstado')?.clearValidators();
-          this.recursoGroupForm.get('idEstado')?.updateValueAndValidity();
-          this.recursoGroupForm.get('idDocenteRevisor')?.clearValidators();
-          this.recursoGroupForm
-            .get('idDocenteRevisor')
-            ?.updateValueAndValidity();
-          this.recursoGroupForm.get('observation')?.clearValidators();
-          this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+  //       break;
+  //     case ROLES.DOCENTE:
+  //       if (this.modeForm === 'Add') {
+  //         this.recursoGroupForm.get('idEstado')?.clearValidators();
+  //         this.recursoGroupForm.get('idEstado')?.updateValueAndValidity();
+  //         this.recursoGroupForm.get('idDocenteRevisor')?.clearValidators();
+  //         this.recursoGroupForm
+  //           .get('idDocenteRevisor')
+  //           ?.updateValueAndValidity();
+  //         this.recursoGroupForm.get('observation')?.clearValidators();
+  //         this.recursoGroupForm.get('observation')?.updateValueAndValidity();
 
-          this.recursoGroupForm.get('observationArchivo')?.clearValidators();
-          this.recursoGroupForm
-            .get('observationArchivo')
-            ?.updateValueAndValidity();
+  //         this.recursoGroupForm.get('observationArchivo')?.clearValidators();
+  //         this.recursoGroupForm
+  //           .get('observationArchivo')
+  //           ?.updateValueAndValidity();
 
-          this.recursoGroupForm
-            .get('extensionObservaciones')
-            ?.clearValidators();
-          this.recursoGroupForm
-            .get('extensionObservaciones')
-            ?.updateValueAndValidity();
-        } else if (
-          this.modeForm === 'Edit' ||
-          this.modeForm === 'Por Aprobar'
-        ) {
-          this.recursoGroupForm.get('idDocenteRevisor')?.clearValidators();
-          this.recursoGroupForm
-            .get('idDocenteRevisor')
-            ?.updateValueAndValidity();
-          this.recursoGroupForm.get('observation')?.clearValidators();
-          this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+  //         this.recursoGroupForm
+  //           .get('extensionObservaciones')
+  //           ?.clearValidators();
+  //         this.recursoGroupForm
+  //           .get('extensionObservaciones')
+  //           ?.updateValueAndValidity();
+  //       } else if (
+  //         this.modeForm === 'Edit' ||
+  //         this.modeForm === 'Por Aprobar'
+  //       ) {
+  //         this.recursoGroupForm.get('idDocenteRevisor')?.clearValidators();
+  //         this.recursoGroupForm
+  //           .get('idDocenteRevisor')
+  //           ?.updateValueAndValidity();
+  //         this.recursoGroupForm.get('observation')?.clearValidators();
+  //         this.recursoGroupForm.get('observation')?.updateValueAndValidity();
 
-          this.recursoGroupForm.get('observationArchivo')?.clearValidators();
-          this.recursoGroupForm
-            .get('observationArchivo')
-            ?.updateValueAndValidity();
+  //         this.recursoGroupForm.get('observationArchivo')?.clearValidators();
+  //         this.recursoGroupForm
+  //           .get('observationArchivo')
+  //           ?.updateValueAndValidity();
 
-          this.recursoGroupForm
-            .get('extensionObservaciones')
-            ?.clearValidators();
-          this.recursoGroupForm
-            .get('extensionObservaciones')
-            ?.updateValueAndValidity();
-        }
-        break;
+  //         this.recursoGroupForm
+  //           .get('extensionObservaciones')
+  //           ?.clearValidators();
+  //         this.recursoGroupForm
+  //           .get('extensionObservaciones')
+  //           ?.updateValueAndValidity();
+  //       }
+  //       break;
 
-      default:
-        this.recursoGroupForm.get('observation')?.clearValidators();
-        this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+  //     default:
+  //       this.recursoGroupForm.get('observation')?.clearValidators();
+  //       this.recursoGroupForm.get('observation')?.updateValueAndValidity();
 
-        this.recursoGroupForm.get('observationArchivo')?.clearValidators();
-        this.recursoGroupForm
-          .get('observationArchivo')
-          ?.updateValueAndValidity();
+  //       this.recursoGroupForm.get('observationArchivo')?.clearValidators();
+  //       this.recursoGroupForm
+  //         .get('observationArchivo')
+  //         ?.updateValueAndValidity();
 
-        this.recursoGroupForm.get('extensionObservaciones')?.clearValidators();
-        this.recursoGroupForm
-          .get('extensionObservaciones')
-          ?.updateValueAndValidity();
+  //       this.recursoGroupForm.get('extensionObservaciones')?.clearValidators();
+  //       this.recursoGroupForm
+  //         .get('extensionObservaciones')
+  //         ?.updateValueAndValidity();
 
-        this.recursoGroupForm.get('idDocenteRevisor')?.clearValidators();
-        this.recursoGroupForm.get('idDocenteRevisor')?.updateValueAndValidity();
-        this.recursoGroupForm.get('idEstado')?.clearValidators();
-        this.recursoGroupForm.get('idEstado')?.updateValueAndValidity();
-        break;
-    }
-  }
+  //       this.recursoGroupForm.get('idDocenteRevisor')?.clearValidators();
+  //       this.recursoGroupForm.get('idDocenteRevisor')?.updateValueAndValidity();
+  //       this.recursoGroupForm.get('idEstado')?.clearValidators();
+  //       this.recursoGroupForm.get('idEstado')?.updateValueAndValidity();
+  //       break;
+  //   }
+  // }
 
   setData(data: any) {
     if (data && this.recursoGroupForm) {
@@ -215,77 +215,77 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
         idRecurso: data.idRecurso,
         idNivel: data.idNivel,
         idAsignatura: data.idAsignatura,
-        idEstado: data.idEstado,
+        // idEstado: data.idEstado,
         tipoRecurso: data.tipoRecurso,
         enlaceDelRecurso: data.enlaceDelRecurso,
         nombreRecurso: data.nombreRecurso,
-        nombreRevisor: data.nombreRevisor,
+        // nombreRevisor: data.nombreRevisor,
         recursoCargado: data.recurso,
-        observation: data.observacion,
-        idDocenteRevisor: data.idDocenteRevisor,
+        // observation: data.observacion,
+        // idDocenteRevisor: data.idDocenteRevisor,
       });
       if (data?.idNivel) {
         this.getAsignaturasPorNivel(Number(data.idNivel));
       }
       
-      if (this.rol === ROLES.ESTUDIANTE) {
-        console.log({ FORM: this.modeForm });
-        if (this.modeForm === 'Edit') {
-          this.recursoGroupForm.get('observation')?.disable();
-          this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+      // if (this.rol === ROLES.ESTUDIANTE) {
+      //   console.log({ FORM: this.modeForm });
+      //   if (this.modeForm === 'Edit') {
+      //     this.recursoGroupForm.get('observation')?.disable();
+      //     this.recursoGroupForm.get('observation')?.updateValueAndValidity();
 
-          this.recursoGroupForm.get('idDocenteRevisor')?.disable();
-          this.recursoGroupForm
-            .get('idDocenteRevisor')
-            ?.updateValueAndValidity();
+      //     this.recursoGroupForm.get('idDocenteRevisor')?.disable();
+      //     this.recursoGroupForm
+      //       .get('idDocenteRevisor')
+      //       ?.updateValueAndValidity();
 
-          this.recursoGroupForm.get('observationArchivo')?.disable();
-          this.recursoGroupForm
-            .get('observationArchivo')
-            ?.updateValueAndValidity();
+      //     this.recursoGroupForm.get('observationArchivo')?.disable();
+      //     this.recursoGroupForm
+      //       .get('observationArchivo')
+      //       ?.updateValueAndValidity();
 
-          this.recursoGroupForm.get('extensionObservaciones')?.disable();
-          this.recursoGroupForm
-            .get('extensionObservaciones')
-            ?.updateValueAndValidity();
-        }
+      //     this.recursoGroupForm.get('extensionObservaciones')?.disable();
+      //     this.recursoGroupForm
+      //       .get('extensionObservaciones')
+      //       ?.updateValueAndValidity();
+      //   }
 
-        if (this.modeForm === 'Corregir Recurso') {
-          this.recursoGroupForm.get('idDocenteRevisor')?.disable();
-          this.recursoGroupForm
-            .get('idDocenteRevisor')
-            ?.updateValueAndValidity();
-        }
-      }
-      this.observation = data.observacion;
+      //   if (this.modeForm === 'Corregir Recurso') {
+      //     this.recursoGroupForm.get('idDocenteRevisor')?.disable();
+      //     this.recursoGroupForm
+      //       .get('idDocenteRevisor')
+      //       ?.updateValueAndValidity();
+      //   }
+      // }
+      //this.observation = data.observacion;
       this.idAssign = data.idAsignatura;
       this.idNiv = data.idNivel;
     }
 
-    if (this.rol === ROLES.ADMIN) {
-      this.recursoGroupForm.get('enlaceDelRecurso')?.disable();
-    }
+    // if (this.rol === ROLES.ADMIN) {
+    //   this.recursoGroupForm.get('enlaceDelRecurso')?.disable();
+    // }
 
-    if (this.rol === ROLES.DOCENTE) {
-      this.recursoGroupForm.get('idDocenteRevisor')?.disable();
-      this.recursoGroupForm.get('idDocenteRevisor')?.updateValueAndValidity();
-      this.recursoGroupForm.get('observation')?.disable();
-      this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+    // if (this.rol === ROLES.DOCENTE) {
+    //   this.recursoGroupForm.get('idDocenteRevisor')?.disable();
+    //   this.recursoGroupForm.get('idDocenteRevisor')?.updateValueAndValidity();
+    //   this.recursoGroupForm.get('observation')?.disable();
+    //   this.recursoGroupForm.get('observation')?.updateValueAndValidity();
 
-      if (this.modeForm === 'Por Aprobar') {
-        this.recursoGroupForm.get('observation')?.enable();
-        this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+    //   if (this.modeForm === 'Por Aprobar') {
+    //     this.recursoGroupForm.get('observation')?.enable();
+    //     this.recursoGroupForm.get('observation')?.updateValueAndValidity();
 
-        this.recursoGroupForm.disable();
-        this.recursoGroupForm.get('idEstado')?.enable();
+    //     this.recursoGroupForm.disable();
+    //     this.recursoGroupForm.get('idEstado')?.enable();
 
-        this.recursoGroupForm.get('idNivel')?.disable();
-        this.recursoGroupForm.get('idAsignatura')?.disable();
-        this.recursoGroupForm.get('tipoRecurso')?.disable();
-        this.recursoGroupForm.get('enlaceDelRecurso')?.disable();
-        this.recursoGroupForm.get('nombreRecurso')?.disable();
-      }
-    }
+    //     this.recursoGroupForm.get('idNivel')?.disable();
+    //     this.recursoGroupForm.get('idAsignatura')?.disable();
+    //     this.recursoGroupForm.get('tipoRecurso')?.disable();
+    //     this.recursoGroupForm.get('enlaceDelRecurso')?.disable();
+    //     this.recursoGroupForm.get('nombreRecurso')?.disable();
+    //   }
+    // }
   }
 
   loadNiveles() {
@@ -297,24 +297,24 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
     });
   }
 
-  loadEstados() {
-    this.recursoService.getEstados().subscribe((res: any) => {
-      this.estados = res.data.map((estado: any) => ({
-        label: estado.descripcion,
-        value: estado.idEstado,
-      }));
-    });
-  }
+  // loadEstados() {
+  //   this.recursoService.getEstados().subscribe((res: any) => {
+  //     this.estados = res.data.map((estado: any) => ({
+  //       label: estado.descripcion,
+  //       value: estado.idEstado,
+  //     }));
+  //   });
+  // }
 
-  loadDocentesRevision() {
-    if (this.rol === 'Admin')
-      this.recursoService.getDocentesRevision().subscribe((res: any) => {
-        this.docentes = res.data.map((docente: any) => ({
-          label: docente.nombresCompletos,
-          value: docente.idDocente,
-        }));
-      });
-  }
+  // loadDocentesRevision() {
+  //   if (this.rol === 'Admin')
+  //     this.recursoService.getDocentesRevision().subscribe((res: any) => {
+  //       this.docentes = res.data.map((docente: any) => ({
+  //         label: docente.nombresCompletos,
+  //         value: docente.idDocente,
+  //       }));
+  //     });
+  // }
 
   onNivelChange(nivelId: number) {
     if (nivelId) this.getAsignaturasPorNivel(nivelId);
@@ -374,45 +374,45 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
     return value.split('/').slice(-1)[0] || '';
   }
   observationView: boolean = false;
-  showObservation(rol: string): boolean {
-    const isStudent = rol === 'Estudiante' && this.observation !== '';
-    const isDocente =
-      rol === 'Docente' &&
-      (this.modeForm === 'Edit' || this.modeForm === 'Por Aprobar') &&
-      (this.observation !== '' || this.observationView);
+  // showObservation(rol: string): boolean {
+  //   const isStudent = rol === 'Estudiante' && this.observation !== '';
+  //   const isDocente =
+  //     rol === 'Docente' &&
+  //     (this.modeForm === 'Edit' || this.modeForm === 'Por Aprobar') &&
+  //     (this.observation !== '' || this.observationView);
 
-    let status = false;
-    if (rol === 'Estudiante') status = isStudent;
-    if (rol === 'Docente') status = isDocente;
+  //   let status = false;
+  //   if (rol === 'Estudiante') status = isStudent;
+  //   if (rol === 'Docente') status = isDocente;
 
-    return status;
-  }
+  //   return status;
+  // }
 
-  selectedActivate(rol: string): boolean {
-    let RolValid = false;
-    if (rol === 'Estudiante' || rol === 'Docente') {
-      RolValid = true;
-    }
-    return RolValid;
-  }
+  // selectedActivate(rol: string): boolean {
+  //   let RolValid = false;
+  //   if (rol === 'Estudiante' || rol === 'Docente') {
+  //     RolValid = true;
+  //   }
+  //   return RolValid;
+  // }
 
-  showStatus(rol: string): boolean {
-    const isDocente = rol === 'Docente';
-    return isDocente;
-  }
+  // showStatus(rol: string): boolean {
+  //   const isDocente = rol === 'Docente';
+  //   return isDocente;
+  // }
 
-  canShowStatus() {
-    let status: boolean = false;
-    if (this.rol === 'Docente') {
-      status = this.modeForm === 'Edit' || this.modeForm === 'Por Aprobar';
-    }
+  // canShowStatus() {
+  //   let status: boolean = false;
+  //   if (this.rol === 'Docente') {
+  //     status = this.modeForm === 'Edit' || this.modeForm === 'Por Aprobar';
+  //   }
 
-    if (this.rol === 'Estudiante') {
-      status = this.modeForm === 'Corregir Recurso';
-    }
+  //   if (this.rol === 'Estudiante') {
+  //     status = this.modeForm === 'Corregir Recurso';
+  //   }
 
-    return status;
-  }
+  //   return status;
+  // }
   ngSuscribesOnInit() {
     this.recursoGroupForm.get('tipoRecurso')?.valueChanges.subscribe({
       next: (tipoRecurso) => {
@@ -434,44 +434,44 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
       },
     });
 
-    this.recursoGroupForm.get('idEstado')?.valueChanges.subscribe({
-      next: (idEstado) => {
-        if (idEstado === RecursosIdEstados.RECHAZADO) {
-          this.recursoGroupForm
-            .get('observation')
-            ?.setValidators([Validators.required]);
-          this.observationView = true;
-          this.recursoGroupForm.get('observation')?.enable();
-          this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+    // this.recursoGroupForm.get('idEstado')?.valueChanges.subscribe({
+    //   next: (idEstado) => {
+    //     if (idEstado === RecursosIdEstados.RECHAZADO) {
+    //       this.recursoGroupForm
+    //         .get('observation')
+    //         ?.setValidators([Validators.required]);
+    //       this.observationView = true;
+    //       this.recursoGroupForm.get('observation')?.enable();
+    //       this.recursoGroupForm.get('observation')?.updateValueAndValidity();
 
-          this.recursoGroupForm
-            .get('observationArchivo')
-            ?.setValidators([Validators.required]);
-          this.recursoGroupForm.get('observationArchivo')?.enable();
-          this.recursoGroupForm
-            .get('extensionObservaciones')
-            ?.setValidators([Validators.required]);
-          this.recursoGroupForm.get('extensionObservaciones')?.enable();
-        } else {
-          this.recursoGroupForm.get('observation')?.reset();
-          this.recursoGroupForm.get('observation')?.clearValidators();
-          this.recursoGroupForm.get('observationArchivo')?.reset();
-          this.recursoGroupForm.get('observationArchivo')?.clearValidators();
-          this.recursoGroupForm.get('extensionObservaciones')?.reset();
-          this.recursoGroupForm
-            .get('extensionObservaciones')
-            ?.clearValidators();
-          this.observationView = false;
-        }
-        this.recursoGroupForm.get('observation')?.updateValueAndValidity();
-        this.recursoGroupForm
-          .get('observationArchivo')
-          ?.updateValueAndValidity();
-        this.recursoGroupForm
-          .get('extensionObservaciones')
-          ?.updateValueAndValidity();
-      },
-    });
+    //       this.recursoGroupForm
+    //         .get('observationArchivo')
+    //         ?.setValidators([Validators.required]);
+    //       this.recursoGroupForm.get('observationArchivo')?.enable();
+    //       this.recursoGroupForm
+    //         .get('extensionObservaciones')
+    //         ?.setValidators([Validators.required]);
+    //       this.recursoGroupForm.get('extensionObservaciones')?.enable();
+    //     } else {
+    //       this.recursoGroupForm.get('observation')?.reset();
+    //       this.recursoGroupForm.get('observation')?.clearValidators();
+    //       this.recursoGroupForm.get('observationArchivo')?.reset();
+    //       this.recursoGroupForm.get('observationArchivo')?.clearValidators();
+    //       this.recursoGroupForm.get('extensionObservaciones')?.reset();
+    //       this.recursoGroupForm
+    //         .get('extensionObservaciones')
+    //         ?.clearValidators();
+    //       this.observationView = false;
+    //     }
+    //     this.recursoGroupForm.get('observation')?.updateValueAndValidity();
+    //     this.recursoGroupForm
+    //       .get('observationArchivo')
+    //       ?.updateValueAndValidity();
+    //     this.recursoGroupForm
+    //       .get('extensionObservaciones')
+    //       ?.updateValueAndValidity();
+    //   },
+    // });
     this.recursoGroupForm.get('idNivel')?.valueChanges.subscribe({
       next: (idNivel) => {
         if (idNivel !== this.currentIdNivel) {
@@ -489,19 +489,19 @@ export class ResourcesFormComponent implements OnInit, OnChanges {
         idRecurso: this.recursoGroupForm.get('idRecurso')?.value,
         idNivel: this.recursoGroupForm.get('idNivel')?.value,
         idAsignatura: this.recursoGroupForm.get('idAsignatura')?.value,
-        idEstado: this.recursoGroupForm.get('idEstado')?.value,
+        // idEstado: this.recursoGroupForm.get('idEstado')?.value,
         tipoRecurso: this.recursoGroupForm.get('tipoRecurso')?.value,
         enlaceDelRecurso: this.recursoGroupForm.get('enlaceDelRecurso')?.value,
         nombreRecurso: this.recursoGroupForm.get('nombreRecurso')?.value,
         nombreRevisor: this.recursoGroupForm.get('nombreRevisor')?.value,
         recurso: this.recursoGroupForm.get('recurso')?.value,
-        observation: this.recursoGroupForm.get('observation')?.value,
-        idDocenteRevisor: this.recursoGroupForm.get('idDocenteRevisor')?.value,
-        observacionesArchivo:
-          this.recursoGroupForm.get('observationArchivo')?.value,
-        extensionObservaciones: this.recursoGroupForm.get(
-          'extensionObservaciones'
-        )?.value,
+        // observation: this.recursoGroupForm.get('observation')?.value,
+        // idDocenteRevisor: this.recursoGroupForm.get('idDocenteRevisor')?.value,
+        // observacionesArchivo:
+        //   this.recursoGroupForm.get('observationArchivo')?.value,
+        // extensionObservaciones: this.recursoGroupForm.get(
+        //   'extensionObservaciones'
+        // )?.value,
         extension: this.recursoGroupForm.get('extension')?.value,
       };
       console.log({ form: this.recursoGroupForm, response });

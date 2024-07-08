@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Form, FormBuilder, FormGroup } from '@angular/forms';
+import { Form, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Editor, Toolbar, Validators } from 'ngx-editor';
 import { sendObservation, updateStatusMazo } from '../../../learn/interfaces/mazo.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -34,6 +34,8 @@ export class ObservacionRechazoComponent implements OnInit{
   ];
   opcion: string = this.data.opcion;
   myApiKey: string ='k6p16qwz4kk0yy3tkcuwd2qoj4wmsxslp5tzdhgqjjlhp2tz';
+  onlyView: boolean = false;
+  archivoObservacion: string = '';
 
   constructor(
     private learnService: LearnService,
@@ -45,10 +47,29 @@ export class ObservacionRechazoComponent implements OnInit{
 
   ngOnInit(): void {
     this.createForm();
+    switch(this.opcion){
+      case 'verObservacionMazo':
+        // this.verObservacionMazo();
+        break;
+      case 'verObservacionRecurso':
+        this.verObservacionRecurso();
+        this.onlyView = true;
+        break;
+    }
   }
 
   init: EditorComponent['init'] = {
     plugins: 'lists link image table code help wordcount',
+    menu: {
+      file: { title: 'File', items: '' },
+      edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
+      view: { title: 'View', items: 'code revisionhistory | visualaid visualchars visualblocks | spellchecker | preview fullscreen | showcomments' },
+      insert: { title: 'Insert', items: '' },
+      format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript codeformat | styles blocks fontfamily fontsize align lineheight | forecolor backcolor | language | removeformat' },
+      tools: { title: 'Tools', items: 'spellchecker spellcheckerlanguage | a11ycheck code wordcount' },
+      table: { title: 'Table', items: 'inserttable | cell row column | advtablesort | tableprops deletetable' },
+      help: { title: 'Help', items: '' }
+    },
     toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help',
     placeholder: 'Escribe aquí tu observación...',
     language: 'es',
@@ -58,9 +79,9 @@ export class ObservacionRechazoComponent implements OnInit{
 
   createForm() {
     this.observationForm = this.fb.group({
-      observacionArchivo: ['', Validators.required],
-      observacion: [''], // Agrega el campo de observación para TinyMCE
-      observacionFileName: ['']
+      observacionArchivo: [''],
+      observacion: ['',Validators.required], // Agrega el campo de observación para TinyMCE
+      observacionFileName: [''],
     });
   }
 
@@ -78,7 +99,9 @@ export class ObservacionRechazoComponent implements OnInit{
 
   //----------RECURSOS ACADÉMICOS----------------
   rechazarRecurso(){
-    const observacionMessage = this.observationForm.get('observacion')?.value.toString();
+    if(this.observationForm.invalid){
+      console.log('Formulario inválido');
+    }
     const observacion: sendObservationResource = {
       idRecurso: this.data.id,
       observacion: this.observationForm.get('observacion')?.value,
@@ -136,8 +159,9 @@ export class ObservacionRechazoComponent implements OnInit{
       reader.readAsDataURL(file);
       reader.onload = () => {
         const recursoFile = (reader.result as string).split(',')[1];
+        console.log('recursoFile', recursoFile);
         if (recursoFile)
-          this.observationForm.get('observacionesArchivo')?.setValue(recursoFile);
+          this.observationForm.get('observacionArchivo')?.setValue(recursoFile);
           this.observationForm.get('observacionFileName')?.setValue(file.name);
       };
     }
@@ -151,9 +175,14 @@ export class ObservacionRechazoComponent implements OnInit{
     this.dialogRef.close();
   }
 
-  viewObservation(){
-    const observ = this.observationForm.get('observacion')?.value;
-    console.log('Observacion', observ)
+  verObservacionRecurso(){
+    this.recursoService.getObservations(this.data.id).subscribe((res: any) => {
+      console.log('Observaciones', res.data);
+      this.observationForm.get('observacion')?.setValue(res.data.observacion);
+      this.observationForm.get('observacion')?.disable();
+      this.archivoObservacion = res.data.observacionesArchivo;
+    });
   }
+
 
 }

@@ -76,11 +76,16 @@
 
   <div class="pt-5 pb-5">
     @switch (selectedTab) { @case ('Recursos Académicos') {
-    <resources-table
+    <!-- <resources-table
       [searchData]="searchInfo"
       filterByStatus="Ingresado"
       [typeTable]="'Asignar Revisor'"
-    ></resources-table>
+    ></resources-table> -->
+    <resources-cards
+      [searchData]="searchInfo"
+      filterByStatus="Ingresado"
+      [typeTable]="'Asignar Revisor'"
+    ></resources-cards>
     } @case ('Flashcards') {
     <cards-flashcards
       [searchData]="searchInfo"

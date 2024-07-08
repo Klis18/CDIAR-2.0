@@ -11,6 +11,8 @@ import { ROLES } from '../../interfaces/roles.interface';
 import { ResourcesComponent } from '../../pages/resources/resources.component';
 import { EditResourceComponent } from '../edit-resource/edit-resource.component';
 import { ResourceDetailsComponent } from '../resource-details/resource-details.component';
+import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
+import { Role } from '../../../auth/interfaces/role';
 
 @Component({
   selector: 'resources-cards',
@@ -366,18 +368,18 @@ export class ResourcesCardsComponent {
     }
   }
 
-  getStyleColor(tipoRecurso: string) {
-    switch (tipoRecurso) {
-      case 'Archivo':
-        return 'bg-cyan-700';
-      case 'Link':
-        return 'bg-orange-600';
-      case 'Imagen':
-        return 'bg-pink-700';
-      default:
-        return '';
-    }
-  }
+  // getStyleColor(tipoRecurso: string) {
+  //   switch (tipoRecurso) {
+  //     case 'Archivo':
+  //       return 'bg-cyan-700';
+  //     case 'Link':
+  //       return 'bg-orange-600';
+  //     case 'Imagen':
+  //       return 'bg-pink-700';
+  //     default:
+  //       return '';
+  //   }
+  // }
 
   getIcon(tipoRecurso: string) {
     switch (tipoRecurso) {
@@ -392,81 +394,85 @@ export class ResourcesCardsComponent {
     }
   }
 
-  canApprove(item: any): boolean {
-    let isReviewer = false;
-    if (this.userRol === ROLES.DOCENTE) {
-      isReviewer =
-        item.docenteRevisor == this.usuario &&
-        this.selectedTab === 'Por Aprobar' &&
-        item.estadoRecurso != 'Aprobado';
-    }
+  // canApprove(item: any): boolean {
+  //   let isReviewer = false;
+  //   if (this.userRol === ROLES.DOCENTE) {
+  //     isReviewer =
+  //       item.docenteRevisor == this.usuario &&
+  //       this.selectedTab === 'Por Aprobar' &&
+  //       item.estadoRecurso != 'Aprobado';
+  //   }
 
-    return isReviewer;
-  }
+  //   return isReviewer;
+  // }
 
   canDelete(item: any) {
-    const first = item.usuarioCreacion == this.usuario;
-    const second = this.selectedTab === 'Mis Recursos';
-    const three =
-      item.estadoRecurso !== 'Aprobado' && item.estadoRecurso !== 'Eliminado';
-
-    const fourth = item.docenteRevisor === '';
-
-    return first && second && three && fourth;
+    const estudiante = (this.selectedTab === 'Mis Recursos' && item.estadoRecurso === 'Ingresado' && item.usuarioCreacion == this.usuario && item.docenteRevisor === '');
+    const docente = (this.selectedTab === 'Mis Recursos' && this.userRol === ROLES.DOCENTE );
+    return estudiante || docente;
   }
 
-  viewNotify(element: any) {
-    if (element?.recursoRevisadoDato) return '';
-    return 'nuevo';
-  }
+  // viewNotify(element: any) {
+  //   if (element?.recursoRevisadoDato) return '';
+  //   return 'nuevo';
+  // }
 
-  canResolveReject(item: any) {
-    let status: boolean = false;
-    if (item.estadoRecurso === 'Rechazado') {
-      status =
-        item.usuarioCreacion == this.usuario &&
-        this.selectedTab === 'Mis Recursos' &&
-        item.docenteRevisor;
-    }
-    return status;
-  }
+  // canResolveReject(item: any) {
+  //   let status: boolean = false;
+  //   if (item.estadoRecurso === 'Rechazado') {
+  //     status =
+  //       item.usuarioCreacion == this.usuario &&
+  //       this.selectedTab === 'Mis Recursos' &&
+  //       item.docenteRevisor;
+  //   }
+  //   return status;
+  // }
+
+  // canEdit(item: any): boolean {
+  //   let status: boolean = false;
+
+  //   switch (this.userRol) {
+  //     case 'Estudiante':
+  //       if (this.selectedTab === 'Mis Recursos') {
+  //         if (item.estadoRecurso === 'Ingresado') {
+  //           status =
+  //             item.usuarioCreacion == this.usuario &&
+  //             item.docenteRevisor === '';
+  //         }
+  //       }
+
+  //       break;
+  //     case 'Docente':
+  //       if (this.selectedTab === 'Mis Recursos') {
+  //         status =
+  //           item.usuarioCreacion == this.usuario &&
+  //           item.estadoRecurso !== 'Aprobado' &&
+  //           item.docenteRevisor === '';
+  //       }
+
+  //       if (this.selectedTab === 'Por Aprobar') {
+  //         status =
+  //           item.estadoRecurso !== 'Aprobado' && item.docenteRevisor !== '';
+  //       }
+  //       break;
+  //   }
+
+  //   return status;
+  // }
 
   canEdit(item: any): boolean {
     let status: boolean = false;
-
-    switch (this.userRol) {
-      case 'Estudiante':
-        if (this.selectedTab === 'Mis Recursos') {
-          if (item.estadoRecurso === 'Ingresado') {
-            status =
-              item.usuarioCreacion == this.usuario &&
-              item.docenteRevisor === '';
-          }
-        }
-
-        break;
-      case 'Docente':
-        if (this.selectedTab === 'Mis Recursos') {
-          status =
-            item.usuarioCreacion == this.usuario &&
-            item.estadoRecurso !== 'Aprobado' &&
-            item.docenteRevisor === '';
-        }
-
-        if (this.selectedTab === 'Por Aprobar') {
-          status =
-            item.estadoRecurso !== 'Aprobado' && item.docenteRevisor !== '';
-        }
-        break;
-      // case 'Admin':
-      //   status =
-      //     item.docenteRevisor === '' &&
-      //     item.estadoRecurso !== 'Aprobado' &&
-      //     this.selectedTab2 === 'Recursos Académicos';
-      //   break;
-    }
-
-    return status;
+    let condition1 = (this.selectedTab === 'Mis Recursos' && item.estadoRecurso === 'Ingresado' && item.usuarioCreacion == this.usuario && item.docenteRevisor === '');
+    let condition2 = (this.selectedTab === 'Mis Recursos' && item.estadoRecurso ==='Rechazado' ) ;
+    let condition3 = (this.selectedTab === 'Mis Recursos' && this.userRol ===ROLES.DOCENTE);
+    // if (this.selectedTab === 'Mis Recursos') {
+    //   if (item.estadoRecurso === 'Ingresado') {
+    //     status =
+    //       item.usuarioCreacion == this.usuario &&
+    //       item.docenteRevisor === '';
+    //   }
+    // }
+    return condition1 || condition2 || condition3;
   }
 
   editarRecurso(idRecurso: number) {
@@ -486,22 +492,22 @@ export class ResourcesCardsComponent {
     });
   }
 
-  corregirRecurso(idRecurso: number) {
-    const dialogRef = this.dialog.open(EditResourceComponent, {
-      width: '80%',
-      maxWidth: '420px',
-      data: {
-        id: idRecurso,
-        titulo: 'Corregir Recurso',
-        typeModal: this.typeTable,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.listaRecursos();
-      }
-    });
-  }
+  // corregirRecurso(idRecurso: number) {
+  //   const dialogRef = this.dialog.open(EditResourceComponent, {
+  //     width: '80%',
+  //     maxWidth: '420px',
+  //     data: {
+  //       id: idRecurso,
+  //       titulo: 'Corregir Recurso',
+  //       typeModal: this.typeTable,
+  //     },
+  //   });
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     if (result) {
+  //       this.listaRecursos();
+  //     }
+  //   });
+  // }
 
 
 
@@ -523,14 +529,16 @@ export class ResourcesCardsComponent {
     return `linear-gradient(to right, ${color1} 0%, ${color2} 100%)`;
   }
 
-  viewDetailsResource(item: any, opcion: string) {
-    
-    this.dialog.open(ResourceDetailsComponent, {
+  viewDetailsResource(item: any, opcion: string) { 
+   const dialogRef = this.dialog.open(ResourceDetailsComponent, {
       width: '38%',
       data: {id: item.idRecurso, 
             nivel:item.nivel, 
             asignatura:item.asignatura,
             opcion:opcion},
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+        this.listaRecursos();
     });
   }
 
@@ -547,5 +555,13 @@ export class ResourcesCardsComponent {
     else{
       return false;
     }
+  }
+
+  verObservacion(idRecurso: number) {
+    this.dialog.open(ObservacionRechazoComponent, {
+      width: '55%',
+      maxHeight: '90%',
+      data: {id: idRecurso, opcion: 'verObservacionRecurso'},
+    });
   }
 }

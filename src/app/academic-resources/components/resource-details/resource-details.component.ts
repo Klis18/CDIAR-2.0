@@ -55,15 +55,17 @@ export class ResourceDetailsComponent {
     };
     this.recursoService.changeStatusResource(recurso).subscribe((res) => {
       console.log(res);
+      this.dialogRef.close();
     });
   }
 
   reprobarRecurso() {
     this.dialog.open(ObservacionRechazoComponent, {
       width: '55%',
-      maxHeight: '85%',
+      maxHeight: '90%',
       data: {id: this.data.id, opcion: 'recurso'},
     });
+    this.dialogRef.close();
   }
 
 
@@ -88,4 +90,6 @@ export class ResourceDetailsComponent {
       this.title = 'Detalle Recurso';
     }
   }
+
+  
 }

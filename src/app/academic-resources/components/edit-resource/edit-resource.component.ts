@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ModeFormsResources, RecursoEdit } from '../../interfaces/recurso.interface';
 import { RecursoService } from '../../services/recurso.service';
@@ -80,8 +80,20 @@ export class EditResourceComponent {
       recursosEdit.enlaceDelRecurso = null;
     }
 
+   
+    
     this.recursoService.editarRecurso(recursosEdit).subscribe((res) => {
+      this.cambiarEstado();
       this.CloseModal('recurso editado');
+    });
+  }
+
+  cambiarEstado(){
+    const changeStatus = {
+      idRecurso: this.editaDataRecurso.idRecurso,
+      idEstado: 1,
+    };
+    this.recursoService.changeStatusResource(changeStatus).subscribe((res) => {
     });
   }
 

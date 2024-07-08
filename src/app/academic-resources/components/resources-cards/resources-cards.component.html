@@ -59,7 +59,7 @@
            
   
             <div class="col-span-4">
-              @if(userRol == 'Admin' && item.docenteRevisor == null){
+              @if(userRol === 'Admin' && item.docenteRevisor == ''){
                 <button
                   type="button"
                   (click)="asignaRevisor(item.idRecurso)"
@@ -67,7 +67,7 @@
                 >
                   <span class="flex items-center justify-center">
                     <mat-icon
-                    class="text-blue-900 mr-2 cursor-pointer"
+                    class="cursor-pointer"
                     (click)="asignaRevisor(item.idRecurso)"
                     onkeydown="asignarRevisor(item.idRecurso)"
                     matTooltip="Asignar Revisor"
@@ -80,29 +80,48 @@
   
               @if(selectedTab == 'Mis Recursos'){
                 <button
+                  *ngIf="canEdit(item)"
                   type="button"
                   class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
                 >
                   <span class="flex items-center justify-center">
                     <mat-icon
-                  class="mr-2 cursor-pointer"
+                  class="cursor-pointer"
                   [matTooltip]="tituloRecurso"
                   matTooltipPosition="above"
                   onkeydown="editarRecurso(item.idRecurso)"
                   (click)="editarRecurso(item.idRecurso)"
                 >
-                  {{ iconActionTable }}
+                  edit
                 </mat-icon>
                   </span>
                 </button>
-  
+
                 <button
+                  *ngIf="item.estadoRecurso === 'Rechazado'"
                   type="button"
                   class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
                 >
                   <span class="flex items-center justify-center">
                     <mat-icon
-                    class="mr-2 cursor-pointer"
+                    class="cursor-pointer"
+                    (click)="verObservacion(item.idRecurso)"
+                    onkeydown="verObservacion(item.idRecurso)"
+                    matTooltip="Ver Observación"
+                    matTooltipPosition="above"
+                    >error_outline</mat-icon
+                  >
+                  </span>
+                </button>
+  
+                <button
+                  *ngIf="canDelete(item)"
+                  type="button"
+                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
+                >
+                  <span class="flex items-center justify-center">
+                    <mat-icon
+                    class="cursor-pointer"
                     (click)="eliminarRecurso(item.idRecurso)"
                     onkeydown="eliminarRecurso(item.idRecurso)"
                     matTooltip="Eliminar Recurso"
@@ -133,7 +152,10 @@
                 class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
               >
                 <span class="flex items-center justify-center">
-                  <mat-icon>view_list</mat-icon>
+                  <mat-icon
+                    matTooltip="Ver Detalles"
+                    matTooltipPosition="above"
+                  >view_list</mat-icon>
                 </span>
               </button>
   
