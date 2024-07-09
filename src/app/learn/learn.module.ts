@@ -21,6 +21,7 @@ import { EditMazoComponent } from './components/edit-mazo/edit-mazo.component';
 import { ObservacionRechazoComponent } from './components/observacion-rechazo/observacion-rechazo.component';
 import { MazosGuardadosComponent } from './components/mazos-guardados/mazos-guardados.component';
 import { MazosEstudiadosComponent } from './components/mazos-estudiados/mazos-estudiados.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { MazosEstudiadosComponent } from './components/mazos-estudiados/mazos-es
     LearnRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgSelectModule
   ],
   exports:[
     CardsFlashcardsComponent

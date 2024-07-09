@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HomeService } from '../../../home/services/home.service';
-import { LearnService } from '../../services/learn.service';
 
 @Component({
   selector: 'question-flashcard-form',
@@ -10,33 +8,24 @@ import { LearnService } from '../../services/learn.service';
 })
 export class QuestionFlashcardFormComponent implements OnInit{
 
-  // @Input() formData: any;
-  // @Output() editedDataEmitter = new EventEmitter<any>();
-  // @Output() valueFormEmitter = new EventEmitter<boolean>();
-  // @Output() asignaturaEmitter = new EventEmitter<any>();
+  @Output() valueFormEmitter = new EventEmitter<boolean>();
   @Output() flashcardEmitter = new EventEmitter<string[]>();
   @Input() idMazo: number = 0;
   
-  rol: string = '';
-  observacion: string = '';
   questionGroupForm!: FormGroup;
-  estados: { label: string; value: string }[] = [];
-  docentes: { label: string; value: string }[] = [];
-  selectedTab: string = '';
   newData: string[] = [];
   idMazoAdd: number = 0;
+  public preguntasRespuestas: {idMazo:number, pregunta: string, respuesta: string}[] = [];
+
   
 
   constructor(
     private fb: FormBuilder,
-    private learnService: LearnService,
-    private homeService: HomeService,
   ) {}
 
 
   ngOnInit(){
-    this.createForm(); 
-    console.log('ID MAZO', this.idMazo);
+    this.createForm();     
   }
 
 
@@ -47,11 +36,6 @@ export class QuestionFlashcardFormComponent implements OnInit{
     });
 
   }
-
-  // Declaración del arreglo donde se almacenarán las preguntas y respuestas
-public preguntasRespuestas: {idMazo:number, pregunta: string, respuesta: string}[] = [];
-
-
 
   agregarPreguntaLista(){
     // Obtención de los valores de los campos del formulario
@@ -66,14 +50,13 @@ public preguntasRespuestas: {idMazo:number, pregunta: string, respuesta: string}
     this.preguntasRespuestas.push({idMazo, pregunta, respuesta});
 
     console.log(this.preguntasRespuestas);
-
     // Limpieza de los campos del formulario
+    this.valueFormEmitter.emit(this.questionGroupForm.valid);
     this.questionGroupForm.reset();
   }
 
   recibirDatos(datos: string[]) {
     this.newData = datos;
     this.flashcardEmitter.emit(this.newData);
-    console.log('DATOS RECIBIDOS', this.newData);
   }
 }

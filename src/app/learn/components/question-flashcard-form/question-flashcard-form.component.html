@@ -1,7 +1,7 @@
 <mat-dialog-content>
   <div class="mb-2">
     <span class="text-2xl text-black mr-2">Agregar Flashcard</span>
-    <button type="button"  (click)="agregarPreguntaLista()" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800">
+    <button type="button" [disabled]="!questionGroupForm.valid" (click)="agregarPreguntaLista()" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800">
       <span class="flex items-center justify-center">
         <mat-icon>add</mat-icon>
         Agregar

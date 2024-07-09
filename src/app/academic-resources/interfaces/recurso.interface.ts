@@ -50,17 +50,21 @@ export interface ListaRecurso {
   nivel: string;
   fechaCreacion: Date;
   tipoRecurso: string;
-  recursoRevisadoDato?: any;
+  //recursoRevisadoDato?: any;
   usuarioCreacion: string;
   estadoRecurso: EstadosRecursos;
   docenteRevisor: string;
   enlaceRecurso: string | null;
   recurso: string | null;
+  validado: boolean;
+  numeroRevisiones: number;
 }
 
 export interface RecursoResponse {
+  idRecurso: number;
   idNivel: number;
   idAsignatura: number;
+  idEstado: number;
   tipoRecurso: string;
   estadoRecurso: number;
   nombreRecurso: string;
@@ -68,6 +72,11 @@ export interface RecursoResponse {
   recurso: string | null;
   docenteRevisor: string;
   observacion: string;
+  usuarioCreacion: string;
+  fechaCreacion: string;
+  idDocenteRevisor: string;
+  nombreDocenteRevisor: string;
+  observacionesArchivo: string;
 }
 
 export interface RecursoEdit {

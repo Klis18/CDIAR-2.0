@@ -4,12 +4,12 @@
         <div class="text-right">
           <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
         </div>
-        <!-- <p class="text-2xl text-black">Agregar Flashcard</p>
-        <hr /> -->
+      
       </div>
       <question-flashcard-form
         [idMazo]="idMazo"
         (flashcardEmitter)="getFlashcardAdd($event)"
+        (valueFormEmitter)="getValidForm($event)"
       ></question-flashcard-form>
       
     </div>
@@ -25,6 +25,7 @@
         <button
           type="button"
           (click)="saveFlashcard()"
+          [disabled]="!validForm"
           class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
         >
           <span class="flex items-center justify-center"> Guardar </span>

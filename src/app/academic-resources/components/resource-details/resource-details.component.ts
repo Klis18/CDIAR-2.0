@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { RecursoService } from '../../services/recurso.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { approveResource } from '../../interfaces/recurso.interface';
+import { approveResource, RecursoResponse } from '../../interfaces/recurso.interface';
 import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
 
 @Component({
@@ -9,13 +9,10 @@ import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-r
   templateUrl: './resource-details.component.html',
   styles: ``
 })
-export class ResourceDetailsComponent {
-  datosRecurso!: any;
+export class ResourceDetailsComponent implements OnInit{
+  datosRecurso: RecursoResponse = {} as RecursoResponse;
   nivel!: string;
   asignatura!: string;
-  // tipoRecurso!: string;
-  // enlaceRecurso!: string;
-  // recurso!: string;
   title!: string;
   opcion!: string;
 
@@ -26,20 +23,13 @@ export class ResourceDetailsComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-  ngOnInit(): void {
-    this.getDetailRecurso(this.data.id);
-    console.log(this.getDetailRecurso(this.data.id))
+  ngOnInit(){
     this.nivel = this.data.nivel;
     this.asignatura = this.data.asignatura;
     this.opcion = this.data.opcion;
     this.changeTitle();
-  }
-
-  
-  getDetailRecurso(idRecurso: number) {
-    this.recursoService.getRecurso(idRecurso).subscribe((res: any) => {
+    this.recursoService.getRecurso(this.data.id).subscribe((res: any) => {
       this.datosRecurso = res.data;
-      console.log(this.datosRecurso)
     });
   }
 
@@ -69,8 +59,8 @@ export class ResourceDetailsComponent {
   }
 
 
-  openFileInTab(): string {
-    let urlRecurso: string = '';
+  openFileInTab(): string | null{
+    let urlRecurso: string | null = '';
 
     if (this.datosRecurso.tipoRecurso === 'Link') {
       urlRecurso = this.datosRecurso.enlaceDelRecurso;

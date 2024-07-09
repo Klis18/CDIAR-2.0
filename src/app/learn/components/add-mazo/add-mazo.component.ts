@@ -11,7 +11,7 @@ import { NewMazo } from '../../interfaces/mazo.interface';
 })
 export class AddMazoComponent {
   datosMazo!:any;
-  validForm:boolean = true;
+  validForm:boolean = false;
   asignaturas: { label: string; value: string }[] = [];
 
   constructor(private learnService:LearnService,

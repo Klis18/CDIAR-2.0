@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { LearnService } from '../../services/learn.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'flashcards-table',
@@ -29,9 +30,9 @@ export class FlashcardsTableComponent implements OnInit,OnChanges{
   
   }
 
-  eliminarPreguntaRespuesta(pregunta:string) {
-    this.flashcards = this.flashcards.filter(objeto => objeto.pregunta !== pregunta);
-    console.log(this.flashcards);
+
+  eliminarItem(index:number){
+    this.flashcards.splice(index, 1);
   }
 
 
