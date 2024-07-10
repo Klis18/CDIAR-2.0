@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LearnService } from '../../services/learn.service';
 import { HomeService } from '../../../home/services/home.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { sendObservation, updateStatusMazo } from '../../interfaces/mazo.interface';
+import { sendObservationMazo, updateStatusMazo } from '../../interfaces/mazo.interface';
 
 @Component({
   selector: 'app-observacion-rechazo',
@@ -45,9 +45,10 @@ export class ObservacionRechazoComponent {
 
   rechazarMazo(){
     const observacionMessage = this.observationForm.get('observation')?.value;
-    const observacion: sendObservation = {
+    const observacion: sendObservationMazo = {
       idMazo: this.idMazo,
-      observacion: observacionMessage
+      observacion: observacionMessage,
+      observacionesArchivo: ''
     }
 
     this.learnService.enviarObservacion(observacion).subscribe((res) => {

@@ -7,7 +7,7 @@
   </div>
   <div class="flex flex-col p-5">
     <question-filter (search)="emitSearch($event)"></question-filter>
-    <list-revisor [searchData]="searchInfo"  (loadedTableEmitter)="loadedTale()"
+    <list-revisor [searchData]="searchInfo" [id]="id" [opcion]="opcion" (loadedTableEmitter)="loadedTale()"
     [loadTable]="reloadTable" ></list-revisor>
 </div>
 <div class="col-span-4 text-right mt-3 mb-3 pr-5">

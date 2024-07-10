@@ -60,6 +60,7 @@ export class EditFlashcardComponent {
         console.error('Error:', error);
       }
     );
+    this.dialogRef.close();
   }
 
   editar() {

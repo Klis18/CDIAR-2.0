@@ -7,7 +7,7 @@ import {
   ListaDocentesPorAprobar,
 } from '../interfaces/lista-docentes.interface';
 import { DocenteAprobacion } from '../interfaces/docente-aprobacion.interface';
-import { AsignaDocenteRevisor, AsignaDocenteRevisorRecurso, AsignaDocenteRevisorSimulador, ListaDocenteRevisor, RevisorGetQuery } from '../interfaces/asignDocente.interface';
+import {AsignaDocenteRevisorMazo, AsignaDocenteRevisorRecurso, AsignaDocenteRevisorSimulador, ListaDocenteRevisor, RevisorGetQuery } from '../interfaces/asignDocente.interface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 
 
@@ -48,8 +48,8 @@ export class SecurityService {
     });
   }
 
-  asignarRevisorMazo(revisor: AsignaDocenteRevisor) {
-    return this.http.post<AsignaDocenteRevisor>('mazos/asignarrevisor',revisor, {
+  asignarRevisorMazo(revisor: AsignaDocenteRevisorMazo) {
+    return this.http.post<AsignaDocenteRevisorMazo>('mazos/asignarrevisor',revisor, {
       headers: this.headers,
     });
   }

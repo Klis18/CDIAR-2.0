@@ -24,6 +24,8 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
   preguntaFlashcard: string = '';
   usuarioCreador: string = '';
   nombreUsuario: string = '';
+  docenteRevisor: string = '';
+  estado: string = '';
   itemsPerPage: number = 5;
   totalPages: number = 1;
   flashCards!: FormGroup;
@@ -77,6 +79,8 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
     
     this.learnService.getDatosMazo(this.idMazo).subscribe((res) => {
       this.usuarioCreador = res.data.usuarioCreador;
+      this.docenteRevisor = res.data.nombreRevisor;
+      this.estado = res.data.estado;
     });
   }
 
@@ -215,9 +219,13 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
   }
 
   editarFlashcard(idFlashcard: number) {
-    this.dialog.open(EditFlashcardComponent, {
+    const dialogRef = this.dialog.open(EditFlashcardComponent, {
       width: '40%',
       data: {id: idFlashcard, isDisabled: true, titulo: 'Editar Flashcard'},
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      this.listaPreguntas();
     });
   }
 

@@ -14,6 +14,7 @@ import { Estados, IdEstados } from '../../../shared/interfaces/estados.interface
 import { EditMazoComponent } from '../edit-mazo/edit-mazo.component';
 import { ListRevisorComponent } from '../../../control/components/list-revisor/list-revisor.component';
 import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
+import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
 
 interface DataItem {
   title: string;
@@ -296,18 +297,38 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
 
     return isReviewer;
   }
-  canEdit(item: any): boolean {
-    const isCreator =
-      item.usuarioCreacion == this.usuario &&
-      this.selectedTab === 'Mis Flashcards' &&
-      item.estado !== 'Aprobado' &&
-      item.nombreRevisor == '';
+  // canEdit(item: any): boolean {
+  //   const isCreator =
+  //     item.usuarioCreacion == this.usuario &&
+  //     this.selectedTab === 'Mis Flashcards' &&
+  //     item.estado !== 'Aprobado' &&
+  //     item.nombreRevisor == '';
 
-    const isAdmin =
-      item.docenteRevisor === '' &&
-      item.estado != 'Aprobado' &&
-      this.selectedTab2 === 'Flashcards';
-    return isCreator || isAdmin;
+  //   const isAdmin =
+  //     item.docenteRevisor === '' &&
+  //     item.estado != 'Aprobado' &&
+  //     this.selectedTab2 === 'Flashcards';
+  //   return isCreator || isAdmin;
+  // }
+  canEdit(item: any): boolean {
+    let status: boolean = false;
+    let condition1 = (this.selectedTab === 'Mis Flashcards' && ( item.estado === 'Ingresado' || item.estado === 'Privado') && item.nombreDocenteRevisor === '');
+    let condition2 = (this.selectedTab === 'Mis Flashcards' && item.estado ==='Rechazado' ) ;
+    let condition3 = (this.selectedTab === 'Mis Flashcards' && this.userRol ===ROLES.DOCENTE);
+    // if (this.selectedTab === 'Mis Recursos') {
+    //   if (item.estadoRecurso === 'Ingresado') {
+    //     status =
+    //       item.usuarioCreacion == this.usuario &&
+    //       item.docenteRevisor === '';
+    //   }
+    // }
+    return condition1 || condition2 || condition3;
+  }
+
+  canDelete(item: any) {
+    const estudiante = (this.selectedTab === 'Mis Flashcards' &&( item.estado === 'Ingresado' || item.estado === 'Privado') && item.nombreDocenteRevisor === '');
+    const docente = (this.selectedTab === 'Mis Flashcards' && this.userRol === ROLES.DOCENTE );
+    return estudiante || docente;
   }
 
   editarMazo(idMazo: number, item: any) {
@@ -342,11 +363,11 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
     return `linear-gradient(to right, ${color1} 0%, ${color2} 100%)`;
   }
 
-  viewDetailsMazo(idMazo: number) {
+  viewDetailsMazo(item: any) {
     
     this.dialog.open(DetailsMazoComponent, {
-      width: '30%',
-      data: {id: idMazo},
+      width: '33%',
+      data: {id: item.idMazo, nivel: item.nivel, asignatura: item.asignatura},
     });
   }
 
@@ -362,21 +383,33 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
     // this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
   }
 
+  canAssignRevisor(item:any){
+    const noRevisor = item.nombreDocenteRevisor === '';
+    const isAdmin = this.userRol === ROLES.ADMIN;
+    return noRevisor && isAdmin;
+  }
+
   asignaRevisor(idMazo: number) {
     const dialogRef = this.dialog.open(SelectRevisorComponent, {
-      width: '40%',
+      width: '80%',
       data: {id: idMazo, opcion:'Mazo'},
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
         this.listaMazos();
-      }
     });
   }
 
   saveMazoToReview(idMazo: number) {
     this.learnService.saveMazoToReview(idMazo).subscribe(() => {
       console.log('Mazo guardado para futura revisión');
+    });
+  }
+
+  verObservacion(idMazo: number) {
+    this.dialog.open(ObservacionRechazoComponent, {
+      width: '55%',
+      maxHeight: '90%',
+      data: {id: idMazo, opcion: 'verObservacionMazo'},
     });
   }
 }

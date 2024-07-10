@@ -1,4 +1,3 @@
-import { sendObservation, observation } from '../../learn/interfaces/mazo.interface';
 export interface ListSimulators{
     idSimulador: number;
     cantidadPreguntas: number;

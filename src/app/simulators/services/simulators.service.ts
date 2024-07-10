@@ -6,7 +6,6 @@ import { Asignatura } from '../../academic-resources/interfaces/asignatura.intef
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 import { Estado } from '../../academic-resources/interfaces/estados.interface';
 import { Nivel } from '../../academic-resources/interfaces/nivel.inteface';
-import { sendObservation } from '../../learn/interfaces/mazo.interface';
 
 @Injectable({
   providedIn: 'root'

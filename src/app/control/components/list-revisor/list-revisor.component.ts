@@ -13,9 +13,13 @@ export class ListRevisorComponent implements OnInit, OnChanges{
   @Input() loadTable: boolean = false;
   @Output() loadedTableEmitter = new EventEmitter<boolean>();
   @Input() searchData: any;
+  @Input() id!:number;
+  @Input() opcion!:string;
+
   dataDocentes: any;
-  id = this.data.id;
-  opcion = this.data.opcion;
+  // id = this.data.id;
+  // opcion = this.data.opcion;
+  data: any;
   nombre = '';
   searchInfo: any;
   revisors!: FormGroup;
@@ -40,7 +44,7 @@ export class ListRevisorComponent implements OnInit, OnChanges{
 
   constructor(private securityService: SecurityService,
               @Inject(FormBuilder) private formBuilder: FormBuilder,
-              @Inject (MAT_DIALOG_DATA) public data: any,
+              // @Inject (MAT_DIALOG_DATA) public data: any,
               private dialogRef: MatDialogRef<ListRevisorComponent>
   ){
     
@@ -68,7 +72,7 @@ export class ListRevisorComponent implements OnInit, OnChanges{
     switch(this.opcion){
       case 'Mazo':
         const revisorMazo = {
-          idMazo: this.id,
+          id: this.id,
           idDocenteRevisor: idDocente
         }
         this.securityService.asignarRevisorMazo(revisorMazo).subscribe((res) => {

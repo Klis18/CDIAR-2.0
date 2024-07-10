@@ -1,13 +1,15 @@
 import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Form, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Editor, Toolbar, Validators } from 'ngx-editor';
-import { sendObservation, updateStatusMazo } from '../../../learn/interfaces/mazo.interface';
+import { sendObservationMazo, updateStatusMazo } from '../../../learn/interfaces/mazo.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LearnService } from '../../../learn/services/learn.service';
 import { EditorComponent } from '@tinymce/tinymce-angular';
 import tinymce from 'tinymce';
 import { RecursoService } from '../../../academic-resources/services/recurso.service';
 import { approveResource, sendObservationResource } from '../../../academic-resources/interfaces/recurso.interface';
+import { SimulatorsService } from '../../../simulators/services/simulators.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -40,8 +42,10 @@ export class ObservacionRechazoComponent implements OnInit{
   constructor(
     private learnService: LearnService,
     private recursoService:RecursoService,
+    private simuladorService: SimulatorsService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<ObservacionRechazoComponent>,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
@@ -49,7 +53,8 @@ export class ObservacionRechazoComponent implements OnInit{
     this.createForm();
     switch(this.opcion){
       case 'verObservacionMazo':
-        // this.verObservacionMazo();
+        this.verObservacionMazo();
+        this.onlyView = true;
         break;
       case 'verObservacionRecurso':
         this.verObservacionRecurso();
@@ -79,7 +84,7 @@ export class ObservacionRechazoComponent implements OnInit{
 
   createForm() {
     this.observationForm = this.fb.group({
-      observacionArchivo: [''],
+      observacionArchivo: [],
       observacion: ['',Validators.required], // Agrega el campo de observación para TinyMCE
       observacionFileName: [''],
     });
@@ -113,6 +118,7 @@ export class ObservacionRechazoComponent implements OnInit{
       this.actualizarEstadoRecurso();
     });
     this.dialogRef.close();
+    this.router.navigate(['/control-security/asignar-revisor/']);    
   }
 
   actualizarEstadoRecurso() {
@@ -125,23 +131,34 @@ export class ObservacionRechazoComponent implements OnInit{
     });
   }
 
+  verObservacionRecurso(){
+    this.recursoService.getObservations(this.data.id).subscribe((res: any) => {
+      console.log('Observaciones', res.data);
+      this.observationForm.get('observacion')?.setValue(res.data.observacion);
+      this.observationForm.get('observacion')?.disable();
+      this.archivoObservacion = res.data.observacionesArchivo;
+    });
+  }
+
   //------------------FLASHCARDS----------------
   rechazarMazo() {
-    const observacionMessage = this.observationForm.get('observacion')?.value;
-    const observacion = {
+    const observacionMazo: sendObservationMazo = {
       idMazo: this.data.id,
-      observacion: observacionMessage.toString(),
+      observacion: this.observationForm.get('observacion')?.value,
+      observacionesArchivo: this.observationForm.get('observacionArchivo')?.value,
     };
 
-    this.learnService.enviarObservacion(observacion).subscribe((res) => {
+    this.learnService.enviarObservacion(observacionMazo).subscribe((res) => {
       console.log('Observacion enviada', res);
       this.actualizarEstadoMazo();
     });
     this.dialogRef.close();
+    this.router.navigate(['/control-security/asignar-revisor/']);
+
   }
 
   actualizarEstadoMazo() {
-    const estado = {
+    const estado: updateStatusMazo ={
       idMazo: this.data.id,
       idEstado: 3
     };
@@ -149,6 +166,48 @@ export class ObservacionRechazoComponent implements OnInit{
       console.log('Mazo rechazado', res);
     });
   }
+
+  verObservacionMazo(){
+    this.learnService.getObservacion(this.data.id).subscribe((res: any) => {
+      console.log('Observaciones', res.data);
+      this.observationForm.get('observacion')?.setValue(res.data.observacion);
+      this.observationForm.get('observacion')?.disable();
+      this.archivoObservacion = res.data.observacionesArchivo;
+    });
+  }
+
+
+
+  //--------------SIMULADORES-----------------
+  rechazarSimulador() {
+    const observacionMessage = this.observationForm.get('observacion')?.value;
+    const observacion = {
+      idSimulador: this.data.id,
+      observacion: observacionMessage.toString(),
+      observacionesArchivo: this.observationForm.get('observacionArchivo')?.value,
+
+    };
+
+    this.simuladorService.sendObservationSimulator(observacion).subscribe((res:any) => {
+      console.log('Observacion enviada', res);
+      this.actualizarEstadoSimulador();
+    });
+    this.dialogRef.close();
+    this.router.navigate(['/control-security/asignar-revisor/']);
+
+  }
+
+actualizarEstadoSimulador() {
+    const estado = {
+      idSimulador: this.data.id,
+      idEstado: 3
+    };
+    this.simuladorService.actualizarEstadoSimulator(estado).subscribe((res:any) => {
+      console.log('Mazo rechazado', res);
+    });
+  }
+
+  //-------------------ARCHIVOS----------------
 
    onFileChange(event: any) {
 
@@ -175,14 +234,8 @@ export class ObservacionRechazoComponent implements OnInit{
     this.dialogRef.close();
   }
 
-  verObservacionRecurso(){
-    this.recursoService.getObservations(this.data.id).subscribe((res: any) => {
-      console.log('Observaciones', res.data);
-      this.observationForm.get('observacion')?.setValue(res.data.observacion);
-      this.observationForm.get('observacion')?.disable();
-      this.archivoObservacion = res.data.observacionesArchivo;
-    });
-  }
+  
 
+ 
 
 }

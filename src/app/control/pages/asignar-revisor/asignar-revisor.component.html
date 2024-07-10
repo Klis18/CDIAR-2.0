@@ -87,12 +87,17 @@
       [typeTable]="'Asignar Revisor'"
     ></resources-cards>
     } @case ('Flashcards') {
-    <cards-flashcards
+    <!-- <cards-flashcards
       [searchData]="searchInfo"
       [typeTable]="'Flashcards'"
       [filterByStatus]="'Ingresado'"
       (loadedTableEmitter)="loadedTale()"
       [loadTable]="reloadTable"
+    ></cards-flashcards> -->
+    <cards-flashcards
+      [searchData]="searchInfo"
+      [typeTable]="'Flashcards'"
+      [filterByStatus]="'Ingresado'"
     ></cards-flashcards>
     } @case ('Simuladores') {
     <cards-simulators

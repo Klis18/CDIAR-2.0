@@ -9,13 +9,21 @@
     <li>
       <div class="flex items-center">
         <mat-icon>keyboard_arrow_right</mat-icon>
-        <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Aprender</a>
+        @if(rol!=='Admin'){
+          <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Aprender</a>
+        }@if(rol=='Admin'){
+          <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Control y Seguridad</a>
+        }
       </div>
     </li>
     <li>
       <div class="flex items-center">
         <mat-icon>keyboard_arrow_right</mat-icon>
-        <a [routerLink]="'/learn/flashcards'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Repositorio de Flashcards</a>
+        @if(rol!=='Admin'){
+          <a [routerLink]="'/learn/flashcards'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Repositorio de Flashcards</a>
+        }@if(rol=='Admin'){
+          <a [routerLink]="'/control-security/asignar-revisor/'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Asignación Revisores</a>
+        }
       </div>
     </li>
     <li>
@@ -66,18 +74,12 @@
         </span>
       </button>
     </div>
-    <div *ngIf="observationVisible == true" class="bg-amber-100">
-      <div class="p-5">
-        <p class="text-base pb-2 text-amber-600 font-bold">Motivo Rechazo:</p>
-        {{observacionRechazo}}
-      </div>
-    </div>
     <div class="mt-10">
       <question-filter (search)="emitSearch($event)"></question-filter>
     </div>
   
     <div class="text-sm font-medium text-center text-gray-700 border-b border-gray-200">
-      <questions-table [idMazo]="idMazo" [searchData]="searchInfo"  (loadedTableEmitter)="loadedTale()"
+      <questions-table [idMazo]="idMazo" [searchData]="searchInfo" (loadedTableEmitter)="loadedTale()"
       [loadTable]="reloadTable" ></questions-table>
     </div>
  

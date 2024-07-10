@@ -102,9 +102,10 @@ export interface updateStatusMazo{
     idEstado: number;
 }
 
-export interface sendObservation{
+export interface sendObservationMazo{
     idMazo: number;
     observacion: string;
+    observacionesArchivo: string;
 }
 
 export interface observation{

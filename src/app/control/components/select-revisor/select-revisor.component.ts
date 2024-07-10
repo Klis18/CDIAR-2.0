@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-select-revisor',
@@ -10,7 +10,12 @@ export class SelectRevisorComponent {
 
   searchInfo:any;
 
-  constructor(private dialogRef: MatDialogRef<SelectRevisorComponent>) { }
+  id = this.data.id;
+  opcion = this.data.opcion;
+
+  constructor(private dialogRef: MatDialogRef<SelectRevisorComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   emitSearch(res: any) {
     if (res) {

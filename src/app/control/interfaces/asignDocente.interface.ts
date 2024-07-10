@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
-export interface AsignaDocenteRevisor {
-    idMazo:number
+export interface AsignaDocenteRevisorMazo {
+    id:number
     idDocenteRevisor:string
 }
 

@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { ListaRecurso } from '../../academic-resources/interfaces/recurso.interface';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateSiguienteRepasoFlashcard, Flashcard, updateFlashcard, MazosGetQuery, EditMazo, FlashcardsGetQuery, updateStatusMazo, sendObservation, observation } from '../interfaces/mazo.interface';
+import { ListMazo, Mazo, NewFlashcard, NewMazo, PreguntasMazo, updateSiguienteRepasoFlashcard, Flashcard, updateFlashcard, MazosGetQuery, EditMazo, FlashcardsGetQuery, updateStatusMazo, observation, sendObservationMazo } from '../interfaces/mazo.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Nivel } from '../../academic-resources/interfaces/nivel.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
@@ -165,8 +165,8 @@ export class LearnService {
   });
  }
 
- enviarObservacion(observacion:sendObservation){
-  return this.http.post(`mazos/observaciones`,observacion, {
+ enviarObservacion(observacion:sendObservationMazo){
+  return this.http.post('mazos/observaciones',observacion, {
     headers: this.headers,
   });
  }

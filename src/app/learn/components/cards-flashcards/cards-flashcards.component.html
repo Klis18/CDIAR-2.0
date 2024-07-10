@@ -58,7 +58,7 @@
          
 
           <div class="col-span-4">
-            @if(userRol == 'Admin' && item.nombreDocenteRevisor == null){
+            @if(canAssignRevisor(item)){
               <button
                 type="button"
                 (click)="asignaRevisor(item.idMazo)"
@@ -85,6 +85,7 @@
             @if(selectedTab == 'Mis Flashcards'){
               <button
                 type="button"
+                *ngIf="canEdit(item)"
                 (click)="editarMazo(item.idMazo, item)"
                 class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
               >
@@ -93,8 +94,10 @@
                 </span>
               </button>
 
+
               <button
                 type="button"
+                *ngIf="canDelete(item)"
                 (click)="eliminarMazo(item.idMazo)"
                 class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
               >
@@ -102,6 +105,23 @@
                   <mat-icon>delete</mat-icon>
                 </span>
               </button>
+
+              <button
+                  *ngIf="item.estado === 'Rechazado'"
+                  type="button"
+                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
+                >
+                  <span class="flex items-center justify-center">
+                    <mat-icon
+                    class="cursor-pointer"
+                    (click)="verObservacion(item.idMazo)"
+                    onkeydown="verObservacion(item.idMazo)"
+                    matTooltip="Ver Observación"
+                    matTooltipPosition="above"
+                    >error_outline</mat-icon
+                  >
+                  </span>
+                </button>
             }
 
             @if(selectedTab ==='Por Aprobar'){
@@ -118,20 +138,23 @@
 
             <button
               type="button"
-              (click)="viewDetailsMazo(item.idMazo)"
+              (click)="viewDetailsMazo(item)"
               class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
             >
               <span class="flex items-center justify-center">
                 <mat-icon>view_list</mat-icon>
               </span>
             </button>
-
-            <button type="button"  (click)="redirigirEstudiarFlashcards(item)" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-              <span class="flex items-center justify-center">
-                <mat-icon>play_arrow</mat-icon>
-                Estudiar
-              </span>
-            </button>
+            
+           @if(userRol !=='Admin'){
+            
+             <button type="button"  (click)="redirigirEstudiarFlashcards(item)" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+               <span class="flex items-center justify-center">
+                 <mat-icon>play_arrow</mat-icon>
+                 Estudiar
+               </span>
+             </button>
+           } 
 
           </div>
         </div>
