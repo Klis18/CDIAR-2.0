@@ -14,6 +14,9 @@ export class EditQuestionSimulatorComponent implements OnInit{
   datosSimulador!: any;
   validForm: boolean = false;
   idSimulador: number = this.data.idSimulador;
+  isDisabled: boolean = this.data.isDisabled;
+  title: string = this.data.titulo;
+
 
   constructor(
     private simulatorService: SimulatorsService,
@@ -49,9 +52,20 @@ export class EditQuestionSimulatorComponent implements OnInit{
 
 
     this.simulatorService.updateSimulatorQuestion(simulador).subscribe((res:any) => {
-      console.log('RESPUESTA EDITANDO',res);
-      this.CloseModal(res.statusCode.toString());
-    });
+      // manejar la respuesta exitosa
+      console.log('Response:', res);
+      this.isDisabled = true;
+    },
+    (error) => {
+      // manejar el error
+      console.error('Error:', error);
+    }
+    );
+    this.dialogRef.close();
+  }
+
+  editar() {
+    this.isDisabled = !this.isDisabled;
   }
 
   getData(events: any) {

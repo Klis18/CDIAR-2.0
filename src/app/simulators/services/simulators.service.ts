@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { ListSimulatorSaver, ListSimulators, NewSimulator, NewSimulatorQuestion, QuestionsSimulatorsGetQuery, Simulator, SimulatorSaversGetQuery, SimulatorsGetQuery, SimulatorsQuestions, TipoPreguntas, UpdateSimulator, UpdateSimulatorQuestion, calificacionSimulador, observationSimulator, sendObservationSimulator, updateStatusSimulator } from '../interfaces/simulators.interface';
+import { ListSimulatorSaver, ListSimulators, NewSimulator, NewSimulatorQuestion, QuestionsSimulatorsGetQuery, Simulator, SimulatorSaversGetQuery, SimulatorsGetQuery, SimulatorsQuestions, TipoPreguntas, UpdateSimulator, UpdateSimulatorQuestion, calificacionSimulador, observationSimulator, sendObservationSimulator, simulatorRealized, updateStatusSimulator } from '../interfaces/simulators.interface';
 import { Asignatura } from '../../academic-resources/interfaces/asignatura.inteface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 import { Estado } from '../../academic-resources/interfaces/estados.interface';
@@ -167,6 +167,33 @@ export class SimulatorsService {
 
   saveResultTest(calificacion:calificacionSimulador){
     return this.http.post('simuladores/simuladorRealizado',calificacion,{
+      headers: this.headers,
+    });
+  }
+
+  saveSimulatorStarted(idSimulador:number){
+    return this.http.post(`simuladores/simuladorRealizado/${idSimulador}`, {
+      headers: this.headers,
+    });
+  }
+  
+  getSimulatorsRealized({
+    page,
+    limit,
+    idAsignatura,
+    idNivel,
+    nombreSimulador,
+  }: SimulatorSaversGetQuery) {
+    if (!page) page = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${page}&limit=${limit}`;
+
+    if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
+    if (idNivel) query += `&idNivel=${idNivel}`;
+    if (nombreSimulador && nombreSimulador !== '')
+      query += `&nombreSimulador=${nombreSimulador}`;
+
+    return this.http.get<simulatorRealized>(`simuladores/simuladoresRealizadosTabla${query}`, {
       headers: this.headers,
     });
   }

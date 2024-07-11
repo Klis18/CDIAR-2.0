@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { SimulatorsService } from '../../services/simulators.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ListSimulators } from '../../interfaces/simulators.interface';
+import { Router } from '@angular/router';
+import { HomeService } from '../../../home/services/home.service';
 
 @Component({
   selector: 'app-details-simulator',
@@ -12,10 +15,13 @@ export class DetailsSimulatorComponent implements OnInit{
   datosSimulador!: any;
   nivel = this.data.nivel;
   asignatura = this.data.asignatura;
+  userRol: string = '';
 
   constructor(
     private simulatorService: SimulatorsService,
+    private homeService: HomeService,
     public dialogRef: MatDialogRef<DetailsSimulatorComponent>,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
@@ -24,6 +30,9 @@ export class DetailsSimulatorComponent implements OnInit{
     console.log(this.getDetailsSimulador(this.data.id))
 
     console.log(this.data)
+    this.homeService.obtenerDatosMenu().subscribe((user) => {
+      this.userRol = user.data.rol;
+    });
   }
 
   
@@ -34,6 +43,22 @@ export class DetailsSimulatorComponent implements OnInit{
     });
   }
 
+  redirigirIniciarSimulador() {
+    this.saveSimulatorStarted(this.data.id);
+    this.router.navigate(['/simuladores/iniciar-simulador',{id: this.data.id, simulador: this.data.nombreSimulador}]);
+  }
+
+  saveSimulatorToReview() {
+    this.simulatorService.SaveSimulatorToReview(this.data.id).subscribe(() => {
+      console.log('Simulador guardado');
+    });
+  }
+
+  saveSimulatorStarted(idSimulador: number) {
+    this.simulatorService.saveSimulatorStarted(idSimulador).subscribe(() => {
+      console.log('Simulador iniciado guardado');
+    });
+  }
 
   cancelar() {
     this.dialogRef.close();

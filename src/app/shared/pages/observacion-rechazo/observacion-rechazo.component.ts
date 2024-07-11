@@ -60,6 +60,10 @@ export class ObservacionRechazoComponent implements OnInit{
         this.verObservacionRecurso();
         this.onlyView = true;
         break;
+      case 'verObservacionSimulador':
+        this.verObservacionSimulador();
+        this.onlyView = true;
+        break;
     }
   }
 
@@ -99,6 +103,9 @@ export class ObservacionRechazoComponent implements OnInit{
       case 'recurso':
         this.rechazarRecurso();
         break;
+      case 'simulador':
+        this.rechazarSimulador();
+        break;
     }
   }
 
@@ -118,7 +125,7 @@ export class ObservacionRechazoComponent implements OnInit{
       this.actualizarEstadoRecurso();
     });
     this.dialogRef.close();
-    this.router.navigate(['/control-security/asignar-revisor/']);    
+    this.router.navigate(['/academic-resources']);    
   }
 
   actualizarEstadoRecurso() {
@@ -153,7 +160,7 @@ export class ObservacionRechazoComponent implements OnInit{
       this.actualizarEstadoMazo();
     });
     this.dialogRef.close();
-    this.router.navigate(['/control-security/asignar-revisor/']);
+    this.router.navigate(['/learn/flashcards']);
 
   }
 
@@ -180,12 +187,10 @@ export class ObservacionRechazoComponent implements OnInit{
 
   //--------------SIMULADORES-----------------
   rechazarSimulador() {
-    const observacionMessage = this.observationForm.get('observacion')?.value;
     const observacion = {
       idSimulador: this.data.id,
-      observacion: observacionMessage.toString(),
+      observacion:  this.observationForm.get('observacion')?.value,
       observacionesArchivo: this.observationForm.get('observacionArchivo')?.value,
-
     };
 
     this.simuladorService.sendObservationSimulator(observacion).subscribe((res:any) => {
@@ -193,7 +198,7 @@ export class ObservacionRechazoComponent implements OnInit{
       this.actualizarEstadoSimulador();
     });
     this.dialogRef.close();
-    this.router.navigate(['/control-security/asignar-revisor/']);
+    this.router.navigate(['/simuladores/repositorio-simuladores']);
 
   }
 
@@ -204,6 +209,15 @@ actualizarEstadoSimulador() {
     };
     this.simuladorService.actualizarEstadoSimulator(estado).subscribe((res:any) => {
       console.log('Mazo rechazado', res);
+    });
+  }
+
+  verObservacionSimulador(){
+    this.simuladorService.getObservationSimulator(this.data.id).subscribe((res: any) => {
+      console.log('Observaciones', res.data);
+      this.observationForm.get('observacion')?.setValue(res.data.observacion);
+      this.observationForm.get('observacion')?.disable();
+      this.archivoObservacion = res.data.observacionesArchivo;
     });
   }
 

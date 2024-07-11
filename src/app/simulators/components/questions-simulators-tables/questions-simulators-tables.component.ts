@@ -216,16 +216,19 @@ nombreUsuario: string = '';
   }
 
   editarPreguntaSimulador(idPregunta: number) {
-    this.dialog.open(EditQuestionSimulatorComponent, {
+    const dialogRef = this.dialog.open(EditQuestionSimulatorComponent, {
       width: '40%',
-      data: {idPregunta: idPregunta, idSimulador:this.idSimulador},
+      data: {idPregunta: idPregunta, idSimulador:this.idSimulador, isDisabled: true, titulo: 'Editar Pregunta Simulador'},
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+        this.listaPreguntas();
     });
   }
 
-  // viewFlashcard(idFlashcard: number) {
-  //   this.dialog.open(EditFlashcardComponent, {
-  //     width: '40%',
-  //     data: {id: idFlashcard, isDisabled: false, titulo: 'Detalles Flashcard'},
-  //   });
-  // }
+  viewPreguntaSimulador(idPregunta: number) {
+    this.dialog.open(EditQuestionSimulatorComponent, {
+      width: '40%',
+      data: {idPregunta: idPregunta, idSimulador:this.idSimulador, isDisabled: false, titulo: 'Detalles Pregunta Simulador'},
+    });
+  }
 }

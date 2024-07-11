@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SimulatorsService } from '../../services/simulators.service';
 import { HomeService } from '../../../home/services/home.service';
 import { OptionsQuestion, TipoPreguntas, UpdateSimulatorQuestion } from '../../interfaces/simulators.interface';
+import { debounceTime, Subscription } from 'rxjs';
 
 @Component({
   selector: 'questions-simulator-form',
@@ -17,6 +18,7 @@ export class QuestionsSimulatorFormComponent implements OnInit, OnChanges{
   @Output() editedDataEmitter = new EventEmitter<any>();
   @Output() valueFormEmitter = new EventEmitter<boolean>();
   @Output() asignaturaEmitter = new EventEmitter<any>();
+  @Input() onlyView!: boolean;
 
   tiposPreguntasType: { label: string; value: string }[] = [];
   asignaturas: { label: string; value: string }[] = [];
@@ -25,6 +27,8 @@ export class QuestionsSimulatorFormComponent implements OnInit, OnChanges{
   nivel: string = '';
   asignatura: string = '';
   nombreSimulador: string = '';
+
+  private subscriptions: Subscription[] = [];
 
 
   opcionesRespuestas: OptionsQuestion[] = [];
@@ -51,11 +55,10 @@ export class QuestionsSimulatorFormComponent implements OnInit, OnChanges{
     this.createForm();
     this.loadTiposPreguntas();
     this.obtenerDatosSimulador(this.id);
-    
     this.homeService.obtenerDatosMenu().subscribe({
       next: (user) => {
         if (user) this.rol = user.data?.rol;
-        this.ngSuscribesOnInit();
+       // this.ngSuscribesOnInit();
 
         if (this.formData) {
           console.log('Data desde preguntas simulador', this.formData);
@@ -66,6 +69,42 @@ export class QuestionsSimulatorFormComponent implements OnInit, OnChanges{
         window.alert('No cargo la información del Usuario Administrador');
       },
     });
+
+    this.subscriptions.push(
+      this.simulatorQuestionGroupForm.valueChanges.pipe(
+        debounceTime(300)  // Ejemplo de debounce para reducir peticiones
+      ).subscribe(() => {
+        this.clickControllers();
+      if(this.questionType === 2){
+        this.opcionesRespuestas=[
+          {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple1')?.value, esCorrecta: this.radioSeleccionado1},
+          {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple2')?.value, esCorrecta:  this.radioSeleccionado2},
+          {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple3')?.value, esCorrecta:  this.radioSeleccionado3},
+          {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple4')?.value, esCorrecta:  this.radioSeleccionado4},
+        ]
+      }else if(this.questionType === 1){
+        this.opcionesRespuestas=[
+          {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple1')?.value, esCorrecta: this.checkboxSeleccionado1},
+          {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple2')?.value, esCorrecta:  this.checkboxSeleccionado2},
+          {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple3')?.value, esCorrecta:  this.checkboxSeleccionado3},
+          {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple4')?.value, esCorrecta:  this.checkboxSeleccionado4},
+        ]
+
+      }
+      const response = {
+        idSimulador: this.id,
+        pregunta: this.simulatorQuestionGroupForm.get('pregunta')?.value,
+        idTipoPregunta: this.questionType,
+        opcionesRespuestas: this.opcionesRespuestas,
+      };
+      
+
+      console.log(response);
+      this.editedDataEmitter.emit(response);
+      this.valueFormEmitter.emit(this.simulatorQuestionGroupForm.valid);
+
+      })
+    );
   }
 
 
@@ -147,6 +186,10 @@ idPregunta:number = 0;
       this.questionType = data.idTipoPregunta;
       this.idPregunta = data.idPregunta;
     }
+
+    if(this.onlyView == false){
+      this.simulatorQuestionGroupForm.disable();
+    }
   }
 
  
@@ -220,39 +263,39 @@ idPregunta:number = 0;
     });
   }
  
-  ngSuscribesOnInit() {
+  // ngSuscribesOnInit() {
     
-    this.simulatorQuestionGroupForm.valueChanges.subscribe(() => {
+  //   this.simulatorQuestionGroupForm.valueChanges.subscribe(() => {
 
-     this.clickControllers();
-      if(this.questionType === 2){
-        this.opcionesRespuestas=[
-          {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple1')?.value, esCorrecta: this.radioSeleccionado1},
-          {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple2')?.value, esCorrecta:  this.radioSeleccionado2},
-          {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple3')?.value, esCorrecta:  this.radioSeleccionado3},
-          {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple4')?.value, esCorrecta:  this.radioSeleccionado4},
-        ]
-      }else if(this.questionType === 1){
-        this.opcionesRespuestas=[
-          {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple1')?.value, esCorrecta: this.checkboxSeleccionado1},
-          {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple2')?.value, esCorrecta:  this.checkboxSeleccionado2},
-          {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple3')?.value, esCorrecta:  this.checkboxSeleccionado3},
-          {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple4')?.value, esCorrecta:  this.checkboxSeleccionado4},
-        ]
+  //    this.clickControllers();
+  //     if(this.questionType === 2){
+  //       this.opcionesRespuestas=[
+  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple1')?.value, esCorrecta: this.radioSeleccionado1},
+  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple2')?.value, esCorrecta:  this.radioSeleccionado2},
+  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple3')?.value, esCorrecta:  this.radioSeleccionado3},
+  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple4')?.value, esCorrecta:  this.radioSeleccionado4},
+  //       ]
+  //     }else if(this.questionType === 1){
+  //       this.opcionesRespuestas=[
+  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple1')?.value, esCorrecta: this.checkboxSeleccionado1},
+  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple2')?.value, esCorrecta:  this.checkboxSeleccionado2},
+  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple3')?.value, esCorrecta:  this.checkboxSeleccionado3},
+  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple4')?.value, esCorrecta:  this.checkboxSeleccionado4},
+  //       ]
 
-      }
-      const response = {
-        idSimulador: this.id,
-        pregunta: this.simulatorQuestionGroupForm.get('pregunta')?.value,
-        idTipoPregunta: this.questionType,
-        opcionesRespuestas: this.opcionesRespuestas,
-      };
+  //     }
+  //     const response = {
+  //       idSimulador: this.id,
+  //       pregunta: this.simulatorQuestionGroupForm.get('pregunta')?.value,
+  //       idTipoPregunta: this.questionType,
+  //       opcionesRespuestas: this.opcionesRespuestas,
+  //     };
       
 
-      console.log(response);
-      this.editedDataEmitter.emit(response);
-      this.valueFormEmitter.emit(this.simulatorQuestionGroupForm.valid);
-    });
-  }
+  //     console.log(response);
+  //     this.editedDataEmitter.emit(response);
+  //     this.valueFormEmitter.emit(this.simulatorQuestionGroupForm.valid);
+  //   });
+  // }
 
 }

@@ -118,13 +118,24 @@ export interface updateStatusSimulator{
 export interface sendObservationSimulator{
     idSimulador: number;
     observacion: string;
+    observacionesArchivo: string;
 }
 
 export interface observationSimulator{
     observacion: string;
+    observacionesArchivo: string;
 }
 
 export interface calificacionSimulador{
     idSimulador: number;
     calificacion: number;
+}
+
+export interface simulatorRealized{
+    idSimuladorRealizado: number;
+    nombreSimulador: string;
+    asignatura: string;
+    nivel: string;
+    calificacion: number;
+    fechaSimuladorRealizado: string;
 }

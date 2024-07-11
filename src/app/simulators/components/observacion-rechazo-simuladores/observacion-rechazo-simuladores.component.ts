@@ -10,63 +10,64 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styles: ``
 })
 export class ObservacionRechazoSimuladoresComponent {
-  rol: string = '';
-  observationForm!: FormGroup;
-  estados: { label: string; value: string }[] = [];
-  docentes: { label: string; value: string }[] = [];
-  selectedTab: string = '';
-  newData: string[] = [];
-  idSimulador: number = this.data.id;
+  // rol: string = '';
+  // observationForm!: FormGroup;
+  // estados: { label: string; value: string }[] = [];
+  // docentes: { label: string; value: string }[] = [];
+  // selectedTab: string = '';
+  // newData: string[] = [];
+  // idSimulador: number = this.data.id;
   
 
-  constructor(
-    private fb: FormBuilder,
-    private simulatorService: SimulatorsService,
-    private dialogRef: MatDialogRef<ObservacionRechazoSimuladoresComponent>,
+  // constructor(
+  //   private fb: FormBuilder,
+  //   private simulatorService: SimulatorsService,
+  //   private dialogRef: MatDialogRef<ObservacionRechazoSimuladoresComponent>,
 
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
-
-
-  ngOnInit(){
-    this.createForm(); 
-    console.log('ID SIMULADOR', this.idSimulador);
-  }
+  //   @Inject(MAT_DIALOG_DATA) public data: any
+  // ) {}
 
 
-  createForm() {
-    this.observationForm = this.fb.group({
-      observation: ['', Validators.required],
-    });
-
-  }
+  // ngOnInit(){
+  //   this.createForm(); 
+  //   console.log('ID SIMULADOR', this.idSimulador);
+  // }
 
 
-  rechazarSimulador(){
-    const observacionMessage = this.observationForm.get('observation')?.value;
-    const observacion: sendObservationSimulator = {
-      idSimulador: this.idSimulador,
-      observacion: observacionMessage
-    }
+  // createForm() {
+  //   this.observationForm = this.fb.group({
+  //     observation: ['', Validators.required],
+  //   });
 
-    this.simulatorService.sendObservationSimulator(observacion).subscribe((res) => {
-      console.log('Observacion enviada', res);
-      this.actualizarEstado();
-    });
-    this.dialogRef.close();
-  }
+  // }
 
-  actualizarEstado(){
-    const estado: updateStatusSimulator= {
-      idSimulador: this.idSimulador,
-      idEstado: 3
-    }
-    this.simulatorService.actualizarEstadoSimulator(estado).subscribe((res) => {
-      console.log('Mazo rechazado', res);
-    });
-  }
 
-  cancelar() {
-    this.dialogRef.close();
-  }
+  // rechazarSimulador(){
+  //   const observacionMessage = this.observationForm.get('observation')?.value;
+  //   const observacion: sendObservationSimulator = {
+  //     idSimulador: this.idSimulador,
+  //     observacion: observacionMessage,
+  //     observacionesArchivo
+  //   }
+
+  //   this.simulatorService.sendObservationSimulator(observacion).subscribe((res) => {
+  //     console.log('Observacion enviada', res);
+  //     this.actualizarEstado();
+  //   });
+  //   this.dialogRef.close();
+  // }
+
+  // actualizarEstado(){
+  //   const estado: updateStatusSimulator= {
+  //     idSimulador: this.idSimulador,
+  //     idEstado: 3
+  //   }
+  //   this.simulatorService.actualizarEstadoSimulator(estado).subscribe((res) => {
+  //     console.log('Mazo rechazado', res);
+  //   });
+  // }
+
+  // cancelar() {
+  //   this.dialogRef.close();
+  // }
 }

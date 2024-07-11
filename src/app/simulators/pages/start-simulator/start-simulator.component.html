@@ -9,7 +9,7 @@
       <li>
         <div class="flex items-center">
           <mat-icon>keyboard_arrow_right</mat-icon>
-          <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Simuladores</a>
+          <a routerLink="/simuladores/repositorio-simuladores" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Simuladores</a>
         </div>
       </li>
       <li>
@@ -40,9 +40,15 @@
                         {{ opcion.respuesta }}
                         </label>
                         <label *ngIf="preguntasSimulador[preguntaActualIndex].tipoPregunta === 'Opcion Multiple'">
+                          <input type="checkbox" [checked]="respuestasUsuario[preguntaActualIndex][i]" 
+                                 (change)="toggleRespuesta(i)">
+                          {{ opcion.respuesta }}
+                        </label>
+                        <!-- <label *ngIf="preguntasSimulador[preguntaActualIndex].tipoPregunta === 'Opcion Multiple'">
                         <input type="checkbox" [checked]="respuestasUsuario[preguntaActualIndex][i]" (click)="respuestasUsuario[preguntaActualIndex][i] = !respuestasUsuario[preguntaActualIndex][i]">
                         {{ opcion.respuesta }}
-                        </label>
+                        </label> -->
+                       
                     </div>
                 </div> 
                  <!-- <div>

@@ -13,6 +13,7 @@ import { ROLES } from '../../../shared/interfaces/roles.interface';
 import { DetailsSimulatorComponent } from '../details-simulator/details-simulator.component';
 import { EditSimulatorComponent } from '../edit-simulator/edit-simulator.component';
 import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
+import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
 
 @Component({
   selector: 'cards-simulators',
@@ -287,23 +288,40 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
         this.selectedTab === 'Por Aprobar' &&
         item.estado != 'Aprobado';
     }
-
     return isReviewer;
   }
 
   //TODO:
-  canEdit(item: any): boolean {
-    const isCreator =
-      item.usuarioCreacion == this.usuario &&
-      this.selectedTab === 'Mis Simuladores' &&
-      item.estado !== 'Aprobado' &&
-      item.nombreRevisor == '';
+  // canEdit(item: any): boolean {
+  //   const isCreator =
+  //     item.usuarioCreacion == this.usuario &&
+  //     this.selectedTab === 'Mis Simuladores' &&
+  //     item.estado !== 'Aprobado' &&
+  //     item.nombreRevisor == '';
 
-    const isAdmin =
-      item.docenteRevisor === '' &&
-      item.estado != 'Aprobado' &&
-      this.selectedTab2 === 'Simuladores';
-    return isCreator || isAdmin;
+  //   const isAdmin =
+  //     item.docenteRevisor === '' &&
+  //     item.estado != 'Aprobado' &&
+  //     this.selectedTab2 === 'Simuladores';
+  //   return isCreator || isAdmin;
+  // }
+  canEdit(item: any): boolean {
+    let condition1 = (this.selectedTab === 'Mis Simuladores' && ( item.estado === 'Ingresado' || item.estado === 'Privado') && item.nombreDocenteRevisor === '');
+    let condition2 = (this.selectedTab === 'Mis Simuladores' && item.estado ==='Rechazado' ) ;
+    let condition3 = (this.selectedTab === 'Mis Simuladores' && this.userRol ===ROLES.DOCENTE);
+    return condition1 || condition2 || condition3 ;
+  }
+
+  canDelete(item: any) {
+    const estudiante = (this.selectedTab === 'Mis Simuladores' &&( item.estado === 'Ingresado' || item.estado === 'Privado') && item.nombreDocenteRevisor === '');
+    const docente = (this.selectedTab === 'Mis Simuladores' && this.userRol === ROLES.DOCENTE );
+    return estudiante || docente;
+  }
+
+  canStartSimulator(){
+    const tab = this.selectedTab !== 'Por Aprobar';
+    const isAdmin = this.userRol !== ROLES.ADMIN;
+    return tab && isAdmin;
   }
 
   //TODO:
@@ -339,11 +357,11 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     return `linear-gradient(to right, ${color1} 0%, ${color2} 100%)`;
   }
 
-  viewDetailsSimulator(idSimulator: number, nivel: string, asignatura: string) {
+  viewDetailsSimulator(item: any) {
     
     this.dialog.open(DetailsSimulatorComponent, {
-      width: '30%',
-      data: {id: idSimulator, nivel: nivel, asignatura: asignatura},
+      width: '32%',
+      data: {id: item.idSimulador, nivel: item.nivel, asignatura: item.asignatura, nombreSimulador:item.nombreSimulador},
     });
   }
 
@@ -353,6 +371,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   }
 
   redirigirIniciarSimulador(item: ListSimulators) {
+        this.saveSimulatorStarted(item.idSimulador);
         this.router.navigate(['/simuladores/iniciar-simulador',{id: item.idSimulador, simulador: item.nombreSimulador}]);
 
   //   this.learnService.guardarMazoEstudiado(item.idMazo).subscribe((res) => {
@@ -377,6 +396,20 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   saveSimulatorToReview(idSimulador: number) {
     this.simulatorService.SaveSimulatorToReview(idSimulador).subscribe(() => {
       console.log('Simulador guardado');
+    });
+  }
+
+  saveSimulatorStarted(idSimulador: number) {
+    this.simulatorService.saveSimulatorStarted(idSimulador).subscribe(() => {
+      console.log('Simulador iniciado guardado');
+    });
+  }
+
+  verObservacion(idSimulador: number) {
+    this.dialog.open(ObservacionRechazoComponent, {
+      width: '55%',
+      maxHeight: '90%',
+      data: {id: idSimulador, opcion: 'verObservacionSimulador'},
     });
   }
 }

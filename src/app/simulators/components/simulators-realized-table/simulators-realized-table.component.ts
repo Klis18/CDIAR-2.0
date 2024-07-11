@@ -1,24 +1,20 @@
 import { Component, EventEmitter, Inject, Input, Output, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { ListSimulators, SimulatorSaversGetQuery, typeTable } from '../../interfaces/simulators.interface';
+import { DetailsSimulatorComponent } from '../details-simulator/details-simulator.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SimulatorsService } from '../../services/simulators.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ROLES } from '../../../academic-resources/interfaces/roles.interface';
 import { AsignarRevisorComponent } from '../../../control/pages/asignar-revisor/asignar-revisor.component';
 import { HomeService } from '../../../home/services/home.service';
-import { IdEstados, Estados } from '../../../shared/interfaces/estados.interface';
-import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
-import { typeTable, ListSimulators, SimulatorsGetQuery, SimulatorSaversGetQuery } from '../../interfaces/simulators.interface';
 import { SimulatorsComponent } from '../../pages/simulators/simulators.component';
-import { SimulatorsService } from '../../services/simulators.service';
-import { DetailsSimulatorComponent } from '../details-simulator/details-simulator.component';
-import { EditSimulatorComponent } from '../edit-simulator/edit-simulator.component';
 
 @Component({
-  selector: 'saved-simulators-table',
-  templateUrl: './saved-simulators-table.component.html',
+  selector: 'simulators-realized-table',
+  templateUrl: './simulators-realized-table.component.html',
   styles: ``
 })
-export class SavedSimulatorsTableComponent {
+export class SimulatorsRealizedTableComponent {
   @Input() typeTable!: typeTable;
   @Input() searchData: any;
   @Input() loadTable: boolean = false;
@@ -138,7 +134,7 @@ export class SavedSimulatorsTableComponent {
       nombreSimulador: this.nombreSimulador,
     };
     
-    this.simulatorService.getSimulatorsSavers(paginate).subscribe({
+    this.simulatorService.getSimulatorsRealized(paginate).subscribe({
       next: (res: any) => {
         this.data = res.data ?? [];
         if (this.data.length > 0) {
@@ -212,12 +208,17 @@ export class SavedSimulatorsTableComponent {
     return `linear-gradient(to right, ${color1} 0%, ${color2} 100%)`;
   }
 
-  viewDetailsSimulator(idSimulator: number, nivel: string, asignatura: string) {
-    
+  viewDetailsSimulator(item: any) {
     this.dialog.open(DetailsSimulatorComponent, {
-      width: '30%',
-      data: {id: idSimulator, nivel: nivel, asignatura: asignatura},
+      width: '32%',
+      data: {id: item.idSimuladorRealizado, nivel: item.nivel, asignatura: item.asignatura, nombreSimulador:item.nombreSimulador},
     });
+  }
+
+  canStartSimulator(){
+    const tab = this.selectedTab !== 'Por Aprobar';
+    const isAdmin = this.userRol !== 'Admin';
+    return tab && isAdmin;
   }
 
   //TODO:
@@ -225,21 +226,16 @@ export class SavedSimulatorsTableComponent {
     this.router.navigate(['/simuladores/preguntas',{id: item.idSimulador, simulador: item.nombreSimulador}]);
   }
 
-  canStartSimulator(){
-    const tab = this.selectedTab !== 'Por Aprobar';
-    const isAdmin = this.userRol !== ROLES.ADMIN;
-    return tab && isAdmin;
-  }
+  // redirigirEstudiarFlashcards(item: ListMazo) {
+  //   this.learnService.guardarMazoEstudiado(item.idMazo).subscribe((res) => {
+  //     console.log('Mazo guardado', res.data);
+  //     this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
+  //   });
+  // }
 
   redirigirIniciarSimulador(item: ListSimulators) {
-    this.saveSimulatorStarted(item.idSimulador);
     this.router.navigate(['/simuladores/iniciar-simulador',{id: item.idSimulador, simulador: item.nombreSimulador}]);
   }
 
-saveSimulatorStarted(idSimulador: number) {
-  this.simulatorService.saveSimulatorStarted(idSimulador).subscribe(() => {
-    console.log('Simulador iniciado guardado');
-  });
-}
-  
+
 }

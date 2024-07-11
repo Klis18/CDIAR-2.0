@@ -6,7 +6,9 @@
         class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2"
       >
         <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
-          <div [ngStyle]="{ background: getGradient(i) }" class="h-32"></div>
+          <div [ngStyle]="{ background: getGradient(i) }" class="h-32 flex items-center justify-center">
+            <img src="assets/images/cuestionario.png" alt="mazo Preguntas" class="h-20 w-auto"/>
+         </div>
           <div class="grid grid-cols-4 gap-4 m-4">
             <div class="col-span-4">
               <button (click)="redirigirPreguntas(item)">
@@ -66,12 +68,14 @@
                 </span>
               </button>
   
-              <!-- <button type="button"  (click)="redirigirEstudiarFlashcards(item)" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                <span class="flex items-center justify-center">
-                  <mat-icon>play_arrow</mat-icon>
-                  Estudiar
-                </span>
-              </button> -->
+              @if(canStartSimulator()){
+                <button type="button"  (click)="redirigirIniciarSimulador(item)" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                  <span class="flex items-center justify-center">
+                    <mat-icon>play_arrow</mat-icon>
+                    Iniciar
+                  </span>
+                </button>
+              }
    
             </div>
           </div>

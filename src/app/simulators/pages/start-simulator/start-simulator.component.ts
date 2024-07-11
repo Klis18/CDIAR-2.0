@@ -48,8 +48,12 @@ export class StartSimulatorComponent implements OnInit {
   inicializarRespuestasUsuario(): void {
     this.respuestasUsuario = new Array(this.preguntasSimulador.length).fill([])
       .map(() => new Array<boolean>(this.preguntasSimulador[this.preguntaActualIndex].opcionesRespuestas.length).fill(false));
+    // this.respuestasUsuario[this.preguntaActualIndex] = new Array<boolean>(this.preguntasSimulador[this.preguntaActualIndex].opcionesRespuestas.length).fill(false);
   }
 
+  toggleRespuesta(index: number) {
+    this.respuestasUsuario[this.preguntaActualIndex][index] = !this.respuestasUsuario[this.preguntaActualIndex][index];
+  }
   verificarRespuesta(): void {
     const opcionesRespuestas = this.preguntasSimulador[this.preguntaActualIndex].opcionesRespuestas;
 
@@ -64,7 +68,9 @@ export class StartSimulatorComponent implements OnInit {
         this.puntaje++;
       }
     } else {
+
       // Obtener índices de respuestas seleccionadas
+
       const respuestasSeleccionadasIndices = this.respuestasUsuario[this.preguntaActualIndex]
         .map((seleccionada, index) => seleccionada ? index : -1)
         .filter(index => index !== -1);

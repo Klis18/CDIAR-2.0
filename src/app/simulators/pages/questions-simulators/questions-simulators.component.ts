@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HomeService } from '../../../home/services/home.service';
 import { updateStatusSimulator } from '../../interfaces/simulators.interface';
 import { ObservacionRechazoSimuladoresComponent } from '../../components/observacion-rechazo-simuladores/observacion-rechazo-simuladores.component';
+import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
 
 @Component({
   selector: 'app-questions-simulators',
@@ -120,15 +121,19 @@ export class QuestionsSimulatorsComponent {
 
   
   reprobarSimulador() {
-    this.dialog.open(ObservacionRechazoSimuladoresComponent, {
-      width: '40%',
-      maxHeight: '80%',
-      data: {id: this.idSimulador},
+    this.dialog.open(ObservacionRechazoComponent, {
+      width: '55%',
+      maxHeight: '90%',
+      data: {id: this.idSimulador, opcion:'simulador'},
     });
   }
 
   viewObservation(){
-    this.observationVisible = true;
+    this.dialog.open(ObservacionRechazoComponent, {
+      width: '55%',
+      maxHeight: '90%',
+      data: {id: this.idSimulador, opcion:'verObservacionSimulador'},
+    });
   }
 
   canViewObservation(){

@@ -22,9 +22,7 @@
                   <td class="px-6 py-4 whitespace-nowrap">
                       <mat-icon class="text-red-600 mr-2" *ngIf="usuarioCreador === nombreUsuario" (click)="eliminarPregunta(item.idPregunta)">delete</mat-icon>
                         <mat-icon class="text-blue-800 mr-2" *ngIf="usuarioCreador === nombreUsuario" (click)="editarPreguntaSimulador(item.idPregunta)">edit</mat-icon>
-                      <!-- <a>
-                        <mat-icon class="text-blue-800" (click)="viewFlashcard(item.idFlashcard)">visibility</mat-icon>
-                      </a> -->
+                        <mat-icon class="text-blue-800" (click)="viewPreguntaSimulador(item.idPregunta)">visibility</mat-icon>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">{{ item.pregunta }}</td>
                   <td class="px-6 py-4 whitespace-nowrap">{{ item.tipoPregunta }}</td>

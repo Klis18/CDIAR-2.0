@@ -19,24 +19,40 @@
         </div>
       </div>
     </mat-dialog-content>
-    <div class="col-span-4">
-      <button
-        type="button"
-        class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2.5 text-center me-2 mb-2"
-      >
-        <span class="flex items-center justify-center">
-          <mat-icon>bookmark</mat-icon>
-          Guardar
-        </span>
-      </button>
-      <button
-        type="button"
-        class="ml-2 text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2.5 text-center me-2 mb-2"
-      >
-        <span class="flex items-center justify-center">
-          <mat-icon>play_arrow</mat-icon>
-          Estudiar
-        </span>
-      </button>
-    </div>
+    @if(userRol !== 'Admin'){
+    
+      <div class="col-span-4 justify center">
+        <button
+            type="button"
+            (click)="cancelar()"
+            class="text-white bg-gray-500 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+          >
+            <span class="flex items-center justify-center">
+              <mat-icon class="me-2">cancel</mat-icon>
+              Cancelar
+            </span>
+          </button>
+  
+        <button
+          type="button"
+          (click)="saveSimulatorToReview()"
+          class="ml-2 text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2.5 text-center me-2 mb-2"
+        >
+          <span class="flex items-center justify-center">
+            <mat-icon>bookmark</mat-icon>
+            Guardar
+          </span>
+        </button>
+        <button
+          type="button"
+          (click)="redirigirIniciarSimulador()"
+          class="ml-2 text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-3 py-2.5 text-center me-2 mb-2"
+        >
+          <span class="flex items-center justify-center">
+            <mat-icon>play_arrow</mat-icon>
+            Estudiar
+          </span>
+        </button>
+      </div>
+    }
   </div>
