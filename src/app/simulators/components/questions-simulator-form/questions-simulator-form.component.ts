@@ -63,6 +63,9 @@ export class QuestionsSimulatorFormComponent implements OnInit, OnChanges{
         if (this.formData) {
           console.log('Data desde preguntas simulador', this.formData);
           this.setData(this.formData);
+          if(this.onlyView == false){
+            this.simulatorQuestionGroupForm.disable();
+          }
         }
       },
       error: () => {
@@ -99,7 +102,6 @@ export class QuestionsSimulatorFormComponent implements OnInit, OnChanges{
       };
       
 
-      console.log(response);
       this.editedDataEmitter.emit(response);
       this.valueFormEmitter.emit(this.simulatorQuestionGroupForm.valid);
 
@@ -152,8 +154,6 @@ idPregunta:number = 0;
   setData(data: any) {
     if (data && this.simulatorQuestionGroupForm) {
 
-      console.log('Data 123', data.pregunta, data.idTipoPregunta);
-      
       this.simulatorQuestionGroupForm.patchValue({
         pregunta: data.pregunta,
         idTipoPregunta: data.idTipoPregunta,
@@ -187,9 +187,7 @@ idPregunta:number = 0;
       this.idPregunta = data.idPregunta;
     }
 
-    if(this.onlyView == false){
-      this.simulatorQuestionGroupForm.disable();
-    }
+   
   }
 
  
@@ -219,7 +217,6 @@ idPregunta:number = 0;
   onChange(option:any) {
     this.tipoPreguntaSeleccionada = option;
     this.questionType = option.value;
-    console.log(this.tipoPreguntaSeleccionada);
 
   }
   

@@ -6,12 +6,29 @@
           Inicio
         </a>
       </li>
-      <li>
-        <div class="flex items-center">
-          <mat-icon>keyboard_arrow_right</mat-icon>
-          <a [routerLink]="'/simuladores/repositorio-simuladores'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Simuladores</a>
-        </div>
-      </li>
+      @if(rol !== 'Admin'){
+
+        <li>
+          <div class="flex items-center">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+            <a [routerLink]="'/simuladores/repositorio-simuladores'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Simuladores</a>
+          </div>
+        </li>
+      }
+      @if(rol === 'Admin'){
+        <li>
+          <div class="flex items-center">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+            <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Control y Seguridad</a>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+            <a [routerLink]="'/control-security/asignar-revisor/'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Asignación Revisores</a>
+          </div>
+        </li>
+      }
       <li>
         <div class="flex items-center">
           <mat-icon>keyboard_arrow_right</mat-icon>

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AddQuestionSimulatorComponent } from '../../components/add-question-simulator/add-question-simulator.component';
 import { SimulatorsService } from '../../services/simulators.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HomeService } from '../../../home/services/home.service';
 import { updateStatusSimulator } from '../../interfaces/simulators.interface';
 import { ObservacionRechazoSimuladoresComponent } from '../../components/observacion-rechazo-simuladores/observacion-rechazo-simuladores.component';
@@ -29,6 +29,7 @@ export class QuestionsSimulatorsComponent {
   
   constructor(private simulatorService: SimulatorsService,
               public dialog: MatDialog, 
+              public router: Router,  
               private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -102,7 +103,7 @@ export class QuestionsSimulatorsComponent {
   }
 
   canCreate(){
-    const Estudiante = this.rol === 'Estudiante' ;
+    const Estudiante = this.rol === 'Estudiante' && this.creadorSimulador=== this.nombreUsuario && this.estadoSimulador !== 'Aprobado';
     const Docente = this.rol === 'Docente' && this.creadorSimulador=== this.nombreUsuario;
     return Estudiante || Docente;
   }
@@ -116,6 +117,8 @@ export class QuestionsSimulatorsComponent {
     };
     this.simulatorService.actualizarEstadoSimulator(simulator).subscribe((res) => {
       console.log(res);
+      this.router.navigate(['/simuladores/repositorio-simuladores']);
+
     });
   }
 

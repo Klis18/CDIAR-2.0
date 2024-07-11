@@ -22,6 +22,8 @@ export class QuestionsSimulatorsTablesComponent implements OnInit, OnChanges{
   pregunta: string = '';
   usuarioCreador: string = '';
 nombreUsuario: string = '';
+docenteRevisor: string = '';
+estado: string = '';
   itemsPerPage: number = 5;
   totalPages: number = 1;
   simulatorForm!: FormGroup;
@@ -77,6 +79,8 @@ nombreUsuario: string = '';
     
     this.simulatorService.getDatosSimulator(this.idSimulador).subscribe((res) => {
       this.usuarioCreador = res.data.usuarioCreador;
+      this.docenteRevisor = res.data.nombreRevisor;
+      this.estado = res.data.estado;
     });
   }
 

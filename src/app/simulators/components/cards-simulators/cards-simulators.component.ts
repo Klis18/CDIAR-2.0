@@ -92,6 +92,8 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
       },
     });
     this.listaSimuladores();
+
+    
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -364,6 +366,8 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
       data: {id: item.idSimulador, nivel: item.nivel, asignatura: item.asignatura, nombreSimulador:item.nombreSimulador},
     });
   }
+
+
 
   //TODO:
   redirigirPreguntas(item: ListSimulators) {
