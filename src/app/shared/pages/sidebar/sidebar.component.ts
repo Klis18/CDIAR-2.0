@@ -44,7 +44,7 @@ export class SidebarComponent implements OnInit {
       expanded: false,
       subOptions: [
         { name: 'Flashcards', route: '/learn/flashcards'},
-        { name: 'Videolearn', route: '' },
+        { name: 'Videolearn', route: '/learn/videolearns' },
       ],
       roles: ['Docente', 'Estudiante'],
     },
@@ -102,7 +102,7 @@ export class SidebarComponent implements OnInit {
     {
       icon: ' insert_chart',
       name: 'Dashboard',
-      route: '/productos',
+      route: '/dashboard',
       expanded: false,
       subOptions: [],
       roles: ['Admin'],

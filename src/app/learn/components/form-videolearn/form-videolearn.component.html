@@ -1,0 +1,115 @@
+<mat-dialog-content>
+  <div class="pr-7 pl-7">
+    <form [formGroup]="videolearnGroupForm">
+      <div class="grid grid-cols-5 gap-4 mt-5">
+        <div class="col-span-2">
+          <label
+            for="nivel"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Nivel</label
+          >
+          <ng-select
+            [items]="nivelesType"
+            bindLabel="label"
+            bindValue="value"
+            [searchable]="false"
+            placeholder="Niveles"
+            formControlName="idNivel"
+            notFoundText="No hay niveles"
+            class="ng-custom"
+            (change)="onNivelChange($event)"
+          >
+          </ng-select>
+        </div>
+
+        <div class="col-span-3">
+          <label
+            for="asignatura"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Asignatura</label
+          >
+          <ng-select
+            [items]="asignaturas"
+            bindLabel="label"
+            bindValue="value"
+            [searchable]="false"
+            placeholder="Asignatura"
+            formControlName="idAsignatura"
+            notFoundText="No hay Asignaturas"
+            class="ng-custom"
+          >
+          </ng-select>
+        </div>
+
+        <div class="col-span-5">
+          <label
+            for="nombreVideoLearn"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Descripción</label
+          >
+          <input
+            type="text"
+            id="nombreVideoLearn"
+            formControlName="nombreVideoLearn"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="Descripción"
+            [readonly]="onlyViewACtivate(rol)"
+          />
+        </div>
+        <div class="col-span-5">
+          <label
+            for="enlaceVideo"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Enlace del video</label
+          >
+        </div>
+          <div class="col-span-4">
+            <input
+              type="text"
+              id="enlaceVideo"
+              formControlName="enlaceVideo"
+              [(ngModel)]="enlaceVideoYtb"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Enlace del video"
+              (change)="updateVideoId()"
+              [readonly]="onlyViewACtivate(rol)"
+            />
+            <!-- <span class="text-sm">{{alertaVideo}}</span> -->
+
+          </div>
+        
+          <div class="col-span-1">
+            <button
+              type="button"
+              (click)="verifyDurationVideo()"
+              class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2"
+            >
+              <span class="flex items-center justify-center">
+                <mat-icon>done</mat-icon>
+              </span>
+            </button>
+          </div>
+          @if(alertaVideo!=''){
+
+            <div id="alert-border-1" class="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50 col-span-5" role="alert">
+              <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+              </svg>
+              <div class="ms-3 text-sm font-medium">
+                {{alertaVideo}}
+              </div>
+            </div>
+          }
+
+          <div *ngIf="urlValid === true" class="col-span-5 youtube-player-container">
+            <youtube-player
+              videoId="{{ videoId }}"
+              suggestedQuality="highres"
+              [width]="420"
+              [height]="275"
+            ></youtube-player>
+          </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

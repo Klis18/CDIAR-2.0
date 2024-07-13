@@ -60,7 +60,9 @@ export class HttpInterceptorService implements HttpInterceptor {
               case 400:
                 // Código de estado 400 (Bad Request)
                 // window.alert(message);
-                this.openDialog('error', message);
+                if(message != null){
+                  this.openDialog('error', message);
+                }
                 // window.location.href = '/registro';
                 // Ejemplo: Manejar errores de validación o mostrar un mensaje al usuario
                 break;

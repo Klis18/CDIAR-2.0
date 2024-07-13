@@ -22,6 +22,12 @@ import { ObservacionRechazoComponent } from './components/observacion-rechazo/ob
 import { MazosGuardadosComponent } from './components/mazos-guardados/mazos-guardados.component';
 import { MazosEstudiadosComponent } from './components/mazos-estudiados/mazos-estudiados.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { VideolearnComponent } from './pages/videolearn/videolearn.component';
+import { CardsVideolearnsComponent } from './components/cards-videolearns/cards-videolearns.component';
+import { AddVideolearnComponent } from './components/add-videolearn/add-videolearn.component';
+import { FormVideolearnComponent } from './components/form-videolearn/form-videolearn.component';
+import { YoutubeViewComponent } from './components/youtube-view/youtube-view.component';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 
 @NgModule({
@@ -41,7 +47,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
     EditMazoComponent,
     ObservacionRechazoComponent,
     MazosGuardadosComponent,
-    MazosEstudiadosComponent
+    MazosEstudiadosComponent,
+    VideolearnComponent,
+    CardsVideolearnsComponent,
+    AddVideolearnComponent,
+    FormVideolearnComponent,
+    YoutubeViewComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +60,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MaterialModule,
     ReactiveFormsModule,
     SharedModule,
-    NgSelectModule
+    NgSelectModule,
+    YouTubePlayerModule
   ],
   exports:[
     CardsFlashcardsComponent

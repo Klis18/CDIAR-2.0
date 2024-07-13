@@ -6,6 +6,7 @@ import { ResourcesComponent } from './academic-resources/pages/resources/resourc
 import { CargaHorariaComponent } from './docente/pages/carga-horaria/carga-horaria.component';
 import { FlashcardsComponent } from './learn/pages/flashcards/flashcards.component';
 import { SimulatorsComponent } from './simulators/pages/simulators/simulators.component';
+import { DashboardCdiarComponent } from './dashboard/dashboard-cdiar/dashboard-cdiar.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,11 @@ const routes: Routes = [
       {
         path: 'reports',
         loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
+      },
+      {
+        path:'dashboard',
+        component: DashboardCdiarComponent,
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
       }
       
     ],
