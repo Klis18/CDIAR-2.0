@@ -13,6 +13,7 @@ import { ROLES } from '../../../shared/interfaces/roles.interface';
 import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
 import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
 import { EditVideolearnComponent } from '../edit-videolearn/edit-videolearn.component';
+import { VideolearnDetailsComponent } from '../videolearn-details/videolearn-details.component';
 
 @Component({
   selector: 'cards-videolearns',
@@ -63,7 +64,7 @@ export class CardsVideolearnsComponent {
   mensaje: string = '';
   tituloMazo: string = '';
   usuario: string = '';
-  simulators!: FormGroup;
+  videolearns!: FormGroup;
   creadorSimulador: string = '';
 
   colors = ['#8B7CC0', '#924294', '#2E90A8', '#73C5D3', '#4581BA', '#5BC9D7', '#6C3EB1']; 
@@ -81,7 +82,7 @@ export class CardsVideolearnsComponent {
   ngOnInit(): void {
     this.builderForm();
     this.getDataMenu();
-    this.simulators.valueChanges.subscribe({
+    this.videolearns.valueChanges.subscribe({
       next: (res) => {
         if (res?.limit) {
           this.limit = Number(res?.limit);
@@ -113,12 +114,12 @@ export class CardsVideolearnsComponent {
     buttonRight: true,
   };
   builderForm() {
-    this.simulators = this.formBuilder.group({
+    this.videolearns = this.formBuilder.group({
       limit: [5],
       page: [1],
     });
-    this.limit = this.simulators.get('limit')?.value;
-    this.page = this.simulators.get('page')?.value;
+    this.limit = this.videolearns.get('limit')?.value;
+    this.page = this.videolearns.get('page')?.value;
   }
 
   changePage(newPage: number) {
@@ -284,15 +285,15 @@ export class CardsVideolearnsComponent {
 
   prevPage() {
     if (this.pagination.buttonLeft) {
-      const leftButton = this.simulators.get('page')?.value;
-      this.simulators.get('page')?.setValue(leftButton - 1);
+      const leftButton = this.videolearns.get('page')?.value;
+      this.videolearns.get('page')?.setValue(leftButton - 1);
     }
   }
 
   nextPage() {
     if (this.pagination.buttonRight) {
-      const rightButton = this.simulators.get('page')?.value;
-      this.simulators.get('page')?.setValue(rightButton + 1);
+      const rightButton = this.videolearns.get('page')?.value;
+      this.videolearns.get('page')?.setValue(rightButton + 1);
     }
   }
 
@@ -354,16 +355,16 @@ export class CardsVideolearnsComponent {
     const imagen= `https://img.youtube.com/vi//${id}/hqdefault.jpg`;
     return imagen
   }
+  
   viewDetailsVideolearn(item: any) {
-    
-    // this.dialog.open(DetailsSimulatorComponent, {
-    //   width: '32%',
-    //   data: {id: item.idSimulador, nivel: item.nivel, asignatura: item.asignatura, nombreSimulador:item.nombreSimulador},
-    // });
+    this.dialog.open(VideolearnDetailsComponent, {
+      width: '32%',
+      data: {id: item.idVideoLearn},
+    });
   }
 
   redirigirPreguntas(item: ListVideolearn) {
-    // this.router.navigate(['/simuladores/preguntas',{id: item.idSimulador, simulador: item.nombreSimulador}]);
+    this.router.navigate(['/learn/preguntas-videolearn',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
   }
 
   redirigirIniciarSimulador(item: ListVideolearn) {

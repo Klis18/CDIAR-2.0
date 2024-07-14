@@ -29,6 +29,12 @@ import { FormVideolearnComponent } from './components/form-videolearn/form-video
 import { YoutubeViewComponent } from './components/youtube-view/youtube-view.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { EditVideolearnComponent } from './components/edit-videolearn/edit-videolearn.component';
+import { VideolearnDetailsComponent } from './components/videolearn-details/videolearn-details.component';
+import { VideolearnsQuestionsComponent } from './pages/videolearns-questions/videolearns-questions.component';
+import { VideolearnQuestionsTableComponent } from './components/videolearn-questions-table/videolearn-questions-table.component';
+import { AddQuestionsVideolearnComponent } from './components/add-questions-videolearn/add-questions-videolearn.component';
+import { VideolearnsFormQuestionsComponent } from './components/videolearns-form-questions/videolearns-form-questions.component';
+import { EditQuestionVideolearnComponent } from './components/edit-question-videolearn/edit-question-videolearn.component';
 
 
 @NgModule({
@@ -54,7 +60,13 @@ import { EditVideolearnComponent } from './components/edit-videolearn/edit-video
     AddVideolearnComponent,
     FormVideolearnComponent,
     YoutubeViewComponent,
-    EditVideolearnComponent
+    EditVideolearnComponent,
+    VideolearnDetailsComponent,
+    VideolearnsQuestionsComponent,
+    VideolearnQuestionsTableComponent,
+    AddQuestionsVideolearnComponent,
+    VideolearnsFormQuestionsComponent,
+    EditQuestionVideolearnComponent
   ],
   imports: [
     CommonModule,

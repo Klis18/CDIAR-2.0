@@ -1,5 +1,5 @@
 
-<div [formGroup]="simulators" class="-my-2 overflow-x-auto sm:-mx-6">
+<div [formGroup]="videolearns" class="-my-2 overflow-x-auto sm:-mx-6">
     <div class="flex flex-wrap pr-7 pl-7 pt-2 pb-7">
       <div
         *ngFor="let item of data; let i = index"
@@ -32,7 +32,7 @@
                   {{ item.asignatura }}
                 </div>
               </div>
-              <div class="text-sm ml-2" *ngIf="selectedTab ==='Mis Simuladores'">
+              <div class="text-sm ml-2" *ngIf="selectedTab ==='Mis VideoLearns'">
                 @switch (item.estado) { 
                   @case ('Privado') {
                     <span class="text-cyan-500 font-bold">

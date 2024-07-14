@@ -1,0 +1,102 @@
+<nav class="flex bg-gray-200 pt-2 pb-2" aria-label="Breadcrumb">
+    <ol class="inline-flex ml-5 items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+      <li class="inline-flex items-center">
+        <a [routerLink]="'/home/landing'" class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-900">
+          <mat-icon class="text-base">home</mat-icon>
+          Inicio
+        </a>
+      </li>
+      @if(rol !== 'Admin'){
+
+        <li>
+          <div class="flex items-center">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+            <a [routerLink]="'/simuladores/repositorio-simuladores'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Aprender</a>
+          </div>
+        </li>
+        <li>
+            <div class="flex items-center">
+              <mat-icon>keyboard_arrow_right</mat-icon>
+              <a [routerLink]="'/simuladores/repositorio-simuladores'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">VideoLearn</a>
+            </div>
+          </li>
+      }
+      @if(rol === 'Admin'){
+        <li>
+          <div class="flex items-center">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+            <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Control y Seguridad</a>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+            <a [routerLink]="'/control-security/asignar-revisor/'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Asignación Revisores</a>
+          </div>
+        </li>
+      }
+      <li>
+        <div class="flex items-center">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+          <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">{{nombreVideoLearn}}</a>
+        </div>
+      </li>
+    </ol>
+  </nav>
+    
+    <div class="m-7">
+      <div class="mt-5 mb-5">
+        <span class="text-3xl">{{nombreVideoLearn}}</span>
+        <button type="button" *ngIf="canCreate()" (click)="openDialog()" 
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          <span class="flex items-center justify-center">
+            <mat-icon>add</mat-icon>
+            Nuevo
+          </span>
+        </button>
+        <button type="button" *ngIf="canPublish()" (click)="publishVideoLearn()" 
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          <span class="flex items-center justify-center">
+            <mat-icon>publish</mat-icon>
+            Publicar
+          </span>
+        </button>
+        <button type="button" *ngIf="canAprove()" (click)="updateStatusVideolearn(2)" 
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          <span class="flex items-center justify-center">
+            <mat-icon>done</mat-icon>
+            Aprobar
+          </span>
+        </button>
+        <button type="button" *ngIf="canAprove()" (click)="reprobarVideoLearn()" 
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          <span class="flex items-center justify-center">
+            <mat-icon>clear</mat-icon>
+            Reprobar
+          </span>
+        </button>
+        <button type="button" *ngIf="canViewObservation()" (click)="viewObservation()" 
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          <span class="flex items-center justify-center">
+            <mat-icon>report</mat-icon>
+            Ver observación
+          </span>
+        </button>
+      </div>
+      <!-- <div *ngIf="observationVisible == true" class="bg-amber-100">
+        <div class="p-5">
+          <p class="text-base pb-2 text-amber-600 font-bold">Motivo Rechazo:</p>
+          {{observacionRechazo}}
+        </div>
+      </div> -->
+      <div class="mt-10">
+        <question-filter (search)="emitSearch($event)"></question-filter>
+      </div>
+    
+      <div class="text-sm font-medium text-center text-gray-700 border-b border-gray-200">
+        <videolearn-questions-table [idVideoLearn]="idVideoLearn" [searchData]="searchInfo"  (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"/>
+      </div>
+   
+    </div>
+  

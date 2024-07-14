@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { addQuestionsVideolearn, addVideolearn, asignarRevisorVideolearn, editQuestionsVideolearn, editVideoLearn, GetQuestionsQuery, ListVideolearn, obtenerPreguntasRespuestas, videoLearnsGetQuery, sendObservationVideolearn, updateStatusVideolearn, videoYtb } from '../interfaces/videolearn.interface';
+import { addQuestionsVideolearn, addVideolearn, asignarRevisorVideolearn, editQuestionsVideolearn, editVideoLearn, GetQuestionsQuery, ListVideolearn, obtenerPreguntasRespuestas, videoLearnsGetQuery, sendObservationVideolearn, updateStatusVideolearn, videoYtb, getVideolearn, verObservacionesVideolearn } from '../interfaces/videolearn.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -108,7 +108,7 @@ export class VideolearnService {
   }
 
   getVideoLearn(idVideoLearn: number){
-    return this.http.get(`videolearn/${idVideoLearn}`, {
+    return this.http.get<getVideolearn>(`videolearn/${idVideoLearn}`, {
       headers: this.headers,
     });
   }
@@ -132,7 +132,7 @@ export class VideolearnService {
   }
 
   viewObservation(idVideoLearn: number){
-    return this.http.get(`videolearn/visualizarObservacionesVideoLear${idVideoLearn}`, {
+    return this.http.get<verObservacionesVideolearn>(`videolearn/visualizarObservacionesVideoLear${idVideoLearn}`, {
       headers: this.headers,
     });
   }

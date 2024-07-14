@@ -27,9 +27,7 @@ export class FlashcardsTableComponent implements OnInit,OnChanges{
     if(changes['flashcards']){
       this.flashcardsAdd.emit(this.flashcards);    
     }
-  
   }
-
 
   eliminarItem(index:number){
     this.flashcards.splice(index, 1);
