@@ -107,7 +107,7 @@ export class VideolearnService {
     });
   }
 
-  getVideolLearn(idVideoLearn: number){
+  getVideoLearn(idVideoLearn: number){
     return this.http.get(`videolearn/${idVideoLearn}`, {
       headers: this.headers,
     });

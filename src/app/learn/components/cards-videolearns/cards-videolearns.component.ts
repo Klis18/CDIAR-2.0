@@ -12,6 +12,7 @@ import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-co
 import { ROLES } from '../../../shared/interfaces/roles.interface';
 import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
 import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
+import { EditVideolearnComponent } from '../edit-videolearn/edit-videolearn.component';
 
 @Component({
   selector: 'cards-videolearns',
@@ -268,13 +269,13 @@ export class CardsVideolearnsComponent {
     });
   }
 
-  eliminarSimulador(idSimulador: number) {
+  eliminarVideolearn(idVideoLearn: number) {
     const dialogRef = this.openDialog(
       '¿Estás seguro de eliminar este videolearn?'
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        this.videolearnService.deleteVideolearn(idSimulador).subscribe(() => {
+        this.videolearnService.deleteVideolearn(idVideoLearn).subscribe(() => {
           this.listaVideoLearns();
         });
       }
@@ -325,20 +326,20 @@ export class CardsVideolearnsComponent {
     return tab && isAdmin;
   }
 
-  editarSimulador(idSimulador: number, item: any) {
-    // const dialogRef = this.dialog.open(EditSimulatorComponent, {
-    //   width: '40%',
-    //   maxHeight: '80%',
-    //   data: {
-    //     id: idSimulador,
-    //     typeModal: this.typeTable,
-    //   },
-    // });
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     this.listaVideoLearns();
-    //   }
-    // });
+  editarVideoLearn(idVideoLearn: number, item: any) {
+    const dialogRef = this.dialog.open(EditVideolearnComponent, {
+      width: '40%',
+      maxHeight: '80%',
+      data: {
+        id: idVideoLearn,
+        typeModal: this.typeTable,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.listaVideoLearns();
+      }
+    });
   }
 
   getGradient(index: number) {

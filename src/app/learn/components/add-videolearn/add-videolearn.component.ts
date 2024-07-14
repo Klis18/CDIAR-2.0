@@ -10,7 +10,7 @@ import { addVideolearn } from '../../interfaces/videolearn.interface';
   styles: ``
 })
 export class AddVideolearnComponent {
-  datosMazo!:any;
+  datosVideolearn!:any;
   validForm:boolean = false;
   asignaturas: { label: string; value: string }[] = [];
 
@@ -18,21 +18,20 @@ export class AddVideolearnComponent {
               private dialogRef: MatDialogRef<AddVideolearnComponent>
   ) {}
   
-  saveMazo(){
+  saveVideoLearn(){
     if(!this.validForm){
-      console.log('DATOS RECURSOS: ', this.datosMazo);
+      console.log('DATOS RECURSOS: ', this.datosVideolearn);
       return;
     }
   
     const videolearn: addVideolearn = {
-      idNivel: this.datosMazo.idNivel,
-      idAsignatura: this.datosMazo.idAsignatura,
-      nombreVideoLearn: this.datosMazo.nombreMazo,
-      enlaceVideo: this.datosMazo.enlaceVideo,
+      idNivel: this.datosVideolearn.idNivel,
+      idAsignatura: this.datosVideolearn.idAsignatura,
+      nombreVideoLearn: this.datosVideolearn.nombreVideoLearn,
+      enlaceVideo: this.datosVideolearn.enlaceVideo,
     }
     
-    // console.log('Mazo: ', mazo);
-
+    console.log('Videolearn: ', videolearn);
     this.videolearnService.addVideolearn(videolearn)
     .subscribe((res) => {
       this.CloseModal(res.statusCode.toString())
@@ -42,7 +41,7 @@ export class AddVideolearnComponent {
   }
 
   getData(events:any){
-    this.datosMazo = events;
+    this.datosVideolearn = events;
   }
 
   CloseModal(mensaje?:string){

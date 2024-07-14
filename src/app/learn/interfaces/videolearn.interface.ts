@@ -52,7 +52,7 @@ export interface ListVideolearn {
     estado: string;
     observacion: string;
     nombreDocenteRevisor: string;
-    enlaceVideoLearn: string;
+    enlaceVideo: string;
     cantidadPreguntas: number;
     numeroRevisiones: number;
     preguntas: Preguntas[];
@@ -82,7 +82,7 @@ export interface obtenerPreguntasRespuestas{
 }
 
 export interface getQuestionVideolearn{
-    idVideolearn: number;
+    idVideoLearn: number;
     pregunta: string;
     opcionesRespuestas: opcionesRespuestas[];
     idPregunta: number;

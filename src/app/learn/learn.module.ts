@@ -28,6 +28,7 @@ import { AddVideolearnComponent } from './components/add-videolearn/add-videolea
 import { FormVideolearnComponent } from './components/form-videolearn/form-videolearn.component';
 import { YoutubeViewComponent } from './components/youtube-view/youtube-view.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import { EditVideolearnComponent } from './components/edit-videolearn/edit-videolearn.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
     CardsVideolearnsComponent,
     AddVideolearnComponent,
     FormVideolearnComponent,
-    YoutubeViewComponent
+    YoutubeViewComponent,
+    EditVideolearnComponent
   ],
   imports: [
     CommonModule,

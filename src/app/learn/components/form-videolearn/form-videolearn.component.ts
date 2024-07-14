@@ -140,10 +140,10 @@ export class FormVideolearnComponent {
   setData(data: any) {
     if (data && this.videolearnGroupForm) {
       this.videolearnGroupForm.patchValue({
-        idVideoLearn: data.idVideolLearn,
+        idVideoLearn: data.idVideoLearn,
         idNivel: data.idNivel,
         idAsignatura: data.idAsignatura,
-        nombreVideoLearn: data.nombreVideolearn,
+        nombreVideoLearn: data.nombreVideoLearn,
         enlaceVideo: data.enlaceVideo,
       });
 

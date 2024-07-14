@@ -17,28 +17,9 @@
               formControlName="idNivel"
               notFoundText="No hay niveles"
               class="ng-custom"
-              (change)="onNivelChange($event)"
             >
             </ng-select>
-              <!-- <select *ngIf="selectedActivate(rol)"
-                id="niveles"
-                formControlName="idNivel"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                (change)="onNivelChange($event)"
-              >
-                <option value="" disabled selected>Nivel</option>
-                <option *ngFor="let nivel of nivelesType" [value]="nivel.value">
-                  {{ nivel.label }}
-                </option>
-              </select> -->
               
-              <!-- <input *ngIf="onlyViewACtivate(rol)"
-              type="text"
-              id="nivelSelected"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              [value]="descripcionNivel"
-              [readonly]="rol == 'Admin' || rol == 'Docente'"
-             /> -->
             </div>
       
             <div class="col-span-3">
@@ -59,28 +40,7 @@
             >
             </ng-select>
 
-              <!-- <select *ngIf="selectedActivate(rol)"
-                id="asignaturas"
-                formControlName="idAsignatura"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              >
-                <option value="" disabled selected>Asignatura</option>
-                <option
-                  *ngFor="let asignatura of asignaturas"
-                  [value]="asignatura.value"
-                >
-                  {{ asignatura.label }}
-                </option>
-              </select> -->
-    
-              <!-- <input *ngIf="onlyViewACtivate(rol)"
-              type="text"
-              id="asignatureSelected"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              [value]="nombreAsignatura"
-              [readonly]="rol == 'Admin' || rol == 'Docente'"
-             /> -->
-            </div>
+          </div>
       
            
           <div class="col-span-5">

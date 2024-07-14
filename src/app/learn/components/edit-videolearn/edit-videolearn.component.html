@@ -4,11 +4,12 @@
         <div class="text-right">
           <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
         </div>
-        <p class="text-2xl text-black">Agregar VideoLearn</p>
+        <p class="text-2xl text-black">Editar VideoLearn</p>
         <hr />
       </div>
       <app-form-videolearn
-       [modeForm]="'Add'"
+        [formData]="datosVideolearn"
+        [modeForm]="'Edit'"
         (editedDataEmitter)="getData($event)"
         (valueFormEmitter)="getValidForm($event)"
         (asignaturaEmitter)="updateAsignatura($event)"
