@@ -4,7 +4,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 import localeEsEC from '@angular/common/locales/es-EC';
 
@@ -22,16 +26,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ControlModule } from './control/control.module';
 import { AcademicResourcesModule } from './academic-resources/academic-resources.module';
 
-
 registerLocaleData(localeEsEC);
 
 @NgModule({
   declarations: [AppComponent],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule,
     ReactiveFormsModule,
     ControlModule,
     DocenteModule,
@@ -52,11 +55,11 @@ registerLocaleData(localeEsEC);
     //   useClass: HashLocationStrategy,
     // },
     {
-      provide:ResourcesComponent,
-      useClass:ResourcesComponent
+      provide: ResourcesComponent,
+      useClass: ResourcesComponent,
     },
     provideAnimationsAsync(),
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}
