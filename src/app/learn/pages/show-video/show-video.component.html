@@ -1,0 +1,56 @@
+<nav class="flex bg-gray-200 pt-2 pb-2" aria-label="Breadcrumb">
+    <ol class="inline-flex ml-5 items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+      <li class="inline-flex items-center">
+        <a [routerLink]="'/home/landing'" class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-900">
+          <mat-icon class="text-base">home</mat-icon>
+          Inicio
+        </a>
+      </li>
+      <li>
+        <div class="flex items-center">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+          <a routerLink="/simuladores/repositorio-simuladores" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">VideoLearn</a>
+        </div>
+      </li>
+      <li>
+        <div class="flex items-center">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+          <a [routerLink]="'/simuladores/iniciar-simulador'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">{{nombreVideoLearn}}</a>
+        </div>
+      </li>
+    </ol>
+  </nav>
+    
+    <div class="m-7 mt-5 mb-5">
+      <span class="text-3xl">{{nombreVideoLearn}}</span>
+    </div>
+   
+    <div class="items-center h-full m-7 mt-2 flashcard-view rounded-lg p-9" style="display: flex; justify-content: center; align-items: center;">
+      <div class="text-2xl block font-medium text-center bg-white text-gray-700 border border-gray-200 rounded-lg shadow p-7 md:mr-48 md:ml-48 sm:mr-7 sm:ml-7">
+        <youtube-player
+          [videoId]="videoId"
+          suggestedQuality="highres"
+          [width]="(width - 400)"
+          [height]="(height - 200)"
+        ></youtube-player>
+        <button type="button" (click)="redirigirIniciarVideoLearn()" class="mt-4 px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-900 rounded-lg hover:bg-blue-800">
+          Responder Preguntas
+          <mat-icon>arrow_forward</mat-icon>
+      </button>
+      </div>
+    </div>
+
+    <!-- <div class="items-center h-full m-7 mt-2 flashcard-view rounded-lg p-9" style="display: flex; justify-content: center; align-items: center;">
+      <div class="text-2xl block font-medium text-center bg-white text-gray-700 border border-gray-200 rounded-lg shadow p-7 md:mr-48 md:ml-48 sm:mr-7 sm:ml-7">
+        <youtube-player
+          [videoId]="videoId"
+          suggestedQuality="highres"
+          [width]="(width - 400)"
+          [height]="(height - 200)"
+        ></youtube-player>
+      </div>
+    </div> -->
+
+   
+
+  

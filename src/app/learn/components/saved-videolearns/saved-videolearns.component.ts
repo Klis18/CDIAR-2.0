@@ -1,26 +1,27 @@
 import { Component, EventEmitter, Inject, Input, Output, SimpleChanges } from '@angular/core';
-import { ListVideolearn, typeTable, videoLearnsGetQuery, videoLearnsRealizedGetQuerys } from '../../interfaces/videolearn.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { VideolearnService } from '../../services/videolearn.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { VideolearnComponent } from '../../pages/videolearn/videolearn.component';
+import { ROLES } from '../../../academic-resources/interfaces/roles.interface';
+import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
 import { AsignarRevisorComponent } from '../../../control/pages/asignar-revisor/asignar-revisor.component';
 import { HomeService } from '../../../home/services/home.service';
-import { Estados, IdEstados } from '../../../shared/interfaces/estados.interface';
+import { IdEstados, Estados } from '../../../shared/interfaces/estados.interface';
 import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
-import { ROLES } from '../../../shared/interfaces/roles.interface';
-import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
-import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
+import { typeTable } from '../../interfaces/mazo.interface';
+import { ListVideolearn, videoLearnsGetQuery, videoLearnsRealizedGetQuerys } from '../../interfaces/videolearn.interface';
+import { VideolearnComponent } from '../../pages/videolearn/videolearn.component';
+import { VideolearnService } from '../../services/videolearn.service';
 import { EditVideolearnComponent } from '../edit-videolearn/edit-videolearn.component';
+import { ObservacionRechazoComponent } from '../observacion-rechazo/observacion-rechazo.component';
 import { VideolearnDetailsComponent } from '../videolearn-details/videolearn-details.component';
 
 @Component({
-  selector: 'cards-videolearns',
-  templateUrl: './cards-videolearns.component.html',
+  selector: 'saved-videolearns',
+  templateUrl: './saved-videolearns.component.html',
   styles: ``
 })
-export class CardsVideolearnsComponent {
+export class SavedVideolearnsComponent {
   @Input() filterByUser: string = '';
   @Input() filterByStatus: string = '';
   @Input() filterByRevisor: string = '';
@@ -138,70 +139,66 @@ export class CardsVideolearnsComponent {
   }
   private idEstado!: number;
   listaVideoLearns() {
-    const paginate: videoLearnsGetQuery = {
+    const paginate: videoLearnsRealizedGetQuerys= {
       pages: this.page,
       limit: this.limit,
       idAsignatura: this.idAsignatura,
       idNivel: this.idNivel,
       nombreVideoLearn: this.nombreVideoLearn,
-      idEstado: this.idEstado,
-      nombreDocenteRevisor: this.nombreRevisor,
-      usuarioCreador: this.usuarioCreador,
+    
     };
-    if (this.typeTable === 'Mis VideoLearns') {
-      delete paginate.idEstado;
-    }
-    if (this.typeTable === 'Publicado') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado = IdEstados.APROBADO;
-    }
-    if (this.typeTable === 'Por Aprobar') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado = IdEstados.INGRESADO;
-    }
-    if(this.typeTable === 'VideoLearns') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado == IdEstados.INGRESADO && paginate.nombreDocenteRevisor == null ;
-    }
-
-    if (this.filterByStatus) {
-      const StatesByResources = [
-        {
-          label: Estados.INGRESADO,
-          value: IdEstados.INGRESADO,
-        },
-        {
-          label: Estados.APROBADO,
-          value: IdEstados.APROBADO,
-        },
-        {
-          label: Estados.RECHAZADO,
-          value: IdEstados.RECHAZADO,
-        },
-        {
-          label: Estados.ELIMINADO,
-          value: IdEstados.RECHAZADO,
-        },
-      ];
-      const find = StatesByResources.find(
-        (state) => state.label === this.filterByStatus
-      );
-      if (find) paginate.idEstado = find.value;
-    }
-    if (this.filterByRevisor) {
-      paginate.nombreDocenteRevisor = this.filterByRevisor;
-    }
-   
-    this.videolearnService.getVideolearns(paginate).subscribe({
+    
+    this.videolearnService.getVideoLearnsSavers(paginate).subscribe({
       next: (res: any) => {
         this.data = res.data ?? [];
+        console.log('data', this.data);
         if (this.data.length > 0) {
           this.nombreVideoLearn = res.data.nombreVideoLearn;
           this.nivel = res.data.nivel;
           this.asignatura = res.data.asignatura;
           this.docenteRevisor = res.data.nombreDocenteRevisor;
           this.creadorSimulador = res.data.usuarioCreador;
-          this.enlaceVideoLearn = res.data.enlaceVideoLearn;
+          this.enlaceVideoLearn = res.data.enlaceVideo;
+          this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
+        }
+        if (this.data?.length === 0 || !this.data) {
+          this.paginateCurrent = [1];
+        }
+      },
+      complete: () => {
+        this.loadedTableEmitter.emit(false);
+      },
+
+    });
+  };
+
+ 
+
+
+
+  //--------------VIDEOLEARNS REALIZADOS---------------
+
+  getServiceVideoLearnRealizados() {
+    const paginate: videoLearnsRealizedGetQuerys= {
+      pages: this.page,
+      limit: this.limit,
+      idAsignatura: this.idAsignatura,
+      idNivel: this.idNivel,
+      nombreVideoLearn: this.nombreVideoLearn,
+    
+    };
+
+    this.videolearnService.getVideoLearnsRealized(paginate).subscribe({
+      next: (res: any) => {
+        this.data = res.data ?? [];
+        console.log('data', this.data);
+        if (this.data.length > 0) {
+          this.nombreVideoLearn = res.data.nombreVideoLearn;
+          this.nivel = res.data.nivel;
+          this.asignatura = res.data.asignatura;
+          this.docenteRevisor = res.data.nombreDocenteRevisor;
+          this.creadorSimulador = res.data.usuarioCreador;
+          this.enlaceVideoLearn = res.data.enlaceVideo;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
         if (this.data?.length === 0 || !this.data) {
@@ -215,8 +212,7 @@ export class CardsVideolearnsComponent {
     });
   }
 
- 
- 
+  //------------FIN VIDEOLEARN REALIZADOS----------------
 
   obtenerIDYoutube(url: string): string | null {
     // Patrón de expresión regular para extraer el ID del video

@@ -10,6 +10,8 @@ import { RecursoService } from '../../../academic-resources/services/recurso.ser
 import { approveResource, sendObservationResource } from '../../../academic-resources/interfaces/recurso.interface';
 import { SimulatorsService } from '../../../simulators/services/simulators.service';
 import { Router } from '@angular/router';
+import { VideolearnService } from '../../../learn/services/videolearn.service';
+import { updateStatusVideolearn } from '../../../learn/interfaces/videolearn.interface';
 
 
 @Component({
@@ -41,6 +43,7 @@ export class ObservacionRechazoComponent implements OnInit{
 
   constructor(
     private learnService: LearnService,
+    private videolearnService: VideolearnService,
     private recursoService:RecursoService,
     private simuladorService: SimulatorsService,
     private fb: FormBuilder,
@@ -62,6 +65,10 @@ export class ObservacionRechazoComponent implements OnInit{
         break;
       case 'verObservacionSimulador':
         this.verObservacionSimulador();
+        this.onlyView = true;
+        break;
+      case 'verObservacionVideolearn':
+        this.verObservacionVideoLearn();
         this.onlyView = true;
         break;
     }
@@ -105,6 +112,9 @@ export class ObservacionRechazoComponent implements OnInit{
         break;
       case 'simulador':
         this.rechazarSimulador();
+        break;
+      case 'videolearn':
+        this.rechazarVideoLearn();
         break;
     }
   }
@@ -183,6 +193,39 @@ export class ObservacionRechazoComponent implements OnInit{
     });
   }
 
+  //-----------------VIDEOLEARNS----------------
+  rechazarVideoLearn() {
+    const observacion = {
+      idVideoLearn: this.data.id,
+      observacion: this.observationForm.get('observacion')?.value,
+      observacionesArchivo: this.observationForm.get('observacionArchivo')?.value,
+    };
+
+    this.videolearnService.sendObservationVideolearn(observacion).subscribe((res:any) => {
+      console.log('Observacion enviada', res);
+      this.actualizarEstadoVideoLearn();
+    });
+    this.dialogRef.close();
+    this.router.navigate(['/learn/videolearns']);
+  }
+
+  actualizarEstadoVideoLearn() {
+    const estado: updateStatusVideolearn ={
+      idVideoLearn: this.data.id,
+      idEstado: 3
+    };
+    this.videolearnService.changeStatusVideolearn(estado).subscribe((res) => {
+      console.log('Videolearn rechazado', res);
+    });
+  }
+  verObservacionVideoLearn(){
+    this.videolearnService.viewObservation(this.data.id).subscribe((res: any) => {
+      console.log('Observaciones', res.data);
+      this.observationForm.get('observacion')?.setValue(res.data.observacion);
+      this.observationForm.get('observacion')?.disable();
+      this.archivoObservacion = res.data.observacionesArchivo;
+    });
+  }
 
 
   //--------------SIMULADORES-----------------

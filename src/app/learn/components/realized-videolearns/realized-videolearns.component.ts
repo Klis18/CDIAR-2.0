@@ -1,26 +1,25 @@
 import { Component, EventEmitter, Inject, Input, Output, SimpleChanges } from '@angular/core';
-import { ListVideolearn, typeTable, videoLearnsGetQuery, videoLearnsRealizedGetQuerys } from '../../interfaces/videolearn.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { VideolearnService } from '../../services/videolearn.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { VideolearnComponent } from '../../pages/videolearn/videolearn.component';
+import { ROLES } from '../../../academic-resources/interfaces/roles.interface';
+import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
 import { AsignarRevisorComponent } from '../../../control/pages/asignar-revisor/asignar-revisor.component';
 import { HomeService } from '../../../home/services/home.service';
-import { Estados, IdEstados } from '../../../shared/interfaces/estados.interface';
 import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
-import { ROLES } from '../../../shared/interfaces/roles.interface';
-import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
-import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
+import { ListVideolearn, typeTable, videoLearnsRealized, videoLearnsRealizedGetQuerys } from '../../interfaces/videolearn.interface';
+import { VideolearnComponent } from '../../pages/videolearn/videolearn.component';
+import { VideolearnService } from '../../services/videolearn.service';
 import { EditVideolearnComponent } from '../edit-videolearn/edit-videolearn.component';
+import { ObservacionRechazoComponent } from '../observacion-rechazo/observacion-rechazo.component';
 import { VideolearnDetailsComponent } from '../videolearn-details/videolearn-details.component';
 
 @Component({
-  selector: 'cards-videolearns',
-  templateUrl: './cards-videolearns.component.html',
+  selector: 'realized-videolearns',
+  templateUrl: './realized-videolearns.component.html',
   styles: ``
 })
-export class CardsVideolearnsComponent {
+export class RealizedVideolearnsComponent {
   @Input() filterByUser: string = '';
   @Input() filterByStatus: string = '';
   @Input() filterByRevisor: string = '';
@@ -28,7 +27,7 @@ export class CardsVideolearnsComponent {
   @Input() searchData: any;
   @Input() loadTable: boolean = false;
   @Output() loadedTableEmitter = new EventEmitter<boolean>();
-  data: ListVideolearn[] = [];
+  data: videoLearnsRealized[] = [];
   itemsPerPage: number = 5;
   totalPages: number = 1;
   selectedTab = this.videolearn.selectedTab;
@@ -65,7 +64,7 @@ export class CardsVideolearnsComponent {
   tituloMazo: string = '';
   usuario: string = '';
   videolearns!: FormGroup;
-  creadorSimulador: string = '';
+  // creadorSimulador: string = '';
 
   colors = ['#8B7CC0', '#924294', '#2E90A8', '#73C5D3', '#4581BA', '#5BC9D7', '#6C3EB1']; 
 
@@ -138,70 +137,23 @@ export class CardsVideolearnsComponent {
   }
   private idEstado!: number;
   listaVideoLearns() {
-    const paginate: videoLearnsGetQuery = {
+    const paginate: videoLearnsRealizedGetQuerys= {
       pages: this.page,
       limit: this.limit,
       idAsignatura: this.idAsignatura,
       idNivel: this.idNivel,
       nombreVideoLearn: this.nombreVideoLearn,
-      idEstado: this.idEstado,
-      nombreDocenteRevisor: this.nombreRevisor,
-      usuarioCreador: this.usuarioCreador,
     };
-    if (this.typeTable === 'Mis VideoLearns') {
-      delete paginate.idEstado;
-    }
-    if (this.typeTable === 'Publicado') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado = IdEstados.APROBADO;
-    }
-    if (this.typeTable === 'Por Aprobar') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado = IdEstados.INGRESADO;
-    }
-    if(this.typeTable === 'VideoLearns') {
-      paginate.usuarioCreador = false;
-      paginate.idEstado == IdEstados.INGRESADO && paginate.nombreDocenteRevisor == null ;
-    }
 
-    if (this.filterByStatus) {
-      const StatesByResources = [
-        {
-          label: Estados.INGRESADO,
-          value: IdEstados.INGRESADO,
-        },
-        {
-          label: Estados.APROBADO,
-          value: IdEstados.APROBADO,
-        },
-        {
-          label: Estados.RECHAZADO,
-          value: IdEstados.RECHAZADO,
-        },
-        {
-          label: Estados.ELIMINADO,
-          value: IdEstados.RECHAZADO,
-        },
-      ];
-      const find = StatesByResources.find(
-        (state) => state.label === this.filterByStatus
-      );
-      if (find) paginate.idEstado = find.value;
-    }
-    if (this.filterByRevisor) {
-      paginate.nombreDocenteRevisor = this.filterByRevisor;
-    }
-   
-    this.videolearnService.getVideolearns(paginate).subscribe({
+    this.videolearnService.getVideoLearnsRealized(paginate).subscribe({
       next: (res: any) => {
         this.data = res.data ?? [];
+        console.log('data VLEARN', this.data);
         if (this.data.length > 0) {
           this.nombreVideoLearn = res.data.nombreVideoLearn;
           this.nivel = res.data.nivel;
           this.asignatura = res.data.asignatura;
-          this.docenteRevisor = res.data.nombreDocenteRevisor;
-          this.creadorSimulador = res.data.usuarioCreador;
-          this.enlaceVideoLearn = res.data.enlaceVideoLearn;
+          this.enlaceVideoLearn = res.data.enlaceVideo;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
         if (this.data?.length === 0 || !this.data) {
@@ -213,9 +165,8 @@ export class CardsVideolearnsComponent {
       },
 
     });
-  }
+  };
 
- 
  
 
   obtenerIDYoutube(url: string): string | null {
@@ -360,19 +311,20 @@ export class CardsVideolearnsComponent {
   }
   
   viewDetailsVideolearn(item: any) {
+    console.log('item ID', item.idVideoLearn);
     this.dialog.open(VideolearnDetailsComponent, {
       width: '32%',
-      data: {id: item.idVideoLearn},
+      data: {id: item.idVideoLearnRealizado},
     });
   }
 
-  redirigirPreguntas(item: ListVideolearn) {
-    this.router.navigate(['/learn/preguntas-videolearn',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
+  redirigirPreguntas(item: videoLearnsRealized) {
+    this.router.navigate(['/learn/preguntas-videolearn',{id: item.idVideoLearnRealizado, videolearn: item.nombreVideoLearn}]);
   }
 
-  redirigirIniciarVideoLearn(item: ListVideolearn) {
-    this.saveVideoLearnStarted(item.idVideoLearn);
-    this.router.navigate(['/learn/iniciar-videolearn',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
+  redirigirIniciarVideoLearn(item: videoLearnsRealized) {
+    this.saveVideoLearnStarted(item.idVideoLearnRealizado);
+    this.router.navigate(['/learn/iniciar-videolearn',{id: item.idVideoLearnRealizado, videolearn: item.nombreVideoLearn}]);
   }
 
   
@@ -388,14 +340,12 @@ export class CardsVideolearnsComponent {
     });
   }
 
-  saveVideoLearnToReview(idVideoLearn: number) {
-    this.videolearnService.SaveVideoLearnToReview(idVideoLearn).subscribe(() => {
-        console.log('Videolearn guardado');
-    });
-    // this.simulatorService.SaveSimulatorToReview(idSimulador).subscribe(() => {
-    //   console.log('Videolearn guardado');
-    // });
-  }
+  // saveVideoLearnToReview(idVideoLearn: number) {
+  //   this.videolearnService.SaveVideoLearnToReview(idVideoLearn).subscribe(() => {
+  //       console.log('Videolearn guardado');
+  //   });
+    
+  // }
 
   saveVideoLearnStarted(idVideoLearn: number) {
     this.videolearnService.saveVideoLearnStarted(idVideoLearn).subscribe(() => {
@@ -403,11 +353,11 @@ export class CardsVideolearnsComponent {
     });
   }
 
-  verObservacion(idVideoLearn: number) {
-    this.dialog.open(ObservacionRechazoComponent, {
-      width: '55%',
-      maxHeight: '90%',
-      data: {id: idVideoLearn, opcion: 'verObservacionVideolearn'},
-    });
-  }
+  // verObservacion(idVideoLearn: number) {
+  //   this.dialog.open(ObservacionRechazoComponent, {
+  //     width: '55%',
+  //     maxHeight: '90%',
+  //     data: {id: idVideoLearn, opcion: 'verObservacionVideolearn'},
+  //   });
+  // }
 }

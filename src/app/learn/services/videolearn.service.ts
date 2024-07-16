@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { addQuestionsVideolearn, addVideolearn, asignarRevisorVideolearn, editQuestionsVideolearn, editVideoLearn, GetQuestionsQuery, ListVideolearn, obtenerPreguntasRespuestas, videoLearnsGetQuery, sendObservationVideolearn, updateStatusVideolearn, videoYtb, getVideolearn, verObservacionesVideolearn } from '../interfaces/videolearn.interface';
+import { addQuestionsVideolearn, addVideolearn, asignarRevisorVideolearn, editQuestionsVideolearn, editVideoLearn, GetQuestionsQuery, ListVideolearn, obtenerPreguntasRespuestas, videoLearnsGetQuery, sendObservationVideolearn, updateStatusVideolearn, videoYtb, getVideolearn, verObservacionesVideolearn, ListVideoLearnSaved, videoLearnsRealizedGetQuerys, calificacionVideolearn, videoLearnsRealized } from '../interfaces/videolearn.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +56,7 @@ export class VideolearnService {
     limit,
     idAsignatura,
     idNivel,
-    nombreSimulador,
+    nombreVideoLearn,
     idEstado,
     nombreDocenteRevisor,
     usuarioCreador,
@@ -67,8 +67,8 @@ export class VideolearnService {
 
     if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
     if (idNivel) query += `&idNivel=${idNivel}`;
-    if (nombreSimulador && nombreSimulador !== '')
-      query += `&nombreSimulador=${nombreSimulador}`;
+    if (nombreVideoLearn && nombreVideoLearn !== '')
+      query += `&nombreVideoLearn=${nombreVideoLearn}`;
     if (idEstado) query += `&idEstado=${idEstado}`;
     if (nombreDocenteRevisor && nombreDocenteRevisor !== '')
       query += `&nombreDocenteRevisor=${nombreDocenteRevisor}`;
@@ -132,13 +132,13 @@ export class VideolearnService {
   }
 
   viewObservation(idVideoLearn: number){
-    return this.http.get<verObservacionesVideolearn>(`videolearn/visualizarObservacionesVideoLear${idVideoLearn}`, {
+    return this.http.get<verObservacionesVideolearn>(`videolearn/visualizarObservacionesVideoLear/${idVideoLearn}`, {
       headers: this.headers,
     });
   }
 
   sendObservationVideolearn(videolearn: sendObservationVideolearn){
-    return this.http.post('videolearn/obsrevaciones',videolearn, {
+    return this.http.post('videolearn/observaciones',videolearn, {
       headers: this.headers,
     });
   }
@@ -151,6 +151,78 @@ export class VideolearnService {
 
   verifyYtbVideoDuration(video: videoYtb){
     return this.http.post('yt', video,{
+      headers: this.headers,
+    });
+  }
+
+  SaveVideoLearnToReview(idVideoLearn:number){
+    return this.http.post(`videolearn/guardarVideoLearn/${idVideoLearn}`, {}, {
+      headers: this.headers,
+    });
+  }
+
+  getSimulatorSaver(){
+    return this.http.get<ListVideoLearnSaved>('videolearn/listaVideoLearnGuardado', {
+      headers: this.headers,
+    });
+  }
+
+  getVideoLearnsSavers({
+    pages,
+    limit,
+    idAsignatura,
+    idNivel,
+    nombreVideoLearn,
+  }: videoLearnsRealizedGetQuerys) {
+    if (!pages) pages = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${pages}&limit=${limit}`;
+
+    if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
+    if (idNivel) query += `&idNivel=${idNivel}`;
+    if (nombreVideoLearn && nombreVideoLearn !== '')
+      query += `&nombreVideoLearn=${nombreVideoLearn}`;
+
+    return this.http.get<ListVideoLearnSaved>(`videolearn/listaVideoLearnGuardado${query}`, {
+      headers: this.headers,
+    });
+  }
+
+  startVideolearn(idVideolearn:number){
+    return this.http.get<obtenerPreguntasRespuestas[]>(`videolearn/realizarVideoLearn/${idVideolearn}`, {
+      headers: this.headers,
+    });
+  }
+
+  saveResultTest(calificacion:calificacionVideolearn){
+    return this.http.post('videolearn/videoLearnRealizado',calificacion,{
+      headers: this.headers,
+    });
+  }
+
+  saveVideoLearnStarted(idVideoLearn:number){
+    return this.http.post(`videolearn/videoLearnRealizado/${idVideoLearn}`,{}, {
+      headers: this.headers,
+    });
+  }
+
+  getVideoLearnsRealized({
+    pages,
+    limit,
+    idAsignatura,
+    idNivel,
+    nombreVideoLearn,
+  }: videoLearnsRealizedGetQuerys) {
+    if (!pages) pages = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${pages}&limit=${limit}`;
+
+    if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
+    if (idNivel) query += `&idNivel=${idNivel}`;
+    if (nombreVideoLearn && nombreVideoLearn !== '')
+      query += `&nombreVideoLearn=${nombreVideoLearn}`;
+
+    return this.http.get<videoLearnsRealized>(`videolearn/videoLearnRealizadosTabla${query}`, {
       headers: this.headers,
     });
   }

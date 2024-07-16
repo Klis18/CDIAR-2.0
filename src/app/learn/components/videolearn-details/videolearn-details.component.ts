@@ -70,6 +70,33 @@ export class VideolearnDetailsComponent implements OnInit{
     // });
   }
 
+  redirigirPreguntas() {
+    this.router.navigate(['/learn/preguntas-videolearn',{id: this.data.id, videolearn: this.nombreVideolearn}]);
+    this.dialogRef.close();
+  }
+
+  redirigirIniciarVideoLearn() {
+    this.saveVideoLearnStarted(this.data.id);
+    this.router.navigate(['/learn/iniciar-videolearn',{id: this.data.id, videolearn: this.nombreVideolearn}]);
+    this.dialogRef.close();
+  }
+
+  
+
+
+  saveVideoLearnToReview() {
+    this.videolearnService.SaveVideoLearnToReview(this.data.id).subscribe(() => {
+        console.log('Videolearn guardado');
+    });
+    this.dialogRef.close();
+  }
+
+  saveVideoLearnStarted(idVideoLearn: number) {
+    this.videolearnService.saveVideoLearnStarted(idVideoLearn).subscribe(() => {
+      console.log('Videolearn iniciado guardado');
+    });
+  }
+
   cancelar() {
     this.dialogRef.close();
   }

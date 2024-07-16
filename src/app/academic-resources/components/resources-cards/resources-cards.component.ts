@@ -98,11 +98,6 @@ export class ResourcesCardsComponent {
         this.iconActionTable = 'assignment_turned_in';
         break;
 
-      // case 'Asignar Revisor':
-      //   this.tituloRecurso = 'Asignar Revisor';
-      //   this.iconActionTable = 'perm_contact_calendar';
-      //   break;
-
       default:
         this.tituloRecurso = 'Editar Recurso';
         this.iconActionTable = 'edit';
@@ -368,19 +363,6 @@ export class ResourcesCardsComponent {
     }
   }
 
-  // getStyleColor(tipoRecurso: string) {
-  //   switch (tipoRecurso) {
-  //     case 'Archivo':
-  //       return 'bg-cyan-700';
-  //     case 'Link':
-  //       return 'bg-orange-600';
-  //     case 'Imagen':
-  //       return 'bg-pink-700';
-  //     default:
-  //       return '';
-  //   }
-  // }
-
   getIcon(tipoRecurso: string) {
     switch (tipoRecurso) {
       case 'Archivo':
@@ -394,84 +376,18 @@ export class ResourcesCardsComponent {
     }
   }
 
-  // canApprove(item: any): boolean {
-  //   let isReviewer = false;
-  //   if (this.userRol === ROLES.DOCENTE) {
-  //     isReviewer =
-  //       item.docenteRevisor == this.usuario &&
-  //       this.selectedTab === 'Por Aprobar' &&
-  //       item.estadoRecurso != 'Aprobado';
-  //   }
-
-  //   return isReviewer;
-  // }
-
   canDelete(item: any) {
     const estudiante = (this.selectedTab === 'Mis Recursos' && item.estadoRecurso === 'Ingresado' && item.usuarioCreacion == this.usuario && item.docenteRevisor === '');
     const docente = (this.selectedTab === 'Mis Recursos' && this.userRol === ROLES.DOCENTE );
     return estudiante || docente;
   }
 
-  // viewNotify(element: any) {
-  //   if (element?.recursoRevisadoDato) return '';
-  //   return 'nuevo';
-  // }
-
-  // canResolveReject(item: any) {
-  //   let status: boolean = false;
-  //   if (item.estadoRecurso === 'Rechazado') {
-  //     status =
-  //       item.usuarioCreacion == this.usuario &&
-  //       this.selectedTab === 'Mis Recursos' &&
-  //       item.docenteRevisor;
-  //   }
-  //   return status;
-  // }
-
-  // canEdit(item: any): boolean {
-  //   let status: boolean = false;
-
-  //   switch (this.userRol) {
-  //     case 'Estudiante':
-  //       if (this.selectedTab === 'Mis Recursos') {
-  //         if (item.estadoRecurso === 'Ingresado') {
-  //           status =
-  //             item.usuarioCreacion == this.usuario &&
-  //             item.docenteRevisor === '';
-  //         }
-  //       }
-
-  //       break;
-  //     case 'Docente':
-  //       if (this.selectedTab === 'Mis Recursos') {
-  //         status =
-  //           item.usuarioCreacion == this.usuario &&
-  //           item.estadoRecurso !== 'Aprobado' &&
-  //           item.docenteRevisor === '';
-  //       }
-
-  //       if (this.selectedTab === 'Por Aprobar') {
-  //         status =
-  //           item.estadoRecurso !== 'Aprobado' && item.docenteRevisor !== '';
-  //       }
-  //       break;
-  //   }
-
-  //   return status;
-  // }
 
   canEdit(item: any): boolean {
     let status: boolean = false;
     let condition1 = (this.selectedTab === 'Mis Recursos' && item.estadoRecurso === 'Ingresado' && item.usuarioCreacion == this.usuario && item.docenteRevisor === '');
     let condition2 = (this.selectedTab === 'Mis Recursos' && item.estadoRecurso ==='Rechazado' ) ;
     let condition3 = (this.selectedTab === 'Mis Recursos' && this.userRol ===ROLES.DOCENTE);
-    // if (this.selectedTab === 'Mis Recursos') {
-    //   if (item.estadoRecurso === 'Ingresado') {
-    //     status =
-    //       item.usuarioCreacion == this.usuario &&
-    //       item.docenteRevisor === '';
-    //   }
-    // }
     return condition1 || condition2 || condition3;
   }
 
@@ -491,24 +407,6 @@ export class ResourcesCardsComponent {
       }
     });
   }
-
-  // corregirRecurso(idRecurso: number) {
-  //   const dialogRef = this.dialog.open(EditResourceComponent, {
-  //     width: '80%',
-  //     maxWidth: '420px',
-  //     data: {
-  //       id: idRecurso,
-  //       titulo: 'Corregir Recurso',
-  //       typeModal: this.typeTable,
-  //     },
-  //   });
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result) {
-  //       this.listaRecursos();
-  //     }
-  //   });
-  // }
-
 
 
   asignaRevisor(idRecurso: number) {

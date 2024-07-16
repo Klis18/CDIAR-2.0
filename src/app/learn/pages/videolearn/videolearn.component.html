@@ -102,13 +102,25 @@
         [loadTable]="reloadTable"
       />
       } @case ('Guardados') {
+        <saved-videolearns
+        [searchData]="searchInfo"
+        [typeTable]="'Guardados'"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      />
         <!-- <mazos-guardados
         [searchData]="searchInfo"
         [typeTable]="'Guardados'"
         (loadedTableEmitter)="loadedTale()"
         [loadTable]="reloadTable"
       ></mazos-guardados> -->
-      }  @case ('Estudiados') {
+      }  @case ('Realizados') {
+        <realized-videolearns
+        [searchData]="searchInfo"
+        [typeTable]="'Realizados'"
+        (loadedTableEmitter)="loadedTale()"
+        [loadTable]="reloadTable"
+      />
         <!-- <mazos-estudiados
         [searchData]="searchInfo"
         [typeTable]="'Estudiados'"

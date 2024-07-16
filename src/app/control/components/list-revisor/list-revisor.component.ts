@@ -88,6 +88,15 @@ export class ListRevisorComponent implements OnInit, OnChanges{
           this.CloseModal('Revisor asignado exitosamente');
         });
         break;
+        case 'VideoLearns':
+          const revisorVideoLearn = {
+            idVideoLearn: this.id,
+            idDocenteRevisor: idDocente
+          }
+          this.securityService.asignaRevisorVideoLearn(revisorVideoLearn).subscribe((res) => {
+            this.CloseModal('Revisor asignado exitosamente');
+          });
+          break;
       case 'Simuladores':
         const revisorSimulador = {
           idSimulador: this.id,

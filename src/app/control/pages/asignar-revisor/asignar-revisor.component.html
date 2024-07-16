@@ -57,6 +57,19 @@
           >Flashcards</span
         >
       </li>
+      <li class="me-2">
+        <span
+          (click)="selectedTab = 'VideoLearns'"
+          [ngClass]="{
+            'text-blue-900 border-b-2 border-blue-900':
+              selectedTab === 'VideoLearns',
+            'hover:text-gray-600 hover:border-gray-300':
+              selectedTab !== 'VideoLearns'
+          }"
+          class="inline-block p-4 rounded-t-lg"
+          >VideoLearns</span
+        >
+      </li>
 
       <li class="me-2">
         <a
@@ -87,19 +100,20 @@
       [typeTable]="'Asignar Revisor'"
     ></resources-cards>
     } @case ('Flashcards') {
-    <!-- <cards-flashcards
-      [searchData]="searchInfo"
-      [typeTable]="'Flashcards'"
-      [filterByStatus]="'Ingresado'"
-      (loadedTableEmitter)="loadedTale()"
-      [loadTable]="reloadTable"
-    ></cards-flashcards> -->
     <cards-flashcards
       [searchData]="searchInfo"
       [typeTable]="'Flashcards'"
       [filterByStatus]="'Ingresado'"
     ></cards-flashcards>
-    } @case ('Simuladores') {
+    }
+    @case ('VideoLearns') {
+      <cards-videolearns
+        [searchData]="searchInfo"
+        [typeTable]="'VideoLearns'"
+        [filterByStatus]="'Ingresado'"
+      />
+    }
+     @case ('Simuladores') {
     <cards-simulators
       [searchData]="searchInfo"
       [typeTable]="'Simuladores'"

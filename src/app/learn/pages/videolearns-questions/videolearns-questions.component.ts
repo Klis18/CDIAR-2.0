@@ -53,10 +53,10 @@ export class VideolearnsQuestionsComponent {
     });
     
     
-    this.videolearnService.viewObservation(this.idVideoLearn).subscribe((res) => {
-      console.log(res);
-      this.observacionRechazo = res.data.observacion;
-    });
+    // this.videolearnService.viewObservation(this.idVideoLearn).subscribe((res) => {
+    //   console.log(res);
+    //   this.observacionRechazo = res.data.observacion;
+    // });
     
   }
 
@@ -109,14 +109,14 @@ export class VideolearnsQuestionsComponent {
 
   
   updateStatusVideolearn(idStatus: number){
-    const simulator: updateStatusVideolearn = {
+    const videolearn: updateStatusVideolearn = {
       idVideoLearn: this.idVideoLearn,
       idEstado: idStatus
     
     };
-    this.videolearnService.changeStatusVideolearn(simulator).subscribe((res) => {
+    this.videolearnService.changeStatusVideolearn(videolearn).subscribe((res) => {
       console.log(res);
-      this.router.navigate(['/simuladores/repositorio-simuladores']);
+      this.router.navigate(['/learn/videolearns']);
 
     });
   }
@@ -139,7 +139,7 @@ export class VideolearnsQuestionsComponent {
   }
 
   canViewObservation(){
-    return this.rol ==='Estudiante' && this.observacionRechazo !== null;
+    return this.rol ==='Estudiante' && this.observacionRechazo !== '';
   }
 
   publishVideoLearn(){

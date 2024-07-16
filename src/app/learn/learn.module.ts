@@ -35,6 +35,10 @@ import { VideolearnQuestionsTableComponent } from './components/videolearn-quest
 import { AddQuestionsVideolearnComponent } from './components/add-questions-videolearn/add-questions-videolearn.component';
 import { VideolearnsFormQuestionsComponent } from './components/videolearns-form-questions/videolearns-form-questions.component';
 import { EditQuestionVideolearnComponent } from './components/edit-question-videolearn/edit-question-videolearn.component';
+import { ShowVideoComponent } from './pages/show-video/show-video.component';
+import { StartVideolearnComponent } from './pages/start-videolearn/start-videolearn.component';
+import { SavedVideolearnsComponent } from './components/saved-videolearns/saved-videolearns.component';
+import { RealizedVideolearnsComponent } from './components/realized-videolearns/realized-videolearns.component';
 
 
 @NgModule({
@@ -66,7 +70,11 @@ import { EditQuestionVideolearnComponent } from './components/edit-question-vide
     VideolearnQuestionsTableComponent,
     AddQuestionsVideolearnComponent,
     VideolearnsFormQuestionsComponent,
-    EditQuestionVideolearnComponent
+    EditQuestionVideolearnComponent,
+    ShowVideoComponent,
+    StartVideolearnComponent,
+    SavedVideolearnsComponent,
+    RealizedVideolearnsComponent
   ],
   imports: [
     CommonModule,
@@ -78,9 +86,10 @@ import { EditQuestionVideolearnComponent } from './components/edit-question-vide
     YouTubePlayerModule
   ],
   exports:[
-    CardsFlashcardsComponent
+    CardsFlashcardsComponent,
+    CardsVideolearnsComponent
   ],
-  providers: [FlashcardsComponent]
+  providers: [FlashcardsComponent, VideolearnComponent]
 
 })
 export class LearnModule { }

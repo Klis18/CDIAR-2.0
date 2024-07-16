@@ -13,3 +13,8 @@
   'GRAD' 0,
   'opsz' 24
 }
+
+.background-view{
+  background-image: url('/assets/images/bgflashcard.jpg');
+  background-size: cover;
+}

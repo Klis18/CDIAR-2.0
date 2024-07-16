@@ -36,7 +36,7 @@ export interface videoLearnsGetQuery {
     limit: number;
     idNivel: number;
     idAsignatura: number;
-    nombreSimulador: string;
+    nombreVideoLearn: string;
     idEstado?: number;
     nombreDocenteRevisor: string;
     usuarioCreador: boolean;
@@ -100,6 +100,7 @@ export interface getVideolearn{
     cantidadPreguntas: number;
     preguntas: Preguntas[];
     nombreRevisor: string;
+    enlaceVideo: string;
 }
 
 export interface asignarRevisorVideolearn{
@@ -128,3 +129,44 @@ export type typeTable = 'Publicado' | 'Mis VideoLearns' | 'Por Aprobar' | 'Video
 export interface videoYtb{
     url:string;
 }
+
+export interface calificacionVideolearn{
+    idVideoLearn: number;
+    calificacion: number;
+}
+
+export interface videoLearnsRealizedGetQuerys{
+    pages: number;
+    limit: number;
+    idNivel: number;
+    idAsignatura: number;
+    nombreVideoLearn: string;
+}
+
+export interface videoLearnsRealized{
+    idVideoLearnRealizado: number;
+    nombreVideoLearn: string;
+    asignatura: string;
+    nivel: string;
+    calificacion: number;
+    fechaVideoLearnRealizado: string;
+    enlaceVideo: string;
+}
+
+
+export interface ListVideoLearnSaved{
+    idVideoLearn: number;
+    nombreVideoLearn: string;
+    asignatura: string;
+    nivel: string;
+    usuarioCreador: string;
+    fechaCreacion: string;
+    estado: string;
+    observacion: string;
+    nombreDocenteRevisor: string;
+    enlaceVideo: string;
+    cantidadPreguntas: number;
+    numeroRevisiones: number;
+    preguntas: Preguntas[];
+}
+

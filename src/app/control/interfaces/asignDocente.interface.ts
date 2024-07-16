@@ -14,6 +14,11 @@ export interface AsignaDocenteRevisorSimulador{
     idDocenteRevisor: string;
 }
 
+export interface AsignaDocenteRevisorVideoLearn{
+    idVideoLearn: number;
+    idDocenteRevisor: string;
+
+}
 export interface RevisorGetQuery {
     page: number;
     limit: number;
