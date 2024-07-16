@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-user-report',
   templateUrl: './user-report.component.html',
-  styles: ``
+  styles: ``,
 })
-export class UserReportComponent {
-
-}
+export class UserReportComponent {}

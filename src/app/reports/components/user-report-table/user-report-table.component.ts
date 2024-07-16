@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Inject, Input, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ReportsService } from '../../services/reports.service';
 import { userDataGetQuery } from '../../interfaces/users.interface';
@@ -9,7 +16,7 @@ import { utils, writeFile } from 'xlsx';
 @Component({
   selector: 'user-report-table',
   templateUrl: './user-report-table.component.html',
-  styles: ``
+  styles: ``,
 })
 export class UserReportTableComponent {
   @Input() loadTable: boolean = false;
@@ -21,7 +28,7 @@ export class UserReportTableComponent {
   totalPages: number = 1;
   dataUserForm!: FormGroup;
   nombresCompletos: string = '';
- 
+
   limitsOptions = [
     {
       label: '5 Elementos',
@@ -36,18 +43,17 @@ export class UserReportTableComponent {
       value: 15,
     },
   ];
-  
+
   public page!: number;
   public limit: number = 5;
   public paginateCurrent: number[] = [];
- 
 
-  constructor(private reportService:ReportsService,
-              @Inject(FormBuilder) private formBuilder: FormBuilder,
-
+  constructor(
+    private reportService: ReportsService,
+    @Inject(FormBuilder) private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.builderForm();
     this.dataUserForm.valueChanges.subscribe({
       next: (res) => {
@@ -61,9 +67,7 @@ export class UserReportTableComponent {
       },
     });
     this.listaUsuarios();
- 
 
-    
     // this.videolearnService.getVideoLearn(this.idVideoLearn).subscribe((res) => {
     //   this.usuarioCreador = res.data.usuarioCreador;
     //   this.docenteRevisor = res.data.nombreRevisor;
@@ -103,7 +107,6 @@ export class UserReportTableComponent {
       this.listaUsuarios();
     }
   }
- 
 
   listaUsuarios() {
     const paginate: userDataGetQuery = {
@@ -111,7 +114,7 @@ export class UserReportTableComponent {
       limit: this.limit,
       nombresCompletos: this.nombresCompletos,
     };
-   
+
     this.reportService.getDataUsuarios(paginate).subscribe({
       next: (res: any) => {
         console.log('Preguntas Data', res.data);
@@ -145,7 +148,7 @@ export class UserReportTableComponent {
       this.pagination.buttonLeft = true;
       this.pagination.buttonRight = true;
     }
-    
+
     if (elementos > 0) {
       if (arreglo?.length === this.page) {
         this.pagination.buttonRight = false;
@@ -163,7 +166,6 @@ export class UserReportTableComponent {
     return arreglo;
   }
 
-
   prevPage() {
     if (this.pagination.buttonLeft) {
       const leftButton = this.dataUserForm.get('page')?.value;
@@ -177,7 +179,6 @@ export class UserReportTableComponent {
       this.dataUserForm.get('page')?.setValue(rightButton + 1);
     }
   }
-
 
   generarPdf() {
     const doc = new jsPDF();
@@ -247,5 +248,4 @@ export class UserReportTableComponent {
     utils.book_append_sheet(workbook, worksheet, 'Usuarios');
     writeFile(workbook, 'reporte_usuarios.xlsx');
   }
-
 }

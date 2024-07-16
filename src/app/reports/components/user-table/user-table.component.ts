@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { userDataGetQuery, usersData } from '../../interfaces/users.interface';
 import { ReportsService } from '../../services/reports.service';
 import { jsPDF } from 'jspdf';
@@ -6,17 +15,18 @@ import autoTable, { HAlignType } from 'jspdf-autotable';
 import XLSX from 'xlsx';
 import { utils, writeFile } from 'xlsx'; // Importa las funciones utils y writeFile
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'user-table',
   templateUrl: './user-table.component.html',
   styles: ``,
 })
-export class UserTableComponent implements OnInit, OnChanges{
+export class UserTableComponent implements OnInit, OnChanges {
   @Input() loadTable: boolean = false;
   @Output() loadedTableEmitter = new EventEmitter<boolean>();
   @Input() searchData: any;
-  
+
   dataUsuarios: any = [];
   searchInfo: any;
   reloadTable: boolean = false;
@@ -36,7 +46,7 @@ export class UserTableComponent implements OnInit, OnChanges{
       value: 15,
     },
   ];
-  
+
   public page!: number;
   public limit: number = 5;
   public paginateCurrent: number[] = [];
@@ -49,7 +59,10 @@ export class UserTableComponent implements OnInit, OnChanges{
     buttonRight: true,
   };
 
-  constructor(private reportsService: ReportsService, @Inject(FormBuilder) private formBuilder: FormBuilder,) {}
+  constructor(
+    private reportsService: ReportsService,
+    @Inject(FormBuilder) private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {
     this.listaDataUsuarios();
@@ -69,7 +82,7 @@ export class UserTableComponent implements OnInit, OnChanges{
   loadedTale() {
     this.reloadTable = false;
   }
-  
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['searchData']) {
       this.nombresCompletos = this.searchData?.question;
@@ -163,7 +176,7 @@ export class UserTableComponent implements OnInit, OnChanges{
       limit: this.limit,
       nombresCompletos: this.nombresCompletos,
     };
-   
+
     this.reportsService.getDataUsuarios(paginate).subscribe({
       next: (res: any) => {
         this.dataUsuarios = res.data ?? [];
@@ -196,7 +209,7 @@ export class UserTableComponent implements OnInit, OnChanges{
       this.pagination.buttonLeft = true;
       this.pagination.buttonRight = true;
     }
-    
+
     if (elementos > 0) {
       if (arreglo?.length === this.page) {
         this.pagination.buttonRight = false;

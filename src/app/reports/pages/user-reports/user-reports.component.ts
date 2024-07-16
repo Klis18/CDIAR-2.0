@@ -8,10 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class UserReportsComponent implements OnInit {
   searchInfo: any;
   reloadTable: boolean = false;
-  
-  
-  ngOnInit(){
-  }
+
+  ngOnInit() {}
 
   emitSearch(res: any) {
     if (res) {
@@ -26,6 +24,4 @@ export class UserReportsComponent implements OnInit {
   loadedTale() {
     this.reloadTable = false;
   }
-  
-  
 }
