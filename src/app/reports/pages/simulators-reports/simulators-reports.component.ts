@@ -3,8 +3,13 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-simulators-reports',
   templateUrl: './simulators-reports.component.html',
-  styles: ``
+  styles: ``,
 })
 export class SimulatorsReportsComponent {
-
+  searchInfo: any;
+  emitSearch(res: any) {
+    if (res) {
+      this.searchInfo = res;
+    }
+  }
 }
