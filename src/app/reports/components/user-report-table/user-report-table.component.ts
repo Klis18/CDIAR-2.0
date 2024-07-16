@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Inject,
   Input,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -18,7 +19,7 @@ import { utils, writeFile } from 'xlsx';
   templateUrl: './user-report-table.component.html',
   styles: ``,
 })
-export class UserReportTableComponent {
+export class UserReportTableComponent implements OnInit{
   @Input() loadTable: boolean = false;
   @Output() loadedTableEmitter = new EventEmitter<boolean>();
   @Input() searchData: any;
@@ -67,12 +68,6 @@ export class UserReportTableComponent {
       },
     });
     this.listaUsuarios();
-
-    // this.videolearnService.getVideoLearn(this.idVideoLearn).subscribe((res) => {
-    //   this.usuarioCreador = res.data.usuarioCreador;
-    //   this.docenteRevisor = res.data.nombreRevisor;
-    //   this.estado = res.data.estado;
-    // });
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -5,6 +5,7 @@ import {
   Input,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { utils, writeFile } from 'xlsx'; // Importa las funciones utils y writeFile
 import { ReportsService } from '../../services/reports.service';
@@ -16,6 +17,7 @@ import {
   SimuladoresData,
   SimuladoresGetQuery,
 } from '../../interfaces/simulator.interface';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'simulators-table',
@@ -36,10 +38,27 @@ export class SimulatorsTableComponent implements OnInit {
   private idAsignatura!: number;
   private idNivel!: number;
   private id!: number;
+  public simulatorForm!: FormGroup;
+  public page!: number;
+  limitsOptions = [
+    {
+      label: '5 Elementos',
+      value: 5,
+    },
+    {
+      label: '10 Elementos',
+      value: 10,
+    },
+    {
+      label: '15 Elementos',
+      value: 15,
+    },
+  ];
 
   constructor(
     private reportService: ReportsService,
     private reportSimulador: SimulatorsReportsComponent,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     @Inject(HomeService) private homeService: HomeService
   ) {}
 
@@ -119,6 +138,44 @@ export class SimulatorsTableComponent implements OnInit {
     writeFile(workbook, 'reporte_usuarios.xlsx');
   }
 
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['searchData']) {
+      this.idAsignatura = this.searchData?.asignaturas;
+      this.idNivel = this.searchData?.nivelesType;
+      //this.descripcion = this.searchData?.descripcion;
+      this.listaDatosSimuladores();
+    }
+    if (changes['loadTable']) {
+      if (this.loadTable) {
+        this.listaDatosSimuladores();
+      }
+    }
+  }
+
+  pagination = {
+    buttonLeft: true,
+    buttonRight: true,
+  };
+  
+  builderForm() {
+    this.simulatorForm = this.formBuilder.group({
+      limit: [5],
+      page: [1],
+    });
+    this.limit = this.simulatorForm.get('limit')?.value;
+    this.page = this.simulatorForm.get('page')?.value;
+  }
+
+  changePage(newPage: number) {
+    if (newPage !== this.page) {
+      console.log('PASO');
+      this.page = newPage;
+      this.listaDatosSimuladores();
+    }
+  }
+
+
   listaDatosSimuladores() {
     const paginate: SimuladoresGetQuery = {
       pages: this.pages,
@@ -140,4 +197,51 @@ export class SimulatorsTableComponent implements OnInit {
       },
     });
   }
+
+  crearArreglo(limite: number, cant: number) {
+    const rest = cant / limite;
+    const elementos = Math.floor(rest);
+    const arreglo = [];
+    const more = rest - elementos;
+    for (let i = 1; i <= elementos; i++) {
+      arreglo.push(i);
+
+      if (more > 0 && elementos === i) {
+        arreglo.push(i + 1);
+      }
+      this.pagination.buttonLeft = true;
+      this.pagination.buttonRight = true;
+    }
+
+    if (elementos > 0) {
+      if (arreglo?.length === this.page) {
+        this.pagination.buttonRight = false;
+      }
+      if (1 === this.page) {
+        this.pagination.buttonLeft = false;
+      }
+    }
+
+    if (elementos === 0) {
+      this.pagination.buttonLeft = false;
+      this.pagination.buttonRight = false;
+      arreglo.push(1);
+    }
+    return arreglo;
+  }
+  prevPage() {
+    if (this.pagination.buttonLeft) {
+      const leftButton = this.simulatorForm.get('page')?.value;
+      this.simulatorForm.get('page')?.setValue(leftButton - 1);
+    }
+  }
+
+  nextPage() {
+    if (this.pagination.buttonRight) {
+      const rightButton = this.simulatorForm.get('page')?.value;
+      this.simulatorForm.get('page')?.setValue(rightButton + 1);
+    }
+  }
+
+  
 }

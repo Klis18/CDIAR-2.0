@@ -12,4 +12,14 @@ export class SimulatorsReportsComponent {
       this.searchInfo = res;
     }
   }
+
+  reloadTable: boolean = false;
+
+  loadTable() {
+    this.reloadTable = true;
+  }
+
+  loadedTale() {
+    this.reloadTable = false;
+  }
 }

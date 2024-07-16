@@ -33,6 +33,7 @@
   </div>
 
   <div class="pt-5 pb-5">
-    <simulators-table></simulators-table>
+    <simulators-table [searchData]="searchInfo" (loadedTableEmitter)="loadedTale()"
+    [loadTable]="reloadTable"></simulators-table>
   </div>
 </div>
