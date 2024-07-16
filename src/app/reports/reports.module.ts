@@ -6,14 +6,15 @@ import { UserReportsComponent } from './pages/user-reports/user-reports.componen
 import { SimulatorsReportsComponent } from './pages/simulators-reports/simulators-reports.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
 import { MaterialModule } from '../material/material.module';
-import * as XLSX from 'xlsx';
-import { SharedModule } from '../shared/shared.module'; // Import the XLSX module
+import { SharedModule } from '../shared/shared.module';
+import { SimulatorsTableComponent } from './components/simulators-table/simulators-table.component'; // Import the XLSX module
 
 @NgModule({
   declarations: [
     UserReportsComponent,
     SimulatorsReportsComponent,
     UserTableComponent,
+    SimulatorsTableComponent,
   ],
   imports: [CommonModule, ReportsRoutingModule, MaterialModule, SharedModule],
 })
