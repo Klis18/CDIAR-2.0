@@ -29,10 +29,13 @@
 
   </div>
   <div class="mt-10">
-    <search-filters (search)="emitSearch($event)"></search-filters>
+    <question-filter (search)="emitSearch($event)"></question-filter>
   </div>
 
   <div class="pt-5 pb-5">
-    <user-table></user-table>
+    <!-- <user-table [searchData]="searchInfo" (loadedTableEmitter)="loadedTale()"
+    [loadTable]="reloadTable"></user-table> -->
+    <user-report-table [searchData]="searchInfo" (loadedTableEmitter)="loadedTale()"
+    [loadTable]="reloadTable"></user-report-table>
   </div>
 </div>

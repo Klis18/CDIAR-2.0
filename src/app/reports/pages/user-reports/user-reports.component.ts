@@ -6,14 +6,26 @@ import { Component, OnInit } from '@angular/core';
   styles: ``,
 })
 export class UserReportsComponent implements OnInit {
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
   searchInfo: any;
+  reloadTable: boolean = false;
+  
+  
+  ngOnInit(){
+  }
 
   emitSearch(res: any) {
     if (res) {
       this.searchInfo = res;
     }
   }
+
+  loadTable() {
+    this.reloadTable = true;
+  }
+
+  loadedTale() {
+    this.reloadTable = false;
+  }
+  
+  
 }

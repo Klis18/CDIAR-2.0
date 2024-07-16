@@ -6,3 +6,9 @@ export interface usersData{
     rol: string;
     fechaRegistro: string;
 }
+
+export interface userDataGetQuery{
+    pages: number;
+    limit: number;
+    nombresCompletos: string;
+}

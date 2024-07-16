@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, Subscription } from 'rxjs';
 import { VideolearnService } from '../../services/videolearn.service';
@@ -12,23 +12,23 @@ import { videoYtb } from '../../interfaces/videolearn.interface';
   selector: 'app-form-videolearn',
   templateUrl: './form-videolearn.component.html',
   styles: `
-    .youtube-player-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; 
-  height: 0;
-  overflow: hidden; 
-  max-width: 100%; 
-}
+//     .youtube-player-container {
+//   position: relative;
+//   width: 100%;
+//   padding-bottom: 56.25%; 
+//   height: 0;
+//   overflow: hidden; 
+//   max-width: 100%; 
+// }
 
-.youtube-player-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border:0;
-}
+// .youtube-player-container iframe {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   border:0;
+// }
   `
 })
 export class FormVideolearnComponent {
@@ -55,6 +55,9 @@ export class FormVideolearnComponent {
   alertaVideo: string = '';
   urlVideo:string = ''; 
   urlValid: boolean = false;
+
+  width = window.innerWidth;
+  height = window.innerHeight;
  
  
   private subscriptions: Subscription[] = [];
@@ -120,6 +123,14 @@ export class FormVideolearnComponent {
   }
 
  
+  @HostListener('window:resize', ['$event'])
+  onResize(event:any) {
+    this.width = window.innerWidth ;
+    console.log('Width',this.width);
+    this.height = window.innerHeight;
+    console.log('Height',this.height);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['formData']) {
       this.setData(changes['formData'].currentValue);

@@ -101,12 +101,12 @@
             </div>
           }
 
-          <div *ngIf="urlValid === true" class="col-span-5 youtube-player-container">
+          <div *ngIf="urlValid === true" class="col-span-5 youtube-player-container ">
             <youtube-player
               videoId="{{ videoId }}"
               suggestedQuality="highres"
-              [width]="420"
-              [height]="275"
+              [width]="(width - 950)"
+              [height]="(height - 400)"
             ></youtube-player>
           </div>
       </div>
