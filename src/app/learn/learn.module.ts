@@ -39,6 +39,7 @@ import { ShowVideoComponent } from './pages/show-video/show-video.component';
 import { StartVideolearnComponent } from './pages/start-videolearn/start-videolearn.component';
 import { SavedVideolearnsComponent } from './components/saved-videolearns/saved-videolearns.component';
 import { RealizedVideolearnsComponent } from './components/realized-videolearns/realized-videolearns.component';
+import { GenerateMazoComponent } from './components/generate-mazo/generate-mazo.component';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { RealizedVideolearnsComponent } from './components/realized-videolearns/
     ShowVideoComponent,
     StartVideolearnComponent,
     SavedVideolearnsComponent,
-    RealizedVideolearnsComponent
+    RealizedVideolearnsComponent,
+    GenerateMazoComponent
   ],
   imports: [
     CommonModule,

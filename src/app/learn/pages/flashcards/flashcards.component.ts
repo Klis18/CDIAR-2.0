@@ -3,11 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddResourceComponent } from '../../../academic-resources/components/add-resource/add-resource.component';
 import { HomeService } from '../../../home/services/home.service';
 import { AddMazoComponent } from '../../components/add-mazo/add-mazo.component';
+import { GenerateMazoComponent } from '../../components/generate-mazo/generate-mazo.component';
 
 @Component({
   selector: 'app-flashcards',
   templateUrl: './flashcards.component.html',
-  styles: ``
+  styles: `
+
+  `
 })
 export class FlashcardsComponent implements OnInit{
   usuario: string = '';
@@ -43,7 +46,7 @@ export class FlashcardsComponent implements OnInit{
     this.reloadTable = false;
   }
 
-  openDialog() {
+  agregarMazo() {
     const dialogRef = this.dialog.open(AddMazoComponent, {
       width: '40%',
       maxHeight: '80%',
@@ -52,6 +55,18 @@ export class FlashcardsComponent implements OnInit{
       if (result) {
         this.loadTable();
       }
+    });
+  }
+
+  generarMazo(){
+    const dialogRef = this.dialog.open(GenerateMazoComponent, {
+      width: '40%',
+      maxHeight: '80%',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadTable();
+    }
     });
   }
 }

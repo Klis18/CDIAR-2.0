@@ -259,4 +259,10 @@ export class LearnService {
 
   });
   }
+
+  generarFlashcardsIa(mazo:NewMazo){
+    return this.http.post('ia/generadorMazosIa',mazo,{
+      headers: this.headers,
+    });
+  }
 }
