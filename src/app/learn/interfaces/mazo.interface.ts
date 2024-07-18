@@ -8,6 +8,7 @@ export interface ListMazo{
     nombreMazo: string;
     cantidadFlashcards: number;
     nombreDocenteRevisor: string;
+    esIA: boolean;
 }
 
 

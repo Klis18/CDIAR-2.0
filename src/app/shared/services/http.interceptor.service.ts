@@ -70,8 +70,14 @@ export class HttpInterceptorService implements HttpInterceptor {
               case 404:
                 // Código de estado 404 (Not Found)
                 // Ejemplo: Mostrar un mensaje de "recurso no encontrado" al usuario
+                if(message != null){
+                  this.openDialog('triste', 'Lo sentimos, no pudimos encontrar el recurso solicitado');
+                }
                 break;
               case 500:
+                if(message != null){
+                  this.openDialog('error', 'Estamos teniendo problemas, por favor vuelve a intentarlo más tarde');
+                }
                 // Código de estado 500 (Internal Server Error)
                 // Ejemplo: Mostrar un mensaje genérico de error al usuario o registrar el error en el backend
                 break;

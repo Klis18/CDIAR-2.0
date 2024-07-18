@@ -1,5 +1,5 @@
 <body>
-    <div class="container">
+    <!-- <div class="container">
         <div class="bubbles" style="position: relative;">
             <span style="--i:11;"></span>
             <span style="--i:12;"></span>
@@ -23,10 +23,62 @@
             <span style="--i:28;"></span>
             
         </div>
-        <div style="position: absolute; top: 30%; left: 30%; transform: translate(-30%, -30%);">
-            <span class="text-4xl text-white">{{message}}</span>
+        <div>
+
+            <div style="position: absolute; top: 20%; left: 30%; transform: translate(-30%, -30%);">
+                <span class="sm:text-2xl md:text-3xl lg:text-4xl text-white poppins-regular">{{message}}</span>      
+            </div>
+        </div>
+    </div> -->
+
+
+    <div class="container">
+        <div class="bubbles" style="position: relative;">
+            <!-- Aquí van los elementos con clase "span" -->
+            <span style="--i:11;"></span>
+            <span style="--i:12;"></span>
+            <span style="--i:24;"></span>
+            <span style="--i:10;"></span>
+            <span style="--i:14;"></span>
+            <span style="--i:23;"></span>
+            <span style="--i:18;"></span>
+            <span style="--i:16;"></span>
+            <span style="--i:19;"></span>
+            <span style="--i:20;"></span>
+            <span style="--i:22;"></span>
+            <span style="--i:25;"></span>
+            <span style="--i:18;"></span>
+            <span style="--i:21;"></span>
+            <span style="--i:15;"></span>
+            <span style="--i:13;"></span>
+            <span style="--i:26;"></span>
+            <span style="--i:17;"></span>
+            <span style="--i:13;"></span>
+            <span style="--i:28;"></span>
+        </div>
+    
+        <div style="position: absolute; top: 20%; left: 40%; transform: translate(-30%, -30%);">
+            <div class="text-center space-y-2.5">
+                <p class="sm:text-3xl md:text-4xl lg:text-5xl text-white poppins-regular">{{message}}</p> 
+                <p class="sm:text-base md:text-xl lg:text-2xl text-white poppins-regular">{{message2}}</p>      
+     
+            </div>
+           
+        </div>
+    
+        <!-- Tarjeta debajo del mensaje -->
+        <div class="card" style="position: absolute; top: 60%; left: 50%; transform: translate(-47%, -50%); width: 90%; height: 40%; background-color: #ffffff; border-radius: 10px; padding: 20px;">
+           <div class="text-center">
+            <span class="text-3xl font-semibold poppins-regular bg-gradient-to-r from-sky-700 via-cyan-500 to-cyan-700 inline-block text-transparent bg-clip-text">¿Qué deseas aprender hoy?</span>
+
+           </div>
+           <study-form></study-form>
+            <!-- <p>Aquí pued</p>
+            <button>Botón</button> -->
         </div>
     </div>
+
+
     <!-- <div class="grid grid-cols-4 gap-5 m-5"> 
         <div class="col-span-4 bg-cyan-700 h-fit relative rounded-lg">
             <img src="assets/banner.jpg" class="w-full h-36" alt="banner">

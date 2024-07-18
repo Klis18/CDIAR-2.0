@@ -25,6 +25,7 @@ import { ResourcesComponent } from './academic-resources/pages/resources/resourc
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ControlModule } from './control/control.module';
 import { AcademicResourcesModule } from './academic-resources/academic-resources.module';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 registerLocaleData(localeEsEC);
 
@@ -39,6 +40,7 @@ registerLocaleData(localeEsEC);
     ControlModule,
     DocenteModule,
     NgSelectModule,
+    YouTubePlayerModule
   ],
   providers: [
     {
