@@ -11,6 +11,8 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { DocenteModule } from '../docente/docente.module';
 import { SharedModule } from '../shared/shared.module';
 import { AcademicResourcesModule } from '../academic-resources/academic-resources.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { StudyFormComponent } from './components/study-form/study-form.component';
 
 
 @NgModule({
@@ -19,6 +21,7 @@ import { AcademicResourcesModule } from '../academic-resources/academic-resource
     HomeComponent,
     ProfileComponent,
     ChangePasswordComponent,
+    StudyFormComponent,
 
   ],
   imports: [
@@ -26,6 +29,7 @@ import { AcademicResourcesModule } from '../academic-resources/academic-resource
     HomeRoutingModule,
     MaterialModule,
     FormsModule,
+    NgSelectModule,
     ReactiveFormsModule,
     DocenteModule,
     SharedModule,   

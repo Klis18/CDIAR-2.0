@@ -8,6 +8,7 @@ export interface ListSimulators{
     nombreSimulador: string;
     asignatura: string;
     nivel: string;
+    
 }
 
 export interface Simulator {

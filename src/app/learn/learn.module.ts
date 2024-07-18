@@ -7,7 +7,7 @@ import { FlashcardsComponent } from './pages/flashcards/flashcards.component';
 import { CardsFlashcardsComponent } from './components/cards-flashcards/cards-flashcards.component';
 import { DetailsMazoComponent } from './components/details-mazo/details-mazo.component';
 import { FormMazoComponent } from './components/form-mazo/form-mazo.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddMazoComponent } from './components/add-mazo/add-mazo.component';
 import { PreguntasFlashcardsComponent } from './pages/preguntas-flashcards/preguntas-flashcards.component';
 import { QuestionsTableComponent } from './components/questions-table/questions-table.component';
@@ -40,6 +40,8 @@ import { StartVideolearnComponent } from './pages/start-videolearn/start-videole
 import { SavedVideolearnsComponent } from './components/saved-videolearns/saved-videolearns.component';
 import { RealizedVideolearnsComponent } from './components/realized-videolearns/realized-videolearns.component';
 import { GenerateMazoComponent } from './components/generate-mazo/generate-mazo.component';
+import { VideoPlayerComponent } from './pages/video-player/video-player.component';
+import { QuestionFormComponent } from './pages/question-form/question-form.component';
 
 
 @NgModule({
@@ -76,12 +78,15 @@ import { GenerateMazoComponent } from './components/generate-mazo/generate-mazo.
     StartVideolearnComponent,
     SavedVideolearnsComponent,
     RealizedVideolearnsComponent,
-    GenerateMazoComponent
+    GenerateMazoComponent,
+    VideoPlayerComponent,
+    QuestionFormComponent
   ],
   imports: [
     CommonModule,
     LearnRoutingModule,
     MaterialModule,
+    FormsModule,
     ReactiveFormsModule,
     SharedModule,
     NgSelectModule,

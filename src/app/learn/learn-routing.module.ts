@@ -7,6 +7,7 @@ import { VideolearnComponent } from './pages/videolearn/videolearn.component';
 import { VideolearnsQuestionsComponent } from './pages/videolearns-questions/videolearns-questions.component';
 import { ShowVideoComponent } from './pages/show-video/show-video.component';
 import { StartVideolearnComponent } from './pages/start-videolearn/start-videolearn.component';
+import { VideoPlayerComponent } from './pages/video-player/video-player.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'preguntas-video',
     component: StartVideolearnComponent
+  },
+  {
+    path:'video-player',
+    component: VideoPlayerComponent
   }
   
 ];

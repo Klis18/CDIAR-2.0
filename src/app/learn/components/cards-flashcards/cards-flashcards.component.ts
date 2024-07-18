@@ -70,6 +70,7 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   usuario: string = '';
   flashCards!: FormGroup;
   creadorMazo: string = '';
+  generado: boolean = false;
 
   colors = ['#67E8A2', '#67E8DA', '#C883F1', '#CB48A0', '#7FCDE8', '#2E95A3', '#E8BB7F']; 
 
@@ -205,6 +206,7 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
           this.asignatura = res.data.asignatura;
           this.docenteRevisor = res.data.nombreDocenteRevisor;
           this.creadorMazo = res.data.usuarioCreador;
+          this.generado = res.data.esIA;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
         if (this.data?.length === 0 || !this.data) {
@@ -411,5 +413,14 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
       maxHeight: '90%',
       data: {id: idMazo, opcion: 'verObservacionMazo'},
     });
+  }
+
+  isGenerate(item:any){
+    if(item.esIA === true){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }

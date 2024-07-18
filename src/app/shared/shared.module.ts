@@ -16,6 +16,7 @@ import { QuestionFilterComponent } from './pages/question-filter/question-filter
 import { ObservacionRechazoComponent } from './pages/observacion-rechazo/observacion-rechazo.component';
 // import { NgxEditorComponent, NgxEditorModule } from 'ngx-editor';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { SpinnerGenerateComponent } from './components/spinner-generate/spinner-generate.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
     SearchFiltersComponent,
     QuestionFilterComponent,
     ObservacionRechazoComponent,
+    SpinnerGenerateComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +48,7 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
     SelectComponent,
     SearchFiltersComponent,
     QuestionFilterComponent,
+    SpinnerGenerateComponent,
   ]
 })
 export class SharedModule { }

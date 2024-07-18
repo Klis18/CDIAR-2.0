@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
 import { Login } from '../../interfaces/login';
 import { JsonResponse } from '../../../shared/interfaces/json-response';
 import { CustomValidators } from '../../../../custom/custom-validators';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 // import Swal from 'sweetalert2'
 
 @Component({
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private spinnerService: SpinnerService,
     private router: Router
   ) {}
   ngOnInit(): void {
@@ -45,11 +47,14 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+    this.spinnerService.showSpinner();
 
   this.authService.login(this.loginSend).subscribe((res: boolean) => {
     if (res) {
+      this.spinnerService.hideSpinner();
       this.router.navigate(['/home']);
     } else {
+      this.spinnerService.hideSpinner();
       this.router.navigate(['/auth/login']);
     }
   });

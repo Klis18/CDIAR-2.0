@@ -1,0 +1,76 @@
+<div class="pr-7 pl-7">
+    <form [formGroup]="generateGroupForm">
+      <div class="grid grid-cols-12 gap-4 mt-5">
+        <div class="col-span-6">
+            <label
+              for="tema"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Tema</label
+            >
+            <input
+              type="text"
+              id="tema"
+              formControlName="tema"
+              class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Tema..."
+            />
+          </div>
+          <div class="col-span-2">
+            <label
+              for="nivel"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Nivel</label
+            >
+            <ng-select
+            [items]="nivelesType"
+            bindLabel="label"
+            bindValue="value"
+            [searchable]="false"
+            placeholder="Niveles"
+            formControlName="idNivel"
+            notFoundText="No hay niveles"
+            class="ng-custom"
+          >
+          </ng-select>
+            
+          </div>
+    
+          <div class="col-span-4">
+            <label
+              for="asignatura"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Asignatura</label
+            >
+            <ng-select
+            [items]="asignaturas"
+            bindLabel="label"
+            bindValue="value"
+            [searchable]="false"
+            placeholder="Asignatura"
+            formControlName="idAsignatura"
+            notFoundText="No hay Asignaturas"
+            class="ng-custom"
+          >
+          </ng-select>
+
+        </div>
+        <div class="flex items-center me-4 mt-2 col-span-2">
+            <input type="checkbox" value="" formControlName="flashcardsCheckbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded focus:ring-2">
+            <label for="flashcards-checkbox" class="ms-2 text-sm font-medium text-gray-900">Flashcards</label>
+        </div>
+        <div class="flex items-center me-4 mt-2 col-span-2">
+            <input type="checkbox" value="" formControlName="simuladoresCheckbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded focus:ring-2">
+            <label for="simuladores-checkbox" class="ms-2 text-sm font-medium text-gray-900">Simuladores</label>
+        </div>
+        <div class="col-span-8 text-right">
+            <button type="button" (click)="generarMateriales()" [disabled]="!this.generateGroupForm.valid" class="p-0.5 mb-2 me-2 overflow-hidden text-base font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200">
+                <span class="flex transition-all px-5 py-2.5 ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0 items-center justify-center">
+                  <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>
+                  Generar
+                </span>
+              </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <spinner-generate [message]="'Generando'"></spinner-generate>
