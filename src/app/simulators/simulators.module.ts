@@ -21,6 +21,7 @@ import { ObservacionRechazoSimuladoresComponent } from './components/observacion
 import { SavedSimulatorsTableComponent } from './components/saved-simulators-table/saved-simulators-table.component';
 import { StartSimulatorComponent } from './pages/start-simulator/start-simulator.component';
 import { SimulatorsRealizedTableComponent } from './components/simulators-realized-table/simulators-realized-table.component';
+import { GenerateSimulatorComponent } from './components/generate-simulator/generate-simulator.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { SimulatorsRealizedTableComponent } from './components/simulators-realiz
     ObservacionRechazoSimuladoresComponent,
     SavedSimulatorsTableComponent,
     StartSimulatorComponent,
-    SimulatorsRealizedTableComponent
+    SimulatorsRealizedTableComponent,
+    GenerateSimulatorComponent
   ],
   imports: [
     CommonModule,

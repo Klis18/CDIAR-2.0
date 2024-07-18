@@ -172,7 +172,7 @@ export class UserTableComponent implements OnInit, OnChanges {
 
   listaDataUsuarios() {
     const paginate: userDataGetQuery = {
-      pages: this.page,
+      page: this.page,
       limit: this.limit,
       nombresCompletos: this.nombresCompletos,
     };

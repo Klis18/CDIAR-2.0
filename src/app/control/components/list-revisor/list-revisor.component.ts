@@ -107,26 +107,6 @@ export class ListRevisorComponent implements OnInit, OnChanges{
         });
         break;
     }
-
-    // if(this.opcion === 'Mazo'){
-    //   const revisor = {
-    //     idMazo: this.id,
-    //     idDocenteRevisor: idDocente
-    //   }
-    //   this.securityService.asignarRevisorMazo(revisor).subscribe((res) => {
-    //     this.CloseModal('Revisor asignado exitosamente');      
-    //   });
-    // }else if(this.opcion === 'Recursos'){
-    //   const revisor = {
-    //     id: this.id,
-    //     idDocenteRevisor: idDocente
-    //   }
-    //   this.securityService.asignarRevisorRecurso(revisor).subscribe((res) => {
-    //     this.CloseModal('Revisor asignado exitosamente');
-    //   });
-    // }
-    
-    
   }
 
   cancelar() {
@@ -196,7 +176,6 @@ export class ListRevisorComponent implements OnInit, OnChanges{
       limit: this.limit,
       nombre: this.nombre,
     };
-   
     this.securityService.getDocRevisores(paginate).subscribe({
       next: (res: any) => {
         this.data = res.data ?? [];

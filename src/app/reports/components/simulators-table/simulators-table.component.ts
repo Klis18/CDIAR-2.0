@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Inject,
   Input,
+  OnChanges,
   OnInit,
   Output,
   SimpleChanges,
@@ -23,23 +24,26 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   selector: 'simulators-table',
   templateUrl: './simulators-table.component.html',
 })
-export class SimulatorsTableComponent implements OnInit {
-  @Input() loadTable: boolean = false;
+export class SimulatorsTableComponent implements OnInit, OnChanges {
+ 
   @Input() searchData: any;
-  @Output() loadedTableEmiter = new EventEmitter<boolean>();
-
-  dataSimuladores: any = [];
+  @Input() loadTable: boolean = false;
+  @Output() loadedTableEmitter = new EventEmitter<boolean>();
+  dataSimuladores: SimuladoresData[] = [];
   itemsPerPage: number = 5;
   totalPages: number = 1;
-
-  public paginateCurrent: number[] = [];
-  public pages!: number;
-  public limit!: number;
+  nombreSimulador: string = '';
+  nivel: string = '';
+  asignatura: string = '';
+  id: number = 0;
   private idAsignatura!: number;
   private idNivel!: number;
-  private id!: number;
-  public simulatorForm!: FormGroup;
+  private descripcion!: string;
   public page!: number;
+  public limit: number = 5;
+  public paginateCurrent: number[] = [];
+  usuario: string = '';
+  simulatorForm!: FormGroup;
   limitsOptions = [
     {
       label: '5 Elementos',
@@ -56,94 +60,38 @@ export class SimulatorsTableComponent implements OnInit {
   ];
 
   constructor(
-    private reportService: ReportsService,
-    private reportSimulador: SimulatorsReportsComponent,
+    private reportsService: ReportsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
-    @Inject(HomeService) private homeService: HomeService
   ) {}
+  public userRol!: string;
+  private idEstado!: number;
+  pagination = {
+    buttonLeft: false,
+    buttonRight: false,
+  };
 
   ngOnInit(): void {
-    this.listaDatosSimuladores();
-  }
+    this.builderForm();
 
-  generarPdf() {
-    const doc = new jsPDF();
-
-    const img = new Image();
-
-    img.src = 'assets/CDIARLogo.png';
-
-    const logoWidth = 30;
-    const logoHeight = 25;
-
-    doc.setFontSize(16);
-    doc.text('CDIAR', 105, 20, { align: 'center' }); // Ajusta la posición (eje y) si es necesario
-    doc.setFontSize(12);
-    doc.text('Reporte de Usuarios', 105, 30, { align: 'center' }); // Ajusta la posición (eje y) si es necesario
-
-    const headers = [
-      [
-        {
-          content: 'Nombre Simulador',
-          styles: { halign: 'center' as HAlignType },
-        },
-        {
-          content: 'Nombres Completos',
-          styles: { halign: 'center' as HAlignType },
-        },
-        { content: 'Asignatura', styles: { halign: 'center' as HAlignType } },
-        { content: 'Nivel', styles: { halign: 'center' as HAlignType } },
-        { content: 'Calificacion', styles: { halign: 'center' as HAlignType } },
-        {
-          content: 'Fecha Simulador Realizado',
-          styles: { halign: 'center' as HAlignType },
-        },
-      ],
-    ];
-
-    const data = this.dataSimuladores.map((simulador: any) => [
-      simulador.nombreSimulador,
-      simulador.nombreEstudiante,
-      simulador.asignatura,
-      simulador.nivel,
-      simulador.calificacion,
-      new Date(simulador.fechaSimuladorRealizado).toLocaleDateString(),
-    ]);
-
-    autoTable(doc, {
-      head: headers,
-      body: data,
-      startY: 40,
-      styles: { halign: 'center' as HAlignType },
-      theme: 'striped',
-      didDrawPage: (data) => {
-        doc.addImage(
-          img,
-          'PNG',
-          10,
-          10, // Posición vertical (arriba)
-          logoWidth,
-          logoHeight
-        );
+    this.simulatorForm.valueChanges.subscribe({
+      next: (res) => {
+        if (res?.limit) {
+          this.limit = Number(res?.limit);
+        }
+        if (res?.page) {
+          this.page = Number(res?.page);
+        }
+        this.listaDatosSimuladores();
       },
     });
-
-    doc.save('reporte_simuladores.pdf');
+    this.listaDatosSimuladores();
   }
-
-  generarExcel() {
-    const worksheet = utils.json_to_sheet(this.dataSimuladores);
-    const workbook = utils.book_new();
-    utils.book_append_sheet(workbook, worksheet, 'Usuarios');
-    writeFile(workbook, 'reporte_usuarios.xlsx');
-  }
-
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['searchData']) {
       this.idAsignatura = this.searchData?.asignaturas;
       this.idNivel = this.searchData?.nivelesType;
-      //this.descripcion = this.searchData?.descripcion;
+      this.nombreSimulador = this.searchData?.descripcion;
       this.listaDatosSimuladores();
     }
     if (changes['loadTable']) {
@@ -153,11 +101,6 @@ export class SimulatorsTableComponent implements OnInit {
     }
   }
 
-  pagination = {
-    buttonLeft: true,
-    buttonRight: true,
-  };
-  
   builderForm() {
     this.simulatorForm = this.formBuilder.group({
       limit: [5],
@@ -169,31 +112,37 @@ export class SimulatorsTableComponent implements OnInit {
 
   changePage(newPage: number) {
     if (newPage !== this.page) {
-      console.log('PASO');
+      // this.simulatorForm.get('page')?.setValue(newPage);
       this.page = newPage;
       this.listaDatosSimuladores();
     }
   }
-
-
+ 
   listaDatosSimuladores() {
     const paginate: SimuladoresGetQuery = {
-      pages: this.pages,
+      page: this.page,
       limit: this.limit,
       idAsignatura: this.idAsignatura,
       idNivel: this.idNivel,
+      nombreSimulador: this.nombreSimulador,
       id: this.id,
     };
-    this.reportService.getDataSimuladores(paginate).subscribe({
+    
+    this.reportsService.getDataSimuladores(paginate).subscribe({
       next: (res: any) => {
-        this.dataSimuladores = res.data;
-
-        if (this.dataSimuladores.length === 0 || this.dataSimuladores) {
+        this.dataSimuladores = res.data ?? [];
+        if (this.dataSimuladores.length > 0) {
+          this.nombreSimulador = res.data.nombreSimulador;
+          this.nivel = res.data.nivel;
+          this.asignatura = res.data.asignatura;
+          this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
+        }
+        if (this.dataSimuladores?.length === 0 || !this.dataSimuladores) {
           this.paginateCurrent = [1];
         }
       },
       complete: () => {
-        this.loadedTableEmiter.emit(true);
+        this.loadedTableEmitter.emit(false);
       },
     });
   }
@@ -212,7 +161,7 @@ export class SimulatorsTableComponent implements OnInit {
       this.pagination.buttonLeft = true;
       this.pagination.buttonRight = true;
     }
-
+    
     if (elementos > 0) {
       if (arreglo?.length === this.page) {
         this.pagination.buttonRight = false;
@@ -229,10 +178,13 @@ export class SimulatorsTableComponent implements OnInit {
     }
     return arreglo;
   }
+
+
   prevPage() {
     if (this.pagination.buttonLeft) {
       const leftButton = this.simulatorForm.get('page')?.value;
       this.simulatorForm.get('page')?.setValue(leftButton - 1);
+      // this.listaDatosSimuladores();
     }
   }
 
@@ -240,8 +192,9 @@ export class SimulatorsTableComponent implements OnInit {
     if (this.pagination.buttonRight) {
       const rightButton = this.simulatorForm.get('page')?.value;
       this.simulatorForm.get('page')?.setValue(rightButton + 1);
+      // this.listaDatosSimuladores();
     }
   }
 
-  
 }
+  

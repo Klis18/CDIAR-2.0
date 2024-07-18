@@ -7,7 +7,7 @@ export interface usersData {
   fechaRegistro: string;
 }
 export interface userDataGetQuery {
-  pages: number;
+  page: number;
   limit: number;
   nombresCompletos: string;
 }

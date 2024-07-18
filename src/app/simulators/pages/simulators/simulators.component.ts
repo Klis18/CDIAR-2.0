@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HomeService } from '../../../home/services/home.service';
 import { AddSimulatorComponent } from '../../components/add-simulator/add-simulator.component';
+import { GenerateSimulatorComponent } from '../../components/generate-simulator/generate-simulator.component';
 
 @Component({
   selector: 'app-simulators',
@@ -42,8 +43,20 @@ export class SimulatorsComponent implements OnInit{
     this.reloadTable = false;
   }
 
-  openDialog() {
+  agregarSimulador() {
     const dialogRef = this.dialog.open(AddSimulatorComponent, {
+      width: '40%',
+      maxHeight: '80%',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadTable();
+      }
+    });
+  }
+
+  generarSimulador() {
+    const dialogRef = this.dialog.open(GenerateSimulatorComponent, {
       width: '40%',
       maxHeight: '80%',
     });

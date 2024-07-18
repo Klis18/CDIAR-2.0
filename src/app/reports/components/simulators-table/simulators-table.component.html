@@ -63,128 +63,138 @@
         <p class="text-2xl font-bold text-gray-500">No hay datos para mostrar</p>
     </div> -->
 
-    <div [formGroup]="simulatorForm">
-        <div class="flex flex-col" *ngIf="dataSimuladores.length > 0; else noData">
-          <div class="col-span-4">
-      
-            <button type="button" (click)="generarPdf()"
-              class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
-              <span class="flex items-center justify-center"> Generar Pdf </span>
-            </button>
-            <button type="button" (click)="generarExcel()"
-              class="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
-              <span class="flex items-center justify-center"> Generar Excel </span>
-            </button>
-          </div>
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead>
+    <div class="flex flex-col">
+      <div [formGroup]="simulatorForm" class="-my-2 overflow-x-auto sm:-mx-6">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div
+            class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+          >
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead>
                 <tr>
-                    <th
-                        class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                        Nombre Simulador
-                    </th>
-                    <th
-                        class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                        Nombres Completos
-                    </th>
-                    <th
-                        class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                        Asignatura
-                    </th>
-                    <th
-                        class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                        Nivel
-                    </th>
-                    <th
-                        class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                        Calificacion
-                    </th>
-                    <th
-                        class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
-                        Fecha Simulador Realizado
-                    </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                  >
+                    Nombre Simulador
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                  >
+                    Nombres Completos
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                  >
+                    Nivel
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                  >
+                    Asignatura
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                  >
+                    Calificación
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                  >
+                    Fecha Simulador Realizado
+                  </th>
                 </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                <tr *ngFor="let item of dataSimuladores">
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {{ item.nombreSimulador }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {{ item.nombreEstudiante }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ item.asignatura }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ item.nivel }}</td>
-
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {{ item.calificacion }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {{ item.fechaSimuladorRealizado | date }}
-                    </td>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                @for (item of dataSimuladores; track item) {
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {{ item.nombreSimulador }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {{ item.nombreEstudiante }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ item.nivel }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ item.asignatura }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {{ item.calificacion }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {{ item.fechaSimuladorRealizado| date : "d/M/yyyy" }}
+                  </td>
                 </tr>
-            </tbody>
-        </table>
-          <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-              <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                
+                } @empty {
+                <tr>
+                  <td colspan="8">
+                    <div class="p-2 text-center text-xl">
+                      No hay datos disponibles.
+                    </div>
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+            <div class="flex my-3">
+              <div class="flex-1 ms-2">
+                <select
+                  class="p-1 rounded border-2 border-solid border-slate-300"
+                  formControlName="limit"
+                >
+                  @for (item of limitsOptions; track item) {
+                  <option [value]="item.value">{{ item.label }}</option>
+                  }
+                </select>
+              </div>
+              <div class="grid justify-end">
+                <nav>
+                  <ul class="flex">
+                    <li>
+                      <a
+                        class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out"
+                        [ngClass]="{
+                          'cursor-pointer hover:border-gray-400 hover:bg-light-300': pagination.buttonLeft,
+                          'opacity-50 cursor-default': !pagination.buttonLeft,
+                        }"
+                        (click)="prevPage()"
+                      >
+                        <span class="material-icons text-sm"
+                          >keyboard_arrow_left</span
+                        >
+                      </a>
+                    </li>
+                    @for (paginate of paginateCurrent; track $index) {
+                    <li>
+                      <a
+                        class="mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm shadow-md transition duration-150 ease-in-out cursor-pointer"
+                        [ngClass]="{
+                          'bg-blue-800 text-white': paginate === page,
+                          'bg-white text-black': paginate !== page
+                        }"
+                        (click)="changePage(paginate)"
+                      >
+                        {{ paginate }}
+                      </a>
+                    </li>
+                    }
+                    <li>
+                      <a
+                        class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+                        (click)="nextPage()"
+                        [ngClass]="{
+                          'cursor-pointer hover:border-gray-400 hover:bg-light-300':
+                            pagination.buttonRight,
+                          'opacity-50 cursor-default': !pagination.buttonRight
+                        }"
+                      >
+                        <span class="material-icons text-sm"
+                          >keyboard_arrow_right</span
+                        >
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
               </div>
             </div>
           </div>
-      
-          <!---PAGINACIÓN-->
-      
-          <div class="flex my-3 pr-7 pl-7">
-            <div class="flex-1 ms-2">
-              <select class="p-1 rounded border-2 border-solid border-slate-300" formControlName="limit">
-                @for (item of limitsOptions; track item) {
-                <option [value]="item.value">{{ item.label }}</option>
-                }
-              </select>
-            </div>
-            <div class="grid justify-end">
-              <nav>
-                <ul class="flex">
-                  <li>
-                    <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out"
-                      [ngClass]="{
-                      'cursor-pointer hover:border-gray-400 hover:bg-light-300': pagination.buttonLeft,
-                      'opacity-50 cursor-default': !pagination.buttonLeft,
-                    }" (click)="prevPage()">
-                      <span class="material-icons text-sm">keyboard_arrow_left</span>
-                    </a>
-                  </li>
-                  @for (paginate of paginateCurrent; track $index) {
-                  <li>
-                    <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm shadow-md transition duration-150 ease-in-out cursor-pointer"
-                      [ngClass]="{
-                    'bg-blue-800 text-white': paginate === page,
-                    'bg-white text-black': paginate !== page
-                  }" (click)="changePage(paginate)">
-                      {{ paginate }}
-                    </a>
-                  </li>
-                  }
-                  <li>
-                    <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
-                      (click)="nextPage()" [ngClass]="{
-                    'cursor-pointer hover:border-gray-400 hover:bg-light-300':
-                      pagination.buttonRight,
-                    'opacity-50 cursor-default': !pagination.buttonRight
-                  }">
-                      <span class="material-icons text-sm">keyboard_arrow_right</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
         </div>
-      
-      
-        <ng-template #noData>
-          <div class="h-24 bg-gray-200 p-7">
-            <div class="text-center text-xl">No hay datos disponibles.</div>
-          </div>
-        </ng-template>
+      </div>
+    </div>
+    

@@ -19,12 +19,12 @@ export class ReportsService {
   );
   constructor() {}
 
-  getDataUsuarios({ pages, limit, nombresCompletos }: userDataGetQuery) {
-    if (!pages) pages = 1;
+  getDataUsuarios({ page, limit, nombresCompletos }: userDataGetQuery) {
+    if (!page) page = 1;
 
     if (!limit) limit = 5;
 
-    let query: string = `?pages=${pages}&limit=${limit}`;
+    let query: string = `?pages=${page}&limit=${limit}`;
     if (nombresCompletos && nombresCompletos !== '')
       query += `&nombresCompletos=${nombresCompletos}`;
 
@@ -34,15 +34,15 @@ export class ReportsService {
   }
 
   getDataSimuladores({
-    pages,
+    page,
     limit,
     idAsignatura,
     idNivel,
     id,
   }: SimuladoresGetQuery) {
-    if (!pages) pages = 1;
+    if (!page) page = 1;
     if (!limit) limit = 10;
-    let query = `?pages=${pages}&limit=${limit}`;
+    let query = `?pages=${page}&limit=${limit}`;
 
     if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
     if (idNivel) query += `&idNivel=${idNivel}`;

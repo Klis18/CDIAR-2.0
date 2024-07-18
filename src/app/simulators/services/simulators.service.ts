@@ -95,6 +95,12 @@ export class SimulatorsService {
     });
   }
 
+  generateSimulator(simulador:NewSimulator){
+    return this.http.post<NewSimulator>('ia/generadorSimuladoresIa',simulador, {
+      headers: this.headers,
+    });
+  }
+
   updateSimulator(simulador:UpdateSimulator){
     return this.http.put<UpdateSimulator>('simuladores/actualizar',simulador, {
       headers: this.headers,
