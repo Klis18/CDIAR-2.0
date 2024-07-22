@@ -19,22 +19,25 @@ export class ListadoAprobacionDocenteComponent implements OnInit{
   cedula: string = '';
   correo: string = '';
   telefono: string = '';
+  cantidadRegistros: number = 0;
   fechaSolicitud: Date = new Date();
   private securityService = inject(SecurityService);
 
   ngOnInit(): void {
     this.listaDocentes();
-    console.log(this.listaDocentes());
   }
 
   listaDocentes() {
     this.securityService.getListaDocenteAprobar().subscribe((res: any) => {
       this.data = res.data;
-      this.nombresCompletos = res.data.nombresCompletos;
-      this.cedula = res.data.cedula;
-      this.correo = res.data.correo;
-      this.telefono = res.data.telefono;
-      this.fechaSolicitud = res.data.fechaSolicitud;
+      this.cantidadRegistros = res.data?.length;
+      this.nombresCompletos = res.data?.nombresCompletos;
+      this.cedula = res.data?.cedula;
+      this.correo = res.data?.correo;
+      this.telefono = res.data?.telefono;
+      this.fechaSolicitud = res.data?.fechaSolicitud;
+    },(error)=>{
+      console.log('Mensaje de');
     });
   }
 
@@ -49,13 +52,6 @@ export class ListadoAprobacionDocenteComponent implements OnInit{
     return docente;
   }
 
-  // aprobarDocente(docente: DocenteAprobacion) {
-  //   docente.aprobado = true;
-  //   this.securityService.aprobarDocente(docente).subscribe((res) => {
-  //     console.log(res);
-  //   });
-  // }
-
   aprobarDocente(correo: string, aprobado: boolean) {
     const docente = { correo, aprobado };
     // docente.aprobado = true;
@@ -63,13 +59,6 @@ export class ListadoAprobacionDocenteComponent implements OnInit{
       console.log(res);
     });
   }
-
-  // rechazarDocente(docente: DocenteAprobacion) {
-  //   docente.aprobado = false;
-  //   this.securityService.aprobarDocente(docente).subscribe((res) => {
-  //     console.log(res);
-  //   });
-  // }
 
   rechazarDocente(correo: string, aprobado: boolean) {
     const docente = { correo, aprobado };

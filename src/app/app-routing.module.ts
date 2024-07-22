@@ -7,6 +7,8 @@ import { CargaHorariaComponent } from './docente/pages/carga-horaria/carga-horar
 import { FlashcardsComponent } from './learn/pages/flashcards/flashcards.component';
 import { SimulatorsComponent } from './simulators/pages/simulators/simulators.component';
 import { DashboardCdiarComponent } from './dashboard/dashboard-cdiar/dashboard-cdiar.component';
+import { CargaHorariaDocenteModule } from './carga-horaria-docente/carga-horaria-docente.module';
+import { CargaHorariaDocenteComponent } from './carga-horaria-docente/pages/carga-horaria-docente/carga-horaria-docente.component';
 
 const routes: Routes = [
   {
@@ -32,8 +34,8 @@ const routes: Routes = [
       },
       {
         path:'carga-horaria',
-        component: CargaHorariaComponent,
-        loadChildren: () => import('./docente/docente.module').then(m => m.DocenteModule),
+        component: CargaHorariaDocenteComponent,
+        loadChildren: () => import('./carga-horaria-docente/carga-horaria-docente.module').then(m => m.CargaHorariaDocenteModule),
       },
       {
         path:'learn',

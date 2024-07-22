@@ -28,7 +28,7 @@ export class ReportsService {
     if (nombresCompletos && nombresCompletos !== '')
       query += `&nombresCompletos=${nombresCompletos}`;
 
-    return this.http.get<usersData>('usuario/usuarios', {
+    return this.http.get<usersData>(`usuario/usuarios${query}`, {
       headers: this.headers,
     });
   }
@@ -39,15 +39,17 @@ export class ReportsService {
     idAsignatura,
     idNivel,
     id,
+    nombreSimulador,
   }: SimuladoresGetQuery) {
     if (!page) page = 1;
     if (!limit) limit = 10;
-    let query = `?pages=${page}&limit=${limit}`;
+    let query = `?page=${page}&limit=${limit}`;
 
     if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
     if (idNivel) query += `&idNivel=${idNivel}`;
     if (id) query += `&id=${id}`;
-    return this.http.get<SimuladoresData>('simuladores/reporteSimuladores', {
+    if (nombreSimulador) query += `&nombreSimulador=${nombreSimulador}`;
+    return this.http.get<SimuladoresData>(`simuladores/reporteSimuladores${query}`, {
       headers: this.headers,
     });
   }

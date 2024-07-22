@@ -1,0 +1,63 @@
+<mat-dialog-content>
+    <div class="pr-7 pl-7">
+      <form [formGroup]="mallaGroupForm">
+        <div class="grid grid-cols-12 gap-4 mt-5">
+            <div class="col-span-12 md:col-span-12">
+                <label
+                  for="tipoRegistro"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Tipo</label
+                >
+                <ng-select
+                  [items]="tipoRegistro"
+                  bindLabel="label"
+                  bindValue="value"
+                  [searchable]="false"
+                  placeholder="Tipo Registro"
+                  formControlName="tipoRegistro"
+                  notFoundText="No hay tipos"
+                  class="ng-custom"
+                >
+                </ng-select>
+              </div>
+
+          @if(this.mallaGroupForm.get('tipoRegistro')?.value === '2'){
+              <div class="col-span-12 md:col-span-12">
+                <label
+                  for="nivel"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Nivel</label
+                >
+                <ng-select
+                  [items]="nivelesType"
+                  bindLabel="label"
+                  bindValue="value"
+                  [searchable]="false"
+                  placeholder="Niveles"
+                  formControlName="idNivel"
+                  notFoundText="No hay niveles"
+                  class="ng-custom"
+                >
+                </ng-select>
+              </div>
+          }
+  
+          <div class="col-span-12">
+            <label
+              for="descripcion"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Descripción</label
+            >
+            <input
+              type="text"
+              id="descripcion"
+              formControlName="descripcion"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Descripción"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
+  

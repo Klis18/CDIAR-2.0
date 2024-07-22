@@ -65,6 +65,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
   ) {}
   public userRol!: string;
   private idEstado!: number;
+  
   pagination = {
     buttonLeft: false,
     buttonRight: false,
@@ -110,13 +111,18 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
     this.page = this.simulatorForm.get('page')?.value;
   }
 
-  changePage(newPage: number) {
-    if (newPage !== this.page) {
-      // this.simulatorForm.get('page')?.setValue(newPage);
-      this.page = newPage;
+  goToPage(event: Event) {
+    const target = event.target as HTMLInputElement;
+    let page = parseInt(target.value, 10);
+    if (!isNaN(page) && page >= 1 && page <= this.paginateCurrent.length) {
+      this.page = page;
+      this.listaDatosSimuladores();
+    } else {
+      target.value = this.page.toString();
       this.listaDatosSimuladores();
     }
   }
+ 
  
   listaDatosSimuladores() {
     const paginate: SimuladoresGetQuery = {
@@ -135,6 +141,8 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
           this.nombreSimulador = res.data.nombreSimulador;
           this.nivel = res.data.nivel;
           this.asignatura = res.data.asignatura;
+          this.idNivel = res.data.idNivel;
+          this.idAsignatura = res.data.idAsignatura;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
         if (this.dataSimuladores?.length === 0 || !this.dataSimuladores) {
@@ -184,7 +192,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
     if (this.pagination.buttonLeft) {
       const leftButton = this.simulatorForm.get('page')?.value;
       this.simulatorForm.get('page')?.setValue(leftButton - 1);
-      // this.listaDatosSimuladores();
+      this.listaDatosSimuladores();
     }
   }
 
@@ -192,9 +200,81 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
     if (this.pagination.buttonRight) {
       const rightButton = this.simulatorForm.get('page')?.value;
       this.simulatorForm.get('page')?.setValue(rightButton + 1);
-      // this.listaDatosSimuladores();
+      this.listaDatosSimuladores();
     }
   }
 
+  generarPdf() {
+    const doc = new jsPDF();
+
+    const img = new Image();
+
+    img.src = 'assets/CDIARLogo.png';
+
+    const logoWidth = 30;
+    const logoHeight = 25;
+
+    doc.setFontSize(16);
+    doc.text('CDIAR', 105, 20, { align: 'center' }); // Ajusta la posición (eje y) si es necesario
+    doc.setFontSize(12);
+    doc.text('Reporte de Simuladores', 105, 30, { align: 'center' }); // Ajusta la posición (eje y) si es necesario
+
+    const headers = [
+      [
+        {
+          content: 'Nombre Simulador',
+          styles: { halign: 'center' as HAlignType },
+        },
+        {
+          content: 'Nombres Completos',
+          styles: { halign: 'center' as HAlignType },
+        },
+        { content: 'Asignatura', styles: { halign: 'center' as HAlignType } },
+        { content: 'Nivel', styles: { halign: 'center' as HAlignType } },
+        { content: 'Calificacion', styles: { halign: 'center' as HAlignType } },
+        {
+          content: 'Fecha Simulador Realizado',
+          styles: { halign: 'center' as HAlignType },
+        },
+      ],
+    ];
+
+    const data = this.dataSimuladores.map((simulador: any) => [
+      simulador.nombreSimulador,
+      simulador.nombreEstudiante,
+      simulador.asignatura,
+      simulador.nivel,
+      simulador.calificacion,
+      new Date(simulador.fechaSimuladorRealizado).toLocaleDateString(),
+    ]);
+
+    autoTable(doc, {
+      head: headers,
+      body: data,
+      startY: 40,
+      styles: { halign: 'center' as HAlignType },
+      theme: 'striped',
+      didDrawPage: (data) => {
+        doc.addImage(
+          img,
+          'PNG',
+          10,
+          10, // Posición vertical (arriba)
+          logoWidth,
+          logoHeight
+        );
+      },
+    });
+
+    doc.save('reporte_simuladores.pdf');
+  }
+
+  generarExcel() {
+    const worksheet = utils.json_to_sheet(this.dataSimuladores);
+    const workbook = utils.book_new();
+    utils.book_append_sheet(workbook, worksheet, 'Simuladores');
+    writeFile(workbook, 'reporte_simuladores.xlsx');
+  }
+  
 }
   

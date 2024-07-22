@@ -1,0 +1,85 @@
+<div [formGroup]="mallaAcademicaForm">
+    <div class="flex flex-col" *ngIf="cantRegistros > 0; else noData">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th class=" px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                    <p>Acciones</p>
+                  </th>
+                  <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                    Nivel</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr *ngFor="let item of dataMalla; let i = index">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <mat-icon class="text-red-600 mr-2" (click)="eliminarNivel(item.idNivel)">delete</mat-icon>
+                    <mat-icon class="text-blue-800 mr-2" (click)="editarNivel(item)">edit</mat-icon>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ item.descripcion }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  
+   <!---PAGINACIÓN-->
+
+   <div class="flex my-3 pr-7 pl-7">
+    <div class="flex-1 ms-2">
+      <select
+        class="p-1 rounded border-2 border-solid border-slate-300"
+        formControlName="limit"
+      >
+        @for (item of limitsOptions; track item) {
+        <option [value]="item.value">{{ item.label }}</option>
+        }
+      </select>
+    </div>
+    <div class="grid justify-end">
+      <nav>
+        <ul class="flex inline-flex">
+          <li>
+            <span>Página: <input class="w-8 p-1 text-center justify-center rounded-full bg-sky-200 mx-1" type="number" (change)="goToPage($event)" value="{{page}}"> de {{paginateCurrent.length}}</span>
+          </li>
+          <li>
+            <a
+              class="mx-1 flex h-8 w-8 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out"
+              [ngClass]="{
+                  'cursor-pointer hover:border-gray-400 hover:bg-light-300': pagination.buttonLeft,
+                  'opacity-50 cursor-default': !pagination.buttonLeft,
+                }"
+              (click)="prevPage()"
+            >
+              <span class="material-icons text-base">keyboard_arrow_left</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="mx-1 flex h-8 w-8 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+              (click)="nextPage()"
+              [ngClass]="{
+                'cursor-pointer hover:border-gray-400 hover:bg-light-300':
+                  pagination.buttonRight,
+                'opacity-50 cursor-default': !pagination.buttonRight
+              }"
+            >
+              <span class="material-icons text-base">keyboard_arrow_right</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  </div>
+
+  
+  <ng-template #noData>
+    <div class="h-24 bg-gray-200 p-7">
+      <div class="text-center text-xl">No hay datos disponibles.</div>
+    </div>
+  </ng-template>

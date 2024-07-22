@@ -16,6 +16,7 @@ export interface editVideoLearn {
 export interface addQuestionsVideolearn {
     idVideoLearn: number;
     pregunta: string;
+    minutoVideo:number;
     opcionesRespuestas: opcionesRespuestas[];
 }
 
@@ -27,6 +28,7 @@ export interface opcionesRespuestas{
 export interface editQuestionsVideolearn {
     idVideoLearn: number;
     pregunta: string;
+    minutoVideo:number;
     opcionesRespuestas: opcionesRespuestas[];
     idPregunta: number;
 }
@@ -63,13 +65,18 @@ export interface Preguntas{
     pregunta: string;
     tipoPregunta: string;
     fechaCreacion: string;
+    minutoVideo: number;
     opcionesRespuestas: opcionesRespuestas[];
 }
 
+// export interface GetQuestionsQuery{
+//     idVideoLearn: number;
+//     pages: number;
+//     limit: number;
+//     pregunta: string;
+// }
 export interface GetQuestionsQuery{
     idVideoLearn: number;
-    pages: number;
-    limit: number;
     pregunta: string;
 }
 
@@ -78,12 +85,14 @@ export interface obtenerPreguntasRespuestas{
     pregunta: string;
     tipoPregunta: string;
     fechaCreacion: string;
+    minutoVideo: number;
     opcionesRespuestas: opcionesRespuestas[];
 }
 
 export interface getQuestionVideolearn{
     idVideoLearn: number;
     pregunta: string;
+    minutoVideo:number;
     opcionesRespuestas: opcionesRespuestas[];
     idPregunta: number;
 }

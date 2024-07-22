@@ -114,13 +114,18 @@ export class UserReportTableComponent implements OnInit, OnChanges {
     this.page = this.users.get('page')?.value;
   }
 
-  changePage(newPage: number) {
-    if (newPage !== this.page) {
-      console.log('PASO');
-      this.page = newPage;
+  goToPage(event: Event) {
+    const target = event.target as HTMLInputElement;
+    let page = parseInt(target.value, 10);
+    if (!isNaN(page) && page >= 1 && page <= this.paginateCurrent.length) {
+      this.page = page;
+      this.listaUsuarios();
+    } else {
+      target.value = this.page.toString();
       this.listaUsuarios();
     }
   }
+ 
  
 
   listaUsuarios() {
@@ -194,161 +199,6 @@ export class UserReportTableComponent implements OnInit, OnChanges {
     }
   }
 
-  
-  // @Input() loadTable: boolean = false;
-  // @Output() loadedTableEmitter = new EventEmitter<boolean>();
-  // @Input() searchData: any;
-
-  // data: any[] = [];
-  // itemsPerPage: number = 5;
-  // totalPages: number = 1;
-  // dataUserForm!: FormGroup;
-  // nombresCompletossCompletos: string = '';
-
-  // limitsOptions = [
-  //   {
-  //     label: '5 Elementos',
-  //     value: 5,
-  //   },
-  //   {
-  //     label: '10 Elementos',
-  //     value: 10,
-  //   },
-  //   {
-  //     label: '15 Elementos',
-  //     value: 15,
-  //   },
-  // ];
-
-  // public page!: number;
-  // public limit: number = 5;
-  // public paginateCurrent: number[] = [];
-
-  // constructor(
-  //   private reportService: ReportsService,
-  //   @Inject(FormBuilder) private formBuilder: FormBuilder
-  // ) {}
-
-  // ngOnInit() {
-  //   this.builderForm();
-  //   this.dataUserForm.valueChanges.subscribe({
-  //     next: (res) => {
-  //       if (res?.limit) {
-  //         this.limit = Number(res?.limit);
-  //       }
-  //       if (res?.page) {
-  //         this.page = Number(res?.page);
-  //       }
-  //       this.listaUsuarios();
-  //     },
-  //   });
-  //   this.listaUsuarios();
-  // }
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes['searchData']) {
-  //     this.nombresCompletossCompletos = this.searchData?.question;
-  //     this.listaUsuarios();
-  //   }
-  //   if (changes['loadTable']) {
-  //     if (this.loadTable) {
-  //       this.listaUsuarios();
-  //     }
-  //   }
-  // }
-  // pagination = {
-  //   buttonLeft: true,
-  //   buttonRight: true,
-  // };
-
-  // builderForm() {
-  //   this.dataUserForm = this.formBuilder.group({
-  //     limit: [5],
-  //     page: [1],
-  //   });
-  //   this.limit = this.dataUserForm.get('limit')?.value;
-  //   this.page = this.dataUserForm.get('page')?.value;
-  // }
-
-  // changePage(newPage: number) {
-  //   if (newPage !== this.page) {
-  //     console.log('PASO');
-  //     this.page = newPage;
-  //     this.listaUsuarios();
-  //   }
-  // }
-
-  // listaUsuarios() {
-  //   const paginate: userDataGetQuery = {
-  //     pages: this.page,
-  //     limit: this.limit,
-  //     nombresCompletossCompletos: this.nombresCompletossCompletos,
-  //   };
-
-  //   this.reportService.getDataUsuarios(paginate).subscribe({
-  //     next: (res: any) => {
-  //       console.log('Preguntas Data', res.data);
-  //       this.data = res.data ?? [];
-  //       if (this.data.length > 0) {
-  //         // this.idSimulador = res.data.idPregunta;
-  //         this.nombresCompletossCompletos = res.data.nombresCompletossCompletos;
-  //         this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
-  //       }
-  //       if (this.data?.length === 0 || !this.data) {
-  //         this.paginateCurrent = [1];
-  //       }
-  //     },
-  //     complete: () => {
-  //       this.loadedTableEmitter.emit(false);
-  //     },
-  //   });
-  // }
-
-  // crearArreglo(limite: number, cant: number) {
-  //   const rest = cant / limite;
-  //   const elementos = Math.floor(rest);
-  //   const arreglo = [];
-  //   const more = rest - elementos;
-  //   for (let i = 1; i <= elementos; i++) {
-  //     arreglo.push(i);
-
-  //     if (more > 0 && elementos === i) {
-  //       arreglo.push(i + 1);
-  //     }
-  //     this.pagination.buttonLeft = true;
-  //     this.pagination.buttonRight = true;
-  //   }
-
-  //   if (elementos > 0) {
-  //     if (arreglo?.length === this.page) {
-  //       this.pagination.buttonRight = false;
-  //     }
-  //     if (1 === this.page) {
-  //       this.pagination.buttonLeft = false;
-  //     }
-  //   }
-
-  //   if (elementos === 0) {
-  //     this.pagination.buttonLeft = false;
-  //     this.pagination.buttonRight = false;
-  //     arreglo.push(1);
-  //   }
-  //   return arreglo;
-  // }
-
-  // prevPage() {
-  //   if (this.pagination.buttonLeft) {
-  //     const leftButton = this.dataUserForm.get('page')?.value;
-  //     this.dataUserForm.get('page')?.setValue(leftButton - 1);
-  //   }
-  // }
-
-  // nextPage() {
-  //   if (this.pagination.buttonRight) {
-  //     const rightButton = this.dataUserForm.get('page')?.value;
-  //     this.dataUserForm.get('page')?.setValue(rightButton + 1);
-  //   }
-  // }
 
   generarPdf() {
     const doc = new jsPDF();
@@ -368,7 +218,7 @@ export class UserReportTableComponent implements OnInit, OnChanges {
     const headers = [
       [
         {
-          content: 'nombresCompletos Completos',
+          content: 'Nombres Completos',
           styles: { halign: 'center' as HAlignType },
         },
         { content: 'Cédula', styles: { halign: 'center' as HAlignType } },
@@ -383,7 +233,7 @@ export class UserReportTableComponent implements OnInit, OnChanges {
     ];
 
     const data = this.data.map((usuario: any) => [
-      usuario.nombresCompletossCompletos,
+      usuario.nombresCompletos,
       usuario.cedula,
       usuario.correo,
       usuario.telefono,

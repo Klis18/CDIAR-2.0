@@ -35,8 +35,8 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
   }
 
   getFoto(){
-    if(this.foto == null){
-      return "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
+    if(this.foto == ''){
+      return "assets/images/usuario.png";
     }else{
       return this.foto;
     }

@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class SimulatorsReportsComponent {
   searchInfo: any;
+
   emitSearch(res: any) {
     if (res) {
       this.searchInfo = res;
@@ -15,9 +16,9 @@ export class SimulatorsReportsComponent {
 
   reloadTable: boolean = false;
 
-  loadTable() {
-    this.reloadTable = true;
-  }
+  // loadTable() {
+  //   this.reloadTable = true;
+  // }
 
   loadedTale() {
     this.reloadTable = false;

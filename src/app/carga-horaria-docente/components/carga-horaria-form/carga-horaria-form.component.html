@@ -1,0 +1,61 @@
+<mat-dialog-content>
+    <div class="mb-2">
+      <span class="text-2xl text-black mr-2">Agregar Carga Horaria</span>
+      <button type="button" [disabled]="!cargaHorariaEmitter" (click)="agregarCargaLista()" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800">
+        <span class="flex items-center justify-center">
+          <mat-icon>add</mat-icon>
+          Agregar
+        </span>
+      </button>
+    </div>
+    <hr />
+      <div class="pr-7 pl-7">
+        <form [formGroup]="cargaGroupForm">
+          <div class="grid grid-cols-10 gap-4 mt-5">
+            <div class="col-span-4">
+              <label
+                for="diaSemana"
+                class="block text-sm font-medium leading-6 text-gray-900"
+                >Día semana</label
+              >
+              <ng-select
+                    [items]="diasSemana"
+                    bindLabel="label"
+                    bindValue="value"
+                    [searchable]="false"
+                    placeholder="Día semana"
+                    formControlName="diaSemana"
+                    notFoundText="No hay Días"
+                    class="ng-custom"
+                >
+                </ng-select>
+            </div>
+  
+            <div class="col-span-3">
+                <label for="horaDesde" class="block mb-2 text-sm font-medium text-gray-900">Hora desde:</label>
+                <div class="relative">
+                    <input type="time" id="horaDesde" formControlName="horaDesde" class="bg-white border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" min="07:00" max="23:00" value="00:00" required />
+                </div>
+            </div>
+
+            <div class="col-span-3">
+              <label for="horaHasta" class="block mb-2 text-sm font-medium text-gray-900">Hora hasta:</label>
+              <div class="relative">
+                  <input type="time" id="horaHasta" formControlName="horaHasta" class="bg-white border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" min="07:00" max="23:00" value="00:00" required />
+              </div>
+            </div>
+
+            <div class="col-span-10">
+              <label for="actividad" class="block mb-2 text-sm font-medium text-gray-900">Actividad:</label>
+              <div class="relative">
+                  <input type="text" id="actividad" formControlName="actividad" class="bg-white border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Actividad"/>
+              </div>
+          </div>
+          </div>
+        </form>
+        <div class="mt-2" *ngIf="cargaDia.length > 0">
+          <carga-pre-table [cargaHorariaDoc]="cargaDia" (cargaAdd)="recibirDatos($event)"/>
+        </div>
+      </div>
+    </mat-dialog-content>
+    

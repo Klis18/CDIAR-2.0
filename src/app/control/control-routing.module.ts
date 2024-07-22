@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AprobarDocentesComponent } from './pages/aprobar-docentes/aprobar-docentes.component';
 import { AsignarRevisorComponent } from './pages/asignar-revisor/asignar-revisor.component';
 import { CargaHorariaComponent } from './pages/carga-horaria/carga-horaria.component';
+import { MallaAcademicaComponent } from './pages/malla-academica/malla-academica.component';
 
 const routes: Routes = [
  
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path:'carga-horaria',
         component: CargaHorariaComponent
+      },
+      {
+        path:'malla-academica',
+        component: MallaAcademicaComponent
       }
 ];
 

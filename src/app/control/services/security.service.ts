@@ -9,6 +9,7 @@ import {
 import { DocenteAprobacion } from '../interfaces/docente-aprobacion.interface';
 import {AsignaDocenteRevisorMazo, AsignaDocenteRevisorRecurso, AsignaDocenteRevisorSimulador, AsignaDocenteRevisorVideoLearn, ListaDocenteRevisor, RevisorGetQuery } from '../interfaces/asignDocente.interface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
+import { mallaAcademica, addAsignatura, updateAsignatura, addNivel, updateNivel, mallaAcademicaGetQuerys, mallaAcademicaNivelesGetQuerys, mallaAcademicaNiveles } from '../interfaces/malla-academica.interface';
 
 
 @Injectable({
@@ -96,6 +97,96 @@ export class SecurityService {
       headers: this.headers,
     });
   }
+
+
+  //-------------------MALLA ACADÉMICA-------------------
+
+    listaMallaAcademica({
+      pages,
+      limit,
+      idNivel,
+      idAsignatura
+    }: mallaAcademicaGetQuerys) {
+      if (!pages) pages = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${pages}&limit=${limit}`;
+  
+  
+    if (idNivel && idNivel !== 0)
+      query += `&idNivel=${idNivel}`;
+    if (idAsignatura && idAsignatura !== 0)
+      query += `&idAsignatura=${idAsignatura}`;
+
+      return this.http.get<mallaAcademica>(`mallaacademica${query}`, {
+        headers: this.headers,
+      });
+    }
+
+
+    listaMallaAcademicaNiveles({
+      idNivel,
+    }: mallaAcademicaNivelesGetQuerys) {
+    //   if (!pages) pages = 1;
+    // if (!limit) limit = 5;
+    // let query: string = `?pages=${pages}&limit=${limit}`;
+    let query: string = `?`;
+    if (idNivel && idNivel !== 0)
+      query += `&idNivel=${idNivel}`;
+
+      return this.http.get<mallaAcademicaNiveles>(`mallaacademica/niveles${query}`, {
+        headers: this.headers,
+      });
+    }
+
+    addAsignatura(asignatura: addAsignatura) {
+      return this.http.post<addAsignatura>('mallaacademica/crearMateria', asignatura, {
+        headers: this.headers,
+      });
+    }
+
+    updateAsignatura(asignatura: updateAsignatura) {
+      return this.http.put<updateAsignatura>('mallaacademica/editarMateria', asignatura, {
+        headers: this.headers,
+      });
+    }
+
+    deleteAsignatura(idAsignatura: number) {
+      return this.http.delete(`mallaacademica/eliminarMateria/${idAsignatura}`, {
+        headers: this.headers,
+      });
+    }
+
+    addNivel(nivel: addNivel) {
+      return this.http.post<addNivel>('mallaacademica/crearNivel', nivel, {
+        headers: this.headers,
+      });
+    }
+
+    getNivel(idNivel: number) {
+      return this.http.get<updateNivel>(`mallaacademica/niveles/${idNivel}`, {
+        headers: this.headers,
+      });
+    }
+
+    getAsignatura(idAsignatura: number) {
+      return this.http.get<updateAsignatura>(`mallaacademica/asignaturas/${idAsignatura}`, {
+        headers: this.headers,
+      });
+    }
+
+    updateNivel(nivel: updateNivel) {
+      return this.http.put<updateNivel>('mallaacademica/editarNivel', nivel, {
+        headers: this.headers,
+      });
+    }
+
+    deleteNivel(idNivel: number) {
+      return this.http.delete(`mallaacademica/eliminarNivel/${idNivel}`, {
+        headers: this.headers,
+      });
+    }
+
+  //---------------------FIN MALLA ACADÉMICA--------------------------------
 }
 
 

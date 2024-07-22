@@ -122,13 +122,19 @@ export class CardsVideolearnsComponent {
     this.page = this.videolearns.get('page')?.value;
   }
 
-  changePage(newPage: number) {
-    if (newPage !== this.page) {
-      console.log('PASO');
-      this.page = newPage;
+  goToPage(event: Event) {
+    const target = event.target as HTMLInputElement;
+    let page = parseInt(target.value, 10);
+    if (!isNaN(page) && page >= 1 && page <= this.paginateCurrent.length) {
+      this.page = page;
+      this.listaVideoLearns();
+    } else {
+      target.value = this.page.toString();
       this.listaVideoLearns();
     }
   }
+ 
+
   public userRol!: string;
   getDataMenu() {
     this.homeService.obtenerDatosMenu().subscribe((user) => {
@@ -367,12 +373,12 @@ export class CardsVideolearnsComponent {
   }
 
   redirigirPreguntas(item: ListVideolearn) {
-    this.router.navigate(['/learn/preguntas-videolearn',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
+    this.router.navigate(['/learn/video-player',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
   }
 
   redirigirIniciarVideoLearn(item: ListVideolearn) {
     this.saveVideoLearnStarted(item.idVideoLearn);
-    this.router.navigate(['/learn/iniciar-videolearn',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
+    this.router.navigate(['/learn/preguntas-video',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
   }
 
   

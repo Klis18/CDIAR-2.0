@@ -15,6 +15,13 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SelectRevisorComponent } from './components/select-revisor/select-revisor.component';
 import { SimulatorsModule } from '../simulators/simulators.module';
+import { MallaAcademicaComponent } from './pages/malla-academica/malla-academica.component';
+import { AddMallaAcademicaComponent } from './components/add-malla-academica/add-malla-academica.component';
+import { ListAsignaturasComponent } from './components/list-asignaturas/list-asignaturas.component';
+import { ListNivelesComponent } from './components/list-niveles/list-niveles.component';
+import { MallaAcademicaFormComponent } from './components/malla-academica-form/malla-academica-form.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { EditMallaAcademicaComponent } from './components/edit-malla-academica/edit-malla-academica.component';
 
 
 @NgModule({
@@ -25,7 +32,13 @@ import { SimulatorsModule } from '../simulators/simulators.module';
     CargaHorariaComponent,
     ListadoCargaDocenteComponent,
     ListRevisorComponent,
-    SelectRevisorComponent
+    SelectRevisorComponent,
+    MallaAcademicaComponent,
+    AddMallaAcademicaComponent,
+    ListAsignaturasComponent,
+    ListNivelesComponent,
+    MallaAcademicaFormComponent,
+    EditMallaAcademicaComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +48,8 @@ import { SimulatorsModule } from '../simulators/simulators.module';
     LearnModule,
     SharedModule,
     SimulatorsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule
   ],
   exports:[
     ListadoAprobacionDocenteComponent

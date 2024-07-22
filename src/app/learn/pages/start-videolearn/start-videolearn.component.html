@@ -21,7 +21,7 @@
     <li>
       <div class="flex items-center">
         <mat-icon>keyboard_arrow_right</mat-icon>
-        <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">{{nombreVideolearn}}</a>
+        <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">{{nombreVideoLearn}}</a>
       </div>
     </li>
   </ol>
@@ -29,63 +29,40 @@
   
     
     <div class="m-7 mt-5 mb-5">
-      <span class="text-3xl">{{nombreVideolearn}}</span>
+      <span class="text-3xl">{{nombreVideoLearn}}</span>
     </div>
 
-      <div class="m-7 mt-2 h-full background-view rounded-lg p-9">
-        <!-- <div class="text-2xl block font-medium text-center text-gray-700 rounded-lg pt-5 pb-9 md:mr-48 md:ml-48 sm:mr-7 sm:ml-7">
-            <div class='bg-cyan-500 h-4.2 rounded-3xl text-sm text-white' style='width: 90%'>{{preguntaActualIndex + 1}}/{{preguntasVideolearn.length}}</div>
-        </div> -->
-        
-        <div *ngIf="preguntaActualIndex < preguntasVideolearn.length">
-            <div class="text-2xl block font-medium text-center text-gray-700 rounded-lg pt-5 pb-9 md:mr-48 md:ml-48 sm:mr-7 sm:ml-7">
-                <div class='bg-cyan-500 h-4.2 rounded-3xl text-sm text-white' [style.width]="(preguntaActualIndex+1)*10+'%'">{{preguntaActualIndex + 1}}/{{preguntasVideolearn.length}}</div>
-            </div>
-          <div class="text-2xl block font-medium text-center bg-white text-gray-700 border border-gray-200 rounded-lg shadow p-7 md:mr-48 md:ml-48 sm:mr-7 sm:ml-7">
-            {{ preguntasVideolearn[preguntaActualIndex].pregunta }}
-          </div>
-          
-    
-            <div class="text-xl mt-5 block bg-white font-medium text-left text-gray-700 border border-gray-200 rounded-lg shadow p-7 md:mr-48 md:ml-48 sm:mr-7 sm:ml-7">
-                <div  class="pb-5">
-                    <div *ngFor="let opcion of preguntasVideolearn[preguntaActualIndex].opcionesRespuestas; let i = index">
-                        <label *ngIf="preguntasVideolearn[preguntaActualIndex].tipoPregunta === 'Opcion Simple'">
-                        <input type="radio" name="opcion" [value]="i" (click)="respuestaSeleccionada = i">
-                        {{ opcion.respuesta }}
-                        </label>
-                        <!-- <label *ngIf="preguntasVideolearn[preguntaActualIndex].tipoPregunta === 'Opcion Multiple'">
-                          <input type="checkbox" [checked]="respuestasUsuario[preguntaActualIndex][i]" 
-                                 (change)="toggleRespuesta(i)">
-                          {{ opcion.respuesta }}
-                        </label> -->
-                    </div>
-                </div> 
-           
-            </div>
-            <div class="text-right md:mr-48 md:ml-48 sm:mr-7 mt-5">
-                <button type="button"(click)="siguientePregunta()" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-900 rounded-lg hover:bg-blue-800">
-                    {{ preguntaActualIndex < preguntasVideolearn.length - 1 ? 'Siguiente' : 'Finalizar'}}
-                    <mat-icon>arrow_forward</mat-icon>
-                </button>
-            </div>
-           
-        </div>
-
-        <div *ngIf="preguntaActualIndex >= preguntasVideolearn.length" class="bg-white h-full flex flex-col items-center justify-center">
-            <img src="/assets/images/testComplete.png" class="h-60 w-50 pt-2"> 
-            <p class="text-xl" *ngIf="preguntaActualIndex >= preguntasVideolearn.length">¡Has completado todas las preguntas!</p>
-            <p class="text-2xl">Puntaje total: {{ puntaje }}/{{preguntasVideolearn.length}}</p>
-            <div class="text-right md:mr-48 md:ml-48 sm:mr-7 mt-5 mb-5">
-                <button type="button" *ngIf="preguntaActualIndex >= preguntasVideolearn.length" routerLink="/learn/videolearns" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 mr-2">
-                    <mat-icon>arrow_back</mat-icon>
-                    Volver a videolearns
-                </button>
-                <button type="button" *ngIf="preguntaActualIndex >= preguntasVideolearn.length" (click)="reiniciar()"class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-900 rounded-lg hover:bg-blue-800">
-                    <mat-icon>autorenew</mat-icon>
-                    Reintentar
-                </button>
-            </div>
-          </div>
+    <div class="m-7 mt-2 h-full background-view rounded-lg p-9"> 
+      <div class="flex flex-wrap" *ngIf="canDoVideoLearn()">
+        <div class="sm:w-full md:2/4 lg:w-3/4 pr-5">
+          <div id="youtube-player" class="w-full h-96"></div>
+          <div
+      class="relative grid select-none items-center whitespace-nowrap rounded-xs bg-sky-700 py-3 px-5 font-sans text-xs font-bold uppercase text-white">
+      <div class="absolute top-2/4 left-1.5 h-5 w-5 -translate-y-2/4">
+        <mat-icon class="pr-5">access_time</mat-icon>
       </div>
-    
-     
+      <span class="ml-[12px]">Tiempo restante: {{tiempoRestante | secondsToMinute}}</span>
+    </div>
+        </div>
+        <div class="sm:w-full md:2/4 lg:w-1/4 p-4 bg-cyan-600 overflow-y-scroll h-96">
+          <app-question-list [idVideoLearn]="idVideoLearn"></app-question-list>
+        </div>
+        
+      </div>
+
+      <div *ngIf="this.currentMinute >= this.videoDurationEnd" class="bg-white h-full flex flex-col items-center justify-center">
+        <img src="/assets/images/testComplete.png" class="h-60 w-50 pt-2"> 
+        <p class="text-xl">¡Has completado todas las preguntas!</p>
+        <p class="text-2xl">Puntaje total: {{ calificacion }}/{{cantidadPreguntas}}</p>
+        <div class="text-right md:mr-48 md:ml-48 sm:mr-7 mt-5 mb-5">
+            <button type="button" routerLink="/learn/videolearns" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 mr-2">
+                <mat-icon>arrow_back</mat-icon>
+                Volver a videolearns
+            </button>
+            <button type="button" (click)="reiniciar()"class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-900 rounded-lg hover:bg-blue-800">
+                <mat-icon>autorenew</mat-icon>
+                Reintentar
+            </button>
+        </div>
+      </div>
+    </div>

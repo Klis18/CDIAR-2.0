@@ -13,6 +13,7 @@ export class AddQuestionsVideolearnComponent {
   validForm: boolean = false;
   // asignaturas: { label: string; value: string }[] = [];
   idVideoLearn: number = this.data.id;
+  minutoVideo: number = this.data.minutos;
   constructor(
     private videolearnService: VideolearnService,
     private dialogRef: MatDialogRef<AddQuestionsVideolearnComponent>,
@@ -28,8 +29,10 @@ export class AddQuestionsVideolearnComponent {
       idVideoLearn: this.idVideoLearn,
       pregunta: this.datosVideoLearn.pregunta, 
       opcionesRespuestas: this.datosVideoLearn.opcionesRespuestas,
+      minutoVideo: this.minutoVideo,
     };
 
+    console.log('Pregunta VideoLearn a guardar', videolearn);
 
     this.videolearnService.addVideolearnQuestions(videolearn).subscribe((res) => {
       this.CloseModal(res.statusCode.toString());

@@ -45,6 +45,7 @@ export class EditQuestionVideolearnComponent {
       idVideoLearn: Number(this.data.idVideoLearn),
       idPregunta: this.data.idPregunta,
       pregunta: this.datosVideoLearn.pregunta, 
+      minutoVideo: this.datosVideoLearn.minutoVideo,
       opcionesRespuestas: this.datosVideoLearn.opcionesRespuestas,
     };
 

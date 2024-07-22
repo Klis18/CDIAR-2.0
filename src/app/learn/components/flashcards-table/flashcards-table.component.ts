@@ -5,7 +5,16 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'flashcards-table',
   templateUrl: './flashcards-table.component.html',
-  styles: ``
+  styles: `
+    td.acciones{
+      width: 10px;
+    }
+    td{
+      max-width: 70px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  `
 })
 export class FlashcardsTableComponent implements OnInit,OnChanges{
 

@@ -80,22 +80,35 @@ export class VideolearnService {
     });
   }
 
+  // getQuestionsVideolearn({
+  //   pages,
+  //   limit,
+  //   idVideoLearn,
+  //   pregunta
+  // }: GetQuestionsQuery) {
+  //   if (!pages) pages = 1;
+  //   if (!limit) limit = 5;
+  //   let query: string = `?pages=${pages}&limit=${limit}`;
+
+  //   if (idVideoLearn) query += `&idVideoLearn=${idVideoLearn}`;
+    
+  //   if (pregunta && pregunta !== '')
+  //     query += `&pregunta=${pregunta}`;
+   
+
+  //   return this.http.get<obtenerPreguntasRespuestas>(`videolearn/obtenerPreguntasRespuestaVideoLearn${query}`, {
+  //     headers: this.headers,
+  //   });
+  // }
+
   getQuestionsVideolearn({
-    pages,
-    limit,
     idVideoLearn,
     pregunta
   }: GetQuestionsQuery) {
-    if (!pages) pages = 1;
-    if (!limit) limit = 5;
-    let query: string = `?pages=${pages}&limit=${limit}`;
-
-    if (idVideoLearn) query += `&idVideoLearn=${idVideoLearn}`;
-    
+    let query: string = `?idVideoLearn=${idVideoLearn}`;
     if (pregunta && pregunta !== '')
       query += `&pregunta=${pregunta}`;
-   
-
+  
     return this.http.get<obtenerPreguntasRespuestas>(`videolearn/obtenerPreguntasRespuestaVideoLearn${query}`, {
       headers: this.headers,
     });
