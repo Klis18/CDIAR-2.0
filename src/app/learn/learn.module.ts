@@ -42,6 +42,10 @@ import { RealizedVideolearnsComponent } from './components/realized-videolearns/
 import { GenerateMazoComponent } from './components/generate-mazo/generate-mazo.component';
 import { VideoPlayerComponent } from './pages/video-player/video-player.component';
 import { QuestionFormComponent } from './pages/question-form/question-form.component';
+import { QuestionListComponent } from './pages/question-list/question-list.component';
+import { QuestionService } from './services/question.service';
+import { SecondsToMinutePipe } from './pipe/seconds-to-minute.pipe';
+import { VideolearnShowQuestionComponent } from './components/videolearn-show-question/videolearn-show-question.component';
 
 
 @NgModule({
@@ -80,7 +84,10 @@ import { QuestionFormComponent } from './pages/question-form/question-form.compo
     RealizedVideolearnsComponent,
     GenerateMazoComponent,
     VideoPlayerComponent,
-    QuestionFormComponent
+    QuestionFormComponent,
+    QuestionListComponent,
+    SecondsToMinutePipe,
+    VideolearnShowQuestionComponent
   ],
   imports: [
     CommonModule,
@@ -96,7 +103,7 @@ import { QuestionFormComponent } from './pages/question-form/question-form.compo
     CardsFlashcardsComponent,
     CardsVideolearnsComponent
   ],
-  providers: [FlashcardsComponent, VideolearnComponent]
+  providers: [FlashcardsComponent, VideolearnComponent, QuestionService]
 
 })
 export class LearnModule { }

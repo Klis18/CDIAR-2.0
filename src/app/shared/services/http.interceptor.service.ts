@@ -71,7 +71,7 @@ export class HttpInterceptorService implements HttpInterceptor {
                 // Código de estado 404 (Not Found)
                 // Ejemplo: Mostrar un mensaje de "recurso no encontrado" al usuario
                 if(message != null){
-                  this.openDialog('triste', 'Lo sentimos, no pudimos encontrar el recurso solicitado');
+                  console.log('No se encontró el recurso solicitado');
                 }
                 break;
               case 500:

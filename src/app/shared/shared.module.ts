@@ -17,6 +17,7 @@ import { ObservacionRechazoComponent } from './pages/observacion-rechazo/observa
 // import { NgxEditorComponent, NgxEditorModule } from 'ngx-editor';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { SpinnerGenerateComponent } from './components/spinner-generate/spinner-generate.component';
+import { SignatureFiltersComponent } from './pages/signature-filters/signature-filters.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { SpinnerGenerateComponent } from './components/spinner-generate/spinner-
     QuestionFilterComponent,
     ObservacionRechazoComponent,
     SpinnerGenerateComponent,
+    SignatureFiltersComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +51,7 @@ import { SpinnerGenerateComponent } from './components/spinner-generate/spinner-
     SearchFiltersComponent,
     QuestionFilterComponent,
     SpinnerGenerateComponent,
+    SignatureFiltersComponent,
   ]
 })
 export class SharedModule { }

@@ -355,13 +355,18 @@ export class ResourcesCardsComponent {
     }
   }
 
-  changePage(newPage: number) {
-    if (newPage !== this.page) {
-      this.resourceTable.get('page')?.setValue(newPage);
-      this.page = newPage;
+  goToPage(event: Event) {
+    const target = event.target as HTMLInputElement;
+    let page = parseInt(target.value, 10);
+    if (!isNaN(page) && page >= 1 && page <= this.paginateCurrent.length) {
+      this.page = page;
+      this.listaRecursos();
+    } else {
+      target.value = this.page.toString();
       this.listaRecursos();
     }
   }
+ 
 
   getIcon(tipoRecurso: string) {
     switch (tipoRecurso) {

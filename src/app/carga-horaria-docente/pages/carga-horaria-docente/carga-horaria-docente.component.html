@@ -1,0 +1,46 @@
+<nav class="flex bg-gray-200 pt-2 pb-2" aria-label="Breadcrumb">
+    <ol class="inline-flex ml-5 items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+      <li class="inline-flex items-center">
+        <a [routerLink]="'/home/landing'" class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-900">
+          <mat-icon class="text-base">home</mat-icon>
+          Inicio
+        </a>
+      </li>
+      <li>
+        <div class="flex items-center">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+          <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Carga Horaria</a>
+        </div>
+    </li>
+    </ol>
+  </nav>
+  
+  <div class="m-7">
+    <div class="flex flex-wrap gap-y-4">
+      <span class="text-3xl">Carga Horaria</span>
+      <button
+        type="button"
+        (click)="openDialog()"
+        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2"
+      >
+        <span class="flex items-center justify-center">
+          <mat-icon>add</mat-icon>
+          Nuevo
+        </span>
+      </button>
+    </div>
+    <div class="mt-12 mb-2">
+      <!-- <search-filters (search)="emitSearch($event)"></search-filters> -->
+    </div>
+  
+    <div
+      class="text-sm font-medium text-center text-gray-700 border-b border-gray-200"
+    >
+      
+    </div>
+    <div class="pt-5 pb-5">
+     <list-carga-horaria (loadedTableEmitter)="loadedTale()"
+     [loadTable]="reloadTable"></list-carga-horaria>
+    </div>
+  </div>
+  

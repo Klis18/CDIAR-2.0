@@ -1,0 +1,89 @@
+<nav class="flex bg-gray-200 pt-2 pb-2" aria-label="Breadcrumb">
+    <ol class="inline-flex ml-5 items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+      <li class="inline-flex items-center">
+        <a [routerLink]="'/home/landing'" class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-900">
+          <mat-icon class="text-base">home</mat-icon>
+          Inicio
+        </a>
+      </li>
+      <li>
+        <div class="flex items-center">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+          <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Control y Seguridad</a>
+        </div>
+      </li>
+      <li>
+        <div class="flex items-center">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+          <a [routerLink]="'/control-security/asignar-revisor/'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Malla Académica</a>
+        </div>
+      </li>
+    </ol>
+  </nav>
+  
+  <div class="m-7">
+    <!-- <div class="mt-5 mb-5">
+      <span class="text-3xl">Malla Académica</span>
+    </div> -->
+    <div class="mt-5 mb-5 flex items-center">
+      <span class="text-3xl">Malla Académica</span>
+      <button type="button" (click)="agregarMalla()" class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg hover:bg-blue-800 text-base px-5 py-2.5 text-center me-2 mb-2">
+        <span class="flex items-center justify-center">
+          <mat-icon>add</mat-icon>
+          Nuevo
+        </span>
+      </button>
+    </div>
+    <div class="mt-10 mb-5">
+        <signature-filters (search)="emitSearch($event)"></signature-filters>
+    </div>
+    <div
+      class="text-sm font-medium text-center text-gray-700 border-b border-gray-200"
+    >
+      <ul class="flex flex-wrap -mb-px">
+        <li class="me-2">
+          <span
+            (click)="selectedTab = 'Niveles'"
+            [ngClass]="{
+              'text-blue-900 active border-b-2 border-blue-900':
+                selectedTab === 'Niveles',
+              'hover:text-gray-600 hover:border-gray-300':
+                selectedTab !== 'Niveles'
+            }"
+            class="inline-block p-4 rounded-t-lg"
+            >Niveles</span
+          >
+        </li>
+        <li class="me-2">
+          <span
+            (click)="selectedTab = 'Asignaturas'"
+            [ngClass]="{
+              'text-blue-900 border-b-2 border-blue-900':
+                selectedTab === 'Asignaturas',
+              'hover:text-gray-600 hover:border-gray-300':
+                selectedTab !== 'Asignaturas'
+            }"
+            class="inline-block p-4 rounded-t-lg"
+            >Asignaturas</span
+          >
+        </li>
+      </ul>
+    </div>
+  
+    <div class="pt-5 pb-5">
+      @switch (selectedTab) { 
+        @case ('Niveles') {
+        <list-niveles [searchData]="searchInfo" (loadedTableEmitter)="loadedTale()"
+            [loadTable]="reloadTable">
+            </list-niveles>
+        } @case ('Asignaturas') {
+            <list-asignaturas [searchData]="searchInfo" (loadedTableEmitter)="loadedTale()"
+            [loadTable]="reloadTable">
+            </list-asignaturas>
+        }
+        @default {
+        } 
+}
+    </div>
+  </div>
+  

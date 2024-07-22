@@ -10,7 +10,6 @@ import { SimulatorsTableComponent } from './components/simulators-table/simulato
 import { UserReportsComponent } from './pages/user-reports/user-reports.component';
 import { UserReportComponent } from './pages/user-report/user-report.component';
 import { SimulatorsReportsComponent } from './pages/simulators-reports/simulators-reports.component';
-import { UserTableComponent } from './components/user-table/user-table.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { UserTableComponent } from './components/user-table/user-table.component
     UserReportComponent,
     UserReportTableComponent,
     SimulatorsReportsComponent,
-    UserTableComponent,
   ],
   imports: [
     CommonModule,

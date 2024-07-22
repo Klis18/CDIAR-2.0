@@ -39,7 +39,9 @@ export class ProfileComponent implements OnInit {
         Validators.required,
         Validators.pattern('.{10}$'),
       ]),
+
     });
+    
 
     this.homeService.obtenerDatosMenu().subscribe((user) => {
       this.userName = user.data.userName;
@@ -57,7 +59,16 @@ export class ProfileComponent implements OnInit {
         email: user.data.email,
         phoneNumber: user.data.phoneNumber,
       });
+
+      if(user.data.foto === ''){
+        this.profilePhoto = "assets/images/usuario.png";
+        return this.profilePhoto;
+      }else{
+        return this.profilePhoto;
+      }
     });
+
+
   }
 
   onFileChange(event: any) {
@@ -109,4 +120,6 @@ export class ProfileComponent implements OnInit {
   cancelar() {
     this.isDisabled = true;
   }
+
+  
 }

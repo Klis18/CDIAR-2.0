@@ -122,13 +122,19 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     this.page = this.simulators.get('page')?.value;
   }
 
-  changePage(newPage: number) {
-    if (newPage !== this.page) {
-      console.log('PASO');
-      this.page = newPage;
+  goToPage(event: Event) {
+    const target = event.target as HTMLInputElement;
+    let page = parseInt(target.value, 10);
+    if (!isNaN(page) && page >= 1 && page <= this.paginateCurrent.length) {
+      this.page = page;
+      this.listaSimuladores();
+    } else {
+      target.value = this.page.toString();
       this.listaSimuladores();
     }
   }
+ 
+
   public userRol!: string;
   getDataMenu() {
     this.homeService.obtenerDatosMenu().subscribe((user) => {

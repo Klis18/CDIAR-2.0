@@ -123,8 +123,6 @@ export class VideolearnQuestionsTableComponent implements OnInit, OnChanges{
   listaPreguntas() {
     const paginate: GetQuestionsQuery = {
       idVideoLearn: this.idVideoLearn,
-      pages: this.page,
-      limit: this.limit,
       pregunta: this.pregunta,
     };
    

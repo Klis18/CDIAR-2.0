@@ -109,13 +109,18 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
     this.page = this.flashCards.get('page')?.value;
   }
 
-  changePage(newPage: number) {
-    if (newPage !== this.page) {
-      console.log('PASO');
-      this.page = newPage;
+  goToPage(event: Event) {
+    const target = event.target as HTMLInputElement;
+    let page = parseInt(target.value, 10);
+    if (!isNaN(page) && page >= 1 && page <= this.paginateCurrent.length) {
+      this.page = page;
+      this.listaPreguntas();
+    } else {
+      target.value = this.page.toString();
       this.listaPreguntas();
     }
   }
+ 
  
 
   listaPreguntas() {
