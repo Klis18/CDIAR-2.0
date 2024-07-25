@@ -6,6 +6,7 @@ import {
   SimuladoresData,
   SimuladoresGetQuery,
 } from '../interfaces/simulator.interface';
+import { VideoLearnsReport, videoLearnsReportGetQuery } from '../interfaces/videolearn.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,7 @@ export class ReportsService {
     idNivel,
     id,
     nombreSimulador,
+    nombreEstudiante,
   }: SimuladoresGetQuery) {
     if (!page) page = 1;
     if (!limit) limit = 10;
@@ -49,7 +51,30 @@ export class ReportsService {
     if (idNivel) query += `&idNivel=${idNivel}`;
     if (id) query += `&id=${id}`;
     if (nombreSimulador) query += `&nombreSimulador=${nombreSimulador}`;
+    if (nombreEstudiante) query += `&nombreEstudiante=${nombreEstudiante}`;
     return this.http.get<SimuladoresData>(`simuladores/reporteSimuladores${query}`, {
+      headers: this.headers,
+    });
+  }
+
+
+  getDataVideoLearns({
+    pages,
+    limit,
+    idAsignatura,
+    idNivel,
+    nombreVideoLearn,
+    nombreEstudiante,
+  }: videoLearnsReportGetQuery) {
+    if (!pages) pages = 1;
+    if (!limit) limit = 10;
+    let query = `?page=${pages}&limit=${limit}`;
+
+    if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
+    if (idNivel) query += `&idNivel=${idNivel}`;
+    if (nombreVideoLearn) query += `&nombreVideoLearn=${nombreVideoLearn}`;
+    if (nombreEstudiante) query += `&nombreEstudiante=${nombreEstudiante}`;
+    return this.http.get<VideoLearnsReport>(`videolearn/reporteVideoLearn${query}`, {
       headers: this.headers,
     });
   }

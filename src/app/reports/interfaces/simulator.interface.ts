@@ -1,5 +1,6 @@
 export interface SimuladoresGetQuery {
   nombreSimulador: string;
+  nombreEstudiante: string;
   id: number;
   idNivel: number;
   idAsignatura: number;

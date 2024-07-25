@@ -4,7 +4,7 @@
   </div>
   <p class="text-2xl mb-2 text-black">Observación de Rechazo</p>
   <hr />
-  <div class="pr-7 pl-7 mt-5">
+  <div class="pr-2 pl-2 md:pr-7 md:pl-7 lg:pr-7 lg:pl-7 mt-5">
     <form [formGroup]="observationForm">
       <div class="grid grid-cols-4 gap-4">
         <div class="col-span-4">
@@ -62,7 +62,7 @@
       <button
       type="button"
       (click)="cancelar()"
-      class="text-white bg-gray-500 hover:bg-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+      class="text-white bg-gray-500 hover:bg-gray-400 font-medium rounded-lg text-sm px-3 py-2 md:text-sm lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center inline-flex items-center me-2 mb-2"
     >
     <mat-icon class="mr-2">cancel</mat-icon>
       <span class="flex items-center justify-center"> Cancelar </span>
@@ -70,7 +70,7 @@
     <button
       type="button"
       (click)="enviarObservacionRechazo()"
-      class="text-white bg-blue-900 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+      class="text-white bg-blue-900 hover:bg-blue-800 font-medium rounded-lg text-sm px-3 py-2 md:text-sm lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center inline-flex items-center me-2 mb-2"
     >
       <mat-icon class="mr-2">save</mat-icon>
       <span class="flex items-center justify-center"> Guardar </span>

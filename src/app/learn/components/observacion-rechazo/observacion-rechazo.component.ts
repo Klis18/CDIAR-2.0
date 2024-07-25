@@ -32,7 +32,6 @@ export class ObservacionRechazoComponent {
 
   ngOnInit(){
     this.createForm(); 
-    console.log('ID MAZO', this.idMazo);
   }
 
 
@@ -64,7 +63,6 @@ export class ObservacionRechazoComponent {
       idEstado: 3
     }
     this.learnService.publicarMazo(estado).subscribe((res) => {
-      console.log('Mazo rechazado', res);
     });
   }
 

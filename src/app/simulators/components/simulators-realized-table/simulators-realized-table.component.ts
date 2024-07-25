@@ -32,15 +32,15 @@ export class SimulatorsRealizedTableComponent {
   usuarioCreador: boolean = true;
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -226,17 +226,10 @@ export class SimulatorsRealizedTableComponent {
     return tab && isAdmin;
   }
 
-  //TODO:
   redirigirPreguntas(item: ListSimulators) {
     this.router.navigate(['/simuladores/preguntas',{id: item.idSimulador, simulador: item.nombreSimulador}]);
   }
 
-  // redirigirEstudiarFlashcards(item: ListMazo) {
-  //   this.learnService.guardarMazoEstudiado(item.idMazo).subscribe((res) => {
-  //     console.log('Mazo guardado', res.data);
-  //     this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
-  //   });
-  // }
 
   redirigirIniciarSimulador(item: ListSimulators) {
     this.router.navigate(['/simuladores/iniciar-simulador',{id: item.idSimulador, simulador: item.nombreSimulador}]);

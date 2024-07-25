@@ -22,6 +22,10 @@ import { ListNivelesComponent } from './components/list-niveles/list-niveles.com
 import { MallaAcademicaFormComponent } from './components/malla-academica-form/malla-academica-form.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EditMallaAcademicaComponent } from './components/edit-malla-academica/edit-malla-academica.component';
+import { ListDocentesComponent } from './components/list-docentes/list-docentes.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ViewCargaHorariaComponent } from './components/view-carga-horaria/view-carga-horaria.component';
+import { CargaHorariaDocenteModule } from '../carga-horaria-docente/carga-horaria-docente.module';
 
 
 @NgModule({
@@ -38,7 +42,9 @@ import { EditMallaAcademicaComponent } from './components/edit-malla-academica/e
     ListAsignaturasComponent,
     ListNivelesComponent,
     MallaAcademicaFormComponent,
-    EditMallaAcademicaComponent
+    EditMallaAcademicaComponent,
+    ListDocentesComponent,
+    ViewCargaHorariaComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +55,8 @@ import { EditMallaAcademicaComponent } from './components/edit-malla-academica/e
     SharedModule,
     SimulatorsModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    CargaHorariaDocenteModule
   ],
   exports:[
     ListadoAprobacionDocenteComponent
@@ -58,6 +65,14 @@ import { EditMallaAcademicaComponent } from './components/edit-malla-academica/e
     {
       provide:AsignarRevisorComponent,
       useClass: AsignarRevisorComponent
+    },
+    {
+      provide: MatDialogRef,
+      useClass: CargaHorariaComponent
+    },
+    {
+      provide: MallaAcademicaComponent,
+      useClass: MallaAcademicaComponent
     }
   ]
 })

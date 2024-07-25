@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModeFormsResources, RecursoEdit } from '../../interfaces/recurso.interface';
 import { RecursoService } from '../../services/recurso.service';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'app-edit-resource',
@@ -21,6 +23,8 @@ export class EditResourceComponent {
 
   constructor(
     private recursoService: RecursoService,
+    private spinnerService: SpinnerService,
+    private dialog: MatDialog,
     public dialogRef: MatDialogRef<EditResourceComponent>,
 
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -52,7 +56,6 @@ export class EditResourceComponent {
   }
 
   saveRecurso() {
-    console.log({ editaDataRecurso: this.editaDataRecurso });
     if (!this.validForm) {
       return;
     }
@@ -80,12 +83,22 @@ export class EditResourceComponent {
       recursosEdit.enlaceDelRecurso = null;
     }
 
-   
+    this.spinnerService.showSpinner();
     
     this.recursoService.editarRecurso(recursosEdit).subscribe((res) => {
+      this.spinnerService.hideSpinner();
       this.cambiarEstado();
-      this.CloseModal('recurso editado');
-    });
+      this.CloseModal('Recurso editado');
+    },
+    (error) => {
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al guardar el recursos, por favor intente de nuevo.'},
+        });
+      });
   }
 
   cambiarEstado(){

@@ -26,6 +26,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ControlModule } from './control/control.module';
 import { AcademicResourcesModule } from './academic-resources/academic-resources.module';
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import { Chart } from 'chart.js';
+import {provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+Chart.register(ChartDataLabels);
 
 registerLocaleData(localeEsEC);
 
@@ -40,7 +45,8 @@ registerLocaleData(localeEsEC);
     ControlModule,
     DocenteModule,
     NgSelectModule,
-    YouTubePlayerModule
+    YouTubePlayerModule,  
+    
   ],
   providers: [
     {
@@ -62,6 +68,7 @@ registerLocaleData(localeEsEC);
     },
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),
+    provideCharts(withDefaultRegisterables()),
   ],
 })
 export class AppModule {}

@@ -53,11 +53,6 @@ export class VideolearnsQuestionsComponent {
     });
     
     
-    // this.videolearnService.viewObservation(this.idVideoLearn).subscribe((res) => {
-    //   console.log(res);
-    //   this.observacionRechazo = res.data.observacion;
-    // });
-    
   }
 
   openDialog() {
@@ -115,7 +110,6 @@ export class VideolearnsQuestionsComponent {
     
     };
     this.videolearnService.changeStatusVideolearn(videolearn).subscribe((res) => {
-      console.log(res);
       this.router.navigate(['/learn/videolearns']);
 
     });

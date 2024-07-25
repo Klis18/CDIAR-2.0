@@ -32,15 +32,15 @@ export class VideolearnQuestionsTableComponent implements OnInit, OnChanges{
  
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -71,8 +71,6 @@ export class VideolearnQuestionsTableComponent implements OnInit, OnChanges{
       },
     });
     this.listaPreguntas();
-    console.log('Preguntas', this.data);
-    console.log('ID', this.idVideoLearn);
 
     this.homeService.obtenerDatosMenu().subscribe((user:any) => {
       this.nombreUsuario = user.data.userName;
@@ -131,7 +129,6 @@ export class VideolearnQuestionsTableComponent implements OnInit, OnChanges{
         console.log('Preguntas Data', res.data);
         this.data = res.data ?? [];
         if (this.data.length > 0) {
-          // this.idSimulador = res.data.idPregunta;
           this.pregunta = res.data.pregunta;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
@@ -209,8 +206,6 @@ export class VideolearnQuestionsTableComponent implements OnInit, OnChanges{
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log('Pregunta a eliminar', idPregunta);
-        console.log('Eliminando pregunta', res);
         this.videolearnService.deleteQuestionVideolearn(idPregunta).subscribe(() => {
           console.log('pregunta de videolearn eliminada');
           this.listaPreguntas();

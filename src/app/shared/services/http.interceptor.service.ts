@@ -6,9 +6,6 @@ import { JsonResponse } from '../interfaces/json-response';
 import { MatDialog } from '@angular/material/dialog';
 import { CardMessageComponent } from '../pages/card-message/card-message.component';
 
-// export interface DialogData {
-//   mensaje?: string;
-// }
 
 @Injectable({
   providedIn: 'root',
@@ -20,11 +17,13 @@ export class HttpInterceptorService implements HttpInterceptor {
 
   openDialog(statusResponse: string, message: string) {
     this.dialog.open(CardMessageComponent, {
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {
         status: statusResponse,
         mensaje: message,
       },
-      width: '30%',
     });
   }
 
@@ -71,7 +70,7 @@ export class HttpInterceptorService implements HttpInterceptor {
                 // Código de estado 404 (Not Found)
                 // Ejemplo: Mostrar un mensaje de "recurso no encontrado" al usuario
                 if(message != null){
-                  console.log('No se encontró el recurso solicitado');
+                  // console.log('No se encontró el recurso solicitado');
                 }
                 break;
               case 500:

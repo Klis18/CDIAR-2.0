@@ -3,13 +3,13 @@
     <li class="inline-flex items-center">
       <a [routerLink]="'/home/landing'" class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-900">
         <mat-icon class="text-base">home</mat-icon>
-        Inicio
+        <span class="hidden md:block md:text-base lg:text-base">Inicio</span> 
       </a>
     </li>
     <li>
       <div class="flex items-center">
         <mat-icon>keyboard_arrow_right</mat-icon>
-        <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Mi Perfil</a>
+        <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Mi Perfil</a>
       </div>
     </li>
   </ol>
@@ -17,12 +17,14 @@
 <!--Modificación de Perfil-->
 <div class="m-7">
   <div class="mt-5 mb-7">
-    <span class="text-3xl">Mi Perfil</span>
+    <span class="text-2xl md:text-3xl lg:text-3xl">Mi Perfil</span>
   </div>
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-    <div class="grid grid-rows-3 grid-flow-col gap-4 m-7">
-      <div class="row-span-6">
-        <img class="w-60 h-60 p-1 rounded-full ring-4 ring-blue-900 dark:ring-blue-900" src="{{profilePhoto}}" [src]="previewPhoto"
+
+
+    <div class="flex flex-col gap-4 m-7">
+      <div class="md:row-span-6 items-center">
+        <img class="w-20 h-20 md:w-60 md:h-60 p-1 rounded-full ring-4 ring-blue-900 dark:ring-blue-900" src="{{profilePhoto}}" [src]="previewPhoto"
           alt="foto-perfil">
         <div *ngIf="!isDisabled" >
           <label for="photo" class="block text-sm font-medium leading-6 text-gray-900">Foto</label>
@@ -40,7 +42,7 @@
           </button>
           <mat-divider></mat-divider>
           <div class="mt-5 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
-            <div class="sm:col-span-1">
+            <div class="col-span-3 md:col-span-1">
               <label for="identity" class="block text-sm font-medium leading-6 text-gray-900">Cédula</label>
               <div class="mt-2">
                 <input type="text" id="identity" formControlName="cedula"
@@ -52,7 +54,7 @@
                 </span>
               </div>
             </div>
-            <div class="sm:col-span-1">
+            <div class="col-span-3 md:col-span-1">
               <label for="user-name" class="block text-sm font-medium leading-6 text-gray-900">Nombres</label>
               <div class="mt-2">
                 <input type="text" id="user-name" formControlName="nombres" [readonly]="isDisabled"
@@ -64,7 +66,7 @@
                 </span>
               </div>
             </div>
-            <div class="sm:col-span-1">
+            <div class="col-span-3 md:col-span-1">
               <label for="user-lastname" class="block text-sm font-medium leading-6 text-gray-900">Apellidos</label>
               <div class="mt-2">
                 <input type="text" id="user-lastname" formControlName="apellidos" [readonly]="isDisabled"
@@ -76,7 +78,7 @@
                 </span>
               </div>
             </div>
-            <div class="sm:col-span-1">
+            <div class="col-span-3 md:col-span-1">
               <label for="role" class="block text-sm font-medium leading-6 text-gray-900">Tipo Usuario</label>
               <div class="mt-2">
                 <input type="text" id="rol" value="{{ rolName }}"
@@ -84,7 +86,7 @@
                   readonly />
               </div>
             </div>
-            <div class="sm:col-span-1">
+            <div class="col-span-3 md:col-span-1">
               <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Correo electrónico</label>
               <div class="mt-2">
                 <input id="email" type="email" formControlName="email" autocomplete="email" [readonly]="isDisabled"
@@ -96,7 +98,7 @@
                 </span>
               </div>
             </div>
-            <div class="sm:col-span-1">
+            <div class="col-span-3 md:col-span-1">
               <label for="phoneNumber" class="block text-sm font-medium leading-6 text-gray-900">Celular</label>
               <div class="mt-2">
                 <input id="phoneNumber" type="text" formControlName="phoneNumber" autocomplete="phoneNumber"
@@ -120,7 +122,6 @@
                 Guardar
               </button>
             </div>
-
             <div class="row-span-3 col-span-3 mt-2">
               <change-password></change-password>
             </div>

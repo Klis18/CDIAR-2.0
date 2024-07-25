@@ -8,10 +8,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { utils, writeFile } from 'xlsx'; // Importa las funciones utils y writeFile
+import { utils, writeFile } from 'xlsx';
 import { ReportsService } from '../../services/reports.service';
-import { SimulatorsReportsComponent } from '../../pages/simulators-reports/simulators-reports.component';
-import { HomeService } from '../../../home/services/home.service';
 import autoTable, { HAlignType } from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import {
@@ -19,13 +17,14 @@ import {
   SimuladoresGetQuery,
 } from '../../interfaces/simulator.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { HomeService } from '../../../home/services/home.service';
 
 @Component({
   selector: 'simulators-table',
   templateUrl: './simulators-table.component.html',
 })
 export class SimulatorsTableComponent implements OnInit, OnChanges {
- 
+  @Input() usuario!: string;
   @Input() searchData: any;
   @Input() loadTable: boolean = false;
   @Output() loadedTableEmitter = new EventEmitter<boolean>();
@@ -42,25 +41,25 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
   public page!: number;
   public limit: number = 5;
   public paginateCurrent: number[] = [];
-  usuario: string = '';
   simulatorForm!: FormGroup;
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
 
   constructor(
     private reportsService: ReportsService,
+    private homeService: HomeService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
   ) {}
   public userRol!: string;
@@ -85,7 +84,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
         this.listaDatosSimuladores();
       },
     });
-    this.listaDatosSimuladores();
+    this.listaDatosSimuladores();   
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -100,6 +99,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
         this.listaDatosSimuladores();
       }
     }
+    
   }
 
   builderForm() {
@@ -131,6 +131,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
       idAsignatura: this.idAsignatura,
       idNivel: this.idNivel,
       nombreSimulador: this.nombreSimulador,
+      nombreEstudiante: this.usuario,
       id: this.id,
     };
     
@@ -259,7 +260,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
           img,
           'PNG',
           10,
-          10, // Posición vertical (arriba)
+          10,
           logoWidth,
           logoHeight
         );

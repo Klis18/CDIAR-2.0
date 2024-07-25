@@ -3,70 +3,35 @@
     <li class="inline-flex items-center">
       <a [routerLink]="'/home/landing'" class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-900">
         <mat-icon class="text-base">home</mat-icon>
-        Inicio
+        <span class="hidden md:block md:text-base lg:text-base">Inicio</span> 
       </a>
     </li>
     <li>
       <div class="flex items-center">
         <mat-icon>keyboard_arrow_right</mat-icon>
-        <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Control y Seguridad</a>
+        <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Control y Seguridad</a>
       </div>
     </li>
     <li>
       <div class="flex items-center">
         <mat-icon>keyboard_arrow_right</mat-icon>
-        <a [routerLink]="'/control-security/carga-horaria/'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Carga Horaria</a>
+        <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Carga Horaria</a>
       </div>
     </li>
   </ol>
 </nav>
-<!-- <form [formGroup]="cargaHorariaForm" (ngSubmit)="onSubmit()">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead>
-        <tr>
-          <th class="px-6 py-3 bg-blue-900 text-left text-xs font-medium text-white uppercase tracking-wider">Acciones
-          </th>
-          <th class="px-6 py-3 bg-blue-900 text-left text-xs font-medium text-white uppercase tracking-wider">Día de la
-            Semana</th>
-          <th class="px-6 py-3 bg-blue-900 text-left text-xs font-medium text-white uppercase tracking-wider">Actividad
-          </th>
-          <th class="px-6 py-3 bg-blue-900 text-left text-xs font-medium text-white uppercase tracking-wider">Hora Desde
-          </th>
-          <th class="px-6 py-3 bg-blue-900 text-left text-xs font-medium text-white uppercase tracking-wider">Hora Hasta
-          </th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200" formArrayName="cargaHoraria">
-        <tr *ngFor="let carga of paginatedData; let i = index" [formGroupName]="i" class="hover:bg-gray-100">
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <button (click)="removeCargaHoraria(i)" class="text-red-500 hover:text-red-700">Eliminar</button>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <select formControlName="diaSemana"
-              class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-              <option *ngFor="let dia of diasSemana" [value]="dia.value">{{ dia.label }}</option>
-            </select>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <input formControlName="actividad" placeholder="actividad"
-              class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <input type="time" formControlName="horaDesde"
-              class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            <input type="time" formControlName="horaHasta"
-              class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="addCargaHoraria()"
-      type="button">
-      Añadir Carga Horaria
-    </button>
-    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">Guardar Cargas
-      Horarias</button>
-  </form> -->
+
+<div class="m-7">
+  <div class="mt-5 mb-5 flex items-center">
+    <span class="text-2xl md:text-3xl lg:text-3xl">Carga Horaria Docentes</span>
+  </div>
+  <div class="mt-10 mb-5">
+      <question-filter (search)="emitSearch($event)"/>
+  </div>
+  <div
+    class="text-sm font-medium text-center text-gray-700 border-b border-gray-200"
+  >
+      <list-docentes [searchData]="searchInfo" (loadedTableEmitter)="loadedTale()"
+      [loadTable]="reloadTable"/>
+  </div>
+</div>

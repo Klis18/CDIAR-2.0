@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddResourceComponent } from '../../../academic-resources/components/add-resource/add-resource.component';
 import { HomeService } from '../../../home/services/home.service';
 import { AddMazoComponent } from '../../components/add-mazo/add-mazo.component';
 import { GenerateMazoComponent } from '../../components/generate-mazo/generate-mazo.component';
@@ -24,7 +23,6 @@ export class FlashcardsComponent implements OnInit{
 
   ngOnInit() {
     this.homeService.obtenerDatosMenu().subscribe((user) => {
-      console.log(user);
       this.usuario = user.data.userName;
       this.rol = user.data.rol;
     });
@@ -48,7 +46,8 @@ export class FlashcardsComponent implements OnInit{
 
   agregarMazo() {
     const dialogRef = this.dialog.open(AddMazoComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
       maxHeight: '80%',
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -60,7 +59,8 @@ export class FlashcardsComponent implements OnInit{
 
   generarMazo(){
     const dialogRef = this.dialog.open(GenerateMazoComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
       maxHeight: '80%',
     });
     dialogRef.afterClosed().subscribe((result) => {

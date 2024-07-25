@@ -17,13 +17,12 @@ import { CargaHorariaDocenteService } from '../../services/carga-horaria-docente
 })
 export class CargaPreTableComponent {
   
-  // @Input() idMazo: number = 0;
   @Input() cargaHorariaDoc: any[] = [];
   @Output() cargaAdd = new EventEmitter<string[]>();
 
   data: any[] = [];
 
-  constructor(private cargaHorariaService: CargaHorariaDocenteService) { }
+  constructor() { }
 
   ngOnInit(){
     this.cargaHorariaDoc;

@@ -1,8 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { VideolearnService } from '../../services/videolearn.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UpdateSimulatorQuestion } from '../../../simulators/interfaces/simulators.interface';
 import { editQuestionsVideolearn } from '../../interfaces/videolearn.interface';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'app-edit-question-videolearn',
@@ -20,19 +22,18 @@ export class EditQuestionVideolearnComponent {
   constructor(
     private videolearnService: VideolearnService,
     private dialogRef: MatDialogRef<EditQuestionVideolearnComponent>,
+    private spinnerService: SpinnerService,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
   ngOnInit(){
     this.getVideolearnQuestion(this.data.idPregunta);
-    console.log('ID PREGUNTA',this.data.idPregunta)
-    console.log('DATOS PREVIO EDICIÓN',this.getVideolearnQuestion(this.data.idPregunta));
   }
 
   getVideolearnQuestion(idPregunta: number) {
     this.videolearnService.getQuestion(idPregunta).subscribe((res) => {
       this.datosVideoLearn = res.data;
-      console.log('DATOS SIMULADOR',this.datosVideoLearn);
     });
   }
 
@@ -49,28 +50,24 @@ export class EditQuestionVideolearnComponent {
       opcionesRespuestas: this.datosVideoLearn.opcionesRespuestas,
     };
 
-    console.log('DATOS A GUARDAR',videolearn);
+    this.spinnerService.showSpinner();
+
     this.videolearnService.updateVideolearnQuestions(videolearn).subscribe((res:any) => {
-      // manejar la respuesta exitosa
-      console.log('Response:', res);
+      this.spinnerService.hideSpinner();
       this.isDisabled = true;
       this.dialogRef.close();
     },
-  );
-  }
+    (error) => {
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al editar pregunta, por favor intente de nuevo.'},
+        });
+      });
 
-  //   this.videolearnService.updateVideolearnQuestions(videolearn).subscribe((res:any) => {
-  //     // manejar la respuesta exitosa
-  //     console.log('Response:', res);
-  //     this.isDisabled = true;
-  //   },
-  //   (error) => {
-  //     // manejar el error
-  //     console.error('Error:', error);
-  //   }
-  //   );
-  //   this.dialogRef.close();
-  // }
+  }
 
   editar() {
     this.isDisabled = !this.isDisabled;

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
 import { EditFlashcardComponent } from '../edit-flashcard/edit-flashcard.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Flashcard, FlashcardsGetQuery } from '../../interfaces/mazo.interface';
+import { FlashcardsGetQuery } from '../../interfaces/mazo.interface';
 import { HomeService } from '../../../home/services/home.service';
 
 @Component({
@@ -32,15 +32,15 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
  
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -213,10 +213,7 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log('Flashcard a eliminar', idFlashcard);
-        console.log('Eliminando flashcard', res);
         this.learnService.deleteFlashcard(idFlashcard).subscribe(() => {
-          console.log('Flashcard eliminada');
           this.listaPreguntas();
         });
       }
@@ -228,8 +225,7 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
       width: '40%',
       data: {id: idFlashcard, isDisabled: true, titulo: 'Editar Flashcard'},
     });
-
-    dialogRef.afterClosed().subscribe((res) => {
+    dialogRef.afterClosed().subscribe(() => {
       this.listaPreguntas();
     });
   }

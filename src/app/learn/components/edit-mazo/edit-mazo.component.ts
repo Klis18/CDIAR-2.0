@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LearnService } from '../../services/learn.service';
 import { EditMazo } from '../../interfaces/mazo.interface';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'app-edit-mazo',
@@ -18,7 +20,8 @@ export class EditMazoComponent implements OnInit{
 
   constructor(private learnService:LearnService,
               private dialogRef: MatDialogRef<EditMazoComponent>,
-
+              private spinnerService: SpinnerService,
+              private dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
@@ -45,12 +48,23 @@ export class EditMazoComponent implements OnInit{
       idAsignatura: this.datosMazo.idAsignatura,
       idMazo: this.datosMazo.idMazo,
     }
-    
+    this.spinnerService.showSpinner();
+
     this.learnService.editMazo(mazoEdit)
     .subscribe((res) => {
-      this.CloseModal(res.statusCode.toString())
-    });
+      this.spinnerService.hideSpinner();
 
+      this.CloseModal(res.statusCode.toString())
+    },
+    (error) => {
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al editar el mazo, por favor intente de nuevo.'},
+        });
+      });
     
   }
 

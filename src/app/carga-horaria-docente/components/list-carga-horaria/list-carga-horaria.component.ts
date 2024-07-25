@@ -4,13 +4,15 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CargaHorariaDocenteService } from '../../services/carga-horaria-docente.service';
 import { MatDialog } from '@angular/material/dialog';
 import { HomeService } from '../../../home/services/home.service';
-import { cargaHoraria, cargaHorariaDocenteDia, listaCargaHoraria } from '../../interfaces/carga-horaria.interface';
+import { cargaHorariaDocenteDia, ListaCargaHorariaDocenteGetQuery} from '../../interfaces/carga-horaria.interface';
+import { EditCargaHorariaComponent } from '../edit-carga-horaria/edit-carga-horaria.component';
 
 @Component({
   selector: 'list-carga-horaria',
   templateUrl: './list-carga-horaria.component.html',
   styles: ``
 })
+
 export class ListCargaHorariaComponent {
   @Input() idMazo: number = 0;
   @Input() loadTable: boolean = false;
@@ -27,18 +29,20 @@ export class ListCargaHorariaComponent {
   itemsPerPage: number = 5;
   totalPages: number = 1;
   cargaHorariaForm!: FormGroup;
+  diaSemana: number = 0;
+  actividad: string = '';
  
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -52,6 +56,7 @@ export class ListCargaHorariaComponent {
               private dialog: MatDialog,
               private homeService: HomeService,
               @Inject(FormBuilder) private formBuilder: FormBuilder,
+              
 
   ) {}
 
@@ -73,18 +78,12 @@ export class ListCargaHorariaComponent {
     this.homeService.obtenerDatosMenu().subscribe((user:any) => {
       this.nombreUsuario = user.data.userName;
     });
-
-    
-    // this.learnService.getDatosMazo(this.idMazo).subscribe((res) => {
-    //   this.usuarioCreador = res.data.usuarioCreador;
-    //   this.docenteRevisor = res.data.nombreRevisor;
-    //   this.estado = res.data.estado;
-    // });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['searchData']) {
-      // this.cargaDia = this.searchData?.question;
+      this.diaSemana = this.searchData?.diasSemana;
+      this.actividad = this.searchData?.actividad;
       this.listaCargaHoraria();
     }
     if (changes['loadTable']) {
@@ -120,16 +119,19 @@ export class ListCargaHorariaComponent {
   }
   
   listaCargaHoraria() {
-    // this.cargaHorariaService.listarCargaHorariaDocente().subscribe((res)=>{
-    //   this.data = res.data ?? [];
-    // });
-
-    this.cargaHorariaService.listarCargaHorariaDocente().subscribe({
+    let paginate: ListaCargaHorariaDocenteGetQuery = {
+      pages: this.page,
+      limit: this.limit,
+      diaSemana: this.diaSemana,
+      actividad: this.actividad
+    };
+    
+    this.cargaHorariaService.listarCargaHorariaDocente(paginate).subscribe({
       next: (res: any) => {
         this.data = res.data ?? [];
         if (this.data.length > 0) {
-          this.idFlashcard = res.data.idFlashcard;
-          this.preguntaFlashcard = res.data.pregunta;
+          this.diaSemana = res.data.diaSemana;
+          this.actividad = res.data.actividad;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
         if (this.data?.length === 0 || !this.data) {
@@ -142,31 +144,6 @@ export class ListCargaHorariaComponent {
     });
   }
 
-  // listaPreguntas() {
-  //   const paginate: FlashcardsGetQuery = {
-  //     id: this.idMazo,
-  //     page: this.page,
-  //     limit: this.limit,
-  //     preguntaFlashcard: this.preguntaFlashcard,
-  //   };
-   
-  //   this.learnService.getFlashcardsMazo(paginate).subscribe({
-  //     next: (res: any) => {
-  //       this.data = res.data ?? [];
-  //       if (this.data.length > 0) {
-  //         this.idFlashcard = res.data.idFlashcard;
-  //         this.preguntaFlashcard = res.data.pregunta;
-  //         this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
-  //       }
-  //       if (this.data?.length === 0 || !this.data) {
-  //         this.paginateCurrent = [1];
-  //       }
-  //     },
-  //     complete: () => {
-  //       this.loadedTableEmitter.emit(false);
-  //     },
-  //   });
-  // }
 
   crearArreglo(limite: number, cant: number) {
     const rest = cant / limite;
@@ -224,7 +201,6 @@ export class ListCargaHorariaComponent {
     }
   }
 
-
  
   eliminarCargaHoraria(idCargaHoraria: number) {
     const dialogRef = this.openDialog(
@@ -235,29 +211,18 @@ export class ListCargaHorariaComponent {
         this.cargaHorariaService.deleteCargaHoraria(idCargaHoraria).subscribe(() => {
           this.listaCargaHoraria();
         });
-        // this.learnService.deleteFlashcard(idFlashcard).subscribe(() => {
-        //   console.log('Flashcard eliminada');
-        //   this.listaPreguntas();
-        // });
       }
     });
   }
 
-  editarCargaHoraria(idCargaHoraria: number) {
-    // const dialogRef = this.dialog.open(EditFlashcardComponent, {
-    //   width: '40%',
-    //   data: {id: idFlashcard, isDisabled: true, titulo: 'Editar Flashcard'},
-    // });
+  editarCargaHoraria(item:any) {
+    const dialogRef = this.dialog.open(EditCargaHorariaComponent, {
+      width: '40%',
+      data: {id: item.idCargaHoraria, idDocente: item.idDocente, isDisabled: true, titulo: 'Editar Carga Horaria'},
+    });
 
-    // dialogRef.afterClosed().subscribe((res) => {
-    //   this.listaPreguntas();
-    // });
-  }
-
-  viewFlashcard(idFlashcard: number) {
-    // this.dialog.open(EditFlashcardComponent, {
-    //   width: '40%',
-    //   data: {id: idFlashcard, isDisabled: false, titulo: 'Detalles Flashcard'},
-    // });
+    dialogRef.afterClosed().subscribe((res) => {
+      this.listaCargaHoraria();
+    });
   }
 }

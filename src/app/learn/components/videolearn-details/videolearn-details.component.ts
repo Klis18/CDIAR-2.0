@@ -32,10 +32,6 @@ export class VideolearnDetailsComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    // this.getDetailsMazo(this.data.id);
-    // console.log(this.getDetailsMazo(this.data.id))
-    // this.nivel = this.data.nivel;
-    // this.asignatura = this.data.asignatura;
     this.videolearnService.getVideoLearn(this.data.id).subscribe((res: any) => {
       this.datosVideoLearn = res.data;
       this.asignatura = this.datosVideoLearn.asignatura;
@@ -46,8 +42,6 @@ export class VideolearnDetailsComponent implements OnInit{
       this.nombreVideolearn = this.datosVideoLearn.nombreVideoLearn;
       this.nombreDocenteRevisor = this.datosVideoLearn.nombreRevisor;
       this.cantidadPreguntas = this.datosVideoLearn.cantidadPreguntas;
-      //this.preguntas = this.datosVideoLearn.preguntas;
-      console.log(this.datosVideoLearn)
     });
 
     this.homeService.obtenerDatosMenu().subscribe((user) => {
@@ -55,45 +49,27 @@ export class VideolearnDetailsComponent implements OnInit{
     });
   }
 
-  //TODO:
-  redirigirEstudiarFlashcards() {
-    // this.learnService.guardarMazoEstudiado(this.data.id).subscribe((res) => {
-    //   console.log('Mazo guardado', res.data);
-    //   this.router.navigate(['/learn/estudiar-flashcards',{id: this.data.id, mazo: this.nombreMazo}]);
-    // });
-  }
   
-  //TODO:
-  saveMazoToReview() {
-    // this.learnService.saveMazoToReview(this.data.id).subscribe(() => {
-    //   console.log('Mazo guardado para futura revisión');
-    // });
-  }
-
   redirigirPreguntas() {
-    this.router.navigate(['/learn/preguntas-videolearn',{id: this.data.id, videolearn: this.nombreVideolearn}]);
+    this.router.navigate(['/learn/video-player',{id: this.data.id, videolearn: this.nombreVideolearn}]);
     this.dialogRef.close();
   }
 
   redirigirIniciarVideoLearn() {
     this.saveVideoLearnStarted(this.data.id);
-    this.router.navigate(['/learn/iniciar-videolearn',{id: this.data.id, videolearn: this.nombreVideolearn}]);
+    this.router.navigate(['/learn/preguntas-video',{id: this.data.id, videolearn: this.nombreVideolearn}]);
     this.dialogRef.close();
   }
-
-  
 
 
   saveVideoLearnToReview() {
     this.videolearnService.SaveVideoLearnToReview(this.data.id).subscribe(() => {
-        console.log('Videolearn guardado');
     });
     this.dialogRef.close();
   }
 
   saveVideoLearnStarted(idVideoLearn: number) {
     this.videolearnService.saveVideoLearnStarted(idVideoLearn).subscribe(() => {
-      console.log('Videolearn iniciado guardado');
     });
   }
 

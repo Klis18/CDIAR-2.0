@@ -50,7 +50,6 @@ export class VideolearnsFormQuestionsComponent implements OnInit{
     this.homeService.obtenerDatosMenu().subscribe({
       next: (user) => {
         if (user) this.rol = user.data?.rol;
-       // this.ngSuscribesOnInit();
 
         if (this.formData) {
           console.log('Data desde preguntas simulador', this.formData);
@@ -67,7 +66,7 @@ export class VideolearnsFormQuestionsComponent implements OnInit{
 
     this.subscriptions.push(
       this.videolearnQuestionGroupForm.valueChanges.pipe(
-        debounceTime(300)  // Ejemplo de debounce para reducir peticiones
+        debounceTime(300) 
       ).subscribe(() => {
         this.clickControllers();
       
@@ -160,16 +159,6 @@ idPregunta:number = 0;
     return RolValid;
   }
   
-  // tipoPreguntaSeleccionada: any;
-  // questionType: number = 0;
-
-
-  // onChange(option:any) {
-  //   this.tipoPreguntaSeleccionada = option;
-  //   this.questionType = option.value;
-
-  // }
-  
   clickControllers(){
     document.getElementById('radio1')?.addEventListener('click', () => {
       this.radioSeleccionado1 = true;
@@ -197,7 +186,5 @@ idPregunta:number = 0;
     });
     
   }
- 
-
   
 }

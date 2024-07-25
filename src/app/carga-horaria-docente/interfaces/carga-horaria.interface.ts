@@ -1,3 +1,4 @@
+import { ListaCargaHoraria } from '../../control/interfaces/cargaHoraria.interface';
 export interface diasSemana{
     idDiaSemana: number;
     nombre: string;
@@ -6,21 +7,39 @@ export interface diasSemana{
 
 export interface listaCargaHoraria{
     idCargaHoraria: number;
+    idDocente: string;
     nombreDocente: string;
     diaSemana: string;
+    diaSemanaNumero: number;
     actividad: string;
     horaDesde: string;
     horaHasta: string;
 }
 
+export interface ListaCargaHorariaDocenteGetQuery{
+    diaSemana: number;
+    actividad: string;
+    pages: number;
+    limit: number;
+}
 
 export interface cargaHoraria{
     idCargaHoraria: number;
-    idDocente: number;
-    idDiaSemana: number;
+    idDocente: string;
+    nombreDocente: string;
+    diaSemana: number;
+    diaSemanaNumero: number;
     actividad: string;
     horaDesde: string;
     horaHasta: string;
+}
+
+export interface ListaCargaHorariaGetQuery{
+    id:string;
+    diaSemana: number;
+    actividad: string;
+    pages: number;
+    limit: number;
 }
 
 
@@ -42,7 +61,7 @@ export interface cargaHorariaDocenteDia{
 
 export interface updateCargaHoraria{
     idCargaHoraria: number;
-    idDocente: number;
+    idDocente: string;
     diaSemana: number;
     actividad: string;
     horaDesde: string;

@@ -1,7 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { RecursoService } from '../../services/recurso.service';
 import { Recurso } from '../../interfaces/recurso.interface';
-import {  MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {  MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'app-add-resource',
@@ -17,6 +19,8 @@ export class AddResourceComponent{
 
   constructor(
     private recursoService: RecursoService,
+    private spinnerService: SpinnerService,
+    private dialog: MatDialog,
     private dialogRef: MatDialogRef<AddResourceComponent>
   ) {}
 
@@ -41,10 +45,21 @@ export class AddResourceComponent{
     } else {
       recursos.enlaceDelRecurso = null;
     }
+    this.spinnerService.showSpinner();
 
     this.recursoService.addRecurso(recursos).subscribe((res) => {
+      this.spinnerService.hideSpinner();
       this.CloseModal(res.statusCode.toString());
-    });
+    },
+    (error) => {
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al guardar el recursos, por favor intente de nuevo.'},
+        });
+      });
   }
 
   getData(events: any) {

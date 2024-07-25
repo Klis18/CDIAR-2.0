@@ -36,13 +36,13 @@ export class VideoPlayerComponent implements OnInit, OnDestroy {
   nombreRevisor: string = '';
   observacionRechazo: string = '';
   observationVisible: boolean = false;
+  testIniciado: boolean = false;  
 
 
   constructor(private route: ActivatedRoute,
               public dialog: MatDialog, 
               private videolearnService: VideolearnService,
               private homeService: HomeService,
-              private questionService: QuestionService,
               private router: Router,
             ) {}
 
@@ -67,11 +67,6 @@ export class VideoPlayerComponent implements OnInit, OnDestroy {
       this.nombreRevisor = res.data.nombreRevisor;
       this.loadYouTubePlayer();
     });
-    // this.route.queryParams.subscribe(params => {
-    //   this.videoUrl = 'https://www.youtube.com/watch?v=7i_W9utnQHQ';
-    //   this.videoId = this.extractVideoId(this.videoUrl);
-    //   this.loadYouTubePlayer();
-    // });
   }
 
   ngOnDestroy() {
@@ -96,9 +91,6 @@ export class VideoPlayerComponent implements OnInit, OnDestroy {
   initPlayer() {
     this.player = new YT.Player('youtube-player', {
       videoId: this.videoId,
-      // playerVars: {
-      //   controls: 0 // Desactivar los controles
-      // },
       events: {
         'onReady': this.onPlayerReady.bind(this),
         'onStateChange': this.onPlayerStateChange.bind(this)
@@ -114,7 +106,6 @@ export class VideoPlayerComponent implements OnInit, OnDestroy {
     if (event.data == YT.PlayerState.PLAYING) {
       setInterval(() => {
         const currentTime = this.player.getCurrentTime();
-        console.log('Current time:', currentTime);
         this.currentMinute = currentTime;
         this.checkVideoProgress();
       }, 1000);
@@ -122,24 +113,13 @@ export class VideoPlayerComponent implements OnInit, OnDestroy {
   }
 
   checkVideoProgress() {
-    // Si el usuario intenta avanzar más allá del tiempo permitido, devolver el video al tiempo permitido
     if (this.player.getCurrentTime() > this.currentMinute) {
       this.player.seekTo(this.currentMinute, true);
     }
   }
 
   addQuestion() {
-    // this.questionService.addQuestion({
-    //   minute: this.currentMinute,
-    //   question: this.newQuestion,
-    //   options: this.options,
-    //   correctOption: this.correctOption
-    // });
-    // this.newQuestion = '';
-    // this.options = ['', '', '', ''];
-    // this.correctOption = 0;
     this.player.pauseVideo();
-    console.log('Datos a enviar', this.idVideoLearn, this.currentMinute);
     const dialogRef = this.dialog.open(AddQuestionsVideolearnComponent, {
       width: '40%',
       maxHeight: '80%',
@@ -165,11 +145,8 @@ export class VideoPlayerComponent implements OnInit, OnDestroy {
     this.reloadTable = false;
   }
 
-
-  
   canAprove() {
     return this.rol === 'Docente' && this.nombreRevisor.trim() === this.nombreUsuario.trim() && this.estadoVideolearn != 'Aprobado' && this.estadoVideolearn != 'Rechazado';
-
   }
 
   canPublish(){

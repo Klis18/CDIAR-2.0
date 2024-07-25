@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { VideolearnService } from '../../services/videolearn.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { editVideoLearn, getVideolearn } from '../../interfaces/videolearn.interface';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'app-edit-videolearn',
@@ -18,6 +20,8 @@ export class EditVideolearnComponent implements OnInit{
   validForm:boolean = true;
 
   constructor(private videolearnService:VideolearnService,
+              private spinnerService: SpinnerService,
+              private dialog: MatDialog,
               private dialogRef: MatDialogRef<EditVideolearnComponent>,
 
               @Inject(MAT_DIALOG_DATA) public data: any
@@ -48,9 +52,23 @@ export class EditVideolearnComponent implements OnInit{
       enlaceVideo: this.datosVideolearn.enlaceVideo,
     }
     
+    this.spinnerService.showSpinner();
+
+
     this.videolearnService.updateVideolearn(videolearnEdit).subscribe((res) => {
+      this.spinnerService.hideSpinner();
+
       this.CloseModal(res.statusCode.toString())
-    });
+    },
+    (error) => {
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al editar el videolearn, por favor intente de nuevo.'},
+        });
+      });
 
     
   }

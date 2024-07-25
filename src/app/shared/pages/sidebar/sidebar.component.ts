@@ -59,11 +59,11 @@ export class SidebarComponent implements OnInit {
     {
       icon: 'trending_up',
       name: 'Metas y Rendimiento',
-      route: '/contacto',
+      route: '/metas-y-rendimiento',
       expanded: false,
       subOptions: [
-        { name: 'Metas', route: '' },
-        { name: 'Rendimiento', route: '' },
+        { name: 'Metas', route: '/metas-y-rendimiento/metas' },
+        { name: 'Rendimiento', route: '/metas-y-rendimiento/rendimiento' },
       ],
       roles: ['Estudiante'],
     },
@@ -96,17 +96,18 @@ export class SidebarComponent implements OnInit {
       subOptions: [
         { name: 'Reporte de Usuarios', route: '/reports/user-report' },
         { name: 'Reporte de Simuladores', route: '/reports/simulators-report' },
+        { name: 'Reporte de VideoLearns', route: '/reports/videolearn-report' },
       ],
       roles: ['Admin'],
     },
-    {
-      icon: ' insert_chart',
-      name: 'Dashboard',
-      route: '/dashboard',
-      expanded: false,
-      subOptions: [],
-      roles: ['Admin'],
-    },
+    // {
+    //   icon: ' insert_chart',
+    //   name: 'Dashboard',
+    //   route: '/dashboard',
+    //   expanded: false,
+    //   subOptions: [],
+    //   roles: ['Admin'],
+    // },
   ];
 
   toggleExpand(option: any) {

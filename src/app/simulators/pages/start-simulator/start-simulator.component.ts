@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SimulatorsQuestions, TipoPreguntas } from '../../interfaces/simulators.interface';
-import { Subscription } from 'rxjs';
+import { SimulatorsQuestions} from '../../interfaces/simulators.interface';
 import { ActivatedRoute } from '@angular/router';
 import { SimulatorsService } from '../../services/simulators.service';
 
@@ -24,6 +23,7 @@ export class StartSimulatorComponent implements OnInit {
   nombreSimulador!: string;
   puntaje = 0;
   btnName!:string;
+  cantPreguntasSimulador!: number;
 
   constructor(private route: ActivatedRoute,private simulatorsService: SimulatorsService) { }
 
@@ -34,13 +34,12 @@ export class StartSimulatorComponent implements OnInit {
     });
 
     this.getPreguntasSimulador(this.idSimulador);
-    console.log(this.preguntasSimulador);
   }
 
   getPreguntasSimulador(idSimulador: number){
     this.simulatorsService.startSimulator(idSimulador).subscribe((res) => {
       this.preguntasSimulador = res.data;
-      console.log('DATA SIMULADORES',res.data);
+      this.cantPreguntasSimulador = this.preguntasSimulador?.length;
       this.inicializarRespuestasUsuario();
     });
   }
@@ -48,7 +47,6 @@ export class StartSimulatorComponent implements OnInit {
   inicializarRespuestasUsuario(): void {
     this.respuestasUsuario = new Array(this.preguntasSimulador.length).fill([])
       .map(() => new Array<boolean>(this.preguntasSimulador[this.preguntaActualIndex].opcionesRespuestas.length).fill(false));
-    // this.respuestasUsuario[this.preguntaActualIndex] = new Array<boolean>(this.preguntasSimulador[this.preguntaActualIndex].opcionesRespuestas.length).fill(false);
   }
 
   toggleRespuesta(index: number) {
@@ -57,30 +55,24 @@ export class StartSimulatorComponent implements OnInit {
   verificarRespuesta(): void {
     const opcionesRespuestas = this.preguntasSimulador[this.preguntaActualIndex].opcionesRespuestas;
 
-    // Obtener índices de respuestas correctas
     const respuestasCorrectasIndices = opcionesRespuestas
       .map((opcion, index) => opcion.esCorrecta ? index : -1)
       .filter(index => index !== -1);
   
-    if (this.preguntasSimulador[this.preguntaActualIndex].tipoPregunta === 'Opcion Simple') {
-      // Para preguntas de opción simple, solo una respuesta puede ser correcta
+    if (this.preguntasSimulador[this.preguntaActualIndex].tipoPregunta === 'Opción Simple') {
       if (respuestasCorrectasIndices.includes(this.respuestaSeleccionada!)) {
         this.puntaje++;
       }
     } else {
 
-      // Obtener índices de respuestas seleccionadas
-
       const respuestasSeleccionadasIndices = this.respuestasUsuario[this.preguntaActualIndex]
         .map((seleccionada, index) => seleccionada ? index : -1)
         .filter(index => index !== -1);
   
-      // Verificar si todas las respuestas seleccionadas son correctas
       const todasCorrectas = respuestasCorrectasIndices.every(index =>
         respuestasSeleccionadasIndices.includes(index)
       );
   
-      // Sumar puntaje si todas las respuestas seleccionadas son correctas
       if (todasCorrectas && respuestasSeleccionadasIndices.length === respuestasCorrectasIndices.length) {
         this.puntaje++;
       }
@@ -110,7 +102,6 @@ export class StartSimulatorComponent implements OnInit {
       calificacion: this.puntaje,
     };
     this.simulatorsService.saveResultTest(calificacion).subscribe(() => {
-      console.log('Calificación guardada');
     });
   }
 

@@ -20,7 +20,6 @@ export class VideolearnComponent implements OnInit {
 
   ngOnInit() {
     this.homeService.obtenerDatosMenu().subscribe((user) => {
-      console.log(user);
       this.usuario = user.data.userName;
       this.rol = user.data.rol;
     });
@@ -44,7 +43,8 @@ export class VideolearnComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddVideolearnComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
       maxHeight: '80%',
     });
     dialogRef.afterClosed().subscribe((result) => {

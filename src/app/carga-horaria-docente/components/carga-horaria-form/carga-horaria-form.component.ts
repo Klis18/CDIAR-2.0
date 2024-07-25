@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CargaHorariaDocenteService } from '../../services/carga-horaria-docente.service';
 
@@ -8,10 +8,9 @@ import { CargaHorariaDocenteService } from '../../services/carga-horaria-docente
   styles: ``
 })
 export class CargaHorariaFormComponent {
-
+  @Input() formData!: any;
   @Output() valueFormEmitter = new EventEmitter<boolean>();
   @Output() cargaHorariaEmitter = new EventEmitter<string[]>();
-  // @Input() idCarga: number = 0;
   
   diasSemana: { label: string; value: string }[] = [];
   cargaGroupForm!: FormGroup;
@@ -29,7 +28,8 @@ export class CargaHorariaFormComponent {
 
   ngOnInit(){
     this.createForm();
-    this.loadDiasSemana();     
+    this.loadDiasSemana();   
+    this.setData(this.formData);  
   }
 
 
@@ -50,16 +50,20 @@ export class CargaHorariaFormComponent {
         value: dia.idDiaSemana,
       }));
     });
-    // this.recursoService.getNiveles().subscribe((res: any) => {
-    //   this.nivelesType = res.data.map((nivel: Nivel) => ({
-    //     label: nivel.descripcion,
-    //     value: nivel.idNivel,
-    //   }));
-    // });
+  }
+
+  setData(data: any) {
+    if (data && this.cargaGroupForm) {
+      this.cargaGroupForm.patchValue({
+        diaSemana: data.idDiaSemana,
+        actividad: data.actividad,
+        horaDesde: data.horaDesde,
+        horaHasta: data.horaHasta,
+      });
+    }
   }
 
   agregarCargaLista(){
-    // Obtención de los valores de los campos del formulario
     let diaSemanaControl = this.cargaGroupForm.get('diaSemana');
     let actividadControl = this.cargaGroupForm.get('actividad');
     let horaDesdeControl = this.cargaGroupForm.get('horaDesde');
@@ -70,11 +74,8 @@ export class CargaHorariaFormComponent {
     let horaDesde = horaDesdeControl ? horaDesdeControl.value : null;
     let horaHasta = horaHastaControl ? horaHastaControl.value : null;
 
-    // Agregación de la pregunta y respuesta al arreglo
     this.cargaDia.push({diaSemana, actividad, horaDesde, horaHasta});
 
-    console.log(this.cargaDia);
-    // Limpieza de los campos del formulario
     this.valueFormEmitter.emit(this.cargaGroupForm.valid);
     this.cargaGroupForm.reset();
   }
@@ -82,6 +83,5 @@ export class CargaHorariaFormComponent {
   recibirDatos(datos: string[]) {
     this.newData = datos;
     this.cargaHorariaEmitter.emit(this.newData);
-    console.log('EMITTER',this.newData);
   }
 }

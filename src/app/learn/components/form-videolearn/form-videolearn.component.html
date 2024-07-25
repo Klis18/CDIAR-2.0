@@ -1,16 +1,15 @@
 <mat-dialog-content>
-  <div class="pr-7 pl-7">
+  <div class="pr-2 pl-2">
     <form [formGroup]="videolearnGroupForm">
       <div class="grid grid-cols-5 gap-4 mt-5">
-        <div class="col-span-2">
+        <div class="col-span-5 md:col-span-2 lg:col-span-2">
           <label for="nivel" class="block text-sm font-medium leading-6 text-gray-900">Nivel</label>
           <ng-select [items]="nivelesType" bindLabel="label" bindValue="value" [searchable]="false"
-            placeholder="Niveles" formControlName="idNivel" notFoundText="No hay niveles" class="ng-custom"
-            (change)="onNivelChange($event)">
+            placeholder="Niveles" formControlName="idNivel" notFoundText="No hay niveles" class="ng-custom">
           </ng-select>
         </div>
 
-        <div class="col-span-3">
+        <div class="col-span-5 md:col-span-3 lg:col-span-3">
           <label for="asignatura" class="block text-sm font-medium leading-6 text-gray-900">Asignatura</label>
           <ng-select [items]="asignaturas" bindLabel="label" bindValue="value" [searchable]="false"
             placeholder="Asignatura" formControlName="idAsignatura" notFoundText="No hay Asignaturas" class="ng-custom">
@@ -36,7 +35,8 @@
 
         <div class="col-span-1">
           <button type="button" (click)="verifyDurationVideo()"
-            class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+            class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 md:text-base lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5
+            text-center me-2 mb-2">
             <span class="flex items-center justify-center">
               <mat-icon>done</mat-icon>
             </span>

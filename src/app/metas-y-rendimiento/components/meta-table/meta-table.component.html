@@ -1,0 +1,109 @@
+<div [formGroup]="metasForm">
+    <div class="flex flex-col" *ngIf="cantRegistros > 0; else noData">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th class=" px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                    <p>Acciones</p>
+                  </th>
+                  <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                    Asignatura</th>
+                  <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                    Nivel</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                        Nota Primer Parcial</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                        Nota Segundo Parcial</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                        Promedio</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                        Puntaje Objetivo</th>
+                    <th class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900">
+                        % Avance</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr *ngFor="let item of dataMeta; let i = index">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <mat-icon class="text-red-600 mr-2" (click)="eliminarMeta(item.idMeta)">delete</mat-icon>
+                    <mat-icon class="text-blue-800 mr-2" (click)="editarMeta(item)">edit</mat-icon>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ item.asignatura }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ item.nivel }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-center">{{ item.calificacionPrimerParcial }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-center">{{calculaNota(item)}} {{nota}}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-center">{{(item.calificacionPrimerParcial + item.calificacionSegundoParcial)/2}}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-center">{{ item.puntajeObjetivo}}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-center">
+                    <div class="w-18 bg-gray-200 rounded-full">
+                      <div class="bg-cyan-600 text-xs font-medium text-blue-100 text-center p-0.5 h-4 leading-none rounded-full" style="width:'{{porcentajeAvance}}%'">{{porcentajeAvance}}%</div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  
+   <!---PAGINACIÓN-->
+
+   <div class="flex my-3 pl-0 pr-0 md:pr-7 md:pl-7 lg:pr-7 lg:pl-7">
+    <div class="flex-1 ms-2">
+      Mostrar:
+      <select
+        class="p-1 rounded border-2 border-solid border-slate-300"
+        formControlName="limit"
+      >
+        @for (item of limitsOptions; track item) {
+        <option [value]="item.value">{{ item.label }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="grid justify-end">
+      <nav>
+        <ul class="flex inline-flex">
+          <li>
+            <span>Página: <input class="w-8 p-1 text-center justify-center rounded-full bg-sky-200 mx-1" type="number" (change)="goToPage($event)" value="{{page}}"> de {{paginateCurrent.length}}</span>
+          </li>
+          <li>
+            <a
+              class="mx-1 flex h-8 w-8 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out"
+              [ngClass]="{
+                  'cursor-pointer hover:border-gray-400 hover:bg-light-300': pagination.buttonLeft,
+                  'opacity-50 cursor-default': !pagination.buttonLeft,
+                }"
+              (click)="prevPage()"
+            >
+              <span class="material-icons text-base">keyboard_arrow_left</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="mx-1 flex h-8 w-8 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+              (click)="nextPage()"
+              [ngClass]="{
+                'cursor-pointer hover:border-gray-400 hover:bg-light-300':
+                  pagination.buttonRight,
+                'opacity-50 cursor-default': !pagination.buttonRight
+              }"
+            >
+              <span class="material-icons text-base">keyboard_arrow_right</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  </div>
+
+  
+  <ng-template #noData>
+    <div class="h-24 bg-gray-200 p-7">
+      <div class="text-center text-xl">No hay datos disponibles.</div>
+    </div>
+  </ng-template>

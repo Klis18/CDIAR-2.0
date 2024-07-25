@@ -39,7 +39,7 @@
               <tr>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <mat-icon class="text-red-600 mr-2" (click)="eliminarCargaHoraria(item.idCargaHoraria)">delete</mat-icon>
-                  <mat-icon class="text-blue-800 mr-2" (click)="editarCargaHoraria(item.idCargaHoraria)">edit</mat-icon>
+                  <mat-icon class="text-blue-800 mr-2" (click)="editarCargaHoraria(item)">edit</mat-icon>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ item.diaSemana }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ item.actividad}}</td>
@@ -57,8 +57,9 @@
               }
             </tbody>
           </table>
-          <div class="flex my-3">
+          <div class="flex my-3 pl-0 pr-0 md:pr-7 md:pl-7 lg:pr-7 lg:pl-7">
             <div class="flex-1 ms-2">
+              Mostrar:
               <select
                 class="p-1 rounded border-2 border-solid border-slate-300"
                 formControlName="limit"
@@ -68,6 +69,7 @@
                 }
               </select>
             </div>
+      
             <div class="grid justify-end">
                 <nav>
                     <ul class="flex inline-flex">

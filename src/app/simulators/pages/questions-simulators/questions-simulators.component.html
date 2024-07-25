@@ -3,7 +3,7 @@
       <li class="inline-flex items-center">
         <a [routerLink]="'/home/landing'" class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-900">
           <mat-icon class="text-base">home</mat-icon>
-          Inicio
+          <span class="hidden md:block md:text-base lg:text-base">Inicio</span> 
         </a>
       </li>
       @if(rol !== 'Admin'){
@@ -11,7 +11,7 @@
         <li>
           <div class="flex items-center">
             <mat-icon>keyboard_arrow_right</mat-icon>
-            <a [routerLink]="'/simuladores/repositorio-simuladores'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Simuladores</a>
+            <a [routerLink]="'/simuladores/repositorio-simuladores'" class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Simuladores</a>
           </div>
         </li>
       }
@@ -19,20 +19,20 @@
         <li>
           <div class="flex items-center">
             <mat-icon>keyboard_arrow_right</mat-icon>
-            <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Control y Seguridad</a>
+            <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Control y Seguridad</a>
           </div>
         </li>
         <li>
           <div class="flex items-center">
             <mat-icon>keyboard_arrow_right</mat-icon>
-            <a [routerLink]="'/control-security/asignar-revisor/'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Asignación Revisores</a>
+            <a [routerLink]="'/control-security/asignar-revisor/'" class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Asignación Revisores</a>
           </div>
         </li>
       }
       <li>
         <div class="flex items-center">
           <mat-icon>keyboard_arrow_right</mat-icon>
-          <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">{{nombreSimulador}}</a>
+          <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">{{nombreSimulador}}</a>
         </div>
       </li>
     </ol>
@@ -40,49 +40,44 @@
     
     <div class="m-7">
       <div class="mt-5 mb-5">
-        <span class="text-3xl">{{nombreSimulador}}</span>
+        <span class="text-2xl md:text-3xl lg:text-3xl">{{nombreSimulador}}</span>
         <button type="button" *ngIf="canCreate()" (click)="openDialog()" 
-          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 md:text-base lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center me-2 mb-2">
           <span class="flex items-center justify-center">
             <mat-icon>add</mat-icon>
             Nuevo
           </span>
         </button>
         <button type="button" *ngIf="canPublish()" (click)="publishSimulator()" 
-          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 md:text-base lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center me-2 mb-2">
           <span class="flex items-center justify-center">
             <mat-icon>publish</mat-icon>
             Publicar
           </span>
         </button>
         <button type="button" *ngIf="canAprove()" (click)="updateStatusSimulator(2)" 
-          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 md:text-base lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center me-2 mb-2">
           <span class="flex items-center justify-center">
             <mat-icon>done</mat-icon>
             Aprobar
           </span>
         </button>
         <button type="button" *ngIf="canAprove()" (click)="reprobarSimulador()" 
-          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 md:text-base lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center me-2 mb-2">
           <span class="flex items-center justify-center">
             <mat-icon>clear</mat-icon>
             Reprobar
           </span>
         </button>
         <button type="button" *ngIf="canViewObservation()" (click)="viewObservation()" 
-          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+          class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 md:text-base lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center me-2 mb-2">
           <span class="flex items-center justify-center">
             <mat-icon>report</mat-icon>
             Ver observación
           </span>
         </button>
       </div>
-      <div *ngIf="observationVisible == true" class="bg-amber-100">
-        <div class="p-5">
-          <p class="text-base pb-2 text-amber-600 font-bold">Motivo Rechazo:</p>
-          {{observacionRechazo}}
-        </div>
-      </div>
+
       <div class="mt-10">
         <question-filter (search)="emitSearch($event)"></question-filter>
       </div>

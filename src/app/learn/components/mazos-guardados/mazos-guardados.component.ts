@@ -34,15 +34,15 @@ export class MazosGuardadosComponent implements OnInit, OnChanges{
   usuarioCreador: boolean = false;
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -130,7 +130,7 @@ export class MazosGuardadosComponent implements OnInit, OnChanges{
       this.userRol = user.data.rol;
     });
   }
-  // private idEstado!: number;
+
   listaMazos() {
     const paginate: MazosGetQuery = {
       page: this.page,
@@ -191,28 +191,6 @@ export class MazosGuardadosComponent implements OnInit, OnChanges{
     return arreglo;
   }
 
-  // openDialog(message: string) {
-  //   return this.dialog.open(CardConfirmComponent, {
-  //     data: {
-  //       mensaje: message,
-  //     },
-  //     width: '30%',
-  //   });
-  // }
-
-  // eliminarMazo(idMazo: number) {
-  //   const dialogRef = this.openDialog(
-  //     '¿Estás seguro de eliminar este mazo?'
-  //   );
-  //   dialogRef.afterClosed().subscribe((res) => {
-  //     if (res) {
-  //       this.learnService.deleteMazo(idMazo).subscribe(() => {
-  //         this.listaMazos();
-  //       });
-  //     }
-  //   });
-  // }
-
   prevPage() {
     if (this.pagination.buttonLeft) {
       const leftButton = this.flashCards.get('page')?.value;
@@ -226,8 +204,6 @@ export class MazosGuardadosComponent implements OnInit, OnChanges{
       this.flashCards.get('page')?.setValue(rightButton + 1);
     }
   }
-
-
 
   
   getGradient(index: number) {
@@ -254,7 +230,6 @@ export class MazosGuardadosComponent implements OnInit, OnChanges{
 
   saveMazoToReview(idMazo: number) {
     this.learnService.saveMazoToReview(idMazo).subscribe(() => {
-      console.log('Mazo guardado para futura revisión');
     });
   }
 }

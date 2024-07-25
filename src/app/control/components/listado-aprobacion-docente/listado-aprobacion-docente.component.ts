@@ -37,7 +37,6 @@ export class ListadoAprobacionDocenteComponent implements OnInit{
       this.telefono = res.data?.telefono;
       this.fechaSolicitud = res.data?.fechaSolicitud;
     },(error)=>{
-      console.log('Mensaje de');
     });
   }
 
@@ -54,17 +53,13 @@ export class ListadoAprobacionDocenteComponent implements OnInit{
 
   aprobarDocente(correo: string, aprobado: boolean) {
     const docente = { correo, aprobado };
-    // docente.aprobado = true;
     this.securityService.aprobarDocente(docente).subscribe((res) => {
-      console.log(res);
     });
   }
 
   rechazarDocente(correo: string, aprobado: boolean) {
     const docente = { correo, aprobado };
-    //docente.aprobado = false;
     this.securityService.aprobarDocente(docente).subscribe((res) => {
-      console.log(res);
     });
   }
 }

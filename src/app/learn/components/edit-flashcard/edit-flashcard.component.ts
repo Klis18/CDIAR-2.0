@@ -1,8 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { LearnService } from '../../services/learn.service';
-import { MAT_DIALOG_DATA,MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA,MatDialog,MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { updateFlashcard } from '../../interfaces/mazo.interface';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'app-edit-flashcard',
@@ -17,6 +19,8 @@ export class EditFlashcardComponent {
 
   constructor(private learnService: LearnService,  
               @Inject(MAT_DIALOG_DATA) public data: any,
+              private spinnerService: SpinnerService,
+              private dialog: MatDialog,
               private dialogRef: MatDialogRef<EditFlashcardComponent>) {}
 
   ngOnInit() {
@@ -34,7 +38,6 @@ export class EditFlashcardComponent {
 
   getFlashcard(idFlashcard: number) {
     this.learnService.getFlashcard(idFlashcard).subscribe((res) => {
-      console.log('Flashcard:', res); // Depuración
       this.flashcardGroupForm.setValue({
         pregunta: res.data.pregunta,
         respuesta: res.data.respuesta
@@ -48,18 +51,22 @@ export class EditFlashcardComponent {
       pregunta: this.flashcardGroupForm.value.pregunta,
       respuesta: this.flashcardGroupForm.value.respuesta
     };
+    this.spinnerService.showSpinner();
 
     this.learnService.updateFlashcard(flashcard).subscribe(
       (response) => {
-        // manejar la respuesta exitosa
-        console.log('Response:', response);
+        this.spinnerService.hideSpinner();
         this.isDisabled = true;
       },
       (error) => {
-        // manejar el error
-        console.error('Error:', error);
-      }
-    );
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al editar la flashcard, por favor intente de nuevo.'},
+        });
+      });
     this.dialogRef.close();
   }
 

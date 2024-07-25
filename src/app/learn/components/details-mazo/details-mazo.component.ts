@@ -33,8 +33,6 @@ export class DetailsMazoComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    // this.getDetailsMazo(this.data.id);
-    // console.log(this.getDetailsMazo(this.data.id))
     this.nivel = this.data.nivel;
     this.asignatura = this.data.asignatura;
     this.learnService.getDatosMazo(this.data.id).subscribe((res: any) => {
@@ -46,7 +44,6 @@ export class DetailsMazoComponent implements OnInit{
       this.nombreDocenteRevisor = this.datosMazo.nombreRevisor;
       this.cantidadFlashcards = this.datosMazo.cantidadFlashcards;
       this.preguntas = this.datosMazo.preguntas;
-      console.log(this.datosMazo)
     });
 
     this.homeService.obtenerDatosMenu().subscribe((user) => {
@@ -54,24 +51,15 @@ export class DetailsMazoComponent implements OnInit{
     });
   }
 
-  
-  // getDetailsMazo(idMazo: number) {
-  //   this.learnService.getDatosMazo(idMazo).subscribe((res: any) => {
-  //     this.datosMazo = res.data;
-  //     console.log(this.datosMazo)
-  //   });
-  // }
+
   redirigirEstudiarFlashcards() {
     this.learnService.guardarMazoEstudiado(this.data.id).subscribe((res) => {
-      console.log('Mazo guardado', res.data);
       this.router.navigate(['/learn/estudiar-flashcards',{id: this.data.id, mazo: this.nombreMazo}]);
     });
-    // this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
   }
   
   saveMazoToReview() {
     this.learnService.saveMazoToReview(this.data.id).subscribe(() => {
-      console.log('Mazo guardado para futura revisión');
     });
   }
 

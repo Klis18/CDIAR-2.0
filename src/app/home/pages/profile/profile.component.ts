@@ -51,7 +51,6 @@ export class ProfileComponent implements OnInit {
 
     this.homeService.obtenerDatosUsuario().subscribe((user) => {
       this.profilePhoto = user.data.foto || '';
-      console.log('User:', user); // Depuración
       this.profileForm.setValue({
         cedula: user.data.cedula,
         nombres: user.data.nombres,
@@ -98,17 +97,13 @@ export class ProfileComponent implements OnInit {
       foto: this.photoBase64,
     };
 
-    console.log('User Data:', userData); // Depuración
 
     this.homeService.actualizarDatosUsuario(userData).subscribe(
       (response) => {
-        // manejar la respuesta exitosa
-        console.log('Response:', response);
         this.isDisabled = true;
       },
       (error) => {
-        // manejar el error
-        console.error('Error:', error);
+
       }
     );
   }

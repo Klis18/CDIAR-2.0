@@ -26,7 +26,6 @@ import { VideolearnComponent } from './pages/videolearn/videolearn.component';
 import { CardsVideolearnsComponent } from './components/cards-videolearns/cards-videolearns.component';
 import { AddVideolearnComponent } from './components/add-videolearn/add-videolearn.component';
 import { FormVideolearnComponent } from './components/form-videolearn/form-videolearn.component';
-import { YoutubeViewComponent } from './components/youtube-view/youtube-view.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { EditVideolearnComponent } from './components/edit-videolearn/edit-videolearn.component';
 import { VideolearnDetailsComponent } from './components/videolearn-details/videolearn-details.component';
@@ -70,7 +69,6 @@ import { VideolearnShowQuestionComponent } from './components/videolearn-show-qu
     CardsVideolearnsComponent,
     AddVideolearnComponent,
     FormVideolearnComponent,
-    YoutubeViewComponent,
     EditVideolearnComponent,
     VideolearnDetailsComponent,
     VideolearnsQuestionsComponent,

@@ -41,18 +41,17 @@ export class ResourceDetailsComponent implements OnInit{
     const recurso: approveResource = {
       idRecurso: this.data.id,
       idEstado: idStatus
-    
     };
     this.recursoService.changeStatusResource(recurso).subscribe((res) => {
-      console.log(res);
       this.dialogRef.close();
     });
   }
 
   reprobarRecurso() {
     this.dialog.open(ObservacionRechazoComponent, {
-      width: '55%',
-      maxHeight: '90%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {id: this.data.id, opcion: 'recurso'},
     });
     this.dialogRef.close();

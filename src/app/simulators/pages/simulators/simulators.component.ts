@@ -45,7 +45,8 @@ export class SimulatorsComponent implements OnInit{
 
   agregarSimulador() {
     const dialogRef = this.dialog.open(AddSimulatorComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
       maxHeight: '80%',
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -57,7 +58,8 @@ export class SimulatorsComponent implements OnInit{
 
   generarSimulador() {
     const dialogRef = this.dialog.open(GenerateSimulatorComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
       maxHeight: '80%',
     });
     dialogRef.afterClosed().subscribe((result) => {

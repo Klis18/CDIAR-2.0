@@ -1,1 +1,103 @@
-<p>listado-carga-docente works!</p>
+<div class="flex flex-col">
+    <div [formGroup]="cargaDocentes" class="-my-2 overflow-x-auto sm:-mx-6">
+      <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+        <div
+          class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+        >
+          <table class="min-w-full divide-y divide-gray-200 table-fixed">
+            <thead>
+              <tr>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                >
+                  Día semana
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                >
+                  Actividad
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                >
+                  Hora Desde
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                >
+                  Hora Hasta
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              @for (item of dataDocentes; track item) {
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">{{ item.diaSemana }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ item.actividad}}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ item.horaDesde}}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ item.horaHasta}}</td>
+              </tr>
+              } @empty {
+              <tr>
+                <td colspan="8">
+                  <div class="p-2 text-center text-xl">
+                    No hay datos disponibles.
+                  </div>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          <div class="flex my-3 pl-0 pr-0 md:pr-7 md:pl-7 lg:pr-7 lg:pl-7">
+            <div class="flex-1 ms-2">
+              Mostrar:
+              <select
+                class="p-1 rounded border-2 border-solid border-slate-300"
+                formControlName="limit"
+              >
+                @for (item of limitsOptions; track item) {
+                <option [value]="item.value">{{ item.label }}</option>
+                }
+              </select>
+            </div>
+      
+            <div class="grid justify-end">
+                <nav>
+                    <ul class="flex inline-flex">
+                      <li>
+                        <span>Página: <input class="w-8 p-1 text-center justify-center rounded-full bg-sky-200 mx-1" type="number" (change)="goToPage($event)" value="{{page}}"> de {{paginateCurrent.length}}</span>
+                      </li>
+                      <li>
+                        <a
+                          class="mx-1 flex h-8 w-8 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out"
+                          [ngClass]="{
+                              'cursor-pointer hover:border-gray-400 hover:bg-light-300': pagination.buttonLeft,
+                              'opacity-50 cursor-default': !pagination.buttonLeft,
+                            }"
+                          (click)="prevPage()"
+                        >
+                          <span class="material-icons text-base">keyboard_arrow_left</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          class="mx-1 flex h-8 w-8 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+                          (click)="nextPage()"
+                          [ngClass]="{
+                            'cursor-pointer hover:border-gray-400 hover:bg-light-300':
+                              pagination.buttonRight,
+                            'opacity-50 cursor-default': !pagination.buttonRight
+                          }"
+                        >
+                          <span class="material-icons text-base">keyboard_arrow_right</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

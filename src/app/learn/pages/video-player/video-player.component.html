@@ -3,7 +3,7 @@
     <li class="inline-flex items-center">
       <a [routerLink]="'/home/landing'" class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-900">
         <mat-icon class="text-base">home</mat-icon>
-        Inicio
+        <span class="hidden md:block md:text-base lg:text-base">Inicio</span> 
       </a>
     </li>
     @if(rol !== 'Admin'){
@@ -11,13 +11,13 @@
       <li>
         <div class="flex items-center">
           <mat-icon>keyboard_arrow_right</mat-icon>
-          <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Aprender</a>
+          <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Aprender</a>
         </div>
       </li>
       <li>
           <div class="flex items-center">
             <mat-icon>keyboard_arrow_right</mat-icon>
-            <a [routerLink]="'/learn/videolearns'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Repositorio de VideoLearns</a>
+            <a [routerLink]="'/learn/videolearns'" class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Repositorio de VideoLearns</a>
           </div>
         </li>
     }
@@ -25,20 +25,20 @@
       <li>
         <div class="flex items-center">
           <mat-icon>keyboard_arrow_right</mat-icon>
-          <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Control y Seguridad</a>
+          <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Control y Seguridad</a>
         </div>
       </li>
       <li>
         <div class="flex items-center">
           <mat-icon>keyboard_arrow_right</mat-icon>
-          <a [routerLink]="'/control-security/asignar-revisor/'" class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Asignación Revisores</a>
+          <a [routerLink]="'/control-security/asignar-revisor/'" class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Asignación Revisores</a>
         </div>
       </li>
     }
     <li>
       <div class="flex items-center">
         <mat-icon>keyboard_arrow_right</mat-icon>
-        <a class="ms-1 text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">{{nombreVideoLearn}}</a>
+        <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">{{nombreVideoLearn}}</a>
       </div>
     </li>
   </ol>
@@ -46,31 +46,31 @@
   
   <div class="m-7">
     <div class="mt-5 mb-5">
-      <span class="text-3xl">{{nombreVideoLearn}}</span>
+      <span class="text-2xl md:text-3xl lg:text-3xl">{{nombreVideoLearn}}</span>
       
       <button type="button" *ngIf="canPublish()" (click)="publishVideoLearn()" 
-        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 md:text-base lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center me-2 mb-2">
         <span class="flex items-center justify-center">
           <mat-icon>publish</mat-icon>
           Publicar
         </span>
       </button>
       <button type="button" *ngIf="canAprove()" (click)="updateStatusVideolearn(2)" 
-        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 md:text-base lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center me-2 mb-2">
         <span class="flex items-center justify-center">
           <mat-icon>done</mat-icon>
           Aprobar
         </span>
       </button>
       <button type="button" *ngIf="canAprove()" (click)="reprobarVideoLearn()" 
-        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 md:text-base lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center me-2 mb-2">
         <span class="flex items-center justify-center">
           <mat-icon>clear</mat-icon>
           Reprobar
         </span>
       </button>
       <button type="button" *ngIf="canViewObservation()" (click)="viewObservation()" 
-        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
+        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 md:text-base lg:text-base md:px-5 md:py-2.5 lg:px-5 lg:py-2.5 text-center me-2 mb-2">
         <span class="flex items-center justify-center">
           <mat-icon>report</mat-icon>
           Ver observación
@@ -78,27 +78,6 @@
       </button>
     </div>
   
-  
-  
-  <!-- video-player.component.html -->
-<!-- <div class="flex flex-wrap">
-  <div class="sm:w-full md:2/4 lg:w-3/4 p-4">
-    <div id="youtube-player" class="w-full h-96"></div>
-    <div class="mt-2">
-      <button type="button" (click)="addQuestion()" 
-        class="ml-2 text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2">
-        <span class="flex items-center justify-center">
-          <mat-icon>add</mat-icon>
-          Agregar
-        </span>
-      </button>
-    </div>
-  </div>
-  <div class="sm:w-full md:2/4 lg:w-1/4 p-4 bg-gray-100">
-    <app-question-list [idVideoLearn]="idVideoLearn"></app-question-list>
-  </div>
-</div> -->
-
 
 <div class="m-7 mt-2 h-full background-view rounded-lg p-9"> 
   <div class="flex flex-wrap">
@@ -115,7 +94,7 @@
     </div>
     </div>
     <div class="sm:w-full md:2/4 lg:w-1/4 p-4 bg-cyan-600 overflow-y-scroll h-96">
-      <app-question-list [idVideoLearn]="idVideoLearn" (loadedTableEmitter)="loadedTale()"
+      <app-question-list [idVideoLearn]="idVideoLearn" [testIniciado]="testIniciado" (loadedTableEmitter)="loadedTale()"
       [loadTable]="reloadTable"></app-question-list>
     </div>
     

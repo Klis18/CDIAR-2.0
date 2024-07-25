@@ -178,7 +178,7 @@ export class SimulatorsService {
   }
 
   saveSimulatorStarted(idSimulador:number){
-    return this.http.post(`simuladores/simuladorRealizado/${idSimulador}`, {
+    return this.http.post(`simuladores/simuladorRealizado/${idSimulador}`,{}, {
       headers: this.headers,
     });
   }

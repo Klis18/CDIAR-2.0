@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ListCargaHorariaComponent } from './components/list-carga-horaria/list-carga-horaria.component';
+import { EditCargaHorariaFormComponent } from './components/edit-carga-horaria-form/edit-carga-horaria-form.component';
+import { CargaHorariaFiltersComponent } from './components/carga-horaria-filters/carga-horaria-filters.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { ListCargaHorariaComponent } from './components/list-carga-horaria/list-
     AddCargaHorariaComponent,
     EditCargaHorariaComponent,
     CargaHorariaDocenteComponent,
-    ListCargaHorariaComponent
+    ListCargaHorariaComponent,
+    EditCargaHorariaFormComponent,
+    CargaHorariaFiltersComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +32,9 @@ import { ListCargaHorariaComponent } from './components/list-carga-horaria/list-
     ReactiveFormsModule,
     MaterialModule,
     NgSelectModule
+  ],
+  exports: [
+    CargaHorariaFiltersComponent
   ]
 })
 export class CargaHorariaDocenteModule { }

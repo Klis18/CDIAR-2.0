@@ -1,0 +1,17 @@
+
+<div class="m-7">
+  <div class="text-right">
+    <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
+  </div>
+
+    <div class="flex flex-wrap gap-y-4">
+      <span class="text-3xl">Carga Horaria</span>
+    </div>
+    <div class="mt-12 mb-2">
+      <carga-horaria-filters (search)="emitSearch($event)"/>
+    </div>
+    <div class="pt-2 pb-5">
+     <listado-carga-docente [searchData]="searchInfo" [id]="idDocente" (loadedTableEmitter)="loadedTale()"
+     [loadTable]="reloadTable"/>
+    </div>
+</div>

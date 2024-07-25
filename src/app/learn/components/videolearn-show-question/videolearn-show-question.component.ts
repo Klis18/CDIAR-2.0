@@ -27,14 +27,11 @@ export class VideolearnShowQuestionComponent {
     if (this.selectedOption !== null) {
       const isCorrect = this.question.opcionesRespuestas[this.selectedOption].esCorrecta;
       if (isCorrect) {
-        console.log('Respuesta correcta');
         this.dialogRef.close({ result: 'answered', puntaje: 1 });
       } else {
-        console.log('Respuesta incorrecta');
         this.dialogRef.close({ result: 'answered', puntaje: 0 });
       }
     } else {
-      console.log('Por favor selecciona una opción');
       this.isDisabled = true;
     }
   }

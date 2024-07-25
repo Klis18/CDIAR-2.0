@@ -42,7 +42,7 @@ export class ResourcesComponent implements OnInit{
   openDialog() {
     const dialogRef = this.dialog.open(AddResourceComponent, {
       width: '80%',
-      maxWidth: '420px',
+      maxWidth: '500px',
       maxHeight: '80%',
     });
     dialogRef.afterClosed().subscribe((result) => {

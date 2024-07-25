@@ -48,6 +48,10 @@ const routes: Routes = [
         loadChildren: () => import('./simulators/simulators.module').then(m => m.SimulatorsModule),
       },
       {
+        path:'metas-y-rendimiento',
+        loadChildren: () => import('./metas-y-rendimiento/metas-y-rendimiento.module').then(m => m.MetasYRendimientoModule),
+      },
+      {
         path: 'reports',
         loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
       },

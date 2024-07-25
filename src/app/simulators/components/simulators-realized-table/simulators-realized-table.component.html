@@ -1,5 +1,5 @@
 
-<div [formGroup]="simulators" class="-my-2 overflow-x-auto sm:-mx-6">
+<div [formGroup]="simulators" class="-my-2 overflow-x-auto sm:-mx-6" *ngIf="data.length > 0; else noData">
     <div class="flex flex-wrap pr-7 pl-7 pt-2 pb-7">
       <div
         *ngFor="let item of data; let i = index"
@@ -84,8 +84,9 @@
   
     <!---PAGINACIÓN-->
   
-    <div class="flex my-3 pr-7 pl-7">
+    <div class="flex my-3 pl-0 pr-0 md:pr-7 md:pl-7 lg:pr-7 lg:pl-7">
       <div class="flex-1 ms-2">
+        Mostrar:
         <select
           class="p-1 rounded border-2 border-solid border-slate-300"
           formControlName="limit"
@@ -95,6 +96,7 @@
           }
         </select>
       </div>
+
       <div class="grid justify-end">
         <nav>
           <ul class="flex inline-flex">
@@ -131,4 +133,9 @@
       </div>
     </div>
   </div>
+  <ng-template #noData>
+    <div class="h-24 bg-gray-200 p-7">
+      <div class="text-center text-xl">No hay datos disponibles.</div>
+    </div>
+  </ng-template>
   

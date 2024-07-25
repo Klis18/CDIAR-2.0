@@ -14,7 +14,7 @@
         </p>
         <p><b>Cantidad preguntas: </b>{{ datosSimulador.cantidadPreguntas }}</p>
         <p><b>Preguntas: </b></p>
-        <div *ngFor="let item of datosSimulador.preguntas">
+        <div *ngFor="let item of datosSimulador?.preguntas">
           <p>{{ item }}</p>
         </div>
       </div>

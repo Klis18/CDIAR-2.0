@@ -1,0 +1,78 @@
+<nav class="flex bg-gray-200 pt-2 pb-2" aria-label="Breadcrumb">
+    <ol class="inline-flex ml-5 items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+      <li class="inline-flex items-center">
+        <a [routerLink]="'/home/landing'" class="inline-flex items-center text-base font-medium text-gray-700 hover:text-blue-900">
+          <mat-icon class="text-base">home</mat-icon>
+          <span class="hidden md:block md:text-base lg:text-base"> Inicio </span> 
+        </a>
+      </li>
+      <li>
+        <div class="flex items-center">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+          <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Metas y Rendimiento</a>
+        </div>
+      </li>
+      <li>
+        <div class="flex items-center">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+          <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">Rendimiento Académico</a>
+        </div>
+      </li>
+    </ol>
+  </nav>
+  
+  <div class="m-7">
+    <div class="mt-5 mb-5 flex items-center">
+      <span class="text-2xl md:text-3xl lg:text-3xl">Rendimiento Académico</span>
+    </div>
+    <div class="mt-10 mb-5">
+      <search-filters (search)="emitSearch($event)"></search-filters>
+    </div>
+    <div
+      class="text-sm font-medium text-center text-gray-700 border-b border-gray-200"
+    >
+      <ul class="flex flex-wrap -mb-px">
+        <li class="me-2">
+          <span
+            (click)="selectedTab = 'Simuladores'"
+            [ngClass]="{
+              'text-blue-900 active border-b-2 border-blue-900':
+                selectedTab === 'Simuladores',
+              'hover:text-gray-600 hover:border-gray-300':
+                selectedTab !== 'Simuladores'
+            }"
+            class="inline-block p-4 rounded-t-lg"
+            >Simuladores</span
+          >
+        </li>
+        <li class="me-2">
+          <span
+            (click)="selectedTab = 'VideoLearns'"
+            [ngClass]="{
+              'text-blue-900 border-b-2 border-blue-900':
+                selectedTab === 'VideoLearns',
+              'hover:text-gray-600 hover:border-gray-300':
+                selectedTab !== 'VideoLearns'
+            }"
+            class="inline-block p-4 rounded-t-lg"
+            >VideoLearns</span
+          >
+        </li>
+      </ul>
+    </div>
+  
+    <div class="pt-5 pb-5">
+      @switch (selectedTab) { 
+        @case ('Simuladores') {
+            <simulators-table [searchData]="searchInfo" [usuario]="usuario" (loadedTableEmitter)="loadedTale()"
+            [loadTable]="reloadTable"/>
+        } @case ('VideoLearns') {
+            <videolearn-table-report [searchData]="searchInfo" [usuario]="usuario" (loadedTableEmitter)="loadedTale()"
+            [loadTable]="reloadTable"/>
+        }
+        @default {
+        } 
+}
+    </div>
+  </div>
+  

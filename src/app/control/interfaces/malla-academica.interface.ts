@@ -20,8 +20,8 @@ export interface mallaAcademicaNiveles{
 }
 
 export interface mallaAcademicaNivelesGetQuerys{
-    // pages: number;
-    // limit: number;
+    pages: number;
+    limit: number;
     idNivel: number;
 }
 

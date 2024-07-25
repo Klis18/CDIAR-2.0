@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { SimulatorsService } from '../../services/simulators.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ListSimulators } from '../../interfaces/simulators.interface';
 import { Router } from '@angular/router';
 import { HomeService } from '../../../home/services/home.service';
 
@@ -27,7 +26,6 @@ export class DetailsSimulatorComponent implements OnInit{
 
   ngOnInit(): void {
     this.getDetailsSimulador(this.data.id);
-    console.log(this.getDetailsSimulador(this.data.id))
 
     console.log(this.data)
     this.homeService.obtenerDatosMenu().subscribe((user) => {
@@ -39,7 +37,6 @@ export class DetailsSimulatorComponent implements OnInit{
   getDetailsSimulador(idSimulador: number) {
     this.simulatorService.getDatosSimulator(idSimulador).subscribe((res: any) => {
       this.datosSimulador = res.data;
-      console.log(this.datosSimulador)
     });
   }
 
@@ -50,13 +47,11 @@ export class DetailsSimulatorComponent implements OnInit{
 
   saveSimulatorToReview() {
     this.simulatorService.SaveSimulatorToReview(this.data.id).subscribe(() => {
-      console.log('Simulador guardado');
     });
   }
 
   saveSimulatorStarted(idSimulador: number) {
     this.simulatorService.saveSimulatorStarted(idSimulador).subscribe(() => {
-      console.log('Simulador iniciado guardado');
     });
   }
 

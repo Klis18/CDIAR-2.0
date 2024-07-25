@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router} from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { FormControl } from '@angular/forms';
 import { Login } from '../../interfaces/login';
-import { JsonResponse } from '../../../shared/interfaces/json-response';
 import { CustomValidators } from '../../../../custom/custom-validators';
 import { SpinnerService } from '../../../shared/services/spinner.service';
-// import Swal from 'sweetalert2'
 
 @Component({
   selector: 'login',
@@ -33,10 +30,6 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, CustomValidators.atLeastOneLowercase, CustomValidators.atLeastOneUppercase, CustomValidators.atLeastOneNumber, Validators.minLength(10)]],
     });
   }
-
-  // value: number | undefined;
-
-  // constructor(private router: Router) {}
 
   get loginSend(): Login {
     return this.loginForm.value as Login;

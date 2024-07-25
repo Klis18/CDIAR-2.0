@@ -3,6 +3,7 @@ import { SecurityService } from '../../services/security.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RevisorGetQuery } from '../../interfaces/asignDocente.interface';
+import { SelectRevisorComponent } from '../select-revisor/select-revisor.component';
 
 @Component({
   selector: 'list-revisor',
@@ -17,23 +18,21 @@ export class ListRevisorComponent implements OnInit, OnChanges{
   @Input() opcion!:string;
 
   dataDocentes: any;
-  // id = this.data.id;
-  // opcion = this.data.opcion;
   data: any;
   nombre = '';
   searchInfo: any;
   revisors!: FormGroup;
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -44,27 +43,10 @@ export class ListRevisorComponent implements OnInit, OnChanges{
 
   constructor(private securityService: SecurityService,
               @Inject(FormBuilder) private formBuilder: FormBuilder,
-              // @Inject (MAT_DIALOG_DATA) public data: any,
               private dialogRef: MatDialogRef<ListRevisorComponent>
   ){
     
   }
-
-  // ngOnInit(){
-  //   // this.getListaDocentes(); 
-  //   this.listaDocentesRevisores();
-  // }
-
- 
-
-  // getDocentesRevision(){
-  //   this.securityService.getDocentesRevision().subscribe((res) => {
-  //     this.dataDocentes = res.data;
-  //     console.log(res);
-  //   });
-  
-  // }
-
 
 
   asignarRevisor(idDocente: string){
@@ -118,8 +100,6 @@ export class ListRevisorComponent implements OnInit, OnChanges{
     this.dialogRef.close(mensaje);
   }
 
-
-  //probando
   ngOnInit(): void {
     this.builderForm();
     this.revisors.valueChanges.subscribe({

@@ -23,11 +23,6 @@ export class ListAsignaturasComponent {
   dataMalla!: mallaAcademica[];
   selectedTab:string='';
   mensaje: string = '';
-//   pregunta: string = '';
-//   usuarioCreador: string = '';
-// nombreUsuario: string = '';
-// docenteRevisor: string = '';
-// estado: string = '';
   itemsPerPage: number = 5;
   totalPages: number = 1;
   nivel: string = '';
@@ -39,15 +34,15 @@ export class ListAsignaturasComponent {
  
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -188,10 +183,12 @@ export class ListAsignaturasComponent {
 
   openDialog(message: string) {
     return this.dialog.open(CardConfirmComponent, {
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {
         mensaje: message,
       },
-      width: '30%',
     });
   }
 
@@ -210,19 +207,7 @@ export class ListAsignaturasComponent {
     }
   }
 
-  eliminarNivel(idNivel: number) {
-    const dialogRef = this.openDialog(
-      'Si elimina este nivel, se eliminarán todas las asignaturas pertenecientes al mismo,'+ 
-          '¿Estás seguro de eliminar este nivel?'
-     );
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res) {
-        this.securityService.deleteNivel(idNivel).subscribe(() => {
-          this.listaMallaAcademica();
-        });
-      }
-    });
-  }
+ 
 
   eliminarAsignatura(idAsignatura: number) {
     const dialogRef = this.openDialog(
@@ -239,7 +224,9 @@ export class ListAsignaturasComponent {
 
   editarAsignatura(item:mallaAcademica) {
     const dialogRef = this.dialog.open(EditMallaAcademicaComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {id: item.idAsignatura, idNivel:item.idNivel, isDisabled: true, titulo: 'Editar Asignatura', tipo:'2'},
     });
     dialogRef.afterClosed().subscribe((res) => {
