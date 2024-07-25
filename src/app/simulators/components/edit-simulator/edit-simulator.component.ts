@@ -1,7 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { SimulatorsService } from '../../services/simulators.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UpdateSimulator } from '../../interfaces/simulators.interface';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'app-edit-simulator',
@@ -19,7 +21,8 @@ export class EditSimulatorComponent {
 
   constructor(private simulatorService:SimulatorsService,
               private dialogRef: MatDialogRef<EditSimulatorComponent>,
-
+              private spinnerService: SpinnerService,
+              private dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
@@ -39,21 +42,30 @@ export class EditSimulatorComponent {
       if(!this.validForm){
         return;
     }
-  
+    
     const simuladorEdit: UpdateSimulator = {
       idSimulador: this.data.id,
       idNivel: this.datosSimulador.idNivel,
       idAsignatura: this.datosSimulador.idAsignatura,
       nombreSimulador: this.datosSimulador.nombreSimulador,
     }
+    this.spinnerService.showSpinner();
     
     this.simulatorService.updateSimulator(simuladorEdit)
     .subscribe((res) => {
-      console.log('ACTUALIZANDO...',res);
-      this.CloseModal(res.statusCode.toString())
-    });
+      this.spinnerService.hideSpinner();
 
-    
+      this.CloseModal(res.statusCode.toString())
+    },
+    (error) => {
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al editar el simulador, por favor intente de nuevo.'},
+        });
+      });   
   }
 
   getData(events:any){

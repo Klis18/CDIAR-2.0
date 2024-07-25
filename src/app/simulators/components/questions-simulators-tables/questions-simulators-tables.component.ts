@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
 import { EditQuestionSimulatorComponent } from '../edit-question-simulator/edit-question-simulator.component';
 import { HomeService } from '../../../home/services/home.service';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'questions-simulators-table',
@@ -30,15 +32,15 @@ estado: string = '';
  
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -51,6 +53,7 @@ estado: string = '';
   constructor(private simulatorService:SimulatorsService,
               private dialog: MatDialog,
               private homeService: HomeService,
+              private spinnerService: SpinnerService,
               @Inject(FormBuilder) private formBuilder: FormBuilder,
 
   ) {}
@@ -69,8 +72,6 @@ estado: string = '';
       },
     });
     this.listaPreguntas();
-    console.log('Preguntas', this.data);
-    console.log('ID', this.idSimulador);
 
     this.homeService.obtenerDatosMenu().subscribe((user:any) => {
       this.nombreUsuario = user.data.userName;
@@ -109,14 +110,17 @@ estado: string = '';
     this.page = this.simulatorForm.get('page')?.value;
   }
 
-  changePage(newPage: number) {
-    if (newPage !== this.page) {
-      console.log('PASO');
-      this.page = newPage;
+  goToPage(event: Event) {
+    const target = event.target as HTMLInputElement;
+    let page = parseInt(target.value, 10);
+    if (!isNaN(page) && page >= 1 && page <= this.paginateCurrent.length) {
+      this.page = page;
+      this.listaPreguntas();
+    } else {
+      target.value = this.page.toString();
       this.listaPreguntas();
     }
   }
- 
 
   listaPreguntas() {
     const paginate: QuestionsSimulatorsGetQuery = {
@@ -128,10 +132,8 @@ estado: string = '';
    
     this.simulatorService.getPreguntasSimulador(paginate).subscribe({
       next: (res: any) => {
-        console.log('Preguntas Data', res.data);
         this.data = res.data ?? [];
         if (this.data.length > 0) {
-          // this.idSimulador = res.data.idPregunta;
           this.pregunta = res.data.pregunta;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
@@ -209,12 +211,21 @@ estado: string = '';
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log('Pregunta a eliminar', idPregunta);
-        console.log('Eliminando pregunta', res);
+        this.spinnerService.showSpinner();
+
         this.simulatorService.deleteSimulatorQuestion(idPregunta).subscribe(() => {
-          console.log('Flashcard eliminada');
+          this.spinnerService.hideSpinner();
           this.listaPreguntas();
-        });
+        },
+        (error) => {
+            this.spinnerService.hideSpinner();
+            this.dialog.open(CardMessageComponent, {
+              width: '80%',
+              maxWidth: '500px',
+              maxHeight: '80%',
+              data: {status:'error', mensaje: 'Error al eliminar la pregunta, por favor intente de nuevo.'},
+            });
+          });  
       }
     });
   }

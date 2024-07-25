@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  // styles: ``,
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
@@ -27,7 +26,7 @@ export class HomeComponent implements OnInit {
     this.typeMessage();
     setTimeout(() => {
       this.typeMessage2();
-    }, 3000); // Puedes ajustar el tiempo de espera para que empiece a escribir el segundo mensaje cambiando este valor
+    }, 3000); 
   }
 
   typeMessage() {
@@ -39,7 +38,7 @@ export class HomeComponent implements OnInit {
       } else {
         clearInterval(interval);
       }
-    }, 100); // Puedes ajustar la velocidad de escritura cambiando este valor
+    }, 100); 
   }
 
   typeMessage2() {
@@ -52,7 +51,7 @@ export class HomeComponent implements OnInit {
       } else {
         clearInterval(interval);
       }
-    }, 100); // Puedes ajustar la velocidad de escritura cambiando este valor
+    }, 100); 
   }
 
 

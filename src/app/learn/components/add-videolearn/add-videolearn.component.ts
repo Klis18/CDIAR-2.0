@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { VideolearnService } from '../../services/videolearn.service';
-import { MatDialogRef } from '@angular/material/dialog';
-import { NewMazo } from '../../interfaces/mazo.interface';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { addVideolearn } from '../../interfaces/videolearn.interface';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'app-add-videolearn',
@@ -15,12 +16,13 @@ export class AddVideolearnComponent {
   asignaturas: { label: string; value: string }[] = [];
 
   constructor(private videolearnService:VideolearnService,
+              private spinnerService: SpinnerService,
+              private dialog: MatDialog,
               private dialogRef: MatDialogRef<AddVideolearnComponent>
   ) {}
   
   saveVideoLearn(){
     if(!this.validForm){
-      console.log('DATOS RECURSOS: ', this.datosVideolearn);
       return;
     }
   
@@ -30,12 +32,23 @@ export class AddVideolearnComponent {
       nombreVideoLearn: this.datosVideolearn.nombreVideoLearn,
       enlaceVideo: this.datosVideolearn.enlaceVideo,
     }
-    
-    console.log('Videolearn: ', videolearn);
+    this.spinnerService.showSpinner();
+
     this.videolearnService.addVideolearn(videolearn)
     .subscribe((res) => {
+      this.spinnerService.hideSpinner();
+
       this.CloseModal(res.statusCode.toString())
-    });
+    },
+    (error) => {
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al guardar el recursos, por favor intente de nuevo.'},
+        });
+      });
 
     
   }
@@ -53,7 +66,6 @@ export class AddVideolearnComponent {
   }
 
   updateAsignatura(event: any) {
-    console.log('EVENTO ASIGNATURA: ', event);
     this.asignaturas = event;
   }
    cancelar() {

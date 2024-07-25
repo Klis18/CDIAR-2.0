@@ -15,6 +15,8 @@ import { EditMazoComponent } from '../edit-mazo/edit-mazo.component';
 import { ListRevisorComponent } from '../../../control/components/list-revisor/list-revisor.component';
 import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
 import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 interface DataItem {
   title: string;
@@ -47,21 +49,20 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   usuarioCreador: boolean = true;
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
   private idAsignatura!: number;
   private idNivel!: number;
-  private descripcion!: string;
   public page!: number;
   public limit: number = 5;
   public paginateCurrent: number[] = [];
@@ -78,6 +79,7 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   constructor(private learnService:LearnService,
               private dialog: MatDialog,
               private router: Router,
+              private spinnerService: SpinnerService,
               private mazo: FlashcardsComponent,
               @Inject(AsignarRevisorComponent) private approve: AsignarRevisorComponent,
               @Inject(HomeService) private homeService: HomeService,
@@ -257,11 +259,13 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   }
 
   openDialog(message: string) {
-    return this.dialog.open(CardConfirmComponent, {
+    return this.dialog.open(CardConfirmComponent, { 
+    width: '80%',
+    maxWidth: '500px',
+    maxHeight: '80%',
       data: {
         mensaje: message,
       },
-      width: '30%',
     });
   }
 
@@ -271,9 +275,21 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
+        this.spinnerService.showSpinner();
+
         this.learnService.deleteMazo(idMazo).subscribe(() => {
+          this.spinnerService.hideSpinner();
           this.listaMazos();
-        });
+        },
+        (error) => {
+            this.spinnerService.hideSpinner();
+            this.dialog.open(CardMessageComponent, {
+              width: '80%',
+              maxWidth: '500px',
+              maxHeight: '80%',
+              data: {status:'error', mensaje: 'Error al guardar el recursos, por favor intente de nuevo.'},
+            });
+          });
       }
     });
   }
@@ -304,31 +320,13 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
 
     return isReviewer;
   }
-  // canEdit(item: any): boolean {
-  //   const isCreator =
-  //     item.usuarioCreacion == this.usuario &&
-  //     this.selectedTab === 'Mis Flashcards' &&
-  //     item.estado !== 'Aprobado' &&
-  //     item.nombreRevisor == '';
-
-  //   const isAdmin =
-  //     item.docenteRevisor === '' &&
-  //     item.estado != 'Aprobado' &&
-  //     this.selectedTab2 === 'Flashcards';
-  //   return isCreator || isAdmin;
-  // }
+ 
   canEdit(item: any): boolean {
     let status: boolean = false;
     let condition1 = (this.selectedTab === 'Mis Flashcards' && ( item.estado === 'Ingresado' || item.estado === 'Privado') && item.nombreDocenteRevisor === '');
     let condition2 = (this.selectedTab === 'Mis Flashcards' && item.estado ==='Rechazado' ) ;
     let condition3 = (this.selectedTab === 'Mis Flashcards' && this.userRol ===ROLES.DOCENTE);
-    // if (this.selectedTab === 'Mis Recursos') {
-    //   if (item.estadoRecurso === 'Ingresado') {
-    //     status =
-    //       item.usuarioCreacion == this.usuario &&
-    //       item.docenteRevisor === '';
-    //   }
-    // }
+
     return condition1 || condition2 || condition3;
   }
 
@@ -384,10 +382,8 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
 
   redirigirEstudiarFlashcards(item: ListMazo) {
     this.learnService.guardarMazoEstudiado(item.idMazo).subscribe((res) => {
-      console.log('Mazo guardado', res.data);
       this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
     });
-    // this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
   }
 
   canAssignRevisor(item:any){

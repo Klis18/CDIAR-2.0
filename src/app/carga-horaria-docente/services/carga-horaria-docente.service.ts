@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { HelperHttpService } from '../../shared/services/helper.http.service';
-import { cargaHoraria, cargaHorariaDocenteDia, diasSemana, addCargaHoraria, updateCargaHoraria, listaCargaHoraria } from '../interfaces/carga-horaria.interface';
+import { cargaHoraria, cargaHorariaDocenteDia, diasSemana, addCargaHoraria, updateCargaHoraria, listaCargaHoraria, ListaCargaHorariaGetQuery, ListaCargaHorariaDocenteGetQuery } from '../interfaces/carga-horaria.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,22 @@ export class CargaHorariaDocenteService {
     });
   }
 
-  listarCargaHorariaDocente() {
-    return this.http.get<cargaHorariaDocenteDia>('cargaHoraria', {
+  listarCargaHorariaDocente({
+    diaSemana,
+    actividad,
+    pages,
+    limit,
+  }: ListaCargaHorariaDocenteGetQuery) {
+
+    if (!pages) pages = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${pages}&limit=${limit}`;
+
+    if (diaSemana) query += `&diaSemana=${diaSemana}`;
+    if (actividad && actividad !== '')
+      query += `&actividad=${actividad}`;
+
+    return this.http.get<cargaHorariaDocenteDia>(`cargaHorariaDocente${query}`, {
       headers: this.headers,
     });
   }
@@ -52,7 +66,28 @@ export class CargaHorariaDocenteService {
   }
 
   listaCargaHorariaDiasSemana(id:number){
-    return this.http.get<listaCargaHoraria>(`cargaHoraria/diasSemana/${id}`, {
+    return this.http.get<listaCargaHoraria>(`cargaHoraria/${id}`, {
+      headers: this.headers,
+    });
+  }
+
+
+  listaCargaHorariaTabla(idDocente: string,{
+    
+    diaSemana,
+    actividad,
+    pages,
+    limit,
+  }: ListaCargaHorariaDocenteGetQuery) {
+    if (!pages) pages = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${pages}&limit=${limit}`;
+
+    if (diaSemana) query += `&diaSemana=${diaSemana}`;
+    if (actividad && actividad !== '')
+      query += `&actividad=${actividad}`;
+
+    return this.http.get<listaCargaHoraria>(`cargaHorariaTabla/${idDocente}${query}`, {
       headers: this.headers,
     });
   }

@@ -7,6 +7,9 @@ import { SimulatorsService } from '../../../simulators/services/simulators.servi
 import { NewMazo } from '../../../learn/interfaces/mazo.interface';
 import { NewSimulator } from '../../../simulators/interfaces/simulators.interface';
 import { SpinnerService } from '../../../shared/services/spinner.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'study-form',
@@ -14,9 +17,6 @@ import { SpinnerService } from '../../../shared/services/spinner.service';
   styles: ``
 })
 export class StudyFormComponent {
-  // @Output() editedDataEmitter = new EventEmitter<any>();
-  // @Output() valueFormEmitter = new EventEmitter<boolean>();
-  // @Output() asignaturaEmitter = new EventEmitter<any>();
   
   observacion: string = '';
   descripcionNivel: string = '';
@@ -35,7 +35,9 @@ export class StudyFormComponent {
     private fb: FormBuilder,
     private learnService: LearnService,
     private simulatorService:SimulatorsService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
 
@@ -55,29 +57,17 @@ export class StudyFormComponent {
         }
       },
     });
-
-
   }
-
- 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['formData']) {
-  //     this.setData(changes['formData'].currentValue);
-  //   }
-  // };
 
 
   createForm() {
     this.generateGroupForm = this.fb.group({
-      idNivel: [0, Validators.required],
-      idAsignatura: [0, Validators.required],
+      idNivel: [, Validators.required],
+      idAsignatura: [, Validators.required],
       tema: ['', Validators.required],
       flashcardsCheckbox: [false],
-      simuladoresCheckbox: [false],
-      // idEstado: [0, Validators.required],
-      // nombreMazo: ['', Validators.required],   
+      simuladoresCheckbox: [false],   
     });
-
   }
 
   loadNiveles() {
@@ -115,10 +105,8 @@ export class StudyFormComponent {
   }
 
 
-
   generateFlashcards(){
     if(!this.generateGroupForm.valid){
-      console.log('DATOS INCOMPLETOS');
       return;
     }
     const mazo: NewMazo = {
@@ -128,22 +116,24 @@ export class StudyFormComponent {
     }
     this.spinnerService.showSpinner();
 
-    console.log('Mazo: ', mazo);
     this.learnService.generarFlashcardsIa(mazo).subscribe((res) => {
-      console.log('Mazo creado con IA: ', res);
       this.spinnerService.hideSpinner();
+      this.router.navigate(['/learn/flashcards']);
     },
     (error) => {
-          console.error('Error al generar flashcards: ', error);
-          // Asegúrate de desactivar el spinner en caso de error también
-          this.spinnerService.hideSpinner();
-        }
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al generar flashcards'},
+        });
+      }
     );
   }
 
   generateSimulador(){
     if(!this.generateGroupForm.valid){
-      console.log('DATOS DE SIMULADOR INCOMPLETOS');
       return;
     }
   
@@ -154,17 +144,19 @@ export class StudyFormComponent {
     }
     this.spinnerService.showSpinner();
 
-    console.log('Simulador: ', simulator);
 
     this.simulatorService.generateSimulator(simulator)
     .subscribe((res) => {
-      console.log('Simulador creado: ', res);
       this.spinnerService.hideSpinner();
     },
     (error) => {
-      console.error('Error al generar simuladores: ', error);
-      // Asegúrate de desactivar el spinner en caso de error también
       this.spinnerService.hideSpinner();
+      this.dialog.open(CardMessageComponent, {
+        width: '80%',
+        maxWidth: '500px',
+        maxHeight: '80%',
+        data: {status:'error' ,mensaje: 'Error al generar simulador'},
+      });
     }
   );
 
@@ -172,13 +164,8 @@ export class StudyFormComponent {
 
 
   generarMateriales(){
-    console.log('Generando materiales...');
-    console.log('Flashcards form: ', this.generateGroupForm.value.flashcardsCheckbox);
-    console.log('Simuladores form: ', this.generateGroupForm.value.simuladoresCheckbox);
     if(this.generateGroupForm.value.flashcardsCheckbox === true && this.generateGroupForm.value.simuladoresCheckbox === true){
-      console.log('Generando flashcards');
       this.generateFlashcards();
-      console.log('Generando simulador');
       this.generateSimulador();
       this.limpiarCampos();
     }

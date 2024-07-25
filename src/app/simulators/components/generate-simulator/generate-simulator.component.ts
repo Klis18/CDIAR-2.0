@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { SimulatorsService } from '../../services/simulators.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NewSimulator } from '../../interfaces/simulators.interface';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'app-generate-simulator',
@@ -14,12 +16,13 @@ export class GenerateSimulatorComponent {
   asignaturas: { label: string; value: string }[] = [];
 
   constructor(private simulatorService:SimulatorsService,
+              private spinnerService: SpinnerService,
+              private dialog: MatDialog,
               private dialogRef: MatDialogRef<GenerateSimulatorComponent>,
   ) {}
   
-  saveMazo(){
+  saveSimulador(){
     if(!this.validForm){
-      console.log('DATOS RECURSOS: ', this.datosSimulador);
       return;
     }
   
@@ -29,12 +32,23 @@ export class GenerateSimulatorComponent {
       nombreSimulador: this.datosSimulador.nombreSimulador,
     }
     
-    console.log('Simulador: ', simulator);
+    this.spinnerService.showSpinner();
 
     this.simulatorService.generateSimulator(simulator)
     .subscribe((res) => {
+      this.spinnerService.hideSpinner();
+
       this.CloseModal(res.statusCode.toString())
-    });
+    },
+    (error) => {
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al generar el simulador, por favor intente de nuevo.'},
+        });
+      });  
 
     
   }
@@ -52,7 +66,6 @@ export class GenerateSimulatorComponent {
   }
 
   updateAsignatura(event: any) {
-    console.log('EVENTO ASIGNATURA: ', event);
     this.asignaturas = event;
   }
    cancelar() {

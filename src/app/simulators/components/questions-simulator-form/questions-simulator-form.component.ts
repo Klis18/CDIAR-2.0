@@ -58,10 +58,8 @@ export class QuestionsSimulatorFormComponent implements OnInit, OnChanges{
     this.homeService.obtenerDatosMenu().subscribe({
       next: (user) => {
         if (user) this.rol = user.data?.rol;
-       // this.ngSuscribesOnInit();
 
         if (this.formData) {
-          console.log('Data desde preguntas simulador', this.formData);
           this.setData(this.formData);
           if(this.onlyView == false){
             this.simulatorQuestionGroupForm.disable();
@@ -75,7 +73,7 @@ export class QuestionsSimulatorFormComponent implements OnInit, OnChanges{
 
     this.subscriptions.push(
       this.simulatorQuestionGroupForm.valueChanges.pipe(
-        debounceTime(300)  // Ejemplo de debounce para reducir peticiones
+        debounceTime(300) 
       ).subscribe(() => {
         this.clickControllers();
       if(this.questionType === 2){
@@ -120,7 +118,7 @@ export class QuestionsSimulatorFormComponent implements OnInit, OnChanges{
   createForm() {
     this.simulatorQuestionGroupForm = this.fb.group({
       pregunta: ['', Validators.required],
-      idTipoPregunta:[0, Validators.required],
+      idTipoPregunta:[, Validators.required],
       opcionSimple1: [''],
       opcionSimple2: [''],
       opcionSimple3: [''],
@@ -259,40 +257,5 @@ idPregunta:number = 0;
       this.checkboxSeleccionado4 = !this.checkboxSeleccionado4;
     });
   }
- 
-  // ngSuscribesOnInit() {
-    
-  //   this.simulatorQuestionGroupForm.valueChanges.subscribe(() => {
-
-  //    this.clickControllers();
-  //     if(this.questionType === 2){
-  //       this.opcionesRespuestas=[
-  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple1')?.value, esCorrecta: this.radioSeleccionado1},
-  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple2')?.value, esCorrecta:  this.radioSeleccionado2},
-  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple3')?.value, esCorrecta:  this.radioSeleccionado3},
-  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionSimple4')?.value, esCorrecta:  this.radioSeleccionado4},
-  //       ]
-  //     }else if(this.questionType === 1){
-  //       this.opcionesRespuestas=[
-  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple1')?.value, esCorrecta: this.checkboxSeleccionado1},
-  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple2')?.value, esCorrecta:  this.checkboxSeleccionado2},
-  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple3')?.value, esCorrecta:  this.checkboxSeleccionado3},
-  //         {respuesta: this.simulatorQuestionGroupForm.get('opcionMultiple4')?.value, esCorrecta:  this.checkboxSeleccionado4},
-  //       ]
-
-  //     }
-  //     const response = {
-  //       idSimulador: this.id,
-  //       pregunta: this.simulatorQuestionGroupForm.get('pregunta')?.value,
-  //       idTipoPregunta: this.questionType,
-  //       opcionesRespuestas: this.opcionesRespuestas,
-  //     };
-      
-
-  //     console.log(response);
-  //     this.editedDataEmitter.emit(response);
-  //     this.valueFormEmitter.emit(this.simulatorQuestionGroupForm.valid);
-  //   });
-  // }
 
 }

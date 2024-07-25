@@ -13,8 +13,6 @@ import { EditMallaAcademicaComponent } from '../edit-malla-academica/edit-malla-
   styles: ``
 })
 export class ListNivelesComponent {
-   // @Input() idNivel!: number;
-  // @Input() idAsignatura!: number;
   @Input() loadTable: boolean = false;
   @Output() loadedTableEmitter = new EventEmitter<boolean>();
   @Input() searchData: any;
@@ -22,11 +20,6 @@ export class ListNivelesComponent {
   dataMalla!: mallaAcademicaNiveles[];
   selectedTab:string='';
   mensaje: string = '';
-//   pregunta: string = '';
-//   usuarioCreador: string = '';
-// nombreUsuario: string = '';
-// docenteRevisor: string = '';
-// estado: string = '';
   itemsPerPage: number = 5;
   totalPages: number = 1;
   nivel: string = '';
@@ -38,15 +31,15 @@ export class ListNivelesComponent {
  
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -118,10 +111,9 @@ export class ListNivelesComponent {
 
   listaMallaAcademicaNiveles() {
     const paginate: mallaAcademicaNivelesGetQuerys = {
-        // pages: this.page,
-        // limit: this.limit,
+        pages: this.page,
+        limit: this.limit,
         idNivel: this.idNivel,
-        // idAsignatura: this.idAsignatura,
       };
       this.securityService.listaMallaAcademicaNiveles(paginate).subscribe({
         next: (res: any) => {
@@ -177,10 +169,13 @@ export class ListNivelesComponent {
 
   openDialog(message: string) {
     return this.dialog.open(CardConfirmComponent, {
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {
         mensaje: message,
       },
-      width: '30%',
     });
   }
 
@@ -215,7 +210,9 @@ export class ListNivelesComponent {
 
   editarNivel(item:mallaAcademicaNiveles) {
     const dialogRef = this.dialog.open(EditMallaAcademicaComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {id:item.idNivel, isDisabled: true, titulo: 'Editar Nivel', tipo:'1'},
     });
     dialogRef.afterClosed().subscribe((res) => {

@@ -16,10 +16,6 @@ export class SimulatorsReportsComponent {
 
   reloadTable: boolean = false;
 
-  // loadTable() {
-  //   this.reloadTable = true;
-  // }
-
   loadedTale() {
     this.reloadTable = false;
   }

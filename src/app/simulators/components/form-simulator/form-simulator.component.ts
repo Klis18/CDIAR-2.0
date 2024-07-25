@@ -27,6 +27,7 @@ export class FormSimulatorComponent {
   asignaturas: { label: string; value: string }[] = [];
   estados: { label: string; value: string }[] = [];
   selectedTab: string = '';
+  currentIdNivel!: number;
   
 
 
@@ -40,11 +41,22 @@ export class FormSimulatorComponent {
 
     this.createForm();
     this.loadNiveles();
-    // this.loadEstados();
     
     if (this.formData) {
       this.setData(this.formData);
     }
+
+    this.simulatorGroupForm.get('idNivel')?.valueChanges.subscribe({
+      next: (idNivel) => {
+        if (idNivel !== this.currentIdNivel) {
+          this.currentIdNivel = idNivel;
+          this.onNivelChange(idNivel);
+        } else if (!idNivel) {
+          this.asignaturas = [];
+          this.simulatorGroupForm.get('idAsignatura')?.reset();
+        }
+      },
+    });
       
       this.simulatorGroupForm.valueChanges.subscribe(() => {
         this.editedDataEmitter.emit(this.simulatorGroupForm.value);
@@ -67,11 +79,9 @@ export class FormSimulatorComponent {
   createForm() {
     this.simulatorGroupForm = this.fb.group({
       idSimulador: [],
-      idNivel: [0, Validators.required],
-      idAsignatura: [0, Validators.required],
-      // idEstado: [0, Validators.required],
+      idNivel: [, Validators.required],
+      idAsignatura: [, Validators.required],
       nombreSimulador: ['', Validators.required],
-      
     });
 
   }
@@ -82,13 +92,11 @@ export class FormSimulatorComponent {
         idSimulador: data.idSimulador,
         idNivel: data.idNivel,
         idAsignatura: data.idAsignatura,
-        // idEstado: data.idEstado,
         nombreSimulador: data.nombreSimulador,
       });
 
       this.getAsignaturasPorNivel(Number(data.idNivel));
 
-      // this.observacion = data.observacion;
       this.idAsign = data.idAsignatura;
       this.idNiv = data.idNivel;
 
@@ -97,11 +105,8 @@ export class FormSimulatorComponent {
 
   loadNiveles() {
     this.simulatorService.getNiveles().subscribe((res: any) => {
-
-       //Extaer descripción de nivel
        let nivel = res.data.find((nivel: any) => nivel.idNivel === this.idNiv);
        this.descripcionNivel = nivel ? nivel.descripcion : null;
-       //Fin de la extracción
 
       this.nivelesType = res.data.map((nivel: Nivel) => ({
         label: nivel.descripcion,
@@ -110,24 +115,14 @@ export class FormSimulatorComponent {
     });
   }
 
-
-  onNivelChange(event: Event) {
-    const selectedNivel = Number((event.target as HTMLSelectElement).value);
-    this.getAsignaturasPorNivel(selectedNivel);
-
-    
+  onNivelChange(nivelId: number) {
+    if (nivelId) this.getAsignaturasPorNivel(nivelId);
   }
 
   getAsignaturasPorNivel(idNivel: number, callback?: () => void) {
     this.simulatorService
       .getAsignaturasPorNivel(idNivel)
       .subscribe((res: any) => {
-
-        //Extaer el nombre de la asignatura
-        let asignatura = res.data.find((asignatura: any) => asignatura.idAsignatura === this.idAsign);
-        this.nombreAsignatura = asignatura ? asignatura.nombre : null;
-        //Fin de la extracción
-
         this.asignaturas = res.data.map((asignatura: any) => ({
           label: asignatura.nombre,
           value: asignatura.idAsignatura,
@@ -138,18 +133,15 @@ export class FormSimulatorComponent {
         }
       });
     const asignaturaControl = this.simulatorGroupForm.get('idAsignatura');
-
     if (asignaturaControl) {
       asignaturaControl.markAsTouched();
       asignaturaControl.updateValueAndValidity();
     }
-  
   }
 
 
   selectedActivate(rol:string): boolean{
     const isStudent = rol === 'Estudiante';
-    // const isDocente = rol === 'Docente' && this.selectedTab === 'Mis Recursos';
     const isDocente = rol === 'Docente';
     return isStudent || isDocente;
   }

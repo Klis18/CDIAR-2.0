@@ -1,61 +1,45 @@
 <mat-dialog-content>
-    <div class="pr-7 pl-7">
+    <div class="pr-2 pl-2">
       <form [formGroup]="simulatorGroupForm">
         <div class="grid grid-cols-5 gap-4 mt-5">
-            <div class="col-span-2">
+            <div class="col-span-5 md:col-span-2 lg:col-span-2">
               <label
                 for="nivel"
                 class="block text-sm font-medium leading-6 text-gray-900"
                 >Nivel</label
               >
-              <select *ngIf="selectedActivate(rol)"
-                id="niveles"
-                formControlName="idNivel"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                (change)="onNivelChange($event)"
-              >
-                <option value="" disabled selected>Nivel</option>
-                <option *ngFor="let nivel of nivelesType" [value]="nivel.value">
-                  {{ nivel.label }}
-                </option>
-              </select>
+              <ng-select
+              [items]="nivelesType"
+              bindLabel="label"
+              bindValue="value"
+              [searchable]="false"
+              placeholder="Niveles"
+              formControlName="idNivel"
+              notFoundText="No hay niveles"
+              class="ng-custom"
+            >
+            </ng-select>
               
-              <input *ngIf="onlyViewACtivate(rol)"
-              type="text"
-              id="nivelSelected"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              [value]="descripcionNivel"
-              [readonly]="rol == 'Admin' || rol == 'Docente'"
-             />
             </div>
       
-            <div class="col-span-3">
+            <div class="col-span-5 md:col-span-3 lg:col-span-3">
               <label
                 for="asignatura"
                 class="block text-sm font-medium leading-6 text-gray-900"
                 >Asignatura</label
               >
-              <select *ngIf="selectedActivate(rol)"
-                id="asignaturas"
-                formControlName="idAsignatura"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              >
-                <option value="" disabled selected>Asignatura</option>
-                <option
-                  *ngFor="let asignatura of asignaturas"
-                  [value]="asignatura.value"
-                >
-                  {{ asignatura.label }}
-                </option>
-              </select>
-    
-              <input *ngIf="onlyViewACtivate(rol)"
-              type="text"
-              id="asignatureSelected"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              [value]="nombreAsignatura"
-              [readonly]="rol == 'Admin' || rol == 'Docente'"
-             />
+              <ng-select
+            [items]="asignaturas"
+            bindLabel="label"
+            bindValue="value"
+            [searchable]="false"
+            placeholder="Asignatura"
+            formControlName="idAsignatura"
+            notFoundText="No hay Asignaturas"
+            class="ng-custom"
+          >
+          </ng-select>
+
             </div>
       
            

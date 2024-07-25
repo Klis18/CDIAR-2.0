@@ -1,7 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { VideolearnService } from '../../services/videolearn.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { addQuestionsVideolearn } from '../../interfaces/videolearn.interface';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'app-add-questions-videolearn',
@@ -11,11 +13,12 @@ import { addQuestionsVideolearn } from '../../interfaces/videolearn.interface';
 export class AddQuestionsVideolearnComponent {
   datosVideoLearn!: any;
   validForm: boolean = false;
-  // asignaturas: { label: string; value: string }[] = [];
   idVideoLearn: number = this.data.id;
   minutoVideo: number = this.data.minutos;
   constructor(
     private videolearnService: VideolearnService,
+    private spinnerService: SpinnerService,
+    private dialog: MatDialog,
     private dialogRef: MatDialogRef<AddQuestionsVideolearnComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
@@ -32,11 +35,21 @@ export class AddQuestionsVideolearnComponent {
       minutoVideo: this.minutoVideo,
     };
 
-    console.log('Pregunta VideoLearn a guardar', videolearn);
+    this.spinnerService.showSpinner();
 
     this.videolearnService.addVideolearnQuestions(videolearn).subscribe((res) => {
+      this.spinnerService.hideSpinner();
       this.CloseModal(res.statusCode.toString());
-    });
+    },
+    (error) => {
+        this.spinnerService.hideSpinner();
+        this.dialog.open(CardMessageComponent, {
+          width: '80%',
+          maxWidth: '500px',
+          maxHeight: '80%',
+          data: {status:'error', mensaje: 'Error al guardar el recursos, por favor intente de nuevo.'},
+        });
+      });
   }
 
   getData(events: any) {
@@ -51,9 +64,7 @@ export class AddQuestionsVideolearnComponent {
     this.validForm = event;
   }
 
-  // updateAsignatura(event: any) {
-  //   this.asignaturas = event;
-  // }
+
   cancelar() {
     this.dialogRef.close();
   }

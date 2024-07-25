@@ -33,12 +33,9 @@ export class ChangePasswordComponent implements OnInit{
 
     this.homeService.cambiarContrasena(userData).subscribe(
       (response) => {
-        // manejar la respuesta exitosa
-        console.log('Response:', response);
       },
       (error) => {
-        // manejar el error
-        console.error('Error:', error);
+
       }
     )
   }

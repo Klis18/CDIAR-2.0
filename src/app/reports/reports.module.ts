@@ -8,17 +8,19 @@ import { UserReportTableComponent } from './components/user-report-table/user-re
 import { SharedModule } from '../shared/shared.module';
 import { SimulatorsTableComponent } from './components/simulators-table/simulators-table.component'; // Import the XLSX module
 import { UserReportsComponent } from './pages/user-reports/user-reports.component';
-import { UserReportComponent } from './pages/user-report/user-report.component';
 import { SimulatorsReportsComponent } from './pages/simulators-reports/simulators-reports.component';
+import { VideolearnsReportsComponent } from './pages/videolearns-reports/videolearns-reports.component';
+import { VideolearnTableComponent } from './components/videolearn-table/videolearn-table.component';
 
 @NgModule({
   declarations: [
     UserReportsComponent,
     UserReportTableComponent,
     SimulatorsTableComponent,
-    UserReportComponent,
     UserReportTableComponent,
     SimulatorsReportsComponent,
+    VideolearnsReportsComponent,
+    VideolearnTableComponent,
   ],
   imports: [
     CommonModule,
@@ -27,5 +29,9 @@ import { SimulatorsReportsComponent } from './pages/simulators-reports/simulator
     SharedModule,
     ReactiveFormsModule,
   ],
+  exports: [
+    VideolearnTableComponent,
+    SimulatorsTableComponent,
+  ]
 })
 export class ReportsModule {}

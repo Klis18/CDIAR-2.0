@@ -23,18 +23,10 @@ export class MallaAcademicaFormComponent {
 
   nivelesType: { label: string; value: string }[] = [];
   tipoRegistro: { label: string; value: string }[] = [];
-//   asignaturas: { label: string; value: string }[] = [];
   mallaGroupForm!: FormGroup;
   response: any;
-//   rol: string = '';
-//   nivel: string = '';
-//   asignatura: string = '';
-//   nombreSimulador: string = '';
 
   private subscriptions: Subscription[] = [];
-
-
-//   // selectedOption: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -77,55 +69,10 @@ export class MallaAcademicaFormComponent {
           };
         }
         this.editedDataEmitter.emit(this.response);
-        console.log('Data desde malla academica', this.response);
         this.valueFormEmitter.emit(this.mallaGroupForm.valid);
       })
     );
-
   }
-
-//   ngOnInit() {
-//     this.createForm();
-//     // this.loadTiposPreguntas();
-//     this.obtenerDatosSimulador(this.id);
-//     this.homeService.obtenerDatosMenu().subscribe({
-//       next: (user) => {
-//         if (user) this.rol = user.data?.rol;
-//        // this.ngSuscribesOnInit();
-
-//         if (this.formData) {
-//           console.log('Data desde preguntas simulador', this.formData);
-//           this.setData(this.formData);
-//           if(this.onlyView == false){
-//             this.simulatorQuestionGroupForm.disable();
-//           }
-//         }
-//       },
-//       error: () => {
-//         window.alert('No cargo la información del Usuario Administrador');
-//       },
-//     });
-
-//     this.subscriptions.push(
-//       this.simulatorQuestionGroupForm.valueChanges.pipe(
-//         debounceTime(300)  // Ejemplo de debounce para reducir peticiones
-//       ).subscribe(() => {
-//         
-//       const response = {
-//         idSimulador: this.id,
-//         pregunta: this.simulatorQuestionGroupForm.get('pregunta')?.value,
-//         idTipoPregunta: this.questionType,
-//         opcionesRespuestas: this.opcionesRespuestas,
-//       };
-      
-
-//       this.editedDataEmitter.emit(response);
-//       this.valueFormEmitter.emit(this.simulatorQuestionGroupForm.valid);
-
-//       })
-//     );
-//   }
-
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['formData']) {
@@ -141,21 +88,9 @@ export class MallaAcademicaFormComponent {
     });
   }
 
-//   obtenerDatosSimulador(idSimulador: number ){
-//     this.simulatorService.getDatosSimulator(idSimulador).subscribe((res)=>{
-//       this.nivel = res.data.nivel;
-//       this.asignatura = res.data.asignatura;
-//     });
-//   }
-
-// idPregunta:number = 0;
 
   setData(data: any) {
     if (data && this.mallaGroupForm) {
-      // this.mallaGroupForm.patchValue({
-      //   pregunta: data.pregunta,
-      //   idTipoPregunta: data.idTipoPregunta,
-      // });
       if(this.tipo === '1'){
         this.mallaGroupForm.patchValue({
           tipoRegistro: this.tipo,
@@ -170,59 +105,6 @@ export class MallaAcademicaFormComponent {
       }
     }
   }
-
-   
-//   }
-
-  
-//   tipoPreguntaSeleccionada: any;
-//   questionType: number = 0;
-
-
-//   onChange(option:any) {
-//     this.tipoPreguntaSeleccionada = option;
-//     this.questionType = option.value;
-//   }
-  
-//   clickControllers(){
-//     document.getElementById('radio1')?.addEventListener('click', () => {
-//       this.radioSeleccionado1 = true;
-//       this.radioSeleccionado2 = false;
-//       this.radioSeleccionado3 = false;
-//       this.radioSeleccionado4 = false;
-//     });
-//     document.getElementById('radio2')?.addEventListener('click', () => {
-//       this.radioSeleccionado2 = true;
-//       this.radioSeleccionado1 = false;
-//       this.radioSeleccionado3 = false;
-//       this.radioSeleccionado4 = false;
-//     });
-//     document.getElementById('radio3')?.addEventListener('click', () => {
-//       this.radioSeleccionado3 = true;
-//       this.radioSeleccionado1 = false;
-//       this.radioSeleccionado2 = false;
-//       this.radioSeleccionado4 = false;
-//     });
-//     document.getElementById('radio4')?.addEventListener('click', () => {
-//       this.radioSeleccionado4 = true;
-//       this.radioSeleccionado1 = false;
-//       this.radioSeleccionado2 = false;
-//       this.radioSeleccionado3 = false;
-//     });
-    
-//     document.getElementById('checkbox1')?.addEventListener('click', () => {
-//       this.checkboxSeleccionado1 = !this.checkboxSeleccionado1;
-//     });
-//     document.getElementById('checkbox2')?.addEventListener('click', () => {
-//       this.checkboxSeleccionado2 = !this.checkboxSeleccionado2;
-//     });
-//     document.getElementById('checkbox3')?.addEventListener('click', () => {
-//       this.checkboxSeleccionado3 = !this.checkboxSeleccionado3;
-//     });
-//     document.getElementById('checkbox4')?.addEventListener('click', () => {
-//       this.checkboxSeleccionado4 = !this.checkboxSeleccionado4;
-//     });
-//   }
 
 loadNiveles() {
   this.sharedService.getNiveles().subscribe((res: any) => {

@@ -1,8 +1,8 @@
 <mat-dialog-content>
-  <div class="pr-7 pl-7">
+  <div class="pr-2 pl-2">
     <form [formGroup]="recursoGroupForm">
       <div class="grid grid-cols-12 gap-4 mt-5">
-        <div class="col-span-12 md:col-span-6">
+        <div class="col-span-12 md:col-span-4">
           <label
             for="nivel"
             class="block text-sm font-medium leading-6 text-gray-900"
@@ -21,7 +21,7 @@
           </ng-select>
         </div>
 
-        <div class="col-span-12 md:col-span-6">
+        <div class="col-span-12 md:col-span-8">
           <label
             for="asignatura"
             class="block text-sm font-medium leading-6 text-gray-900"
@@ -39,27 +39,6 @@
           >
           </ng-select>
         </div>
-        <!-- @if(canShowStatus()){
-        <div class="col-span-12 md:col-span-6">
-          <label
-            for="estado"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Estado</label
-          >
-          <ng-select
-            [items]="estados"
-            bindLabel="label"
-            bindValue="value"
-            [searchable]="false"
-            placeholder="Estados"
-            formControlName="idEstado"
-            notFoundText="No hay niveles"
-            class="ng-custom"
-          >
-          </ng-select>
-        </div>
-        }  -->
-        <!-- @if(selectedActivate(rol)){ -->
         <div
           class="col-span-12"
         >
@@ -68,7 +47,18 @@
             class="block text-sm font-medium leading-6 text-gray-900"
             >Tipo Recurso</label
           >
-          <select
+          <ng-select
+            [items]="resourceType"
+            bindLabel="label"
+            bindValue="value"
+            [searchable]="false"
+            placeholder="Tipo Recurso"
+            formControlName="tipoRecurso"
+            notFoundText="No hay tipos de recursos"
+            class="ng-custom"
+          >
+          </ng-select>
+          <!-- <select
             id="tipoRecurso"
             formControlName="tipoRecurso"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -76,9 +66,8 @@
             <option value="" disabled selected>Tipo Recurso</option>
             <option value="Link">Link</option>
             <option value="Archivo">Documento/Imagen</option>
-          </select>
+          </select> -->
         </div>
-        <!-- } -->
 
         <div class="col-span-12">
           <label
@@ -132,67 +121,7 @@
               readonly
             />
           </div>
-          
         } 
-        <!-- @if(this.rol === 'Admin' || showObservation(this.rol) && rol ===
-        'Estudiante'){
-        <div class="col-span-12">
-          <div class="col-span-4">
-            <label
-              for="docenteRevisor"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Revisor</label
-            >
-            <ng-select
-              [items]="docentes"
-              bindLabel="label"
-              bindValue="value"
-              [searchable]="false"
-              placeholder="Docentes"
-              formControlName="idDocenteRevisor"
-              notFoundText="No hay Docentes"
-              class="ng-custom"
-            >
-            </ng-select>
-          </div>
-        </div>
-        } @if(showObservation(this.rol)){
-        <div class="col-span-12">
-          <div class="col-span-4 mt-2">
-            <label
-              for="observacion"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Observación</label
-            >
-            <textarea
-              type="text"
-              id="observacion"
-              formControlName="observation"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="Observación"
-            ></textarea>
-          </div>
-
-          <div class="col-span-4 mt-2">
-            <label
-              for="file"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Observaciones Archivo</label
-            >
-            <div class="mt-2">
-              <input
-                type="file"
-                id="file"
-                (change)="onFileChange($event, 'observationArchivo')"
-                accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .pdf, .xls, .xlsx, .ppt, .pptx"
-                class="block w-full text-gray-900"
-              />
-              <div>
-              </div>
-            </div>
-          </div>
-        </div>
-        } -->
       </div>
     </form>
   </div>

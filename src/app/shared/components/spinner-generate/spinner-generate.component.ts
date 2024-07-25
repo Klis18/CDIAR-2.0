@@ -5,7 +5,6 @@ import { SpinnerService } from '../../services/spinner.service';
   selector: 'spinner-generate',
   templateUrl: './spinner-generate.component.html',
   styles: `
-    /* spinner-modal.component.css */
 .modal {
   display: none;
   position: fixed;
@@ -13,10 +12,8 @@ import { SpinnerService } from '../../services/spinner.service';
   left: 0;
   width: 100%;
   height: 100%;
-  // background-color: rgba(0, 0, 0, 0.5);
-  // background-color: rgba(7, 36, 131, 0.27);
   background-color:rgba(7, 36, 131, 0.67);
-  z-index: 1050; /* Valor alto para asegurar que esté sobre otros elementos */
+  z-index: 1050; 
 }
 
 .modal.show {

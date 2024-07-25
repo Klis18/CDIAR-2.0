@@ -12,6 +12,7 @@ import { SimulatorsComponent } from '../../pages/simulators/simulators.component
 import { SimulatorsService } from '../../services/simulators.service';
 import { DetailsSimulatorComponent } from '../details-simulator/details-simulator.component';
 import { EditSimulatorComponent } from '../edit-simulator/edit-simulator.component';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
   selector: 'saved-simulators-table',
@@ -36,15 +37,15 @@ export class SavedSimulatorsTableComponent {
   usuarioCreador: boolean = true;
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -64,6 +65,7 @@ export class SavedSimulatorsTableComponent {
 
   constructor(private simulatorService:SimulatorsService,
               private dialog: MatDialog,
+              private spinnerService: SpinnerService,
               private router: Router,
               private simulator: SimulatorsComponent,
               @Inject(AsignarRevisorComponent) private approve: AsignarRevisorComponent,
@@ -226,7 +228,6 @@ export class SavedSimulatorsTableComponent {
     });
   }
 
-  //TODO:
   redirigirPreguntas(item: ListSimulators) {
     this.router.navigate(['/simuladores/preguntas',{id: item.idSimulador, simulador: item.nombreSimulador}]);
   }
@@ -244,7 +245,6 @@ export class SavedSimulatorsTableComponent {
 
 saveSimulatorStarted(idSimulador: number) {
   this.simulatorService.saveSimulatorStarted(idSimulador).subscribe(() => {
-    console.log('Simulador iniciado guardado');
   });
 }
   

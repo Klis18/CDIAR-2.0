@@ -1,5 +1,5 @@
 
-<div [formGroup]="videolearns" class="-my-2 overflow-x-auto sm:-mx-6">
+<div [formGroup]="videolearns" class="-my-2 overflow-x-auto sm:-mx-6" *ngIf="data.length > 0; else noData">
     <div class="flex flex-wrap pr-7 pl-7 pt-2 pb-7">
       <div
         *ngFor="let item of data; let i = index"
@@ -38,20 +38,6 @@
            
   
             <div class="col-span-4">
-  
-              <!-- @if(selectedTab == 'Publicado' && userRol != 'Admin'){
-                <button
-                  type="button"
-                  (click)="saveVideoLearnToReview(item.idVideoLearnRealizado)"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-                >
-                  <span class="flex items-center justify-center">
-                    <mat-icon>bookmark</mat-icon>
-                  </span>
-                </button>
-              }
-             -->
-           
               <button
                 type="button"
                 (click)="viewDetailsVideolearn(item)"
@@ -78,8 +64,9 @@
   
     <!---PAGINACIÓN-->
   
-    <div class="flex my-3 pr-7 pl-7">
+    <div class="flex my-3 pl-0 pr-0 md:pr-7 md:pl-7 lg:pr-7 lg:pl-7">
       <div class="flex-1 ms-2">
+        Mostrar:
         <select
           class="p-1 rounded border-2 border-solid border-slate-300"
           formControlName="limit"
@@ -89,6 +76,7 @@
           }
         </select>
       </div>
+
       <div class="grid justify-end">
         <nav>
           <ul class="flex inline-flex">
@@ -124,5 +112,10 @@
         </nav>
       </div>
     </div>
-  <!-- </div> -->
+  </div>
+    <ng-template #noData>
+      <div class="h-24 bg-gray-200 p-7">
+        <div class="text-center text-xl">No hay datos disponibles.</div>
+      </div>
+    </ng-template>
   

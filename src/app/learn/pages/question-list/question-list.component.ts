@@ -13,6 +13,7 @@ import { EditQuestionVideolearnComponent } from '../../components/edit-question-
 })
 export class QuestionListComponent implements OnInit{
   @Input() idVideoLearn!: number;
+  @Input() testIniciado!:boolean;
   @Input() questions: any[] = [];
   @Input() loadTable: boolean = false;
   @Output() loadedTableEmitter = new EventEmitter<boolean>();
@@ -29,18 +30,17 @@ export class QuestionListComponent implements OnInit{
   estado: string = '';
   itemsPerPage: number = 5;
   totalPages: number = 1;
-  // videoLearnForm!: FormGroup;
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -55,7 +55,6 @@ export class QuestionListComponent implements OnInit{
             ) {}
 
   ngOnInit() {
-    // this.questions = this.questionService.getQuestions();
     this.listaPreguntas();
   }
 
@@ -75,15 +74,11 @@ export class QuestionListComponent implements OnInit{
    
     this.videolearnService.getQuestionsVideolearn(paginate).subscribe({
       next: (res: any) => {
-        console.log('Preguntas Data', res.data);
         this.data = res.data ?? [];
         if (this.data.length > 0) {
-          // this.idSimulador = res.data.idPregunta;
           this.pregunta = res.data.pregunta;          
-          // this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
         if (this.data?.length === 0 || !this.data) {
-          // this.paginateCurrent = [1];
         }
       },
       complete: () => {
@@ -107,10 +102,7 @@ export class QuestionListComponent implements OnInit{
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log('Pregunta a eliminar', idPregunta);
-        console.log('Eliminando pregunta', res);
         this.videolearnService.deleteQuestionVideolearn(idPregunta).subscribe(() => {
-          console.log('pregunta de videolearn eliminada');
           this.listaPreguntas();
         });
       }

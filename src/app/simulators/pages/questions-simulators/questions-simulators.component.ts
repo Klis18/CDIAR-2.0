@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HomeService } from '../../../home/services/home.service';
 import { updateStatusSimulator } from '../../interfaces/simulators.interface';
-import { ObservacionRechazoSimuladoresComponent } from '../../components/observacion-rechazo-simuladores/observacion-rechazo-simuladores.component';
 import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
 
 @Component({
@@ -38,11 +37,9 @@ export class QuestionsSimulatorsComponent {
       this.idSimulador= params['id'];
     });
 
-    console.log('ID SIM',this.idSimulador);
     this.homeService.obtenerDatosMenu().subscribe((user:any) => {
       this.nombreUsuario = user.data.userName;
       this.rol = user.data.rol;
-      console.log('nombreUsuario', this.nombreUsuario);
     });
 
     
@@ -50,12 +47,10 @@ export class QuestionsSimulatorsComponent {
       this.estadoSimulador = res.data.estado;
       this.creadorSimulador = res.data.usuarioCreador;
       this.nombreRevisor = res.data.nombreRevisor;
-      console.log('NOMBRE REVISOR', this.nombreRevisor);
     });
     
     
     this.simulatorService.getObservationSimulator(this.idSimulador).subscribe((res) => {
-      console.log(res);
       this.observacionRechazo = res.data.observacion;
     });
     
@@ -116,7 +111,6 @@ export class QuestionsSimulatorsComponent {
     
     };
     this.simulatorService.actualizarEstadoSimulator(simulator).subscribe((res) => {
-      console.log(res);
       this.router.navigate(['/simuladores/repositorio-simuladores']);
 
     });

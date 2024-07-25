@@ -125,11 +125,12 @@ export class SecurityService {
 
     listaMallaAcademicaNiveles({
       idNivel,
+      pages,
+      limit
     }: mallaAcademicaNivelesGetQuerys) {
-    //   if (!pages) pages = 1;
-    // if (!limit) limit = 5;
-    // let query: string = `?pages=${pages}&limit=${limit}`;
-    let query: string = `?`;
+      if (!pages) pages = 1;
+    if (!limit) limit = 5;
+    let query: string = `?pages=${pages}&limit=${limit}`;
     if (idNivel && idNivel !== 0)
       query += `&idNivel=${idNivel}`;
 

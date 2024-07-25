@@ -5,7 +5,7 @@
         <div class="bg-white p-4 rounded shadow-md">
           <p class="font-bold">Pregunta {{i + 1}} (Minuto {{question.minutoVideo | secondsToMinute}})</p>
           <p>{{question.pregunta}}</p>
-          <div class="flex justify-end mt-2">
+          <div class="flex justify-end mt-2" *ngIf="testIniciado === false">
             <mat-icon class="text-red-600 mr-2" *ngIf="usuarioCreador === nombreUsuario" (click)="eliminarPregunta(question.idPregunta)">delete</mat-icon>
             <mat-icon class="text-blue-800 mr-2" *ngIf="usuarioCreador === nombreUsuario" (click)="editarPreguntaVideoLearn(question.idPregunta)">edit</mat-icon>
             <mat-icon class="text-blue-800" (click)="viewPreguntaVideoLearn(question.idPregunta)">visibility</mat-icon>

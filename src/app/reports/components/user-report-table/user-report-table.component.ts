@@ -34,15 +34,15 @@ export class UserReportTableComponent implements OnInit, OnChanges {
   users!: FormGroup;
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -52,26 +52,10 @@ export class UserReportTableComponent implements OnInit, OnChanges {
   public paginateCurrent: number[] = [];
 
   constructor(private reportService: ReportsService,
-              @Inject(FormBuilder) private formBuilder: FormBuilder
-              // @Inject (MAT_DIALOG_DATA) public data: any,  ){
-    
+              @Inject(FormBuilder) private formBuilder: FormBuilder    
   ){}
 
-  // ngOnInit(){
-  //   // this.getListaDocentes(); 
-  //   this.listaDocentesRevisores();
-  // }
 
- 
-
-  // getDocentesRevision(){
-  //   this.securityService.getDocentesRevision().subscribe((res) => {
-  //     this.dataDocentes = res.data;
-  //     console.log(res);
-  //   });
-  
-  // }
-  //probando
   ngOnInit(){
     this.builderForm();
     this.users.valueChanges.subscribe({

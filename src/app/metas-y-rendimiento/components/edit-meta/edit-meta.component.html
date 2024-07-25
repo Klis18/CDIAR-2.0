@@ -1,0 +1,40 @@
+<div>
+    <div class="cardTo my-3" *ngIf="datos">
+      <div class="pr-7 pl-7">
+        <div class="text-right">
+          <mat-icon mat-dialog-close class="text-gray-700">close</mat-icon>
+        </div>
+        <p class="text-2xl text-black">Editar Meta</p>
+        <hr />
+      </div>
+      <metas-form
+        [formData]="datos"
+        [readonlyPuntaje]="disabled"
+        (editedDataEmitter)="getData($event)"
+        (valueFormEmitter)="getValidForm($event)"
+        (asignaturaEmitter)="updateAsignatura($event)"
+      />
+    </div>
+    <div style="text-align: right" class="my-2">
+      <div class="col-span-4 text-right mt-3 mb-3 pr-5">
+        <button
+          type="button"
+          (click)="cancelar()"
+          class="text-white bg-gray-500 hover:bg-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+        >
+          <mat-icon class="mr-2">cancel</mat-icon>
+          <span class="flex items-center justify-center"> Cancelar </span>
+        </button>
+        <button
+          type="button"
+          (click)="saveMeta()"
+          [disabled]="!validForm"
+          class="text-white bg-blue-900 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+        >
+          <mat-icon class="mr-2">save</mat-icon>
+          <span class="flex items-center justify-center"> Guardar </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  

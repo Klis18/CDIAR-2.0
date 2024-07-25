@@ -38,7 +38,6 @@ export class QuestionFlashcardFormComponent implements OnInit{
   }
 
   agregarPreguntaLista(){
-    // Obtención de los valores de los campos del formulario
     let preguntaControl = this.questionGroupForm.get('pregunta');
     let respuestaControl = this.questionGroupForm.get('respuesta');
 
@@ -46,11 +45,8 @@ export class QuestionFlashcardFormComponent implements OnInit{
     let pregunta = preguntaControl ? preguntaControl.value : null;
     let respuesta = respuestaControl ? respuestaControl.value : null;
 
-    // Agregación de la pregunta y respuesta al arreglo
     this.preguntasRespuestas.push({idMazo, pregunta, respuesta});
 
-    console.log(this.preguntasRespuestas);
-    // Limpieza de los campos del formulario
     this.valueFormEmitter.emit(this.questionGroupForm.valid);
     this.questionGroupForm.reset();
   }

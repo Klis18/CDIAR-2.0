@@ -26,7 +26,6 @@ export class AsignarRevisorComponent {
   ngOnInit(): void {
 
     this.homeService.obtenerDatosMenu().subscribe((user) => {
-      console.log(user);
       this.usuario = user.data.userName;
       this.roleName = user.data.rol;
     });

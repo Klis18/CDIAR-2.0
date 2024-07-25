@@ -7,11 +7,10 @@ import { SelectRevisorComponent } from '../../../control/components/select-revis
 import { AsignarRevisorComponent } from '../../../control/pages/asignar-revisor/asignar-revisor.component';
 import { HomeService } from '../../../home/services/home.service';
 import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
-import { ListVideolearn, typeTable, videoLearnsRealized, videoLearnsRealizedGetQuerys } from '../../interfaces/videolearn.interface';
+import { typeTable, videoLearnsRealized, videoLearnsRealizedGetQuerys } from '../../interfaces/videolearn.interface';
 import { VideolearnComponent } from '../../pages/videolearn/videolearn.component';
 import { VideolearnService } from '../../services/videolearn.service';
 import { EditVideolearnComponent } from '../edit-videolearn/edit-videolearn.component';
-import { ObservacionRechazoComponent } from '../observacion-rechazo/observacion-rechazo.component';
 import { VideolearnDetailsComponent } from '../videolearn-details/videolearn-details.component';
 
 @Component({
@@ -43,15 +42,15 @@ export class RealizedVideolearnsComponent {
   videoId: string | null = '';
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -64,7 +63,6 @@ export class RealizedVideolearnsComponent {
   tituloMazo: string = '';
   usuario: string = '';
   videolearns!: FormGroup;
-  // creadorSimulador: string = '';
 
   colors = ['#8B7CC0', '#924294', '#2E90A8', '#73C5D3', '#4581BA', '#5BC9D7', '#6C3EB1']; 
 
@@ -141,7 +139,7 @@ export class RealizedVideolearnsComponent {
       this.userRol = user.data.rol;
     });
   }
-  private idEstado!: number;
+
   listaVideoLearns() {
     const paginate: videoLearnsRealizedGetQuerys= {
       pages: this.page,
@@ -154,7 +152,6 @@ export class RealizedVideolearnsComponent {
     this.videolearnService.getVideoLearnsRealized(paginate).subscribe({
       next: (res: any) => {
         this.data = res.data ?? [];
-        console.log('data VLEARN', this.data);
         if (this.data.length > 0) {
           this.nombreVideoLearn = res.data.nombreVideoLearn;
           this.nivel = res.data.nivel;
@@ -176,14 +173,13 @@ export class RealizedVideolearnsComponent {
  
 
   obtenerIDYoutube(url: string): string | null {
-    // Patrón de expresión regular para extraer el ID del video
     const regExp = /^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
 
     if (match && match[2].length === 11) {
-        return match[2]; // Devuelve el ID del video
+        return match[2]; 
     } else {
-        return null; // Si no se encuentra un ID válido
+        return null;
     }
   }
 
@@ -311,7 +307,6 @@ export class RealizedVideolearnsComponent {
 
   getCover(url:string){
     const id = this.obtenerIDYoutube(url);
-    // const imagen = `https://img.youtube.com/vi/${id}/0.jpg`;
     const imagen= `https://img.youtube.com/vi//${id}/hqdefault.jpg`;
     return imagen
   }
@@ -346,12 +341,6 @@ export class RealizedVideolearnsComponent {
     });
   }
 
-  // saveVideoLearnToReview(idVideoLearn: number) {
-  //   this.videolearnService.SaveVideoLearnToReview(idVideoLearn).subscribe(() => {
-  //       console.log('Videolearn guardado');
-  //   });
-    
-  // }
 
   saveVideoLearnStarted(idVideoLearn: number) {
     this.videolearnService.saveVideoLearnStarted(idVideoLearn).subscribe(() => {
@@ -359,11 +348,4 @@ export class RealizedVideolearnsComponent {
     });
   }
 
-  // verObservacion(idVideoLearn: number) {
-  //   this.dialog.open(ObservacionRechazoComponent, {
-  //     width: '55%',
-  //     maxHeight: '90%',
-  //     data: {id: idVideoLearn, opcion: 'verObservacionVideolearn'},
-  //   });
-  // }
 }

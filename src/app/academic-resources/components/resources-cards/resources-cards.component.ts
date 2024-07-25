@@ -12,7 +12,8 @@ import { ResourcesComponent } from '../../pages/resources/resources.component';
 import { EditResourceComponent } from '../edit-resource/edit-resource.component';
 import { ResourceDetailsComponent } from '../resource-details/resource-details.component';
 import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
-import { Role } from '../../../auth/interfaces/role';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'resources-cards',
@@ -25,8 +26,7 @@ export class ResourcesCardsComponent {
   @Input() searchData: any;
   @Input() loadTable: boolean = false;
   @Output() loadedTableEmitter = new EventEmitter<boolean>();
-  // colors = ['#E0C94C','#E04CB9','#4CE0E0','#5FA1A1','#BA8789','#8B5E7F','#C95B7E']; 
-    colors = ['#E0C94C','#E04CB9','#4CE0E0','#E071A0','#993ED6', '#8593E1','#8593E1']; 
+  colors = ['#E0C94C','#E04CB9','#4CE0E0','#E071A0','#993ED6', '#8593E1','#8593E1']; 
 
   data: ListaRecurso[] = [];
   itemsPerPage: number = 5;
@@ -48,15 +48,15 @@ export class ResourcesCardsComponent {
   resourceTable!: FormGroup;
   limitsOptions = [
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
     {
-      label: '20 Elementos',
+      label: '20',
       value: 20,
     },
   ];
@@ -64,6 +64,7 @@ export class ResourcesCardsComponent {
   constructor(
     private recursoService: RecursoService,
     private academic: ResourcesComponent,
+    private spinnerService: SpinnerService,
     @Inject(AsignarRevisorComponent) private approve: AsignarRevisorComponent,
     @Inject(HomeService) private homeService: HomeService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
@@ -319,10 +320,13 @@ export class ResourcesCardsComponent {
 
   openDialog(message: string) {
     return this.dialog.open(CardConfirmComponent, {
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {
         mensaje: message,
       },
-      width: '30%',
     });
   }
 
@@ -332,9 +336,20 @@ export class ResourcesCardsComponent {
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
+        this.spinnerService.showSpinner();
         this.recursoService.eliminarRecurso(idRecurso).subscribe(() => {
+          this.spinnerService.hideSpinner();
           this.listaRecursos();
-        });
+        },
+        (error) => {
+            this.spinnerService.hideSpinner();
+            this.dialog.open(CardMessageComponent, {
+              width: '80%',
+              maxWidth: '500px',
+              maxHeight: '80%',
+              data: {status:'error', mensaje: 'Error al eliminar el recursos, por favor intente de nuevo.'},
+            });
+          });
       }
     });
   }
@@ -400,6 +415,7 @@ export class ResourcesCardsComponent {
     const dialogRef = this.dialog.open(EditResourceComponent, {
       width: '80%',
       maxWidth: '500px',
+      maxHeight: '80%',
       data: {
         id: idRecurso,
         titulo: this.tituloRecurso,
@@ -417,6 +433,8 @@ export class ResourcesCardsComponent {
   asignaRevisor(idRecurso: number) {
     const dialogRef = this.dialog.open(SelectRevisorComponent, {
       width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {id: idRecurso, opcion:'Recursos'},
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -434,7 +452,9 @@ export class ResourcesCardsComponent {
 
   viewDetailsResource(item: any, opcion: string) { 
    const dialogRef = this.dialog.open(ResourceDetailsComponent, {
-      width: '38%',
+    width: '80%',
+    maxWidth: '500px',
+    maxHeight: '80%',
       data: {id: item.idRecurso, 
             nivel:item.nivel, 
             asignatura:item.asignatura,
@@ -448,9 +468,7 @@ export class ResourcesCardsComponent {
   newNotify(item: any) {
     let currentDate = new Date();
     let fechaCreacion = new Date(item.fechaCreacion);
-    // Calcular la diferencia en milisegundos
     let diferenciaEnMs = currentDate.getTime() - fechaCreacion.getTime();
-    // Convertir la diferencia de milisegundos a días
     let diferenciaEnDias = Math.floor(diferenciaEnMs / (1000 * 60 * 60 * 24));
     if (diferenciaEnDias < 5) {
       return true;
@@ -462,8 +480,9 @@ export class ResourcesCardsComponent {
 
   verObservacion(idRecurso: number) {
     this.dialog.open(ObservacionRechazoComponent, {
-      width: '55%',
-      maxHeight: '90%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {id: idRecurso, opcion: 'verObservacionRecurso'},
     });
   }

@@ -45,7 +45,6 @@ export class SearchFiltersComponent {
     });
     this.filterForm.get('nivelesType')?.valueChanges.subscribe({
       next: (level) => {
-        console.log({ level });
         if (level) {
           this.onNivelChange(level);
         }
@@ -66,13 +65,11 @@ export class SearchFiltersComponent {
     this.sharedService
       .getAsignaturasPorNivel(selectedNivel)
       .subscribe((res: any) => {
-        console.log(res.data);
         this.asignaturas = res.data.map((asignatura: any) => ({
           label: asignatura.nombre,
           value: asignatura.idAsignatura,
         }));
       });
   }
-
 
 }

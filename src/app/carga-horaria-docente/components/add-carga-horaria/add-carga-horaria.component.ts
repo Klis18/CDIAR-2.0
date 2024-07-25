@@ -10,7 +10,6 @@ import { CargaHorariaDocenteService } from '../../services/carga-horaria-docente
 export class AddCargaHorariaComponent {
   datosCargaAdd!:any;
   validForm:boolean=false;
-  // idMazo: number = this.data.id;
   constructor(private cargaHorariaService:CargaHorariaDocenteService,
               private dialogRef: MatDialogRef<AddCargaHorariaComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any
@@ -26,9 +25,6 @@ export class AddCargaHorariaComponent {
       this.CloseModal(res.statusCode.toString());
     });
     
-    // this.learnService.addFlashcard(payload).subscribe((res) => {
-    //   this.CloseModal(res.statusCode.toString());
-    // });
   }
   
   CloseModal(mensaje?:string){
@@ -36,9 +32,7 @@ export class AddCargaHorariaComponent {
   }
   
   getCargaAdd(datos:string[]){
-    this.datosCargaAdd = datos;
-    // console.log('Datos Flashcard Add: ', this.datosFlashcardAdd);
-    // console.log('longitud flashcard: ', this.datosFlashcardAdd.length);   
+    this.datosCargaAdd = datos; 
   }
       
   getValidForm(event:any){

@@ -1,7 +1,7 @@
 <div class="pr-7 pl-7">
     <form [formGroup]="generateGroupForm">
       <div class="grid grid-cols-12 gap-4 mt-5">
-        <div class="col-span-6">
+        <div class="col-span-12 md:col-span-6 lg:col-span-6">
             <label
               for="tema"
               class="block text-sm font-medium leading-6 text-gray-900"
@@ -15,7 +15,7 @@
               placeholder="Tema..."
             />
           </div>
-          <div class="col-span-2">
+          <div class="col-span-12 md:col-span-2 lg:col-span-2">
             <label
               for="nivel"
               class="block text-sm font-medium leading-6 text-gray-900"
@@ -35,7 +35,7 @@
             
           </div>
     
-          <div class="col-span-4">
+          <div class="col-span-12 md:col-span-4 lg:col-span-4">
             <label
               for="asignatura"
               class="block text-sm font-medium leading-6 text-gray-900"
@@ -54,15 +54,15 @@
           </ng-select>
 
         </div>
-        <div class="flex items-center me-4 mt-2 col-span-2">
+        <div class="flex items-center me-4 mt-2 col-span-6 md:col-span-2 lg:col-span-2">
             <input type="checkbox" value="" formControlName="flashcardsCheckbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded focus:ring-2">
             <label for="flashcards-checkbox" class="ms-2 text-sm font-medium text-gray-900">Flashcards</label>
         </div>
-        <div class="flex items-center me-4 mt-2 col-span-2">
+        <div class="flex items-center me-4 mt-2 col-span-6 md:col-span-2 lg:col-span-2">
             <input type="checkbox" value="" formControlName="simuladoresCheckbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded focus:ring-2">
             <label for="simuladores-checkbox" class="ms-2 text-sm font-medium text-gray-900">Simuladores</label>
         </div>
-        <div class="col-span-8 text-right">
+        <div class="col-span-12 md:col-span-8 lg:col-span-8 text-right">
             <button type="button" (click)="generarMateriales()" [disabled]="!this.generateGroupForm.valid" class="p-0.5 mb-2 me-2 overflow-hidden text-base font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200">
                 <span class="flex transition-all px-5 py-2.5 ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0 items-center justify-center">
                   <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>

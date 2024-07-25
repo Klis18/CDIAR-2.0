@@ -50,7 +50,6 @@ export class PreguntasFlashcardsComponent {
     });
     
     this.learnService.getObservacion(this.idMazo).subscribe((res) => {
-      console.log(res);
       this.observacionRechazo = res.data.observacion;
     });
     
@@ -104,7 +103,6 @@ cantQuestions: number = 0;
     
     };
     this.learnService.publicarMazo(mazo).subscribe((res) => {
-      console.log(res);
       this.router.navigate(['/learn/flashcards']);
     });
   }
@@ -118,7 +116,6 @@ cantQuestions: number = 0;
   }
 
   viewObservation(){
-    // this.observationVisible = true;
     this.dialog.open(ObservacionRechazoComponent, {
       width: '40%',
       maxHeight: '80%',

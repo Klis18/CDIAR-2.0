@@ -14,6 +14,8 @@ import { SelectRevisorComponent } from '../../../control/components/select-revis
 import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
 import { EditVideolearnComponent } from '../edit-videolearn/edit-videolearn.component';
 import { VideolearnDetailsComponent } from '../videolearn-details/videolearn-details.component';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'cards-videolearns',
@@ -44,15 +46,15 @@ export class CardsVideolearnsComponent {
   videoId: string | null = '';
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -74,6 +76,7 @@ export class CardsVideolearnsComponent {
               private dialog: MatDialog,
               private router: Router,
               private videolearn: VideolearnComponent,
+              private spinnerService: SpinnerService,
               @Inject(AsignarRevisorComponent) private approve: AsignarRevisorComponent,
               @Inject(HomeService) private homeService: HomeService,
               @Inject(FormBuilder) private formBuilder: FormBuilder,
@@ -222,21 +225,16 @@ export class CardsVideolearnsComponent {
   }
 
  
- 
-
   obtenerIDYoutube(url: string): string | null {
-    // Patrón de expresión regular para extraer el ID del video
     const regExp = /^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
 
     if (match && match[2].length === 11) {
-        return match[2]; // Devuelve el ID del video
+        return match[2];
     } else {
-        return null; // Si no se encuentra un ID válido
+        return null;
     }
   }
-
-
 
   crearArreglo(limite: number, cant: number) {
     const rest = cant / limite;
@@ -285,9 +283,20 @@ export class CardsVideolearnsComponent {
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
+        this.spinnerService.showSpinner();
         this.videolearnService.deleteVideolearn(idVideoLearn).subscribe(() => {
+          this.spinnerService.hideSpinner();
           this.listaVideoLearns();
-        });
+        },
+        (error) => {
+            this.spinnerService.hideSpinner();
+            this.dialog.open(CardMessageComponent, {
+              width: '80%',
+              maxWidth: '500px',
+              maxHeight: '80%',
+              data: {status:'error', mensaje: 'Error al eliminar el videolearn, por favor intente de nuevo.'},
+            });
+          });
       }
     });
   }
@@ -360,7 +369,6 @@ export class CardsVideolearnsComponent {
 
   getCover(url:string){
     const id = this.obtenerIDYoutube(url);
-    // const imagen = `https://img.youtube.com/vi/${id}/0.jpg`;
     const imagen= `https://img.youtube.com/vi//${id}/hqdefault.jpg`;
     return imagen
   }
@@ -396,16 +404,11 @@ export class CardsVideolearnsComponent {
 
   saveVideoLearnToReview(idVideoLearn: number) {
     this.videolearnService.SaveVideoLearnToReview(idVideoLearn).subscribe(() => {
-        console.log('Videolearn guardado');
     });
-    // this.simulatorService.SaveSimulatorToReview(idSimulador).subscribe(() => {
-    //   console.log('Videolearn guardado');
-    // });
   }
 
   saveVideoLearnStarted(idVideoLearn: number) {
     this.videolearnService.saveVideoLearnStarted(idVideoLearn).subscribe(() => {
-      console.log('Videolearn iniciado guardado');
     });
   }
 

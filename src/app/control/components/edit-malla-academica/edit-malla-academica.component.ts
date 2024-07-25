@@ -47,11 +47,6 @@ export class EditMallaAcademicaComponent implements OnInit{
     });
   }
 
-  // getRecurso(idRecurso: number) {
-    //   this.recursoService.getRecurso(idRecurso).subscribe((res: any) => {
-    //     this.datosRecursos = res.data;
-    //   });
-
   saveMallaAcademica() {
     if (!this.validForm) {
       return;
@@ -71,8 +66,8 @@ export class EditMallaAcademicaComponent implements OnInit{
     }else if (this.editaDataMalla.tipoRegistro === '2') {
       const asignatura: updateAsignatura = {
         idNivel: this.editaDataMalla.idNivel,
-        idAsignatura: this.editaDataMalla.idAsignatura,
-        nombre: this.editaDataMalla.descripcion,
+        idAsignatura: this.id,
+        nombre: this.editaDataMalla.nombre,
       };
 
       this.securityService.updateAsignatura(asignatura).subscribe((res) => {
@@ -80,24 +75,6 @@ export class EditMallaAcademicaComponent implements OnInit{
         this.CloseModal(res.statusCode.toString());
       }) ;
     }
-    // const asignatura: addAsignatura = {
-    //   idNivel: this.datos.idNivel,
-    //   nombre: this.datos.descripcion,
-    // };
-
-    // this.securityService.addAsignatura(asignatura).subscribe((res) => {
-    //   this.CloseModal(res.statusCode.toString());
-    // });
-
-
-    // const nivel:addNivel = {
-    //   descripcion: this.datos.descripcion,
-    // };
-    
-    // this.securityService.addNivel(nivel).subscribe((res) => {
-    //   this.CloseModal(res.statusCode.toString());
-    // });
- 
   }
 
   getData(events: any) {

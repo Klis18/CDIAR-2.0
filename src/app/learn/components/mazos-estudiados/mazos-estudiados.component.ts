@@ -30,15 +30,15 @@ export class MazosEstudiadosComponent {
   usuarioCreador: boolean = false;
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -126,7 +126,6 @@ export class MazosEstudiadosComponent {
       this.userRol = user.data.rol;
     });
   }
-  // private idEstado!: number;
   listaMazos() {
     const paginate: MazosGetQuery = {
       page: this.page,

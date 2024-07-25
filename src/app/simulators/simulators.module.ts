@@ -17,7 +17,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { QuestionsSimulatorsTablesComponent } from './components/questions-simulators-tables/questions-simulators-tables.component';
 import { EditSimulatorComponent } from './components/edit-simulator/edit-simulator.component';
 import { EditQuestionSimulatorComponent } from './components/edit-question-simulator/edit-question-simulator.component';
-import { ObservacionRechazoSimuladoresComponent } from './components/observacion-rechazo-simuladores/observacion-rechazo-simuladores.component';
 import { SavedSimulatorsTableComponent } from './components/saved-simulators-table/saved-simulators-table.component';
 import { StartSimulatorComponent } from './pages/start-simulator/start-simulator.component';
 import { SimulatorsRealizedTableComponent } from './components/simulators-realized-table/simulators-realized-table.component';
@@ -37,7 +36,6 @@ import { GenerateSimulatorComponent } from './components/generate-simulator/gene
     QuestionsSimulatorsTablesComponent,
     EditSimulatorComponent,
     EditQuestionSimulatorComponent,
-    ObservacionRechazoSimuladoresComponent,
     SavedSimulatorsTableComponent,
     StartSimulatorComponent,
     SimulatorsRealizedTableComponent,

@@ -14,6 +14,8 @@ import { DetailsSimulatorComponent } from '../details-simulator/details-simulato
 import { EditSimulatorComponent } from '../edit-simulator/edit-simulator.component';
 import { SelectRevisorComponent } from '../../../control/components/select-revisor/select-revisor.component';
 import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
+import { SpinnerService } from '../../../shared/services/spinner.service';
+import { CardMessageComponent } from '../../../shared/pages/card-message/card-message.component';
 
 @Component({
   selector: 'cards-simulators',
@@ -42,15 +44,15 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   usuarioCreador: boolean = true;
   limitsOptions = [
     {
-      label: '5 Elementos',
+      label: '5',
       value: 5,
     },
     {
-      label: '10 Elementos',
+      label: '10',
       value: 10,
     },
     {
-      label: '15 Elementos',
+      label: '15',
       value: 15,
     },
   ];
@@ -70,6 +72,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
 
   constructor(private simulatorService:SimulatorsService,
               private dialog: MatDialog,
+              private spinnerService: SpinnerService,
               private router: Router,
               private simulator: SimulatorsComponent,
               @Inject(AsignarRevisorComponent) private approve: AsignarRevisorComponent,
@@ -266,9 +269,22 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
+        this.spinnerService.showSpinner();
+
         this.simulatorService.deleteSimulator(idSimulador).subscribe(() => {
+          this.spinnerService.hideSpinner();
+
           this.listaSimuladores();
-        });
+        },
+        (error) => {
+            this.spinnerService.hideSpinner();
+            this.dialog.open(CardMessageComponent, {
+              width: '80%',
+              maxWidth: '500px',
+              maxHeight: '80%',
+              data: {status:'error', mensaje: 'Error al eliminar el simulador, por favor intente de nuevo.'},
+            });
+          }); 
       }
     });
   }
@@ -287,7 +303,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     }
   }
 
-//TODO:
+
   canApprove(item: any): boolean {
     let isReviewer = false;
     if (this.userRol === ROLES.DOCENTE) {
@@ -299,20 +315,7 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     return isReviewer;
   }
 
-  //TODO:
-  // canEdit(item: any): boolean {
-  //   const isCreator =
-  //     item.usuarioCreacion == this.usuario &&
-  //     this.selectedTab === 'Mis Simuladores' &&
-  //     item.estado !== 'Aprobado' &&
-  //     item.nombreRevisor == '';
-
-  //   const isAdmin =
-  //     item.docenteRevisor === '' &&
-  //     item.estado != 'Aprobado' &&
-  //     this.selectedTab2 === 'Simuladores';
-  //   return isCreator || isAdmin;
-  // }
+ 
   canEdit(item: any): boolean {
     let condition1 = (this.selectedTab === 'Mis Simuladores' && ( item.estado === 'Ingresado' || item.estado === 'Privado') && item.nombreDocenteRevisor === '');
     let condition2 = (this.selectedTab === 'Mis Simuladores' && item.estado ==='Rechazado' ) ;
@@ -332,23 +335,12 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
     return tab && isAdmin;
   }
 
-  //TODO:
   editarSimulador(idSimulador: number, item: any) {
-    // if (this.canEdit(item)) {
-    //   if (item.usuarioCreador == this.usuario) {
-    //     this.tituloMazo = 'Editar Mazo';
-    //   } else if (item.docenteRevisor == this.usuario) {
-    //     this.tituloMazo = 'Aprobar Mazo';
-    //   } else {
-    //     this.tituloMazo = 'Asignar Revisor';
-    //   }
-    // }
     const dialogRef = this.dialog.open(EditSimulatorComponent, {
       width: '40%',
       maxHeight: '80%',
       data: {
         id: idSimulador,
-        // titulo: this.tituloMazo,
         typeModal: this.typeTable,
       },
     });
@@ -375,7 +367,6 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
 
 
 
-  //TODO:
   redirigirPreguntas(item: ListSimulators) {
     this.router.navigate(['/simuladores/preguntas',{id: item.idSimulador, simulador: item.nombreSimulador}]);
   }
@@ -383,14 +374,9 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   redirigirIniciarSimulador(item: ListSimulators) {
         this.saveSimulatorStarted(item.idSimulador);
         this.router.navigate(['/simuladores/iniciar-simulador',{id: item.idSimulador, simulador: item.nombreSimulador}]);
-
-  //   this.learnService.guardarMazoEstudiado(item.idMazo).subscribe((res) => {
-  //     console.log('Mazo guardado', res.data);
-  //     this.router.navigate(['/learn/estudiar-flashcards',{id: item.idMazo, mazo: item.nombreMazo}]);
-  //   });
   }
 
-  //TODO:
+
   asignaRevisor(idSimulador: number) {
     const dialogRef = this.dialog.open(SelectRevisorComponent, {
       width: '80%',
@@ -405,13 +391,11 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
 
   saveSimulatorToReview(idSimulador: number) {
     this.simulatorService.SaveSimulatorToReview(idSimulador).subscribe(() => {
-      console.log('Simulador guardado');
     });
   }
 
   saveSimulatorStarted(idSimulador: number) {
     this.simulatorService.saveSimulatorStarted(idSimulador).subscribe(() => {
-      console.log('Simulador iniciado guardado');
     });
   }
 

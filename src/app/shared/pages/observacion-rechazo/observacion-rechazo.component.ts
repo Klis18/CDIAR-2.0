@@ -96,7 +96,7 @@ export class ObservacionRechazoComponent implements OnInit{
   createForm() {
     this.observationForm = this.fb.group({
       observacionArchivo: [],
-      observacion: ['',Validators.required], // Agrega el campo de observación para TinyMCE
+      observacion: ['',Validators.required],
       observacionFileName: [''],
     });
   }
@@ -122,16 +122,14 @@ export class ObservacionRechazoComponent implements OnInit{
   //----------RECURSOS ACADÉMICOS----------------
   rechazarRecurso(){
     if(this.observationForm.invalid){
-      console.log('Formulario inválido');
+      return;
     }
     const observacion: sendObservationResource = {
       idRecurso: this.data.id,
       observacion: this.observationForm.get('observacion')?.value,
       observacionesArchivo: this.observationForm.get('observacionArchivo')?.value,
     };
-    console.log('Observacion a enviar', observacion);
     this.recursoService.sendObservation(observacion).subscribe((res) => {
-      console.log('Observacion enviada', res);
       this.actualizarEstadoRecurso();
     });
     this.dialogRef.close();
@@ -144,13 +142,11 @@ export class ObservacionRechazoComponent implements OnInit{
       idEstado: 3
     };
     this.recursoService.changeStatusResource(estado).subscribe((res) => {
-      console.log('Recurso rechazado', res);
     });
   }
 
   verObservacionRecurso(){
     this.recursoService.getObservations(this.data.id).subscribe((res: any) => {
-      console.log('Observaciones', res.data);
       this.observationForm.get('observacion')?.setValue(res.data.observacion);
       this.observationForm.get('observacion')?.disable();
       this.archivoObservacion = res.data.observacionesArchivo;
@@ -166,7 +162,6 @@ export class ObservacionRechazoComponent implements OnInit{
     };
 
     this.learnService.enviarObservacion(observacionMazo).subscribe((res) => {
-      console.log('Observacion enviada', res);
       this.actualizarEstadoMazo();
     });
     this.dialogRef.close();
@@ -180,13 +175,11 @@ export class ObservacionRechazoComponent implements OnInit{
       idEstado: 3
     };
     this.learnService.publicarMazo(estado).subscribe((res) => {
-      console.log('Mazo rechazado', res);
     });
   }
 
   verObservacionMazo(){
     this.learnService.getObservacion(this.data.id).subscribe((res: any) => {
-      console.log('Observaciones', res.data);
       this.observationForm.get('observacion')?.setValue(res.data.observacion);
       this.observationForm.get('observacion')?.disable();
       this.archivoObservacion = res.data.observacionesArchivo;
@@ -202,7 +195,6 @@ export class ObservacionRechazoComponent implements OnInit{
     };
 
     this.videolearnService.sendObservationVideolearn(observacion).subscribe((res:any) => {
-      console.log('Observacion enviada', res);
       this.actualizarEstadoVideoLearn();
     });
     this.dialogRef.close();
@@ -215,12 +207,10 @@ export class ObservacionRechazoComponent implements OnInit{
       idEstado: 3
     };
     this.videolearnService.changeStatusVideolearn(estado).subscribe((res) => {
-      console.log('Videolearn rechazado', res);
     });
   }
   verObservacionVideoLearn(){
     this.videolearnService.viewObservation(this.data.id).subscribe((res: any) => {
-      console.log('Observaciones', res.data);
       this.observationForm.get('observacion')?.setValue(res.data.observacion);
       this.observationForm.get('observacion')?.disable();
       this.archivoObservacion = res.data.observacionesArchivo;
@@ -237,7 +227,6 @@ export class ObservacionRechazoComponent implements OnInit{
     };
 
     this.simuladorService.sendObservationSimulator(observacion).subscribe((res:any) => {
-      console.log('Observacion enviada', res);
       this.actualizarEstadoSimulador();
     });
     this.dialogRef.close();
@@ -251,13 +240,11 @@ actualizarEstadoSimulador() {
       idEstado: 3
     };
     this.simuladorService.actualizarEstadoSimulator(estado).subscribe((res:any) => {
-      console.log('Mazo rechazado', res);
     });
   }
 
   verObservacionSimulador(){
     this.simuladorService.getObservationSimulator(this.data.id).subscribe((res: any) => {
-      console.log('Observaciones', res.data);
       this.observationForm.get('observacion')?.setValue(res.data.observacion);
       this.observationForm.get('observacion')?.disable();
       this.archivoObservacion = res.data.observacionesArchivo;
@@ -275,7 +262,6 @@ actualizarEstadoSimulador() {
       reader.readAsDataURL(file);
       reader.onload = () => {
         const recursoFile = (reader.result as string).split(',')[1];
-        console.log('recursoFile', recursoFile);
         if (recursoFile)
           this.observationForm.get('observacionArchivo')?.setValue(recursoFile);
           this.observationForm.get('observacionFileName')?.setValue(file.name);
@@ -290,9 +276,5 @@ actualizarEstadoSimulador() {
   cancelar() {
     this.dialogRef.close();
   }
-
-  
-
- 
 
 }

@@ -4,13 +4,13 @@
       <mat-icon class="text-white">menu</mat-icon>
     </button>
     <span>
-     <img class="h-12" src="../../../assets/CDIARLogo2.png" alt="">
+     <img class="h-10 md:h-12 lg:h-12" src="../../../assets/CDIARLogo2.png" alt="Logo CDIAR">
     </span>
     <span class="example-spacer"></span>
     <span class="relative inline-flex" [matMenuTriggerFor]="menu">
     <span class="text-white mr-3">
-      <p class="text-sm">{{ userName }}</p>
-      <p class="text-xs">{{ rol }}</p>
+      <p class="hidden md:block md:text-sm lg:text-sm">{{ userName }}</p>
+      <p class="hidden md:block md:text-xs lg:text-xs">{{ rol }}</p>
     </span>
       <img class="w-10 h-10 rounded-full mr-2"
         src="{{getFoto()}}"
@@ -34,7 +34,7 @@
   
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'over'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="50">
       <mat-nav-list>
         <sidebar></sidebar>

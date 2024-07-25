@@ -33,14 +33,16 @@
                 </tr>
               </tbody>
             </table>
-          </div>
         </div>
       </div>
+    </div>
+    </div>
   
    <!---PAGINACIÓN-->
 
-   <div class="flex my-3 pr-7 pl-7">
+   <div class="flex my-3 pl-0 pr-0 md:pr-7 md:pl-7 lg:pr-7 lg:pl-7">
     <div class="flex-1 ms-2">
+      Mostrar:
       <select
         class="p-1 rounded border-2 border-solid border-slate-300"
         formControlName="limit"
@@ -50,9 +52,13 @@
         }
       </select>
     </div>
+
     <div class="grid justify-end">
       <nav>
         <ul class="flex">
+          <li>
+            <span>Página: <input class="w-8 p-1 text-center justify-center rounded-full bg-sky-200 mx-1" type="number" (change)="goToPage($event)" value="{{page}}"> de {{paginateCurrent.length}}</span>
+          </li>
           <li>
             <a
               class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out"
@@ -65,20 +71,6 @@
               <span class="material-icons text-sm">keyboard_arrow_left</span>
             </a>
           </li>
-          @for (paginate of paginateCurrent; track $index) {
-          <li>
-            <a
-              class="mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm shadow-md transition duration-150 ease-in-out cursor-pointer"
-              [ngClass]="{
-                'bg-blue-800 text-white': paginate === page,
-                'bg-white text-black': paginate !== page
-              }"
-              (click)="changePage(paginate)"
-            >
-              {{ paginate }}
-            </a>
-          </li>
-          }
           <li>
             <a
               class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
@@ -96,7 +88,8 @@
       </nav>
     </div>
   </div>
-  </div>
+</div>
+
 
   
   <ng-template #noData>
@@ -104,3 +97,4 @@
       <div class="text-center text-xl">No hay datos disponibles.</div>
     </div>
   </ng-template>
+  <spinner-generate [message]="'Eliminando'"></spinner-generate>

@@ -1,0 +1,93 @@
+<mat-dialog-content>
+    <div class="pr-2 pl-2">
+      <form [formGroup]="metasGroupForm">
+        <div class="grid grid-cols-12 gap-4 mt-5">
+          <div class="col-span-12 md:col-span-4">
+            <label
+              for="nivel"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Nivel</label
+            >
+            <ng-select
+              [items]="nivelesType"
+              bindLabel="label"
+              bindValue="value"
+              [searchable]="false"
+              placeholder="Niveles"
+              formControlName="idNivel"
+              notFoundText="No hay niveles"
+              class="ng-custom"
+            >
+            </ng-select>
+          </div>
+  
+          <div class="col-span-12 md:col-span-8">
+            <label
+              for="asignatura"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Asignatura</label
+            >
+            <ng-select
+              [items]="asignaturas"
+              bindLabel="label"
+              bindValue="value"
+              [searchable]="false"
+              placeholder="Asignatura"
+              formControlName="idAsignatura"
+              notFoundText="No hay Asignaturas"
+              class="ng-custom"
+            >
+            </ng-select>
+          </div>
+  
+          <div class="col-span-12 md:col-span-4 lg:col-span-4">
+            <label
+              for="primerParcial"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Nota 1er Parcial</label
+            >
+            <input
+              type="number"
+              id="primerParcial"
+              formControlName="calificacionPrimerParcial"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Nota 1er Parcial"
+            />
+          </div>
+
+          <div class="col-span-12 md:col-span-4 lg:col-span-4">
+            <label
+              for="segundoParcial"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Nota 2do Parcial</label
+            >
+            <input
+              type="number"
+              id="segundoParcial"
+              formControlName="calificacionSegundoParcial"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Nota 2do Parcial"
+            />
+          </div>
+
+
+          <div class="col-span-12 md:col-span-4 lg:col-span-4">
+            <label
+              for="notaObjetivo"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Nota Objetivo</label
+            >
+            <input
+              type="number"
+              id="notaObjetivo"
+              formControlName="puntajeObjetivo"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Puntaje Objetivo"
+              readonly="{{readonlyPuntaje}}"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+</mat-dialog-content>
+  
