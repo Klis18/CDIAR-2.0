@@ -9,7 +9,7 @@ import { HttpHeaders } from '@angular/common/http';
 export class HelperHttpService {
   constructor(private http: HttpClient) {}
 
-  private baseUrl: string = 'https://localhost:7053/api/';
+  private baseUrl: string = 'https://cdiar-service.onrender.com/api/';
 
   get<T>(url: string, config?: { headers: HttpHeaders }) {
     return this.http.get<JsonResponse<T>>(`${this.baseUrl}${url}`, config);
