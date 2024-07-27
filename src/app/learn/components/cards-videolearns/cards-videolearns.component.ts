@@ -270,10 +270,12 @@ export class CardsVideolearnsComponent {
 
   openDialog(message: string) {
     return this.dialog.open(CardConfirmComponent, {
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {
         mensaje: message,
       },
-      width: '30%',
     });
   }
 
@@ -347,7 +349,8 @@ export class CardsVideolearnsComponent {
 
   editarVideoLearn(idVideoLearn: number, item: any) {
     const dialogRef = this.dialog.open(EditVideolearnComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
       maxHeight: '80%',
       data: {
         id: idVideoLearn,
@@ -375,7 +378,9 @@ export class CardsVideolearnsComponent {
   
   viewDetailsVideolearn(item: any) {
     this.dialog.open(VideolearnDetailsComponent, {
-      width: '32%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {id: item.idVideoLearn},
     });
   }
@@ -414,8 +419,9 @@ export class CardsVideolearnsComponent {
 
   verObservacion(idVideoLearn: number) {
     this.dialog.open(ObservacionRechazoComponent, {
-      width: '55%',
-      maxHeight: '90%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {id: idVideoLearn, opcion: 'verObservacionVideolearn'},
     });
   }

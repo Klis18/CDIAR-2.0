@@ -104,6 +104,7 @@ export class ListDocentesComponent implements OnInit, OnChanges{
       }
     }
   }
+  
   pagination = {
     buttonLeft: true,
     buttonRight: true,

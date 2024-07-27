@@ -134,8 +134,9 @@ export class StartVideolearnComponent implements OnInit, OnDestroy {
 
   openQuestionModal(question: any) {
     const dialogRef = this.dialog.open(VideolearnShowQuestionComponent, {
-      width: '40%',
-      maxHeight: '80%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',      
       data: {
         question: question,
       },
@@ -150,10 +151,7 @@ export class StartVideolearnComponent implements OnInit, OnDestroy {
     });
   }
 
-   reiniciar(){
-    this.router.navigate(['/learn/preguntas-video',{id: this.idVideoLearn, videolearn: this.nombreVideoLearn}]);
-  
-  }
+
 
    guardarCalificacion(){
     const calificacion = {
@@ -161,7 +159,6 @@ export class StartVideolearnComponent implements OnInit, OnDestroy {
       calificacion: this.calificacion,
     };
     this.videolearnService.saveResultTest(calificacion).subscribe(() => {
-      console.log('Calificación guardada');
     });
   }
 

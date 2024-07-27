@@ -18,7 +18,6 @@ import { StudyFlashcardsComponent } from './pages/study-flashcards/study-flashca
 import { SharedModule } from '../shared/shared.module';
 import { EditFlashcardComponent } from './components/edit-flashcard/edit-flashcard.component';
 import { EditMazoComponent } from './components/edit-mazo/edit-mazo.component';
-import { ObservacionRechazoComponent } from './components/observacion-rechazo/observacion-rechazo.component';
 import { MazosGuardadosComponent } from './components/mazos-guardados/mazos-guardados.component';
 import { MazosEstudiadosComponent } from './components/mazos-estudiados/mazos-estudiados.component';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -29,22 +28,19 @@ import { FormVideolearnComponent } from './components/form-videolearn/form-video
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { EditVideolearnComponent } from './components/edit-videolearn/edit-videolearn.component';
 import { VideolearnDetailsComponent } from './components/videolearn-details/videolearn-details.component';
-import { VideolearnsQuestionsComponent } from './pages/videolearns-questions/videolearns-questions.component';
 import { VideolearnQuestionsTableComponent } from './components/videolearn-questions-table/videolearn-questions-table.component';
 import { AddQuestionsVideolearnComponent } from './components/add-questions-videolearn/add-questions-videolearn.component';
 import { VideolearnsFormQuestionsComponent } from './components/videolearns-form-questions/videolearns-form-questions.component';
 import { EditQuestionVideolearnComponent } from './components/edit-question-videolearn/edit-question-videolearn.component';
-import { ShowVideoComponent } from './pages/show-video/show-video.component';
 import { StartVideolearnComponent } from './pages/start-videolearn/start-videolearn.component';
 import { SavedVideolearnsComponent } from './components/saved-videolearns/saved-videolearns.component';
 import { RealizedVideolearnsComponent } from './components/realized-videolearns/realized-videolearns.component';
 import { GenerateMazoComponent } from './components/generate-mazo/generate-mazo.component';
 import { VideoPlayerComponent } from './pages/video-player/video-player.component';
 import { QuestionFormComponent } from './pages/question-form/question-form.component';
-import { QuestionListComponent } from './pages/question-list/question-list.component';
-import { QuestionService } from './services/question.service';
 import { SecondsToMinutePipe } from './pipe/seconds-to-minute.pipe';
 import { VideolearnShowQuestionComponent } from './components/videolearn-show-question/videolearn-show-question.component';
+import { QuestionListComponent } from './pages/question-list/question-list.component';
 
 
 @NgModule({
@@ -62,7 +58,6 @@ import { VideolearnShowQuestionComponent } from './components/videolearn-show-qu
     StudyFlashcardsComponent,
     EditFlashcardComponent,
     EditMazoComponent,
-    ObservacionRechazoComponent,
     MazosGuardadosComponent,
     MazosEstudiadosComponent,
     VideolearnComponent,
@@ -71,21 +66,19 @@ import { VideolearnShowQuestionComponent } from './components/videolearn-show-qu
     FormVideolearnComponent,
     EditVideolearnComponent,
     VideolearnDetailsComponent,
-    VideolearnsQuestionsComponent,
     VideolearnQuestionsTableComponent,
     AddQuestionsVideolearnComponent,
     VideolearnsFormQuestionsComponent,
     EditQuestionVideolearnComponent,
-    ShowVideoComponent,
     StartVideolearnComponent,
     SavedVideolearnsComponent,
     RealizedVideolearnsComponent,
     GenerateMazoComponent,
     VideoPlayerComponent,
     QuestionFormComponent,
-    QuestionListComponent,
     SecondsToMinutePipe,
-    VideolearnShowQuestionComponent
+    VideolearnShowQuestionComponent,
+    QuestionListComponent
   ],
   imports: [
     CommonModule,
@@ -101,7 +94,7 @@ import { VideolearnShowQuestionComponent } from './components/videolearn-show-qu
     CardsFlashcardsComponent,
     CardsVideolearnsComponent
   ],
-  providers: [FlashcardsComponent, VideolearnComponent, QuestionService]
+  providers: [FlashcardsComponent, VideolearnComponent]
 
 })
 export class LearnModule { }

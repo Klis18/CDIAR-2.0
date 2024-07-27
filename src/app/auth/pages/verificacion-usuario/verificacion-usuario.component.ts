@@ -5,6 +5,7 @@ import { EmailVerification } from '../../interfaces/email-verification';
 import { AuthService } from '../../services/auth.service';
 import { Email } from '../../interfaces/email';
 import { encryptStorage } from '../../../shared/utils/storage';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
   selector: 'verificacion-usuario',
@@ -26,6 +27,7 @@ export class VerificacionUsuarioComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
+    private spinnerService: SpinnerService,
     private route: ActivatedRoute
   ) {}
 
@@ -45,7 +47,10 @@ export class VerificacionUsuarioComponent {
     const email = userJson?.email || '';
     this.emailVerification.email = email;
 
+    this.spinnerService.showSpinner();
+
     this.authService.verifyUser(this.emailVerification).subscribe((email) => {
+      this.spinnerService.hideSpinner();
       encryptStorage.removeItem('user');
       this.router.navigate(['/auth/login']);
     });

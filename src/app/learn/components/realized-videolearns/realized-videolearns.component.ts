@@ -320,12 +320,12 @@ export class RealizedVideolearnsComponent {
   }
 
   redirigirPreguntas(item: videoLearnsRealized) {
-    this.router.navigate(['/learn/preguntas-videolearn',{id: item.idVideoLearnRealizado, videolearn: item.nombreVideoLearn}]);
+    this.router.navigate(['/learn/video-player',{id: item.idVideoLearnRealizado, videolearn: item.nombreVideoLearn}]);
   }
 
   redirigirIniciarVideoLearn(item: videoLearnsRealized) {
     this.saveVideoLearnStarted(item.idVideoLearnRealizado);
-    this.router.navigate(['/learn/iniciar-videolearn',{id: item.idVideoLearnRealizado, videolearn: item.nombreVideoLearn}]);
+    this.router.navigate(['/learn/preguntas-video',{id: item.idVideoLearnRealizado, videolearn: item.nombreVideoLearn}]);
   }
 
   

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-dashboard-cdiar',
+  selector: 'dashboard-cdiar',
   templateUrl: './dashboard-cdiar.component.html',
   styles: ``
 })

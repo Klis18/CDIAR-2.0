@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { cargaHoraria } from '../../interfaces/carga-horaria.interface';
-import { Validators } from 'ngx-editor';
 import { CargaHorariaDocenteService } from '../../services/carga-horaria-docente.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, Subscription } from 'rxjs';
 
 @Component({

@@ -27,16 +27,15 @@ export class DetailsSimulatorComponent implements OnInit{
   ngOnInit(): void {
     this.getDetailsSimulador(this.data.id);
 
-    console.log(this.data)
     this.homeService.obtenerDatosMenu().subscribe((user) => {
-      this.userRol = user.data.rol;
+      this.userRol = user.data?.rol;
     });
   }
 
   
   getDetailsSimulador(idSimulador: number) {
     this.simulatorService.getDatosSimulator(idSimulador).subscribe((res: any) => {
-      this.datosSimulador = res.data;
+      this.datosSimulador = res?.data;
     });
   }
 

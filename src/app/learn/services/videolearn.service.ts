@@ -219,4 +219,10 @@ export class VideolearnService {
       headers: this.headers,
     });
   }
+
+  deleteSavedVideolearn(idVideoLearn:number){
+    return this.http.delete(`videolearn/eliminarVideoLearnGuardado/${idVideoLearn}`, {
+      headers: this.headers,
+    });
+  }
 }

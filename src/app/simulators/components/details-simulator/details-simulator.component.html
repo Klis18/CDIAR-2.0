@@ -8,11 +8,11 @@
       <div class="mt-5 mb-5">
         <p><b>Nivel: </b>{{nivel}}</p>
         <p><b>Asignatura: </b>{{asignatura}}</p>
-        <p><b>Propietario: </b>{{ datosSimulador.usuarioCreador}}</p>
+        <p><b>Propietario: </b>{{ datosSimulador?.usuarioCreador}}</p>
         <p>
-          <b>Fecha registro: </b>{{ datosSimulador.fechaCreacion | date : "d/M/yyyy" }}
+          <b>Fecha registro: </b>{{ datosSimulador?.fechaCreacion | date : "d/M/yyyy" }}
         </p>
-        <p><b>Cantidad preguntas: </b>{{ datosSimulador.cantidadPreguntas }}</p>
+        <p><b>Cantidad preguntas: </b>{{ datosSimulador?.cantidadPreguntas }}</p>
         <p><b>Preguntas: </b></p>
         <div *ngFor="let item of datosSimulador?.preguntas">
           <p>{{ item }}</p>
@@ -29,7 +29,7 @@
           >
             <span class="flex items-center justify-center">
               <mat-icon class="me-2">cancel</mat-icon>
-              Cancelar
+              <span class="hidden md:block md:text-sm">Cancelar</span> 
             </span>
           </button>
   
@@ -40,7 +40,7 @@
         >
           <span class="flex items-center justify-center">
             <mat-icon>bookmark</mat-icon>
-            Guardar
+            <span class="hidden md:block md:text-sm">Guardar</span> 
           </span>
         </button>
         <button
@@ -50,7 +50,7 @@
         >
           <span class="flex items-center justify-center">
             <mat-icon>play_arrow</mat-icon>
-            Estudiar
+            <span class="hidden md:block md:text-sm">Estudiar</span> 
           </span>
         </button>
       </div>

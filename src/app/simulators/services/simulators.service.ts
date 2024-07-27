@@ -244,4 +244,9 @@ export class SimulatorsService {
     });
   }
   
+  deleteSavedSimulator(idSimulador:number){
+    return this.http.delete(`simuladores/eliminarSimuladorGuardado/${idSimulador}`, {
+      headers: this.headers
+    });
+  }
 }

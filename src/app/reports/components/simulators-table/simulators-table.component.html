@@ -23,32 +23,32 @@
               <thead>
                 <tr>
                   <th
-                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                    class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
                   >
                     Nombre Simulador
                   </th>
                   <th
-                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                    class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
                   >
                     Nombres Completos
                   </th>
                   <th
-                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                    class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
                   >
                     Nivel
                   </th>
                   <th
-                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                    class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
                   >
                     Asignatura
                   </th>
                   <th
-                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                    class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
                   >
                     Calificación
                   </th>
                   <th
-                    class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
+                    class="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider bg-blue-900"
                   >
                     Fecha Simulador Realizado
                   </th>
@@ -57,17 +57,17 @@
               <tbody class="bg-white divide-y divide-gray-200">
                 @for (item of dataSimuladores; track item) {
                 <tr>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <td class="px-6 py-4 whitespace-nowrap info">
                     {{ item.nombreSimulador }}
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <td class="px-6 py-4 whitespace-nowrap acciones">
                     {{ item.nombreEstudiante }}
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap">{{ item.nivel }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap">{{ item.asignatura }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <td class="px-6 py-4 whitespace-nowrap acciones">{{ item.nivel }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap acciones">{{ item.asignatura }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap acciones text-center">
                     {{ item.calificacion }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <td class="px-6 py-4 whitespace-nowrap acciones">
                     {{ item.fechaSimuladorRealizado| date : "d/M/yyyy" }}
                   </td>
                 </tr>

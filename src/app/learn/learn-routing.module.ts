@@ -4,8 +4,6 @@ import { FlashcardsComponent } from './pages/flashcards/flashcards.component';
 import { PreguntasFlashcardsComponent } from './pages/preguntas-flashcards/preguntas-flashcards.component';
 import { StudyFlashcardsComponent } from './pages/study-flashcards/study-flashcards.component';
 import { VideolearnComponent } from './pages/videolearn/videolearn.component';
-import { VideolearnsQuestionsComponent } from './pages/videolearns-questions/videolearns-questions.component';
-import { ShowVideoComponent } from './pages/show-video/show-video.component';
 import { StartVideolearnComponent } from './pages/start-videolearn/start-videolearn.component';
 import { VideoPlayerComponent } from './pages/video-player/video-player.component';
 
@@ -25,14 +23,6 @@ const routes: Routes = [
   {
     path: 'videolearns',
     component: VideolearnComponent
-  },
-  {
-    path:'preguntas-videolearn',
-    component: VideolearnsQuestionsComponent
-  },
-  {
-    path:'iniciar-videolearn',
-    component: ShowVideoComponent
   },
   {
     path: 'preguntas-video',

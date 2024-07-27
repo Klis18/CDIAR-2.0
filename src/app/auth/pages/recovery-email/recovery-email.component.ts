@@ -5,6 +5,7 @@ import { Email } from '../../interfaces/email';
 import { EmailVerification } from '../../interfaces/email-verification';
 import { AuthService } from '../../services/auth.service';
 import { encryptStorage } from '../../../shared/utils/storage';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
   selector: 'app-recovery-email',
@@ -18,7 +19,8 @@ export class RecoveryEmailComponent {
     email: new FormControl<string>(''),
   });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private spinnerService: SpinnerService,
+  ) {}
 
   get email(): Email {
     return this.emailGroup.value as Email;
@@ -28,8 +30,11 @@ export class RecoveryEmailComponent {
     if (this.emailGroup.invalid) return;
 
     encryptStorage.setItem('user-email', JSON.stringify(this.email));
+    this.spinnerService.showSpinner();
 
     this.authService.forgotPassword(this.email).subscribe((email) => {
+      this.spinnerService.hideSpinner();
+
       this.router.navigate(['/auth/verify-token']);
     });
   }

@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, Subscription } from 'rxjs';
 import { SecurityService } from '../../services/security.service';
 import { HomeService } from '../../../home/services/home.service';
 import { Nivel } from '../../../shared/interfaces/nivel.interface';
 import { SharedService } from '../../../shared/services/shared.service';
-import { Validators } from 'ngx-editor';
 
 @Component({
   selector: 'malla-academica-form',

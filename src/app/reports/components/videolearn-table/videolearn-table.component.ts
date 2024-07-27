@@ -231,7 +231,7 @@ export class VideolearnTableComponent {
       videolearn.asignatura,
       videolearn.nivel,
       videolearn.calificacion,
-      new Date(videolearn.fechaVideolearnRealizado).toLocaleDateString(),
+      new Date(videolearn.fechaVideoLearnRealizado).toLocaleDateString(),
     ]);
 
     autoTable(doc, {

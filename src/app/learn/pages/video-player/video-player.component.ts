@@ -3,7 +3,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { YouTubePlayer } from '@angular/youtube-player';
 import { environment } from '../../../../environments/environment';
-import { QuestionService } from '../../services/question.service';
 import { VideolearnService } from '../../services/videolearn.service';
 import { HomeService } from '../../../home/services/home.service';
 import { AddQuestionsVideolearnComponent } from '../../components/add-questions-videolearn/add-questions-videolearn.component';
@@ -121,8 +120,10 @@ export class VideoPlayerComponent implements OnInit, OnDestroy {
   addQuestion() {
     this.player.pauseVideo();
     const dialogRef = this.dialog.open(AddQuestionsVideolearnComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
       maxHeight: '80%',
+
       data: {id: this.idVideoLearn, minutos: this.currentMinute},
     });
     

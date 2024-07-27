@@ -180,11 +180,15 @@ estado: string = '';
   }
 
   openDialog(message: string) {
+    
     return this.dialog.open(CardConfirmComponent, {
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {
         mensaje: message,
       },
-      width: '30%',
     });
   }
 
@@ -232,7 +236,9 @@ estado: string = '';
 
   editarPreguntaSimulador(idPregunta: number) {
     const dialogRef = this.dialog.open(EditQuestionSimulatorComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {idPregunta: idPregunta, idSimulador:this.idSimulador, isDisabled: true, titulo: 'Editar Pregunta Simulador'},
     });
     dialogRef.afterClosed().subscribe((res) => {
@@ -242,7 +248,9 @@ estado: string = '';
 
   viewPreguntaSimulador(idPregunta: number) {
     this.dialog.open(EditQuestionSimulatorComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {idPregunta: idPregunta, idSimulador:this.idSimulador, isDisabled: false, titulo: 'Detalles Pregunta Simulador'},
     });
   }

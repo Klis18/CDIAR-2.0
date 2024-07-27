@@ -5,6 +5,7 @@ import { Email } from '../../interfaces/email';
 import { AuthService } from '../../services/auth.service';
 import { encryptStorage } from '../../../shared/utils/storage';
 import { ForgotPassword } from '../../interfaces/forgot-password';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
   selector: 'app-recovery-password',
@@ -18,6 +19,7 @@ export class RecoveryPasswordComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
+    private spinnerService: SpinnerService,
     private route: ActivatedRoute
   ) {
     this.siteKey = '6Ld5KuQpAAAAAEY05mmbzmOX0lO9teZ8VAlyUUOO';
@@ -40,8 +42,11 @@ export class RecoveryPasswordComponent {
 
     const token = encryptStorage.getItem('token');
     this.ForgotPassword.token = token;
+    this.spinnerService.showSpinner();
 
     this.authService.resetpassword(this.ForgotPassword).subscribe((email) => {
+      this.spinnerService.hideSpinner();
+
       encryptStorage.removeItem('user-email');
       encryptStorage.removeItem('token');
       this.router.navigate(['/auth/login']);

@@ -21,7 +21,7 @@
     <li>
       <div class="flex items-center">
         <mat-icon>keyboard_arrow_right</mat-icon>
-        <a class="ms-1 text-xs md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">{{nombreVideoLearn}}</a>
+        <a class="ms-1 text-xs md:text-base lg:text-base md:text-base lg:text-base font-medium text-gray-700 hover:text-blue-900 md:ms-2">{{nombreVideoLearn}}</a>
       </div>
     </li>
   </ol>
@@ -32,9 +32,9 @@
       <span class="text-2xl md:text-3xl lg:text-3xl">{{nombreVideoLearn}}</span>
     </div>
 
-    <div class="m-7 mt-2 h-full background-view rounded-lg p-9"> 
+    <div class="m-7 mt-2 h-full background-view rounded-lg p-2 md:p-9 lg:p-9"> 
       <div class="flex flex-wrap" *ngIf="canDoVideoLearn()">
-        <div class="sm:w-full md:2/4 lg:w-3/4 pr-5">
+        <div class="w-full md:w-2/4 lg:w-3/4 pr-0 md:pr-5 lg:pr-5">
           <div id="youtube-player" class="w-full h-96"></div>
           <div
       class="relative grid select-none items-center whitespace-nowrap rounded-xs bg-sky-700 py-3 px-5 font-sans text-xs font-bold uppercase text-white">
@@ -44,7 +44,7 @@
       <span class="ml-[12px]">Tiempo restante: {{tiempoRestante | secondsToMinute}}</span>
     </div>
         </div>
-        <div class="sm:w-full md:2/4 lg:w-1/4 p-4 bg-cyan-600 overflow-y-scroll h-96">
+        <div class="w-full md:w-2/4 lg:w-1/4 p-2 md:p-4 lg:p-4 bg-cyan-600 overflow-y-scroll h-96">
           <app-question-list [idVideoLearn]="idVideoLearn" [testIniciado]="testIniciado"></app-question-list>
         </div>
         
@@ -58,10 +58,6 @@
             <button type="button" routerLink="/learn/videolearns" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 mr-2">
                 <mat-icon>arrow_back</mat-icon>
                 Volver a videolearns
-            </button>
-            <button type="button" (click)="reiniciar()"class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-900 rounded-lg hover:bg-blue-800">
-                <mat-icon>autorenew</mat-icon>
-                Reintentar
             </button>
         </div>
       </div>

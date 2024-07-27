@@ -256,10 +256,13 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
 
   openDialog(message: string) {
     return this.dialog.open(CardConfirmComponent, {
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {
         mensaje: message,
       },
-      width: '30%',
     });
   }
 
@@ -337,8 +340,10 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
 
   editarSimulador(idSimulador: number, item: any) {
     const dialogRef = this.dialog.open(EditSimulatorComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
       maxHeight: '80%',
+
       data: {
         id: idSimulador,
         typeModal: this.typeTable,
@@ -360,7 +365,10 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
   viewDetailsSimulator(item: any) {
     
     this.dialog.open(DetailsSimulatorComponent, {
-      width: '32%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {id: item.idSimulador, nivel: item.nivel, asignatura: item.asignatura, nombreSimulador:item.nombreSimulador},
     });
   }
@@ -401,8 +409,10 @@ export class CardsSimulatorsComponent implements OnInit, OnChanges{
 
   verObservacion(idSimulador: number) {
     this.dialog.open(ObservacionRechazoComponent, {
-      width: '55%',
-      maxHeight: '90%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {id: idSimulador, opcion: 'verObservacionSimulador'},
     });
   }

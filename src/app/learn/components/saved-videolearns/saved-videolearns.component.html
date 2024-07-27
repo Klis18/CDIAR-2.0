@@ -1,6 +1,6 @@
 
 <div [formGroup]="videolearns" class="-my-2 overflow-x-auto sm:-mx-6" *ngIf="data.length > 0; else noData">
-    <div class="flex flex-wrap pr-7 pl-7 pt-2 pb-7">
+    <div class="flex flex-wrap pr-2 pl-2 pb-2 md:pr-7 md:pl-7 pt-2 md:pb-7">
       <div
         *ngFor="let item of data; let i = index"
         class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2"
@@ -58,82 +58,16 @@
            
   
             <div class="col-span-4">
-              @if(userRol == 'Admin' && item.nombreDocenteRevisor == ''){
-                <button
-                  type="button"
-                  (click)="asignaRevisor(item.idVideoLearn)"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-                >
-                  <span class="flex items-center justify-center">
-                    <mat-icon>assignment_ind</mat-icon>
-                  </span>
-                </button>
-              }
-  
-              @if(selectedTab == 'Publicado' && userRol != 'Admin'){
-                <button
-                  type="button"
-                  (click)="saveVideoLearnToReview(item.idVideoLearn)"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-                >
-                  <span class="flex items-center justify-center">
-                    <mat-icon>bookmark</mat-icon>
-                  </span>
-                </button>
-              }
-  
-              @if(selectedTab == 'Mis VideoLearns'){
-                <button
-                  type="button"
-                  *ngIf="canEdit(item)"
-                  (click)="editarVideoLearn(item.idVideoLearn, item)"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-                >
-                  <span class="flex items-center justify-center">
-                    <mat-icon>edit</mat-icon>
-                  </span>
-                </button>
-  
-                <button
-                  type="button"
-                  *ngIf="canDelete(item)"
-                  (click)="eliminarVideolearn(item.idVideoLearn)"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-                >
-                  <span class="flex items-center justify-center">
-                    <mat-icon>delete</mat-icon>
-                  </span>
-                </button>
-
-                <button
-                  *ngIf="item.estado === 'Rechazado'"
-                  type="button"
-                  class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
-                >
-                  <span class="flex items-center justify-center">
-                    <mat-icon
-                    class="cursor-pointer"
-                    (click)="verObservacion(item.idVideoLearn)"
-                    onkeydown="verObservacion(item.idSimulador)"
-                    matTooltip="Ver Observación"
-                    matTooltipPosition="above"
-                    >error_outline</mat-icon
-                  >
-                  </span>
-                </button>
-              }
-  
-              @if(selectedTab ==='Por Aprobar'){
-                <button
+             
+              <button
                 type="button"
-                (click)="redirigirPreguntas(item)"
+                (click)="deleteSavedVideolearn(item.idVideoLearn)"
                 class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 mr-2"
               >
                 <span class="flex items-center justify-center">
-                  <mat-icon>assignment_turned_in</mat-icon>
+                  <mat-icon>delete</mat-icon>
                 </span>
               </button>
-              }
            
               <button
                 type="button"

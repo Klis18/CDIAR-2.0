@@ -148,7 +148,9 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
       this.userRol = user.data.rol;
     });
   }
+
   private idEstado!: number;
+
   listaMazos() {
     const paginate: MazosGetQuery = {
       page: this.page,
@@ -347,7 +349,8 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
       }
     }
     const dialogRef = this.dialog.open(EditMazoComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
       maxHeight: '80%',
       data: {
         id: idMazo,
@@ -371,7 +374,9 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
   viewDetailsMazo(item: any) {
     
     this.dialog.open(DetailsMazoComponent, {
-      width: '33%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {id: item.idMazo, nivel: item.nivel, asignatura: item.asignatura},
     });
   }
@@ -404,14 +409,20 @@ export class CardsFlashcardsComponent implements OnInit, OnChanges{
 
   saveMazoToReview(idMazo: number) {
     this.learnService.saveMazoToReview(idMazo).subscribe(() => {
-      console.log('Mazo guardado para futura revisión');
+      this.dialog.open(CardMessageComponent, {
+        width: '80%',
+        maxWidth: '500px',
+        maxHeight: '80%',
+        data: {status:'ok', mensaje: 'Mazo guardado para futura revisión.'},
+      });
     });
   }
 
   verObservacion(idMazo: number) {
     this.dialog.open(ObservacionRechazoComponent, {
-      width: '55%',
-      maxHeight: '90%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {id: idMazo, opcion: 'verObservacionMazo'},
     });
   }

@@ -23,6 +23,7 @@ export class PreguntasFlashcardsComponent {
   nombreRevisor: string = '';
   observacionRechazo: string = '';
   observationVisible: boolean = false;
+  statusPublish: number = 0;
 
   private homeService = inject(HomeService);
   
@@ -57,8 +58,10 @@ export class PreguntasFlashcardsComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddQuestionFlashcardComponent, {
-      width: '50%',
+      width: '80%',
+      maxWidth: '500px',
       maxHeight: '80%',
+
       data: {id: this.idMazo},
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -87,6 +90,12 @@ cantQuestions: number = 0;
   }
 
   canPublish(){
+    if(this.rol === 'Docente'){
+      this.statusPublish = 2;
+    }
+    else{
+      this.statusPublish = 1;
+    }
     return this.creadorMazo === this.nombreUsuario && (this.estadoMazo !== 'Aprobado' && this.estadoMazo !== 'Ingresado');
   }
 
@@ -96,7 +105,20 @@ cantQuestions: number = 0;
     return Estudiante || Docente;
   }
 
+  // publishMazo(idStatus: number){
+    
+  //   const mazo: updateStatusMazo = {
+  //     idMazo: this.idMazo,
+  //     idEstado: idStatus
+    
+  //   };
+  //   this.learnService.publicarMazo(mazo).subscribe((res) => {
+  //     this.router.navigate(['/learn/flashcards']);
+  //   });
+  // }
+
   publishMazo(idStatus: number){
+    
     const mazo: updateStatusMazo = {
       idMazo: this.idMazo,
       idEstado: idStatus
@@ -126,4 +148,6 @@ cantQuestions: number = 0;
   canViewObservation(){
     return this.rol ==='Estudiante' && this.observacionRechazo !== null;
   }
+
+
 }

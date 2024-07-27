@@ -232,4 +232,10 @@ export class MazosGuardadosComponent implements OnInit, OnChanges{
     this.learnService.saveMazoToReview(idMazo).subscribe(() => {
     });
   }
+
+  deleteSavedMazo(idMazo: number) {
+    this.learnService.deleteMazoGuardado(idMazo).subscribe(() => {
+      this.listaMazos();
+    });
+  }
 }

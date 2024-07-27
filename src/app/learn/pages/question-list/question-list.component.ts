@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { QuestionService } from '../../services/question.service';
 import { VideolearnService } from '../../services/videolearn.service';
 import { GetQuestionsQuery } from '../../interfaces/videolearn.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { CardConfirmComponent } from '../../../shared/pages/card-confirm/card-confirm.component';
 import { EditQuestionVideolearnComponent } from '../../components/edit-question-videolearn/edit-question-videolearn.component';
+import { HomeService } from '../../../home/services/home.service';
 
 @Component({
   selector: 'app-question-list',
@@ -49,13 +49,19 @@ export class QuestionListComponent implements OnInit{
   public limit: number = 5;
   public paginateCurrent: number[] = [];
 
-  constructor(private questionService: QuestionService, 
-              private videolearnService:VideolearnService,
+  constructor(private videolearnService:VideolearnService,
+              private homeService: HomeService,
               private dialog: MatDialog,
             ) {}
 
   ngOnInit() {
     this.listaPreguntas();
+
+    this.homeService.obtenerDatosMenu().subscribe((res) => {
+      this.nombreUsuario = res.data.userName;
+    });
+
+    this.datosVideoLearn();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -89,10 +95,21 @@ export class QuestionListComponent implements OnInit{
 
   openDialog(message: string) {
     return this.dialog.open(CardConfirmComponent, {
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {
         mensaje: message,
       },
-      width: '30%',
+    });
+  }
+
+
+  datosVideoLearn() {
+    this.videolearnService.getVideoLearn(this.idVideoLearn).subscribe((res) => {
+      this.usuarioCreador = res.data.usuarioCreador;
+      this.estado = res.data.estado;
     });
   }
 
@@ -111,7 +128,10 @@ export class QuestionListComponent implements OnInit{
 
   editarPreguntaVideoLearn(idPregunta: number) {
     const dialogRef = this.dialog.open(EditQuestionVideolearnComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {idPregunta: idPregunta, idVideoLearn:this.idVideoLearn, isDisabled: true, titulo: 'Editar Pregunta VideoLearn'},
     });
     dialogRef.afterClosed().subscribe((res) => {
@@ -121,7 +141,10 @@ export class QuestionListComponent implements OnInit{
 
   viewPreguntaVideoLearn(idPregunta: number) {
     this.dialog.open(EditQuestionVideolearnComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {idPregunta: idPregunta, idVideoLearn:this.idVideoLearn, isDisabled: false, titulo: 'Detalles Pregunta VideoLearn'},
     });
   }

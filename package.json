@@ -33,7 +33,6 @@
     "jspdf-autotable": "^3.8.2",
     "ng2-charts": "^6.0.1",
     "ngx-captcha": "^13.0.0",
-    "ngx-editor": "^17.5.4",
     "rxjs": "~7.8.0",
     "tinymce": "^7.2.1",
     "tslib": "^2.3.0",
