@@ -10,7 +10,7 @@ export class HelperHttpService {
   constructor(private http: HttpClient) {}
 
   private baseUrl: string = 'https://cdiar-service.onrender.com/api/';
-  
+
   get<T>(url: string, config?: { headers: HttpHeaders }) {
     return this.http.get<JsonResponse<T>>(`${this.baseUrl}${url}`, config);
   }
