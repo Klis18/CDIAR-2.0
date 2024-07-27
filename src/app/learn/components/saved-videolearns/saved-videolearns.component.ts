@@ -12,8 +12,8 @@ import { ListVideolearn, videoLearnsRealizedGetQuerys } from '../../interfaces/v
 import { VideolearnComponent } from '../../pages/videolearn/videolearn.component';
 import { VideolearnService } from '../../services/videolearn.service';
 import { EditVideolearnComponent } from '../edit-videolearn/edit-videolearn.component';
-import { ObservacionRechazoComponent } from '../observacion-rechazo/observacion-rechazo.component';
 import { VideolearnDetailsComponent } from '../videolearn-details/videolearn-details.component';
+import { ObservacionRechazoComponent } from '../../../shared/pages/observacion-rechazo/observacion-rechazo.component';
 
 @Component({
   selector: 'saved-videolearns',
@@ -269,18 +269,6 @@ export class SavedVideolearnsComponent {
     });
   }
 
-  eliminarVideolearn(idVideoLearn: number) {
-    const dialogRef = this.openDialog(
-      '¿Estás seguro de eliminar este videolearn?'
-    );
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res) {
-        this.videolearnService.deleteVideolearn(idVideoLearn).subscribe(() => {
-          this.listaVideoLearns();
-        });
-      }
-    });
-  }
 
   prevPage() {
     if (this.pagination.buttonLeft) {
@@ -296,29 +284,6 @@ export class SavedVideolearnsComponent {
     }
   }
 
-  canApprove(item: any): boolean {
-    let isReviewer = false;
-    if (this.userRol === ROLES.DOCENTE) {
-      isReviewer =
-        item.docenteRevisor == this.usuario &&
-        this.selectedTab === 'Por Aprobar' &&
-        item.estado != 'Aprobado';
-    }
-    return isReviewer;
-  }
-
-  canEdit(item: any): boolean {
-    let condition1 = (this.selectedTab === 'Mis VideoLearns' && ( item.estado === 'Ingresado' || item.estado === 'Privado') && item.nombreDocenteRevisor === '');
-    let condition2 = (this.selectedTab === 'Mis VideoLearns' && item.estado ==='Rechazado' ) ;
-    let condition3 = (this.selectedTab === 'Mis VideoLearns' && this.userRol ===ROLES.DOCENTE);
-    return condition1 || condition2 || condition3 ;
-  }
-
-  canDelete(item: any) {
-    const estudiante = (this.selectedTab === 'Mis VideoLearns' &&( item.estado === 'Ingresado' || item.estado === 'Privado') && item.nombreDocenteRevisor === '');
-    const docente = (this.selectedTab === 'Mis VideoLearns' && this.userRol === ROLES.DOCENTE );
-    return estudiante || docente;
-  }
 
   canStartSimulator(){
     const tab = this.selectedTab !== 'Por Aprobar';
@@ -326,21 +291,6 @@ export class SavedVideolearnsComponent {
     return tab && isAdmin;
   }
 
-  editarVideoLearn(idVideoLearn: number, item: any) {
-    const dialogRef = this.dialog.open(EditVideolearnComponent, {
-      width: '40%',
-      maxHeight: '80%',
-      data: {
-        id: idVideoLearn,
-        typeModal: this.typeTable,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.listaVideoLearns();
-      }
-    });
-  }
 
   getGradient(index: number) {
     const color1 = this.colors[index % this.colors.length];
@@ -356,36 +306,25 @@ export class SavedVideolearnsComponent {
   
   viewDetailsVideolearn(item: any) {
     this.dialog.open(VideolearnDetailsComponent, {
-      width: '32%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {id: item.idVideoLearn},
     });
   }
 
   redirigirPreguntas(item: ListVideolearn) {
-    this.router.navigate(['/learn/preguntas-videolearn',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
+    this.router.navigate(['/learn/video-player',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
   }
 
   redirigirIniciarVideoLearn(item: ListVideolearn) {
     this.saveVideoLearnStarted(item.idVideoLearn);
-    this.router.navigate(['/learn/iniciar-videolearn',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
-  }
-
-  
-  asignaRevisor(idVideolearn: number) {
-    const dialogRef = this.dialog.open(SelectRevisorComponent, {
-      width: '80%',
-      data: {id: idVideolearn, opcion:'VideoLearns'},
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.listaVideoLearns();
-      }
-    });
+    this.router.navigate(['/learn/preguntas-video',{id: item.idVideoLearn, videolearn: item.nombreVideoLearn}]);
   }
 
   saveVideoLearnToReview(idVideoLearn: number) {
     this.videolearnService.SaveVideoLearnToReview(idVideoLearn).subscribe(() => {
-        console.log('Videolearn guardado');
     });
   }
 
@@ -395,11 +334,10 @@ export class SavedVideolearnsComponent {
     });
   }
 
-  verObservacion(idVideoLearn: number) {
-    this.dialog.open(ObservacionRechazoComponent, {
-      width: '55%',
-      maxHeight: '90%',
-      data: {id: idVideoLearn, opcion: 'verObservacionVideolearn'},
+  deleteSavedVideolearn(idVideoLearn: number) {
+    this.videolearnService.deleteSavedVideolearn(idVideoLearn).subscribe(() => {
+      this.listaVideoLearns();
     });
   }
+
 }

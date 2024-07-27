@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AcademicResourcesModule } from '../academic-resources/academic-resources.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { StudyFormComponent } from './components/study-form/study-form.component';
+import { DashboardModule } from '../dashboard/dashboard.module';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { StudyFormComponent } from './components/study-form/study-form.component
     ReactiveFormsModule,
     DocenteModule,
     SharedModule,   
+    DashboardModule
   ],
 })
 export class HomeModule {}

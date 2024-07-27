@@ -100,14 +100,14 @@ export class SidebarComponent implements OnInit {
       ],
       roles: ['Admin'],
     },
-    // {
-    //   icon: ' insert_chart',
-    //   name: 'Dashboard',
-    //   route: '/dashboard',
-    //   expanded: false,
-    //   subOptions: [],
-    //   roles: ['Admin'],
-    // },
+    {
+      icon: ' insert_chart',
+      name: 'Dashboard',
+      route: '/dashboard',
+      expanded: false,
+      subOptions: [],
+      roles: ['Admin'],
+    },
   ];
 
   toggleExpand(option: any) {

@@ -215,7 +215,10 @@ export class SimulatorsRealizedTableComponent {
 
   viewDetailsSimulator(item: any) {
     this.dialog.open(DetailsSimulatorComponent, {
-      width: '32%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {id: item.idSimuladorRealizado, nivel: item.nivel, asignatura: item.asignatura, nombreSimulador:item.nombreSimulador},
     });
   }

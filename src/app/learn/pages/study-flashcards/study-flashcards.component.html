@@ -44,13 +44,13 @@
   </div>
   </div>
 
-  <div class="m-7 mt-2 h-96 flashcard-view rounded-lg p-9 pt-9">
+<div class="m-7 mt-2 h-full background-view rounded-lg p-2 md:p-9 lg:p-9">
     <div *ngIf="currentFlashcard">
       <div class="text-2xl block font-medium text-center bg-white text-gray-700 border border-gray-200 rounded-lg shadow p-7 md:mr-48 md:ml-48 sm:mr-7 sm:ml-7">
         <div class="question">
             {{ currentFlashcard.pregunta }}
           </div>
-      </div>
+      
 
       <div class="text-center mt-5 mb-5" *ngIf="!this.showAnswer">
           <button type="button" (click)="toggleAnswer()" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-blue-900 rounded-lg hover:bg-blue-800">
@@ -58,6 +58,7 @@
               Ver respuesta
           </button>
       </div>
+    </div>
 
     <div *ngIf="this.showAnswer" class="text-xl mt-5 block bg-white font-medium text-center text-gray-700 border border-gray-200 rounded-lg shadow p-7 md:mr-48 md:ml-48 sm:mr-7 sm:ml-7">
         <div *ngIf="showAnswer" class="answer pb-5">
@@ -70,23 +71,22 @@
             <button type="button" (click)="actualizarRepasoFlashcard(1)" class="px-3 py-2 text-sm font-medium text-center inline-flex items-center text-white bg-cyan-500 rounded-lg hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-blue-300">
                 Otra vez
             </button>
-            <button type="button" (click)="actualizarRepasoFlashcard(6)" class="px-3 py-2 text-sm ml-5 font-medium text-center inline-flex items-center text-white bg-rose-500 rounded-lg hover:bg-rose-600 focus:ring-4 focus:outline-none focus:ring-blue-300">
+            <button type="button" (click)="actualizarRepasoFlashcard(6)" class="px-3 py-2 text-sm ml-2 md:ml-5 font-medium text-center inline-flex items-center text-white bg-rose-500 rounded-lg hover:bg-rose-600 focus:ring-4 focus:outline-none focus:ring-blue-300">
                 Difícil
             </button>
-            <button type="button" (click)="actualizarRepasoFlashcard(10)"class="px-3 py-2 text-sm ml-5 font-medium text-center inline-flex items-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300">
+            <button type="button" (click)="actualizarRepasoFlashcard(10)"class="px-3 py-2 text-sm ml-2 md:ml-5 font-medium text-center inline-flex items-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300">
                 Bien
             </button>
-            <button type="button" (click)="actualizarRepasoFlashcard(5760)" class="px-3 py-2 text-sm ml-5 font-medium text-center inline-flex items-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300">
+            <button type="button" (click)="actualizarRepasoFlashcard(5760)" class="px-3 py-2 text-sm ml-2 md:ml-5 font-medium text-center inline-flex items-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300">
                 Fácil
             </button>
           
         </div>
     </div>
+    </div>
+    <div *ngIf="!currentFlashcard" class="bg-white h-80 flex flex-col items-center justify-center">
+      <div class="md:text-2xl sm:text-xl pt-5">No hay flashcards disponibles para repasar en este momento.</div>
+      <img src="/assets/images/time.png" class="h-60 w-50 pt-2">
+    </div>
     
   </div>
-
-  <div *ngIf="!currentFlashcard" class="bg-white h-80 flex flex-col items-center justify-center">
-    <div class="md:text-2xl sm:text-xl pt-5">No hay flashcards disponibles para repasar en este momento.</div>
-    <img src="/assets/images/time.png" class="h-60 w-50 pt-2">
-  </div>
-  

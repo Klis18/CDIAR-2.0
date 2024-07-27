@@ -10,7 +10,9 @@ import { HomeService } from '../../../home/services/home.service';
 @Component({
   selector: 'questions-table',
   templateUrl: './questions-table.component.html',
-  styles: ``
+  styles: `
+  
+  `
 })
 export class QuestionsTableComponent implements OnInit, OnChanges{
   
@@ -183,10 +185,12 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
 
   openDialog(message: string) {
     return this.dialog.open(CardConfirmComponent, {
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {
         mensaje: message,
       },
-      width: '30%',
     });
   }
 
@@ -222,7 +226,10 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
 
   editarFlashcard(idFlashcard: number) {
     const dialogRef = this.dialog.open(EditFlashcardComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {id: idFlashcard, isDisabled: true, titulo: 'Editar Flashcard'},
     });
     dialogRef.afterClosed().subscribe(() => {
@@ -232,7 +239,10 @@ export class QuestionsTableComponent implements OnInit, OnChanges{
 
   viewFlashcard(idFlashcard: number) {
     this.dialog.open(EditFlashcardComponent, {
-      width: '40%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {id: idFlashcard, isDisabled: false, titulo: 'Detalles Flashcard'},
     });
   }

@@ -28,7 +28,6 @@ export interface opcionesRespuestas{
 export interface editQuestionsVideolearn {
     idVideoLearn: number;
     pregunta: string;
-    minutoVideo:number;
     opcionesRespuestas: opcionesRespuestas[];
     idPregunta: number;
 }

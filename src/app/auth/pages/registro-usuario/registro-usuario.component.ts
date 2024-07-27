@@ -6,6 +6,7 @@ import { Role } from '../../interfaces/role';
 import { AuthService } from '../../services/auth.service';
 import { CustomValidators } from '../../../../custom/custom-validators';
 import { encryptStorage } from '../../../shared/utils/storage';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
   selector: 'registro-usuario',
@@ -46,7 +47,8 @@ export class RegistroUsuarioComponent {
     });
   }
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private spinnerService: SpinnerService,
+  ) {
     this.siteKey = '6Ld5KuQpAAAAAEY05mmbzmOX0lO9teZ8VAlyUUOO';
   }
 
@@ -57,13 +59,15 @@ export class RegistroUsuarioComponent {
 
   onSubmit() {
     if (this.userGroup.invalid) return;
-    console.log(this.currentUser);
 
     this.currentUser.username = (
       this.currentUser.nombres + this.currentUser.apellidos
     ).replace(/\s/g, '');
+    this.spinnerService.showSpinner();
+
 
     this.authService.registrarUsuario(this.currentUser).subscribe((user) => {
+      this.spinnerService.hideSpinner();
       encryptStorage.setItem('user', this.currentUser);
       this.router.navigate(['/auth/verify']);
     });

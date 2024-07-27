@@ -6,7 +6,7 @@ import {
   ListaDocentes,
   ListaDocentesPorAprobar,
 } from '../interfaces/lista-docentes.interface';
-import { DocenteAprobacion } from '../interfaces/docente-aprobacion.interface';
+import { DocenteAprobacion, DocentesAprobarGetQuery } from '../interfaces/docente-aprobacion.interface';
 import {AsignaDocenteRevisorMazo, AsignaDocenteRevisorRecurso, AsignaDocenteRevisorSimulador, AsignaDocenteRevisorVideoLearn, ListaDocenteRevisor, RevisorGetQuery } from '../interfaces/asignDocente.interface';
 import { Docente } from '../../academic-resources/interfaces/docente.interface';
 import { mallaAcademica, addAsignatura, updateAsignatura, addNivel, updateNivel, mallaAcademicaGetQuerys, mallaAcademicaNivelesGetQuerys, mallaAcademicaNiveles } from '../interfaces/malla-academica.interface';
@@ -36,6 +36,27 @@ export class SecurityService {
       }
     );
   }
+
+
+  listaDocPorAprobar({
+    nombreDocente,
+    pages,
+    limit
+  }: DocentesAprobarGetQuery) {
+    if (!pages) pages = 1;
+  if (!limit) limit = 5;
+  let query: string = `?pages=${pages}&limit=${limit}`;
+  if (nombreDocente && nombreDocente !== '')
+    query += `&nombreDocente=${nombreDocente}`;
+
+  return this.http.get<ListaDocentesPorAprobar>(
+    `admin/listaDocentesPorAprobar${query}`,
+    {
+      headers: this.headers,
+    }
+  );
+  }
+
 
   aprobarDocente(docente: DocenteAprobacion) {
     return this.http.post<DocenteAprobacion>('admin/aprobarDocente', docente, {

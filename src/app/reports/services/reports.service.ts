@@ -68,7 +68,7 @@ export class ReportsService {
   }: videoLearnsReportGetQuery) {
     if (!pages) pages = 1;
     if (!limit) limit = 10;
-    let query = `?page=${pages}&limit=${limit}`;
+    let query = `?pages=${pages}&limit=${limit}`;
 
     if (idAsignatura) query += `&idAsignatura=${idAsignatura}`;
     if (idNivel) query += `&idNivel=${idNivel}`;

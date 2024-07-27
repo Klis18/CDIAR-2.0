@@ -27,8 +27,10 @@
     </div>
   
     <div class="text-sm font-medium text-center text-gray-700 border-b border-gray-200">
+      <question-filter (search)="emitSearch($event)"></question-filter>
     </div>
-    <listado-aprobacion-docente/>
+    <listado-aprobacion-docente [searchData]="searchInfo" (loadedTableEmitter)="loadedTale()"
+    [loadTable]="reloadTable"/>
   </div>
 
 

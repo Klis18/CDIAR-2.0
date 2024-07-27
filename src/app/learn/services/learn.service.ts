@@ -265,4 +265,10 @@ export class LearnService {
       headers: this.headers,
     });
   }
+
+  deleteMazoGuardado(idMazo:number){
+    return this.http.delete(`mazos/guardado/eliminar/${idMazo}`, {
+      headers: this.headers,
+    });
+  }
 }

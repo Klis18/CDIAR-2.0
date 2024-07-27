@@ -135,3 +135,15 @@ body{
 
 
 /*-------------------------------------------------*/
+
+/*-----------------FORMATO TABLA------------------*/
+
+td.acciones{
+  width: 10px;
+}
+td.info{
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/*-----------------FIN FORMATO TABLA------------------*/

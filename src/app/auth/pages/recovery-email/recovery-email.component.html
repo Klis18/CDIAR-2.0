@@ -1,8 +1,11 @@
 <div class="grid grid-flow-col auto-cols-maxjustify-center px-6 py-12 lg:px-8 container-register">
   <div></div>
-  <div class="card bg-white rounded-lg mt-20 mb-20 pb-5">
+  <div class="card bg-white rounded-lg mt-20 mb-20 pb-10">
+    <div class="ml-5 mt-5 text-xl justify-left">
+      <i class="fa-solid fa-arrow-left text-gray-500" routerLink="/login"></i>
+    </div>
     <div class="sm:mx-auto sm:w-full sm:max-w-sm mt-10">
-      <h2 class="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+      <h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
         Recuperar contraseña
       </h2>
     </div>
@@ -26,12 +29,8 @@
           </button>
         </div>
       </form>
-      <p class="mt-5 text-center text-sm text-gray-500">
-        No has recibido el correo?
-        <button type="submit" class="font-semibold leading-6 text-blue-900 hover:text-blue-800"
-          (onClick)="reenviarCorreo()">Reenviar</button>
-      </p>
     </div>
   </div>
   <div></div>
 </div>
+<spinner-generate [message]="'Verificando'"></spinner-generate>

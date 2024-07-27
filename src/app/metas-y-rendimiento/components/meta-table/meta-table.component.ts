@@ -238,9 +238,13 @@ export class MetaTableComponent {
   }
 
   calculaNota(item: listadoMetas){
-
     let porcentaje = (((item.calificacionPrimerParcial + item.calificacionSegundoParcial)/2)/item.puntajeObjetivo)*100;
     this.porcentajeAvance = Math.round(porcentaje);
+
+    if(item.calificacionPrimerParcial === 0){
+      this.nota = 'Necesitas ingresar tu calificación del primer parcial';
+    }
+    else{
 
     if(item.calificacionSegundoParcial === null){
       this.notaSegundoParcial = ((item.puntajeObjetivo*2)-item.calificacionPrimerParcial);
@@ -254,6 +258,7 @@ export class MetaTableComponent {
     else{
       this.nota = item.calificacionSegundoParcial.toString();
     }
+  }
   }
 
 }

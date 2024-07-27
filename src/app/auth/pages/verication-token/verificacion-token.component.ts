@@ -5,6 +5,7 @@ import { EmailVerification } from '../../interfaces/email-verification';
 import { AuthService } from '../../services/auth.service';
 import { Email } from '../../interfaces/email';
 import { encryptStorage } from '../../../shared/utils/storage';
+import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
   selector: 'verificacion-token',
@@ -25,6 +26,7 @@ export class VerificacionTokenComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
+    private spinnerService: SpinnerService,
     private route: ActivatedRoute
   ) {}
 
@@ -46,10 +48,13 @@ export class VerificacionTokenComponent {
     const emailUser = encryptStorage.getItem('email-user') || '';
 
     this.emailVerification.email = emailUser;
+    this.spinnerService.showSpinner();
 
     this.authService
       .resendChangePasswordEmail(this.email)
       .subscribe((email) => {
+        this.spinnerService.hideSpinner();
+
         this.router.navigate(['/auth/verify-token']);
       });
   }

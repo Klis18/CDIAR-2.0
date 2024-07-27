@@ -223,7 +223,9 @@ export class SavedSimulatorsTableComponent {
   viewDetailsSimulator(idSimulator: number, nivel: string, asignatura: string) {
     
     this.dialog.open(DetailsSimulatorComponent, {
-      width: '30%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
       data: {id: idSimulator, nivel: nivel, asignatura: asignatura},
     });
   }
@@ -243,9 +245,15 @@ export class SavedSimulatorsTableComponent {
     this.router.navigate(['/simuladores/iniciar-simulador',{id: item.idSimulador, simulador: item.nombreSimulador}]);
   }
 
-saveSimulatorStarted(idSimulador: number) {
-  this.simulatorService.saveSimulatorStarted(idSimulador).subscribe(() => {
-  });
-}
+  saveSimulatorStarted(idSimulador: number) {
+    this.simulatorService.saveSimulatorStarted(idSimulador).subscribe(() => {
+    });
+  }
+
+  deleteSavedSimulator(idSimulador: number) {
+    this.simulatorService.deleteSavedSimulator(idSimulador).subscribe(() => {
+      this.listaSimuladores();
+    });
+  }
   
 }

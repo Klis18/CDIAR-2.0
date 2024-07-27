@@ -17,6 +17,7 @@ import { ObservacionRechazoComponent } from './pages/observacion-rechazo/observa
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { SpinnerGenerateComponent } from './components/spinner-generate/spinner-generate.component';
 import { SignatureFiltersComponent } from './pages/signature-filters/signature-filters.component';
+import { VerifyAnswerComponent } from './pages/verify-answer/verify-answer.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { SignatureFiltersComponent } from './pages/signature-filters/signature-f
     ObservacionRechazoComponent,
     SpinnerGenerateComponent,
     SignatureFiltersComponent,
+    VerifyAnswerComponent,
   ],
   imports: [
     CommonModule,

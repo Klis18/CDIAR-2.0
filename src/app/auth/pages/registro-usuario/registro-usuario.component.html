@@ -1,14 +1,14 @@
-<div class="grid grid-flow-col auto-cols-maxjustify-center px-6 py-5 lg:px-8">
-  <div></div>
-  <div class="card bg-white rounded-lg mt-5 mb-5">
-    <div class="sm:mx-auto sm:w-full sm:max-w-sm mt-10">
-      <h2 class="mt-5 text-left text-2xl sm:text-2xl md:text-3xl font-bold leading-9 tracking-tight text-gray-900">
+<div class="grid grid-cols-4 auto-cols-maxjustify-center px-6 py-5 lg:px-8">
+  <div class="hidden md:block"></div>
+  <div class="card bg-white rounded-lg mt-5 mb-5 p-0 md:p-9 lg:p-9 col-span-3 md:col-span-2 lg:col-span-2">
+    <div class="sm:w-full mt-10">
+      <h2 class="mt-5 text-left text-xl sm:text-2xl md:text-3xl font-bold leading-9 tracking-tight text-gray-900">
         Crear Cuenta
       </h2>
     </div>
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm mr-3 ml-3">
+    <div class="mt-10 sm:w-full mr-3 ml-3">
       <form [formGroup]="userGroup" (ngSubmit)="onSubmit()">
-        <div class="border-b border-gray-900/10 pb-5">
+        <div class="pb-5">
           <div class="mt-5 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6">
             <div class="sm:col-span-3">
               <label for="identity" class="block text-sm font-medium leading-6 text-gray-900">Cédula
@@ -110,20 +110,22 @@
             </div>
           </div>
         </div>
-        <div>
+        <div class="hidden md:block">
           <ngx-recaptcha2 #captchaElem [siteKey]="siteKey"> </ngx-recaptcha2>
         </div>
         <div class="mt-6 flex items-center justify-end gap-x-6 pb-7">
-          <button type="button" routerLink="/auth/login" class="text-sm font-semibold leading-6 text-gray-900">
+          <button type="button" routerLink="/auth/login" class="text-white bg-gray-500 hover:bg-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
             Cancelar
           </button>
           <button type="submit"
-            class="rounded-md bg-blue-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            class="text-white bg-blue-900 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
             Registrarse
           </button>
         </div>
       </form>
     </div>
   </div>
-  <div></div>
+  <div class="hidden md:block"></div>
 </div>
+<spinner-generate [message]="'Guardando'"></spinner-generate>
+

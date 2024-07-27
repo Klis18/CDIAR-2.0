@@ -1,6 +1,5 @@
 import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Form, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Editor, Toolbar, Validators } from 'ngx-editor';
+import { Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { sendObservationMazo, updateStatusMazo } from '../../../learn/interfaces/mazo.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LearnService } from '../../../learn/services/learn.service';

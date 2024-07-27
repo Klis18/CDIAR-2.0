@@ -2,6 +2,7 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { Nivel } from '../../../shared/interfaces/nivel.interface';
 import { SharedService } from '../../../shared/services/shared.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { HomeService } from '../../services/home.service';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
   counter = 0;
+  rol: string = '';
   message = '';
   message2 = '';
   public fullMessage = 'Bienvenido a CDIAR';
@@ -22,6 +24,7 @@ export class HomeComponent implements OnInit {
   @Output() search = new EventEmitter();
 
   constructor( private sharedService: SharedService,
+    private homeService: HomeService,
     @Inject(FormBuilder) private formBuilder: FormBuilder) {
     this.typeMessage();
     setTimeout(() => {
@@ -85,6 +88,12 @@ export class HomeComponent implements OnInit {
           this.onNivelChange(level);
         }
       },
+    });
+
+
+
+    this.homeService.obtenerDatosMenu().subscribe((res: any) => {
+      this.rol = res.data.rol;
     });
   }
 

@@ -6,5 +6,21 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class AprobarDocentesComponent {
+  searchInfo: any;
+  
+  emitSearch(res: any) {
+    if (res) {
+      this.searchInfo = res;
+    }
+  }
+  reloadTable: boolean = false;
 
+
+  loadTable() {
+    this.reloadTable = true;
+  }
+
+  loadedTale() {
+    this.reloadTable = false;
+  }
 }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SimulatorsQuestions} from '../../interfaces/simulators.interface';
 import { ActivatedRoute } from '@angular/router';
 import { SimulatorsService } from '../../services/simulators.service';
+import { MatDialog } from '@angular/material/dialog';
+import { VerifyAnswerComponent } from '../../../shared/pages/verify-answer/verify-answer.component';
 
 @Component({
   selector: 'app-start-simulator',
@@ -25,7 +27,9 @@ export class StartSimulatorComponent implements OnInit {
   btnName!:string;
   cantPreguntasSimulador!: number;
 
-  constructor(private route: ActivatedRoute,private simulatorsService: SimulatorsService) { }
+  constructor(private route: ActivatedRoute,
+              private simulatorsService: SimulatorsService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -61,7 +65,10 @@ export class StartSimulatorComponent implements OnInit {
   
     if (this.preguntasSimulador[this.preguntaActualIndex].tipoPregunta === 'Opción Simple') {
       if (respuestasCorrectasIndices.includes(this.respuestaSeleccionada!)) {
+          this.respuestaCorrecta();
         this.puntaje++;
+      }else{
+        this.respuestaIncorrecta();
       }
     } else {
 
@@ -74,7 +81,10 @@ export class StartSimulatorComponent implements OnInit {
       );
   
       if (todasCorrectas && respuestasSeleccionadasIndices.length === respuestasCorrectasIndices.length) {
+        this.respuestaCorrecta();
         this.puntaje++;
+      }else{
+        this.respuestaIncorrecta();
       }
     }
   }
@@ -105,4 +115,24 @@ export class StartSimulatorComponent implements OnInit {
     });
   }
 
+
+  respuestaCorrecta(){
+    const dialogRef = this.dialog.open(VerifyAnswerComponent, {
+      data: { imagen: 'correcta', mensaje: 'Respuesta Correcta' }
+    });
+
+    setTimeout(() => {
+      dialogRef.close();
+    }, 2000);
+  }
+
+  respuestaIncorrecta(){
+    const dialogRef = this.dialog.open(VerifyAnswerComponent, {
+      data: { imagen: 'incorrecta', mensaje: 'Respuesta Incorrecta' }
+    });
+
+    setTimeout(() => {
+      dialogRef.close();
+    }, 2000);
+  }
 }
