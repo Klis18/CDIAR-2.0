@@ -37,17 +37,6 @@ export class AuthGuard implements CanMatch, CanActivate {
           const hasAccess = expectedRoles.includes(userRol!);
 
           if (!hasAccess) {
-            this.dialog.open(CardMessageComponent, {
-              width: '80%',
-              maxWidth: '500px',
-              maxHeight: '80%',
-              data: {
-                status: 'denegar',
-                mensaje:
-                  'Acceso denegado, no tienes permisos para acceder a esta página.',
-              },
-            });
-
             this.router.navigate(['/home']);
             return false;
           }
