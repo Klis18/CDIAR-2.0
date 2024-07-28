@@ -75,7 +75,6 @@ export class UserReportTableComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['searchData']) {
       this.nombresCompletos = this.searchData?.question;
-      console.log('searchData', this.nombresCompletos);
       this.listaUsuarios();
     }
     if (changes['loadTable']) {
@@ -118,7 +117,6 @@ export class UserReportTableComponent implements OnInit, OnChanges {
       limit: this.limit,
       nombresCompletos: this.nombresCompletos,
     };
-   console.log('Paginación', paginate);
     this.reportService.getDataUsuarios(paginate).subscribe({
       next: (res: any) => {
         this.data = res.data ?? [];

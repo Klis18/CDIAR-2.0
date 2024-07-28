@@ -74,14 +74,14 @@ estado: string = '';
     this.listaPreguntas();
 
     this.homeService.obtenerDatosMenu().subscribe((user:any) => {
-      this.nombreUsuario = user.data.userName;
+      this.nombreUsuario = user.data?.userName;
     });
 
     
     this.simulatorService.getDatosSimulator(this.idSimulador).subscribe((res) => {
-      this.usuarioCreador = res.data.usuarioCreador;
-      this.docenteRevisor = res.data.nombreRevisor;
-      this.estado = res.data.estado;
+      this.usuarioCreador = res.data?.usuarioCreador;
+      this.docenteRevisor = res.data?.nombreRevisor;
+      this.estado = res.data?.estado;
     });
   }
 
@@ -134,7 +134,7 @@ estado: string = '';
       next: (res: any) => {
         this.data = res.data ?? [];
         if (this.data.length > 0) {
-          this.pregunta = res.data.pregunta;
+          this.pregunta = res.data?.pregunta;
           this.paginateCurrent = this.crearArreglo(this.limit, res.numRecord);
         }
         if (this.data?.length === 0 || !this.data) {

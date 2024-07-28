@@ -433,8 +433,6 @@ export class ResourcesCardsComponent {
   asignaRevisor(idRecurso: number) {
     const dialogRef = this.dialog.open(SelectRevisorComponent, {
       width: '80%',
-      maxWidth: '500px',
-      maxHeight: '80%',
       data: {id: idRecurso, opcion:'Recursos'},
     });
     dialogRef.afterClosed().subscribe((result) => {
