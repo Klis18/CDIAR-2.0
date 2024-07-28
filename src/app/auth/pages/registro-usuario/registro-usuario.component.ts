@@ -19,6 +19,7 @@ export class RegistroUsuarioComponent {
   // userTypes: any;
 
   userTypes: { label: string; value: string }[] = [];
+  userTypes2: { label: string; value: string }[] = [];
 
   // formGroup: FormGroup = new FormGroup({});
 
@@ -44,6 +45,8 @@ export class RegistroUsuarioComponent {
         label: role.rolName,
         value: role.rolId,
       }));
+      this.userTypes2 = this.userTypes.filter(item => item !== this.userTypes[0]);
+      
     });
   }
 

@@ -312,9 +312,11 @@ export class RealizedVideolearnsComponent {
   }
   
   viewDetailsVideolearn(item: any) {
-    console.log('item ID', item.idVideoLearn);
     this.dialog.open(VideolearnDetailsComponent, {
-      width: '32%',
+      width: '80%',
+      maxWidth: '500px',
+      maxHeight: '80%',
+
       data: {id: item.idVideoLearnRealizado},
     });
   }

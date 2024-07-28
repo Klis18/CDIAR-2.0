@@ -1,7 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanMatch, Route, Router, RouterStateSnapshot, UrlSegment } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { CardMessageComponent } from '../../shared/pages/card-message/card-message.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanMatch, CanActivate {
@@ -10,30 +12,45 @@ export class AuthGuard implements CanMatch, CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router,
+    private dialog: MatDialog
   ) { }
 
-  private checkAuthStatus(): boolean | Observable<boolean> {
+private checkAuthStatus(route?: Route | ActivatedRouteSnapshot): Observable<boolean> {
+  return this.authService.checkAuthStatus().pipe(
+    map(isAuthenticated => {
+      if (!isAuthenticated) {
+        this.router.navigate(['./auth/login']);
+        return false;
+      }
 
-    return this.authService.checkAuthStatus()
-      .pipe(
-        tap( isAuthenticated => {
-          if ( !isAuthenticated ) {
-            this.router.navigate(['./auth/login'])
-          }
-        }),
-      )
+      if (route) {
+        const expectedRoles = route.data?.['roles'] as string[];
+        const userRol = this.authService.userRol();
+        const hasAccess = expectedRoles.includes(userRol!);
 
-  }
+        if (!hasAccess) {
+          this.dialog.open(CardMessageComponent, {
+            width: '80%',
+            maxWidth: '500px',
+            maxHeight: '80%',
+            data: {status:'denegar', mensaje: 'Acceso denegado, no tienes permisos para acceder a esta página.'},
+          });
 
+          this.router.navigate(['/home']);
+          return false;
+        }
+      }
 
-  canMatch(route: Route, segments: UrlSegment[]): boolean | Observable<boolean> {
-    
-    return this.checkAuthStatus();
-  }
+      return true;
+    })
+  );
+}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> {
+canMatch(route: Route, segments: UrlSegment[]): Observable<boolean> {
+  return this.checkAuthStatus(route);
+}
 
-    return this.checkAuthStatus();
-  }
-
+canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  return this.checkAuthStatus(route);
+}
 }

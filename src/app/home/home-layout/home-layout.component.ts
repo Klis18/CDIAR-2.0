@@ -60,7 +60,7 @@ export class HomeLayoutComponent implements OnInit, OnDestroy {
     this.authService.logout();
       setTimeout(() => {
         window.location.reload();
-      }, 50); // Se usa un pequeño retraso para asegurar que todas las operaciones de cierre de sesión hayan completado correctamente
+      }, 50); 
     this.router.navigate(['/auth/login']);
   }
 }

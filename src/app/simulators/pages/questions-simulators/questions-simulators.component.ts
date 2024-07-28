@@ -38,20 +38,20 @@ export class QuestionsSimulatorsComponent {
     });
 
     this.homeService.obtenerDatosMenu().subscribe((user:any) => {
-      this.nombreUsuario = user.data.userName;
-      this.rol = user.data.rol;
+      this.nombreUsuario = user.data?.userName;
+      this.rol = user.data?.rol;
     });
 
     
     this.simulatorService.getDatosSimulator(this.idSimulador).subscribe((res) => {
-      this.estadoSimulador = res.data.estado;
-      this.creadorSimulador = res.data.usuarioCreador;
-      this.nombreRevisor = res.data.nombreRevisor;
+      this.estadoSimulador = res.data?.estado;
+      this.creadorSimulador = res.data?.usuarioCreador;
+      this.nombreRevisor = res.data?.nombreRevisor;
     });
     
     
     this.simulatorService.getObservationSimulator(this.idSimulador).subscribe((res) => {
-      this.observacionRechazo = res.data.observacion;
+      this.observacionRechazo = res.data?.observacion;
     });
     
   }

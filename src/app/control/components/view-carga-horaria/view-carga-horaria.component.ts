@@ -18,7 +18,6 @@ export class ViewCargaHorariaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('IDENTIFICACION DOCENTE' ,this.data.idDocente);
   }
   emitSearch(res: any) {
     if (res) {
