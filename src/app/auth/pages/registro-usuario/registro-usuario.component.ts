@@ -73,7 +73,8 @@ export class RegistroUsuarioComponent {
     this.authService.registrarUsuario(this.currentUser).subscribe((user) => {
       this.spinnerService.hideSpinner();
       encryptStorage.setItem('user', this.currentUser);
-      this.router.navigate(['/auth/verify']);
+      // this.router.navigate(['/auth/verify']);
+      this.router.navigate(['/auth/login']);  
     });
   }
 }
