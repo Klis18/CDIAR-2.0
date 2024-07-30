@@ -1,7 +1,16 @@
-import { Component, HostListener, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LearnService } from '../../services/learn.service';
-import { Flashcard, updateSiguienteRepasoFlashcard } from '../../interfaces/mazo.interface';
+import {
+  Flashcard,
+  updateSiguienteRepasoFlashcard,
+} from '../../interfaces/mazo.interface';
 import { Subscription, interval } from 'rxjs';
 
 @Component({
@@ -12,10 +21,9 @@ import { Subscription, interval } from 'rxjs';
       background-image: url('/assets/images/bgflashcard.jpg');
       background-size: cover;
     }
-  `
+  `,
 })
-export class StudyFlashcardsComponent implements OnInit, OnDestroy{
-
+export class StudyFlashcardsComponent implements OnInit, OnDestroy {
   nombreMazo: string = '';
   idMazo: number = 0;
 
@@ -25,75 +33,89 @@ export class StudyFlashcardsComponent implements OnInit, OnDestroy{
   subscription: Subscription | null = null;
   entradaPagina: Date | null = null;
   tiempoEnPagina: number = 0;
-  intervaloTiempo: any; 
+  intervaloTiempo: any;
   nuevaFecha: Date = new Date();
 
-
-  constructor(private route: ActivatedRoute, private learnService: LearnService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private learnService: LearnService
+  ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.nombreMazo = params['mazo'];
       this.idMazo = params['id'];
     });
 
     this.cargarFlashcards();
     this.iniciarRepeticion();
-     this.entradaPagina = new Date();
-     this.intervaloTiempo = setInterval(() => {
-       this.tiempoEnPagina = Math.floor((new Date().getTime() - this.entradaPagina!.getTime()) / 1000);
-     }, 1000);
-  
+    this.entradaPagina = new Date();
+    this.intervaloTiempo = setInterval(() => {
+      this.tiempoEnPagina = Math.floor(
+        (new Date().getTime() - this.entradaPagina!.getTime()) / 1000
+      );
+    }, 1000);
   }
 
   cargarFlashcards() {
-    this.learnService.estudiarMazoGuardado(this.idMazo).subscribe((res: any) => {
-      this.flashcardsMazo = res.data;
-      this.procesarSiguienteFlashcard();
-    });
+    this.learnService
+      .estudiarMazoGuardado(this.idMazo)
+      .subscribe((res: any) => {
+        this.flashcardsMazo = res.data;
+        this.procesarSiguienteFlashcard();
+      });
   }
 
   procesarSiguienteFlashcard() {
-    const now = new Date();
-    const flashcardsDisponibles = this.flashcardsMazo.filter(f => new Date(f.siguienteRepaso) <= now);
-    
+    const now = new Date(); // now ya está en UTC cuando se crea una nueva instancia de Date
+
+    // Filtra flashcards cuyo siguienteRepaso sea menor o igual a 'now' en UTC
+    const flashcardsDisponibles = this.flashcardsMazo.filter((f) => {
+      // Convierte 'siguienteRepaso' a un objeto Date en UTC para comparación
+      const siguienteRepasoUTC = new Date(f.siguienteRepaso);
+      return siguienteRepasoUTC <= now;
+    });
+
     if (flashcardsDisponibles.length > 0) {
       this.currentFlashcard = flashcardsDisponibles[0];
     } else {
       this.currentFlashcard = null;
     }
   }
-                  
+
   toggleAnswer(): void {
     this.showAnswer = !this.showAnswer;
   }
 
-  
-toLocalISOString(date: Date): string {
-  const tzoffset = date.getTimezoneOffset() * 60000;
-  const localISOTime = (new Date(date.getTime() - tzoffset)).toISOString().slice(0,-1);
-  return localISOTime;
-}
+  toLocalISOString(date: Date): string {
+    const tzoffset = date.getTimezoneOffset() * 60000;
+    const localISOTime = new Date(date.getTime() - tzoffset)
+      .toISOString()
+      .slice(0, -1);
+    return localISOTime;
+  }
 
-actualizarRepasoFlashcard(minutos: number): void {
-  if (this.currentFlashcard) {
+  actualizarRepasoFlashcard(minutos: number): void {
+    if (this.currentFlashcard) {
       let ahora = new Date();
-      this.nuevaFecha = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate(), ahora.getHours(), ahora.getMinutes() + minutos);
-      
-      let nuevaFechaISO = this.toLocalISOString(this.nuevaFecha);
+      this.nuevaFecha = new Date(ahora.getTime() + minutos * 60000);
+
+      // Asegúrate de que la fecha se maneje en UTC
+      let nuevaFechaISO = this.nuevaFecha.toISOString(); // ISO string ya está en UTC
 
       const flashcard: updateSiguienteRepasoFlashcard = {
-          idFlashcard: this.currentFlashcard.idFlashcard,
-          siguienteRepaso: nuevaFechaISO
+        idFlashcard: this.currentFlashcard.idFlashcard,
+        siguienteRepaso: nuevaFechaISO,
       };
 
-
-      this.learnService.actualizarRepasoFlashcardsGuardadas(flashcard).subscribe(res => {
-        this.showAnswer = false;
-        this.cargarFlashcards();
-      });
+      this.learnService
+        .actualizarRepasoFlashcardsGuardadas(flashcard)
+        .subscribe((res) => {
+          this.showAnswer = false;
+          this.cargarFlashcards();
+        });
+    }
   }
-}
 
   iniciarRepeticion() {
     if (this.subscription) {
@@ -110,17 +132,18 @@ actualizarRepasoFlashcard(minutos: number): void {
       this.subscription.unsubscribe();
     }
 
-   clearInterval(this.intervaloTiempo);
-   this.tiempoEnPagina = 0;
-   this.entradaPagina = null;
- 
+    clearInterval(this.intervaloTiempo);
+    this.tiempoEnPagina = 0;
+    this.entradaPagina = null;
   }
 
   formatoTiempo(segundos: number): string {
     const horas = Math.floor(segundos / 3600);
     const minutos = Math.floor((segundos % 3600) / 60);
     const segundosRestantes = segundos % 60;
-    return `${this.agregarCero(horas)}:${this.agregarCero(minutos)}:${this.agregarCero(segundosRestantes)}`;
+    return `${this.agregarCero(horas)}:${this.agregarCero(
+      minutos
+    )}:${this.agregarCero(segundosRestantes)}`;
   }
 
   agregarCero(numero: number): string {
@@ -132,7 +155,9 @@ actualizarRepasoFlashcard(minutos: number): void {
     if (!this.entradaPagina) {
       this.entradaPagina = new Date();
       this.intervaloTiempo = setInterval(() => {
-        this.tiempoEnPagina = Math.floor((new Date().getTime() - this.entradaPagina!.getTime()) / 1000);
+        this.tiempoEnPagina = Math.floor(
+          (new Date().getTime() - this.entradaPagina!.getTime()) / 1000
+        );
       }, 1000);
     }
   }
