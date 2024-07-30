@@ -52,7 +52,8 @@ export class RegistroUsuarioComponent {
 
   constructor(private authService: AuthService, private router: Router, private spinnerService: SpinnerService,
   ) {
-    this.siteKey = '6Ld5KuQpAAAAAEY05mmbzmOX0lO9teZ8VAlyUUOO';
+    // this.siteKey = '6Ld5KuQpAAAAAEY05mmbzmOX0lO9teZ8VAlyUUOO';
+    this.siteKey = '6Lf5tBsqAAAAADaF6Z4ymd4CTRNy387FgE5IjWZj';
   }
 
   get currentUser(): User {
