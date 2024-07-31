@@ -11,6 +11,7 @@ import { HomeService } from '../../services/home.service';
 })
 export class HomeComponent implements OnInit {
   counter = 0;
+  counter1=0;
   rol: string = '';
   message = '';
   message2 = '';
@@ -45,12 +46,12 @@ export class HomeComponent implements OnInit {
   }
 
   typeMessage2() {
-    this.counter = 0;
+    this.counter1 = 0;
     this.message2 = '';
     const interval = setInterval(() => {
-      if (this.counter < this.fullMessage2.length) {
-        this.message2 += this.fullMessage2.charAt(this.counter);
-        this.counter++;
+      if (this.counter1 < this.fullMessage2.length) {
+        this.message2 += this.fullMessage2.charAt(this.counter1);
+        this.counter1++;
       } else {
         clearInterval(interval);
       }
