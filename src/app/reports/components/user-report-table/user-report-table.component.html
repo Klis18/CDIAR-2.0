@@ -44,13 +44,64 @@
                 </tr>
               </tbody>
             </table>
+
+
+            <div class="flex my-3 pl-0 pr-0 md:pr-7 md:pl-7 lg:pr-7 lg:pl-7">
+              <div class="flex-1 ms-2">
+                Mostrar:
+                <select
+                  class="p-1 rounded border-2 border-solid border-slate-300"
+                  formControlName="limit"
+                >
+                  @for (item of limitsOptions; track item) {
+                  <option [value]="item.value">{{ item.label }}</option>
+                  }
+                </select>
+              </div>
+        
+              <div class="grid justify-end">
+                <nav>
+                  <ul class="flex inline-flex">
+                    <li>
+                      <span>Página: <input class="w-8 p-1 text-center justify-center rounded-full bg-sky-200 mx-1" type="number" (change)="goToPage($event)" value="{{page}}"> de {{paginateCurrent.length}}</span>
+                    </li>
+                    <li>
+                      <a
+                        class="mx-1 flex h-8 w-8 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out"
+                        [ngClass]="{
+                            'cursor-pointer hover:border-gray-400 hover:bg-light-300': pagination.buttonLeft,
+                            'opacity-50 cursor-default': !pagination.buttonLeft,
+                          }"
+                        (click)="prevPage()"
+                      >
+                        <span class="material-icons text-base">keyboard_arrow_left</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="mx-1 flex h-8 w-8 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
+                        (click)="nextPage()"
+                        [ngClass]="{
+                          'cursor-pointer hover:border-gray-400 hover:bg-light-300':
+                            pagination.buttonRight,
+                          'opacity-50 cursor-default': !pagination.buttonRight
+                        }"
+                      >
+                        <span class="material-icons text-base">keyboard_arrow_right</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+
+              
           </div>
         </div>
       </div>
   
    <!---PAGINACIÓN-->
 
-   <div class="flex my-3 pl-0 pr-0 md:pr-7 md:pl-7 lg:pr-7 lg:pl-7">
+   <!-- <div class="flex my-3 pl-0 pr-0 md:pr-7 md:pl-7 lg:pr-7 lg:pl-7">
     <div class="flex-1 ms-2">
       Mostrar:
       <select
@@ -95,7 +146,7 @@
           </li>
         </ul>
       </nav>
-    </div>
+    </div> -->
   </div>
 </div>
 

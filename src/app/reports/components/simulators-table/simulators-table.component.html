@@ -81,7 +81,7 @@
                   class="p-1 rounded border-2 border-solid border-slate-300"
                   formControlName="limit"
                 >
-                  @for (item of limitsOptions; track item) {
+                  @for (item of limitsOptions; track item.value) {
                   <option [value]="item.value">{{ item.label }}</option>
                   }
                 </select>

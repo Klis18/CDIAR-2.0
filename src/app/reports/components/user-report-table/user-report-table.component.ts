@@ -29,6 +29,8 @@ export class UserReportTableComponent implements OnInit, OnChanges {
 
   dataUsuarios: any;
   data: any;
+  itemsPerPage: number = 5;
+  totalPages: number = 1;
   nombresCompletos = '';
   searchInfo: any;
   users!: FormGroup;

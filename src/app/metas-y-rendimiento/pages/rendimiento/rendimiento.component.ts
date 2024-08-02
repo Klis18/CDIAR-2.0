@@ -27,6 +27,7 @@ export class RendimientoComponent implements OnInit{
       },
     });
   }
+
   
 
   emitSearch(res: any) {

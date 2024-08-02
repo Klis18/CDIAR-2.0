@@ -56,6 +56,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
       value: 15,
     },
   ];
+  nombreEstudiante = this.usuario;
 
   constructor(
     private reportsService: ReportsService,
@@ -73,6 +74,15 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.builderForm();
 
+    this.homeService.obtenerDatosMenu().subscribe((res)=>{
+      this.nombreEstudiante = res.data.userName;
+      const rol = res.data.rol;
+      if(rol === 'Admin'){
+        this.nombreEstudiante = ''; 
+      }
+      this.listaDatosSimuladores(this.nombreEstudiante);
+    });
+
     this.simulatorForm.valueChanges.subscribe({
       next: (res) => {
         if (res?.limit) {
@@ -81,10 +91,11 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
         if (res?.page) {
           this.page = Number(res?.page);
         }
-        this.listaDatosSimuladores();
+        this.listaDatosSimuladores(this.nombreEstudiante);
       },
     });
-    this.listaDatosSimuladores();   
+    this.listaDatosSimuladores(this.nombreEstudiante);   
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -92,11 +103,11 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
       this.idAsignatura = this.searchData?.asignaturas;
       this.idNivel = this.searchData?.nivelesType;
       this.nombreSimulador = this.searchData?.descripcion;
-      this.listaDatosSimuladores();
+      this.listaDatosSimuladores(this.nombreEstudiante);
     }
     if (changes['loadTable']) {
       if (this.loadTable) {
-        this.listaDatosSimuladores();
+        this.listaDatosSimuladores(this.nombreEstudiante);
       }
     }
     
@@ -116,22 +127,22 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
     let page = parseInt(target.value, 10);
     if (!isNaN(page) && page >= 1 && page <= this.paginateCurrent.length) {
       this.page = page;
-      this.listaDatosSimuladores();
+      this.listaDatosSimuladores(this.nombreEstudiante);
     } else {
       target.value = this.page.toString();
-      this.listaDatosSimuladores();
+      this.listaDatosSimuladores(this.nombreEstudiante);
     }
   }
  
  
-  listaDatosSimuladores() {
+  listaDatosSimuladores(estudiante: string ) {
     const paginate: SimuladoresGetQuery = {
       page: this.page,
       limit: this.limit,
       idAsignatura: this.idAsignatura,
       idNivel: this.idNivel,
       nombreSimulador: this.nombreSimulador,
-      nombreEstudiante: this.usuario,
+      nombreEstudiante: estudiante,
       id: this.id,
     };
     
@@ -193,7 +204,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
     if (this.pagination.buttonLeft) {
       const leftButton = this.simulatorForm.get('page')?.value;
       this.simulatorForm.get('page')?.setValue(leftButton - 1);
-      this.listaDatosSimuladores();
+      this.listaDatosSimuladores(this.nombreEstudiante);
     }
   }
 
@@ -201,7 +212,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
     if (this.pagination.buttonRight) {
       const rightButton = this.simulatorForm.get('page')?.value;
       this.simulatorForm.get('page')?.setValue(rightButton + 1);
-      this.listaDatosSimuladores();
+      this.listaDatosSimuladores(this.nombreEstudiante);
     }
   }
 
@@ -216,9 +227,9 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
     const logoHeight = 25;
 
     doc.setFontSize(16);
-    doc.text('CDIAR', 105, 20, { align: 'center' }); // Ajusta la posición (eje y) si es necesario
+    doc.text('CDIAR', 105, 20, { align: 'center' }); 
     doc.setFontSize(12);
-    doc.text('Reporte de Simuladores', 105, 30, { align: 'center' }); // Ajusta la posición (eje y) si es necesario
+    doc.text('Reporte de Simuladores', 105, 30, { align: 'center' }); 
 
     const headers = [
       [

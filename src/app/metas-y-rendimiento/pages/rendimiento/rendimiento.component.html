@@ -64,7 +64,7 @@
     <div class="pt-5 pb-5">
       @switch (selectedTab) { 
         @case ('Simuladores') {
-            <simulators-table [searchData]="searchInfo" [usuario]="usuario" (loadedTableEmitter)="loadedTale()"
+            <simulators-table [searchData]="searchInfo" (loadedTableEmitter)="loadedTale()"
             [loadTable]="reloadTable"/>
         } @case ('VideoLearns') {
             <videolearn-table-report [searchData]="searchInfo" [usuario]="usuario" (loadedTableEmitter)="loadedTale()"

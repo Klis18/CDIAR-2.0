@@ -25,7 +25,7 @@ export class ReportsService {
 
     if (!limit) limit = 5;
 
-    let query: string = `?pages=${page}&limit=${limit}`;
+    let query: string = `?page=${page}&limit=${limit}`;
     if (nombresCompletos && nombresCompletos !== '')
       query += `&nombresCompletos=${nombresCompletos}`;
 

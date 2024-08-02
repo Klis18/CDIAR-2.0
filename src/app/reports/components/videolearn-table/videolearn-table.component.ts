@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, Output, SimpleChanges } from '@
 import { ReportsService } from '../../services/reports.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { VideoLearnsReport, videoLearnsReportGetQuery } from '../../interfaces/videolearn.interface';
-import { utils, writeFile } from 'xlsx'; // Importa las funciones utils y writeFile
+import { utils, writeFile } from 'xlsx'; 
 import autoTable, { HAlignType } from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 
@@ -44,6 +44,8 @@ export class VideolearnTableComponent {
       value: 15,
     },
   ];
+
+  nombreEstudiante!: string;
 
   constructor(
     private reportsService: ReportsService,
