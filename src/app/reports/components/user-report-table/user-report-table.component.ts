@@ -171,6 +171,8 @@ export class UserReportTableComponent implements OnInit, OnChanges {
     if (this.pagination.buttonLeft) {
       const leftButton = this.users.get('page')?.value;
       this.users.get('page')?.setValue(leftButton - 1);
+      this.listaUsuarios();
+
     }
   }
 
@@ -178,6 +180,7 @@ export class UserReportTableComponent implements OnInit, OnChanges {
     if (this.pagination.buttonRight) {
       const rightButton = this.users.get('page')?.value;
       this.users.get('page')?.setValue(rightButton + 1);
+      this.listaUsuarios();
     }
   }
 
