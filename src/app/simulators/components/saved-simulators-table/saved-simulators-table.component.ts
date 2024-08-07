@@ -220,13 +220,13 @@ export class SavedSimulatorsTableComponent {
     return `linear-gradient(to right, ${color1} 0%, ${color2} 100%)`;
   }
 
-  viewDetailsSimulator(idSimulator: number, nivel: string, asignatura: string) {
+  viewDetailsSimulator(item:any) {
     
     this.dialog.open(DetailsSimulatorComponent, {
       width: '80%',
       maxWidth: '500px',
       maxHeight: '80%',
-      data: {id: idSimulator, nivel: nivel, asignatura: asignatura},
+      data: {id: item.idSimulador, nivel: item.nivel, asignatura: item.asignatura, nombreSimulador:item.nombreSimulador},
     });
   }
 

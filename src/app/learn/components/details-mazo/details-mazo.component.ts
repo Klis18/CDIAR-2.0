@@ -56,11 +56,13 @@ export class DetailsMazoComponent implements OnInit{
     this.learnService.guardarMazoEstudiado(this.data.id).subscribe((res) => {
       this.router.navigate(['/learn/estudiar-flashcards',{id: this.data.id, mazo: this.nombreMazo}]);
     });
+    this.dialogRef.close();
   }
   
   saveMazoToReview() {
     this.learnService.saveMazoToReview(this.data.id).subscribe(() => {
     });
+    this.dialogRef.close();
   }
 
   cancelar() {

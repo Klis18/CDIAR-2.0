@@ -38,4 +38,8 @@ export class CustomValidators extends Validators {
       return firstControl?.value != secondControl?.value ? null : { mustBeDifferent: true };
     };
   }
+
+  static atLeastOneSymbol(control: AbstractControl): ValidationErrors | null {
+    return /[!@#$%^&*(),.?":{}|<>-_]+/.test(control.value) ? null : { atLeastOneSymbol: true };
+  }
 }
