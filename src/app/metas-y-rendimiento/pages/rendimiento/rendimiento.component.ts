@@ -28,8 +28,6 @@ export class RendimientoComponent implements OnInit{
     });
   }
 
-  
-
   emitSearch(res: any) {
     if (res) {
       this.searchInfo = res;

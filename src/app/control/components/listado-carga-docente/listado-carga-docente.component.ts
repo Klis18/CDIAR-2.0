@@ -104,7 +104,8 @@ export class ListadoCargaDocenteComponent {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['searchData']) {
-      this.nombre = this.searchData?.question;
+      this.actividad = this.searchData?.actividad;
+      this.diaSemana = this.searchData?.diasSemana;
       this.listaCargaHorariaPorDocente();
     }
     if (changes['loadTable']) {

@@ -13,6 +13,8 @@ import { RecoveryEmailComponent } from './pages/recovery-email/recovery-email.co
 import { RecoveryPasswordComponent } from './pages/recovery-password/recovery-password.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { VerificacionTokenComponent } from './pages/verication-token/verificacion-token.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { VerificacionTokenComponent } from './pages/verication-token/verificacio
     FormsModule,
     SharedModule,
     NgxCaptchaModule,
+    NgSelectModule,
+    FontAwesomeModule
   ],
   exports: [
     RegistroUsuarioComponent,
