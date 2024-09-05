@@ -6,6 +6,7 @@ import { Role } from '../../interfaces/role';
 import { AuthService } from '../../services/auth.service';
 import { CustomValidators } from '../../../../custom/custom-validators';
 import { encryptStorage } from '../../../shared/utils/storage';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { SpinnerService } from '../../../shared/services/spinner.service';
 
 @Component({
@@ -16,6 +17,9 @@ import { SpinnerService } from '../../../shared/services/spinner.service';
 export class RegistroUsuarioComponent {
   value: string | undefined;
   siteKey: string;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
+  showPassword = false;
   // userTypes: any;
 
   userTypes: { label: string; value: string }[] = [];
@@ -30,9 +34,9 @@ export class RegistroUsuarioComponent {
       apellidos: new FormControl<string>('', Validators.required),
       email: new FormControl<string>('', Validators.required),
       phoneNumber: new FormControl<string>('', Validators.required),
-      password: new FormControl<string>('', Validators.required),
+      password: new FormControl<string>('', [Validators.required,CustomValidators.atLeastOneLowercase, CustomValidators.atLeastOneUppercase, CustomValidators.atLeastOneNumber,CustomValidators.atLeastOneSymbol, Validators.minLength(10)]),
       passwordConfirm: new FormControl<string>('', Validators.required),
-      rolId: new FormControl<string>('', Validators.required),
+      rolId: new FormControl<string | null>( null , Validators.required),
     },
     {
       validators: CustomValidators.mustBeEqual('password', 'passwordConfirm'),
@@ -76,5 +80,9 @@ export class RegistroUsuarioComponent {
       // this.router.navigate(['/auth/verify']);
       this.router.navigate(['/auth/login']);  
     });
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

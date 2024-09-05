@@ -15,10 +15,10 @@
               </label>
               <div class="mt-2">
                 <input type="text" name="identity" id="identity" formControlName="cedula"
-                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-500 peer peer-invalid"
                   pattern=".{10}$" />
                 <span
-                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  class="mt-2 hidden text-xs text-gray-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                   *Cédula debe tener 10 dígitos
                 </span>
               </div>
@@ -27,10 +27,10 @@
               <label for="user-name" class="block text-sm font-medium leading-6 text-gray-900">Nombres</label>
               <div class="mt-2">
                 <input type="text" name="user-name" id="user-name" formControlName="nombres"
-                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-500 peer peer-invalid"
                   pattern="^[a-zA-Z\sáéíóúüñÁÉÍÓÚÜÑ]*$" />
                 <span
-                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  class="mt-2 hidden text-xs text-gray-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                   *Solo se permiten letras.
                 </span>
               </div>
@@ -39,10 +39,10 @@
               <label for="user-lastname" class="block text-sm font-medium leading-6 text-gray-900">Apellidos</label>
               <div class="mt-2">
                 <input type="text" name="user-lastname" id="user-lastname" formControlName="apellidos"
-                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-500 peer"
                   pattern="^[a-zA-Z\sáéíóúüñÁÉÍÓÚÜÑ]*$" />
                 <span
-                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  class="mt-2 hidden text-xs text-gray-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                   *Solo se permiten letras.
                 </span>
               </div>
@@ -50,22 +50,27 @@
             <div class="sm:col-span-3">
               <label for="role" class="block text-sm font-medium leading-6 text-gray-900">Tipo Usuario</label>
               <div class="mt-2">
-                <select id="role" name="role" autocomplete="role-name" formControlName="rolId"
-                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid">
-                  <option *ngFor="let rol of userTypes2" [value]="rol.value">
-                    {{ rol.label }}
-                  </option>
-                </select>
+                <ng-select
+                  [items]="userTypes2"
+                  bindLabel="label"
+                  bindValue="value"
+                  [searchable]="false"
+                  placeholder="Tipo Usuario"
+                  formControlName="rolId"
+                  notFoundText="No hay roles"
+                  class="ng-custom"
+                >
+                </ng-select>
               </div>
             </div>
             <div class="sm:col-span-4">
               <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Correo electrónico</label>
               <div class="mt-2">
                 <input id="email" name="email" type="email" formControlName="email" autocomplete="email"
-                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-500 peer peer-invalid"
                   pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}" />
                 <span
-                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  class="mt-2 hidden text-xs text-gray-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                   *Correo electrónico inválido
                 </span>
               </div>
@@ -75,10 +80,10 @@
               <div class="mt-2">
                 <input id="phoneNumber" name="phoneNumber" type="text" autocomplete="phoneNumber"
                   formControlName="phoneNumber"
-                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
+                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-500 peer"
                   pattern=".{10}$" />
                 <span
-                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  class="mt-2 hidden text-xs text-gray-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                   *Celular debe tener 10 dígitos
                 </span>
               </div>
@@ -86,25 +91,51 @@
 
             <div class="sm:col-span-3 sm:col-start-1">
               <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Contraseña</label>
-              <div class="mt-2">
-                <input type="password" name="password" id="password" formControlName="password"
-                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid"
-                  pattern=".{8,}$" />
-                <span
-                  class="mt-2 hidden text-xs text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                  *Contraseña debe tener al menos 8 caracteres
+
+              <div class="mt-2 relative">
+                  <input id="password" name="password" [type]="showPassword ? 'text' : 'password'" autocomplete="current-password"
+                  formControlName="password"
+                  class="block w-full rounded-md border-1 py-1.5 text-gray-900 ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 pr-10 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-700 peer peer-invalid"
+                  pattern=".{10,}$" />
+                <span class="absolute inset-y-0 right-0 pr-3 pt-3 items-center text-sm">
+                  <fa-icon [icon]="showPassword ? faEyeSlash : faEye" (click)="togglePasswordVisibility()"
+                    class="cursor-pointer text-gray-400"></fa-icon>
                 </span>
+
+                <!--VALIDACIONES CONTRASEÑA-->
+                <p class="mt-2 hidden text-xs text-gray-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  *Contraseña debe tener al menos 10 caracteres
+                </p>
+                <p *ngIf="userGroup.controls['password'].getError('atLeastOneLowercase') && userGroup.controls['password']?.touched" class="mt-2 text-xs text-gray-500">
+                  *Contraseña debe tener al menos una letra minúscula
+                </p>
+                <p *ngIf="userGroup.controls['password'].getError('atLeastOneUppercase') && userGroup.controls['password']?.touched" class="mt-2 text-xs text-gray-500">
+                  *Contraseña debe tener al menos una letra mayúscula
+                </p>
+                <p *ngIf="userGroup.controls['password'].getError('atLeastOneSymbol') && userGroup.controls['password']?.touched" class="mt-2 text-xs text-gray-500">
+                  *Contraseña debe tener al menos un símbolo
+                </p>
+                <p *ngIf="userGroup.controls['password'].getError('toNumber') && userGroup.controls['password']?.touched" class="mt-2 text-xs text-gray-500">
+                  *Contraseña debe tener al menos un número
+                </p>
+                <!--FIN VALIDACIONES CONTRASEÑA-->
               </div>
             </div>
 
             <div class="sm:col-span-3">
               <label for="passwordConfirm" class="block text-sm font-medium leading-6 text-gray-900">Confirmar
                 contraseña</label>
-              <div class="mt-2">
-                <input type="password" name="passwordConfirm" id="passwordConfirm" formControlName="passwordConfirm"
-                  class="block w-full rounded-md border-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer peer-invalid" />
+              <div class="mt-2 relative">
+                  <input id="passwordConfirm" name="passwordConfirm" [type]="showPassword ? 'text' : 'password'" autocomplete="current-password"
+                  formControlName="passwordConfirm"
+                  class="block w-full rounded-md border-1 py-1.5 text-gray-900 ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 pr-10 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-700 peer peer-invalid"
+                  pattern=".{10,}$" />
+                <span class="absolute inset-y-0 right-0 pr-3 pt-3 items-center text-sm">
+                  <fa-icon [icon]="showPassword ? faEyeSlash : faEye" (click)="togglePasswordVisibility()"
+                    class="cursor-pointer text-gray-400"></fa-icon>
+                </span>
               </div>
-              <div *ngIf="userGroup.getError('mustBeEqual')" class="text-red-500 text-xs">
+              <div *ngIf="userGroup.getError('mustBeEqual') && userGroup.controls['passwordConfirm']?.touched" class="text-gray-500 text-xs">
                 *No coincide con la contraseña
               </div>
             </div>
@@ -113,12 +144,13 @@
         <div class="hidden md:block">
           <ngx-recaptcha2 #captchaElem [siteKey]="siteKey"> </ngx-recaptcha2>
         </div>
-        <div class="mt-6 flex items-center justify-end gap-x-6 pb-7">
+        <div class="mt-6 flex items-center justify-end gap-x-3 pb-7">
           <button type="button" routerLink="/auth/login" class="text-white bg-gray-500 hover:bg-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
             Cancelar
           </button>
           <button type="submit"
-            class="text-white bg-blue-900 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
+                  [disabled]="userGroup.invalid || userGroup.controls['password'].value !== userGroup.controls['passwordConfirm'].value"
+                  class="text-white bg-blue-900 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
             Registrarse
           </button>
         </div>

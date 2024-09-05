@@ -27,7 +27,7 @@
           <div class="flex items-center justify-between">
             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Contraseña</label>
           </div>
-          <div class="mt-2">
+          <!-- <div class="mt-2">
             <input id="password" name="password" type="password" autocomplete="current-password"
               formControlName="password"
               class="block w-full rounded-md border-1 py-1.5 text-gray-900 ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-700 peer peer-invalid"
@@ -36,19 +36,23 @@
                 <a href="#" class="font-semibold text-blue-900 hover:text-blue-800" routerLink="/auth/recovery">Olvidé mi
                   contraseña</a>
               </div>
-            <p class="mt-2 hidden text-xs text-gray-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-              *Contraseña debe tener al menos 10 caracteres
-            </p>
-            <p *ngIf="loginForm.controls['password'].getError('atLeastOneLowercase') && loginForm.controls['password']?.touched" class="mt-2 text-xs text-gray-500">
-              *Contraseña debe tener al menos una letra minúscula
-            </p>
-            <p *ngIf="loginForm.controls['password'].getError('atLeastOneUppercase') && loginForm.controls['password']?.touched" class="mt-2 text-xs text-gray-500">
-              *Contraseña debe tener al menos una letra mayúscula
-            </p>
-            <p *ngIf="loginForm.controls['password'].getError('toNumber') && loginForm.controls['password']?.touched" class="mt-2 text-xs text-gray-500">
-              *Contraseña debe tener al menos un número
-            </p>
+          </div> -->
+          <div class="mt-2 relative">
+            <input id="password" name="password" [type]="showPassword ? 'text' : 'password'" autocomplete="current-password"
+              formControlName="password"
+              class="block w-full rounded-md border-1 py-1.5 text-gray-900 ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 pl-2 pr-10 invalid:[&:not(:placeholder-shown):not(:focus)]:border-gray-700 peer peer-invalid"
+              pattern=".{8,}$" />
+            <span class="absolute inset-y-0 right-0 pr-3 pt-3 items-center text-sm">
+              <fa-icon [icon]="showPassword ? faEyeSlash : faEye" (click)="togglePasswordVisibility()"
+                class="cursor-pointer text-gray-400"></fa-icon>
+            </span>
+            <div class="mt-1 text-sm text-right">
+              <a href="#" class="font-semibold text-blue-900 hover:text-blue-800" routerLink="/auth/recovery">Olvidé mi
+                contraseña</a>
+            </div>
           </div>
+         
+          
         </div>
 
         <div>

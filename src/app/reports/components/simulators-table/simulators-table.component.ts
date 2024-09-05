@@ -80,6 +80,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
       if(rol === 'Admin'){
         this.nombreEstudiante = ''; 
       }
+      console.log(this.nombreEstudiante);
       this.listaDatosSimuladores(this.nombreEstudiante);
     });
 
@@ -145,7 +146,7 @@ export class SimulatorsTableComponent implements OnInit, OnChanges {
       nombreEstudiante: estudiante,
       id: this.id,
     };
-    
+    console.log(paginate);
     this.reportsService.getDataSimuladores(paginate).subscribe({
       next: (res: any) => {
         this.dataSimuladores = res.data ?? [];
